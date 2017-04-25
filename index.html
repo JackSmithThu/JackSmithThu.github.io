@@ -101,18 +101,34 @@
     </header>
     <div class="entry">
       
-        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><p>###首先，我们先来看一下<strong> kafka</strong>  是用来干什么的<br>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
+        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><p>###首先，我们先来看一下 <strong>kafka</strong> 是用来干什么的<br>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
 <ul>
 <li>搭建一个实时的流数据管道以支持系统间的实时数据通信。</li>
 <li>搭建一个对流数据进行转换或响应的实时流应用。</li>
 </ul>
 <p>###为了实现这个目标，<strong>kafka</strong> 实现了以下三大关键特性</p>
 <ul>
-<li>支持数据流的发布和订阅（这一点有点儿像<strong>消息队列</strong>）。</li>
-<li>允许你以一种高容错的手段存储数据流。</li>
-<li>允许你实时地处理到达的数据。</li>
+<li>支持记录流（<strong>stream of records</strong>）的发布和订阅（有点儿像<strong>消息队列</strong>）。</li>
+<li>允许你以一种高容错的手段存储记录流。</li>
+<li>允许你实时地处理产生的记录。</li>
 </ul>
-<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h2 id="kafka应用"><a href="#kafka应用" class="headerlink" title="kafka应用"></a>kafka应用</h2>
+<p>###初次之外，你可能还需要了解一些关于 <strong>kafka</strong> 其他的知识</p>
+<ul>
+<li><p>首先，<strong>kafka</strong> 是运行在由一个或多个服务器组成的集群（<strong>cluster</strong>）上</p>
+</li>
+<li><p><strong>kafka</strong> 集群将流（<strong>stream</strong>）按照不同的分类存储，每个分类叫做一个主题（ <strong>topic</strong>）。</p>
+</li>
+<li><p>每一条记录（<strong>record</strong>）都包含一个键（<strong>key</strong>），一个值（<strong>value</strong>）和一个时间戳（<strong>timestamp</strong>）。</p>
+<hr>
+</li>
+</ul>
+<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h3 id="kafka-的四大-API"><a href="#kafka-的四大-API" class="headerlink" title="kafka 的四大 API"></a><strong>kafka</strong> 的四大 API</h3><ul>
+<li><strong>Producer API</strong> ：允许一个应用发布一个数据流到一个或多个 <strong>topic</strong> 上。</li>
+<li><strong>Consumer API</strong> ：允许一个应用订阅一个或多个 <strong>topic</strong> ，并对发送给它的数据进行处理。 </li>
+<li><strong>Streams API</strong> ： 允许一个应用作为流处理器（<strong>stream processor</strong>）工作，即从某个或某些 <strong>topic</strong> 订阅，处理之后再发布到其他 <strong>topic</strong> 上。</li>
+<li><strong>Connector API</strong> ： 用于构建可重用的 <strong>producer</strong> 或 <strong>constmer</strong> 来把<strong>kafka</strong> 的 <strong>topic</strong> 连接到已有的系统上。比如，一个关系型数据库上的 <strong>connector</strong> 可以捕捉该数据库上某张表的内一个变化。</li>
+</ul>
+<h2 id="kafka应用"><a href="#kafka应用" class="headerlink" title="kafka应用"></a>kafka应用</h2>
       
     </div>
     <footer>
@@ -169,7 +185,7 @@
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Buscar">
+    <input type="search" name="q" results="0" placeholder="Suche">
     <input type="hidden" name="q" value="site:yoursite.com">
   </form>
 </div>
@@ -178,7 +194,7 @@
 
   
 <div class="widget tag">
-  <h3 class="title">Etiquetas</h3>
+  <h3 class="title">Tags</h3>
   <ul class="entry">
   
     <li><a href="/tags/技术/">技术</a><small>3</small></li>
