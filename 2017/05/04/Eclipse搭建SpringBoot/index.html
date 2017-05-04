@@ -88,8 +88,18 @@
 <p>这样，一个Spring Boot 项目就搭建起来了。</p>
 <h2 id="4-可能会遇到的问题："><a href="#4-可能会遇到的问题：" class="headerlink" title="4.可能会遇到的问题："></a>4.可能会遇到的问题：</h2><p>建立新项目后下载依赖的时候，可能会出现卡在那里不动的情况。这是因为国内连国外的镜像连不上造成的。可以修改maven中的镜像源，具体操作如下：</p>
 <p>修改maven根目录下的conf文件夹中的setting.xml文件，内容如下：</p>
+<blockquote>
+ <mirrors><br>    <mirror><br>      <id>alimaven</id><br>      <name>aliyun maven</name><br>      <url><a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/</a></url><br>      <mirrorof>central</mirrorof><br>    </mirror><br>  </mirrors>
+
+</blockquote>
 <p>改好之后，右击项目→【maven】→【update project】即可</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png" alt="11"></p>
 <p>如果还是不行的话，就去看看 用户名/.m2/目录下是否也存在一个settings.xml文件，这个配置文件的优先级是高于maven安装目录下的配置文件的。所以要把这个也改成阿里云的镜像。</p>
+<blockquote>
+ <mirrors><br>    <mirror><br>      <id>alimaven</id><br>      <name>aliyun maven</name><br>      <url><a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/</a></url><br>      <mirrorof>central</mirrorof><br>    </mirror><br>  </mirrors>
+
+
+</blockquote>
 <h2 id="5-参考链接："><a href="#5-参考链接：" class="headerlink" title="5.参考链接："></a>5.参考链接：</h2><p>Eclipse中创建新的Spring Boot项目：<br><a href="http://blog.csdn.net/clementad/article/details/51334064" target="_blank" rel="external">http://blog.csdn.net/clementad/article/details/51334064</a><br>maven阿里云中央仓库：<br><a href="http://blog.csdn.net/u010717403/article/details/52188496" target="_blank" rel="external">http://blog.csdn.net/u010717403/article/details/52188496</a><br>Maven2的配置文件settings.xml：<br><a href="http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html" target="_blank" rel="external">http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html</a></p>
 <h2 id="6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip"><a href="#6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip" class="headerlink" title="6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip"></a>6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip</h2>
       
