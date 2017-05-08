@@ -81,7 +81,7 @@
 <p>按下 Ctrl + Shift + Enter，以管理员身份进入 cmd，进入之后，如下图所示：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080006.png" alt=""></p>
 <p>进入到 D:\WorkSpace\mysql\msql5601\bin 目录下，输入：</p>
-<p>mysqld install MySQL1  –defaults-file=”D:\WorkSpace\mysql\msql5601\my-default.ini” ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL1  --defaults-file=&quot;D:\WorkSpace\mysql\msql5601\my-default.ini&quot; ：</div></pre></td></tr></table></figure>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080007.png" alt=""></p>
 <p>因为我已经安装过了，所以会显示 The service already exists! ，第一次安装应该显示 Service successfully installed.</p>
 <p>【MySQL1】是服务的名称，安装成功后，在 windows 搜索里输入【服务】，可以在服务中找到它。</p>
@@ -90,7 +90,7 @@
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080009.png" alt=""></p>
 <p>然后用同样的方法启动另一个服务，这回叫MySQL2：</p>
 <p>进入到 D:\WorkSpace\mysql\msql5602\bin 目录下，输入：</p>
-<p>mysqld install MySQL2  –defaults-fil e= “D:\WorkSpace\mysql\msql5602\my-default.ini” </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL2  --defaults-fil e= &quot;D:\WorkSpace\mysql\msql5602\my-default.ini&quot;</div></pre></td></tr></table></figure>
 <p>安装成功后，输入 net start MySQL2，启动这个服务，得到结果如下图所示：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080010.png" alt=""></p>
 <p>两个服务都跑起来之后，我们就可以进入下一步：实现主从备份了。</p>
@@ -604,14 +604,14 @@
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="search" name="q" results="0" placeholder="Search">
     <input type="hidden" name="q" value="site:yoursite.com">
   </form>
 </div>
 
   
 <div class="widget tag">
-  <h3 class="title">Kategorien</h3>
+  <h3 class="title">Categories</h3>
   <ul class="entry">
   
     <li><a href="/categories/心情/">心情</a><small>1</small></li>
