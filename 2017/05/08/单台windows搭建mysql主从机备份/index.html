@@ -83,7 +83,8 @@
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080005.png" alt=""></p>
 <p>按下 Ctrl + Shift + Enter，以管理员身份进入 cmd，进入之后，如下图所示：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080006.png" alt=""></p>
-<p>进入到 D:\WorkSpace\mysql\msql5601\bin 目录下，输入 mysqld install MySQL1  –defaults-file=”D:\WorkSpace\mysql\msql5601\my-default.ini” ：</p>
+<p>进入到 D:\WorkSpace\mysql\msql5601\bin 目录下，输入：</p>
+<p>mysqld install MySQL1  –defaults-file=”D:\WorkSpace\mysql\msql5601\my-default.ini” ：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080007.png" alt=""></p>
 <p>因为我已经安装过了，所以会显示 The service already exists! ，第一次安装应该显示 Service successfully installed.</p>
 <p>【MySQL1】是服务的名称，安装成功后，在 windows 搜索里输入【服务】，可以在服务中找到它。</p>
@@ -91,7 +92,8 @@
 <p>安装成功后，输入 net start MySQL1，启动这个服务：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080009.png" alt=""></p>
 <p>然后用同样的方法启动另一个服务，这回叫MySQL2：</p>
-<p>进入到 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysqld install MySQL2  –defaults-file=”D:\WorkSpace\mysql\msql5602\my-default.ini” </p>
+<p>进入到 D:\WorkSpace\mysql\msql5602\bin 目录下，输入：</p>
+<p>mysqld install MySQL2  –defaults-fil e= “D:\WorkSpace\mysql\msql5602\my-default.ini” </p>
 <p>安装成功后，输入 net start MySQL2，启动这个服务，得到结果如下图所示：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080010.png" alt=""></p>
 <p>两个服务都跑起来之后，我们就可以进入下一步：实现主从备份了。</p>
@@ -134,7 +136,7 @@
 <p>重启 MySQL2 服务。</p>
 <h3 id="2-6-修改从库对主库的连接参数"><a href="#2-6-修改从库对主库的连接参数" class="headerlink" title="2.6.修改从库对主库的连接参数"></a>2.6.修改从库对主库的连接参数</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
 <p>进入 mysql 命令行模式，输入：</p>
-<p>change master to master_host=’10.0.76.192’,master_user=’slave’,master_password=’root’, master_log_file=’mysql-bin.000003’,master_log_pos=120;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">change master to master_host=&apos;10.0.76.192&apos;,master_user=&apos;slave&apos;,master_password=&apos;root&apos;, master_log_file=&apos;mysql-bin.000003&apos;,master_log_pos=120;</div></pre></td></tr></table></figure>
 <p>注意：这里输入的 mysql-bin.000003 和 120 请替换为步骤2.4中查询出来的值，master_host 替换为你自己的 ip。 </p>
 <h3 id="2-7-启动-salve-线程"><a href="#2-7-启动-salve-线程" class="headerlink" title="2.7.启动 salve 线程"></a>2.7.启动 salve 线程</h3><p>输入：start slave;</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080020.png" alt=""></p>
@@ -211,7 +213,7 @@
 
 
 <section id="comment">
-  <h1 class="title">Comments</h1>
+  <h1 class="title">Kommentare</h1>
 
   
       <div id="fb-root"></div>
@@ -234,14 +236,14 @@
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Suche">
     <input type="hidden" name="q" value="site:yoursite.com">
   </form>
 </div>
 
   
 <div class="widget tag">
-  <h3 class="title">Categories</h3>
+  <h3 class="title">Kategorien</h3>
   <ul class="entry">
   
     <li><a href="/categories/心情/">心情</a><small>1</small></li>
