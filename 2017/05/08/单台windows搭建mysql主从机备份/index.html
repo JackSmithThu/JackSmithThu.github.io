@@ -123,7 +123,7 @@
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080017.png" alt=""></p>
 <h3 id="2-3-给要连接的从服务器设置权限"><a href="#2-3-给要连接的从服务器设置权限" class="headerlink" title="2.3.给要连接的从服务器设置权限"></a>2.3.给要连接的从服务器设置权限</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
 <p>进入 mysql 命令行模式，输入</p>
-<p>grant replication slave,reload,super on <em>.</em> to slave@10.0.76.192 identified by ‘root’;   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grant replication slave,reload,super on *.* to slave@10.0.76.192 identified by &apos;root&apos;;</div></pre></td></tr></table></figure>
 <p>给主机10.0.76.192添加权限，用户名：slave，密码：root；</p>
 <p>注意，10.0.76.192是我的 ip 地址，这个地址需要改成你自己的 ip 地址（如果不是一台机器则要改成从机的 ip 地址）。查询 ip 地址的方法很简单，打开 cmd，输入 ipconfig 即可。</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080018.png" alt=""></p>
@@ -213,7 +213,7 @@
 
 
 <section id="comment">
-  <h1 class="title">Comments</h1>
+  <h1 class="title">Kommentare</h1>
 
   
       <div id="fb-root"></div>
@@ -236,14 +236,14 @@
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Suche">
     <input type="hidden" name="q" value="site:yoursite.com">
   </form>
 </div>
 
   
 <div class="widget tag">
-  <h3 class="title">Categories</h3>
+  <h3 class="title">Kategorien</h3>
   <ul class="entry">
   
     <li><a href="/categories/心情/">心情</a><small>1</small></li>
