@@ -50,6 +50,58 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-05-23T09:04:44.000Z"><a href="/2017/05/23/关于利用最小二乘法定位问题的讨论/">2017-05-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/05/23/关于利用最小二乘法定位问题的讨论/">关于利用最小二乘法定位问题的讨论</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>假设有四个基站，其位置分别为 $ (m<em> 1,n</em> 1)、(m<em> 2,n</em> 2)、(m<em> 3,n</em> 3)、(m<em> 4,n</em> 4)$ 。有一个手机，它到这四个基站的观测距离分别为 $ r _1，r _2，r _3，r _4$ 。求该手机的位置坐标。</p>
+<h2 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h2><p>假设手机的坐标为 $ (x, y)$ ，则手机距离第$ i$个基站的距离为：$ l<em> i = \sqrt{(x - m</em> i) ^ 2 + (y - m_ i) ^ 2}$ 。</p>
+<p>为了解决这个问题，我们首先选择某个点 $ (x<em> 0, y</em> 0)$ 作为初始点，然后以该点为起点，移动 $ (d<em> x, d</em> y)$ 距离。使得移动后的点 $ (x<em> 1, y</em> 1) =   (x<em> 0, y</em> 0) + (d<em> x, d</em> y)$ 到四个基站的距离更加接近 $ r _1，r _2，r _3，r _4$ 。不断重复这个过程，就可以找到手机的位置。</p>
+<p><strong>所以，目前最重要的事就是确定 $ (d<em> x, d</em> y)$ ，以确定向什么方向移动以及移动多大距离。</strong></p>
+<p>根据泰勒展开公式，在忽略高阶偏导数的情况下，我们可以得到：</p>
+<p>$ l<em> {i1} = \sqrt{(x</em> 1 - m<em> i) ^ 2 + (y</em> 1 - m<em> i) ^ 2} = d</em> {i0} + \frac{2 (x<em> 0 - m</em> i)}{\sqrt{(x<em> 0 - m</em> i) ^ 2 + (y<em> 0 - n</em> i) ^ 2}} d<em> x + \frac{2 (y</em> 0 - n<em> i)}{\sqrt{(x</em> 0 - m<em> i) ^ 2 + (y</em> 0 - n<em> i) ^ 2}} d</em> y$</p>
+<p>由于我们希望移动之后 $ l<em> {i1} = r</em> i$ ，因而我们就可以得到：</p>
+<p>$ l<em> {i0} + \frac{2 (x</em> 0 - m<em> i)}{\sqrt{(x</em> 0 - m<em> i) ^ 2 + (y</em> 0 - n<em> i) ^ 2}} d</em> x + \frac{2 (y<em> 0 - n</em> i)}{\sqrt{(x<em> 0 - m</em> i) ^ 2 + (y<em> 0 - n</em> i) ^ 2}} d<em> y = r</em> i$</p>
+<p><strong>由于同一组 $ (d<em> x, d</em> y)$ 可能无法使上述公式在 $ i = 1, 2, 3, 4$ 的情况下全部成立，因此我们选择一个指标 $ S = ∑|| l<em> i - r</em> i||^ 2$ , 使得 $ S$ 最小即可。</strong></p>
+<p>我们令: </p>
+<p>$ A = \left[\begin{matrix} \frac{2 (x<em> 0 - m</em> 1)}{\sqrt{(x<em> 0 - m</em> 1) ^ 2 + (y<em> 0 - m</em> 1) ^ 2}}      &amp; \frac{2 (y<em> 0 - n</em> 1)}{\sqrt{(x<em> 0 - m</em> 1) ^ 2 + (y<em> 0 - n</em> 1) ^ 2}}            \ \vdots &amp; \vdots    \ \frac{2 (x<em> 0 - m</em> i)}{\sqrt{(x<em> 0 - m</em> i) ^ 2 + (y<em> 0 - m</em> i) ^ 2}}      &amp; \frac{2 (y<em> 0 - n</em> i)}{\sqrt{(x<em> 0 - m</em> i) ^ 2 + (y<em> 0 - m</em> i) ^ 2}}     \ \vdots &amp; \vdots   \\end{matrix}\right]$</p>
+<p>再令：</p>
+<p>$  P = \left[\begin{matrix} r<em> 1 - l</em> {10}      \ \vdots    \        r<em> i - l</em> {i0} \ \vdots   \\end{matrix}\right] ; D= \left[\begin{matrix} d<em> x     \ d</em> y   \\end{matrix}\right]$</p>
+<p><strong>这样，我们就把原题化为了 $ AD = P$ , 求 $ S = ∑|| l<em> i - r</em> i||^ 2$ 最小。即一般的最小二乘问题。</strong></p>
+<p>那么，这个问题怎么解呢？其实很简单，只需要把 $ S$ 对 $ d<em> x$ 和 $ d</em> y$ 求偏导，并使这两个偏导数为 0 即可。</p>
+<p>已知：$ AD = P​$ ，  则 $ S​$ 可以表示成：$ S = ∑(A<em> {i1} d</em> x + A<em> {i2} d</em> y - P_ i)^ 2​$ 。</p>
+<p>所以 $ S$ 对 $ d<em> x$ 的偏导数为：$ 2∑[(A</em> {i1} d<em> x + A</em> {i2} d<em> y - P</em> i) A_ {i1}]$ 。</p>
+<p>对 $ d<em> y$ 的偏导数为：$ 2∑[(A</em> {i1} d<em> x + A</em> {i2} d<em> y - P</em> i) A_ {i2}]$ 。</p>
+<p>于是，我们得到：<br>$$<br>\left{<br>\begin{array}{c}<br>∑[(A<em> {i1} d</em> x + A<em> {i2} d</em> y - P<em> i) A</em> {i1}] = 0 \<br>∑[(A<em> {i1} d</em> x + A<em> {i2} d</em> y - P<em> i) A</em> {i2}] = 0 \<br>\end{array}<br>\right.<br>$$<br>展开，得到：<br>$$<br>\left{<br>\begin{array}{c}<br>∑(A^ 2<em> {i1}) d</em> x + ∑((A<em> {i1}A</em> {i2}) d<em> y = ∑(A</em> {i1}P<em> i) \<br>∑(A^ 2</em> {i2}) d<em> y + ∑((A</em> {i1}A<em> {i2}) d</em> x = ∑(A<em> {i2}P</em> i) \<br>\end{array}<br>\right.<br>$$<br>上述方程组等价于：$ A^ T A D = A^ T P$ 。</p>
+<p>所以若矩阵 $ A^ T A$ 可逆，则求得：$ D = (A^ T A)^ {-1} A^ T P$ 。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-05-10T09:20:22.000Z"><a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">2017-05-10</a></time>
       
       
@@ -680,15 +732,17 @@
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="search" name="q" results="0" placeholder="Ieškoti">
     <input type="hidden" name="q" value="site:yoursite.com">
   </form>
 </div>
 
   
 <div class="widget tag">
-  <h3 class="title">Kategorien</h3>
+  <h3 class="title">Kategorijos</h3>
   <ul class="entry">
+  
+    <li><a href="/categories/室内定位/">室内定位</a><small>1</small></li>
   
     <li><a href="/categories/心情/">心情</a><small>1</small></li>
   
@@ -700,7 +754,7 @@
 
   
 <div class="widget tag">
-  <h3 class="title">Tags</h3>
+  <h3 class="title">Žymos</h3>
   <ul class="entry">
   
     <li><a href="/tags/Blog/">Blog</a><small>1</small></li>
@@ -725,7 +779,11 @@
   
     <li><a href="/tags/Zookeeper/">Zookeeper</a><small>1</small></li>
   
+    <li><a href="/tags/三边定位/">三边定位</a><small>1</small></li>
+  
     <li><a href="/tags/直升机/">直升机</a><small>1</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>1</small></li>
   
   </ul>
 </div>
