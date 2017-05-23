@@ -62,9 +62,7 @@
     </header>
     <div class="entry">
       
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>假设有四个基站，其位置分别为 $ (m<em> 1,n</em> 1)、(m<em> 2,n</em> 2)、(m<em> 3,n</em> 3)、(m<em> 4,n</em> 4)$ 。有一个手机，它到这四个基站的观测距离分别为 $ r _1，r _2，r _3，r _4$ 。求该手机的位置坐标。</p>
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>假设有四个基站，其位置分别为 $ (m<em> 1,n</em> 1)、(m<em> 2,n</em> 2)、(m<em> 3,n</em> 3)、(m<em> 4,n</em> 4)$ 。有一个手机，它到这四个基站的观测距离分别为 $ r _1，r _2，r _3，r _4$ 。求该手机的位置坐标。</p>
 <h2 id="问题解答"><a href="#问题解答" class="headerlink" title="问题解答"></a>问题解答</h2><p>假设手机的坐标为 $ (x, y)$ ，则手机距离第$ i$个基站的距离为：$ l<em> i = \sqrt{(x - m</em> i) ^ 2 + (y - m_ i) ^ 2}$ 。</p>
 <p>为了解决这个问题，我们首先选择某个点 $ (x<em> 0, y</em> 0)$ 作为初始点，然后以该点为起点，移动 $ (d<em> x, d</em> y)$ 距离。使得移动后的点 $ (x<em> 1, y</em> 1) =   (x<em> 0, y</em> 0) + (d<em> x, d</em> y)$ 到四个基站的距离更加接近 $ r _1，r _2，r _3，r _4$ 。不断重复这个过程，就可以找到手机的位置。</p>
 <p><strong>所以，目前最重要的事就是确定 $ (d<em> x, d</em> y)$ ，以确定向什么方向移动以及移动多大距离。</strong></p>
