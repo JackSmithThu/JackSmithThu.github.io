@@ -1,1 +1,19 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="yes" name="apple-touch-fullscreen"><meta content="telephone=no,email=no" name="format-detection"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet"><script src="https://use.fontawesome.com/adaf0e149c.js"></script><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/monokai_sublime.min.css"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/css/post.css"><link rel="stylesheet" href="/css/markdown-github.css"><title>Jackie</title><script src="/js/googleAnalytics.js"></script></head><body><div id="postContainer"><div id="postTop"><h4 id="logo">Life Is Short</h4><br><br><h2 id="postTitle">大神们的博客</h2><br><span aria-hidden="true" class="postTime fa fa-calendar">2017-4-24</span><span aria-hidden="true" class="postTags fa fa-tags">&nbsp;Blog</span><br><br></div><section id="articleDiv"><h3 id="【学习用】huangjunhui-大神的博客"><a href="#【学习用】huangjunhui-大神的博客" class="headerlink" title="【学习用】huangjunhui 大神的博客"></a>【学习用】<a href="http://opiece.me/2015/04/09/hexo-guide/" target="_blank" rel="external">huangjunhui 大神的博客</a></h3><h3 id="【膜拜用】liuning-大神的博客"><a href="#【膜拜用】liuning-大神的博客" class="headerlink" title="【膜拜用】liuning 大神的博客"></a>【膜拜用】<a href="http://lnplayer.github.io/" target="_blank" rel="external">liuning 大神的博客</a></h3></section></div><script src="/js/jquery.min.js"></script><script src="/js/highlight.min.js"></script><script src="/js/start.js"></script></body></html>
+extends _partial/layout
+
+block title
+  title= `${page.title} | ${config.title}`
+
+block content
+  article.content__post
+    h1.post__title= page.title
+    .post__date= page.date.format(config.date_format)
+    section !{page.content}
+    if page.tags
+      .post__tags
+        for tag in page.tags.toArray()
+          a(href=url_for(tag.path))= tag.name
+  include _partial/paginator_post
+
+
+block comment
+  include _partial/comment

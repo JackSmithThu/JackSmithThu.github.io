@@ -1,4 +1,19 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="yes" name="apple-touch-fullscreen"><meta content="telephone=no,email=no" name="format-detection"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet"><script src="https://use.fontawesome.com/adaf0e149c.js"></script><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/monokai_sublime.min.css"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/css/post.css"><link rel="stylesheet" href="/css/markdown-github.css"><title>Jackie</title><script src="/js/googleAnalytics.js"></script></head><body><div id="postContainer"><div id="postTop"><h4 id="logo">Life Is Short</h4><br><br><h2 id="postTitle">SCAtoolbox应用指南</h2><br><span aria-hidden="true" class="postTime fa fa-calendar">2017-4-25</span><span aria-hidden="true" class="postTags fa fa-tags">&nbsp;SCAtoolbox</span><span aria-hidden="true" class="postTags fa fa-tags">&nbsp;Matlab</span><br><br></div><section id="articleDiv"><p><h2 id="首先，什么是SCAtoolbox"><a href="#首先，什么是SCAtoolbox" class="headerlink" title="首先，什么是SCAtoolbox"></a>首先，什么是SCAtoolbox</h2><p><strong>SCAtoolbox</strong>是一个用于求解<strong>最优化问题</strong>的开源工具，使用<strong>matlab</strong>实现。<br>那么，什么是最优化问题呢？举个简单的例子：</p></p>
-<p><hr></p>
-<p><strong>z = x + y (0 &lt; x &lt; 1, 0 &lt; y &lt; 1)，求 z 的最大值</strong></p><br><hr><br><p>这就是一个简单版的最优化问题，其中：<br><strong>z = x + y</strong> 称作<strong>目标函数</strong><br><strong>0 &lt; x &lt; 1, 0 &lt; y &lt; 1</strong> 称作<strong>约束条件</strong></p><br><h2 id="接下来，我们来看看SCAtoolbox怎么用"><a href="#接下来，我们来看看SCAtoolbox怎么用" class="headerlink" title="接下来，我们来看看SCAtoolbox怎么用"></a>接下来，我们来看看SCAtoolbox怎么用</h2><p><strong>SCAtoolbox</strong>可以从以下链接获取。<br><a href="http://www.alimirjalili.com/SCA.html" target="_blank" rel="external">http://www.alimirjalili.com/SCA.html</a><br>解压之后，用<strong>matlab</strong>打开<strong>SCAtoolbox.m</strong>即可食用。</p><br><hr><br><p>我们先来看一张<strong>SCAtoolbox</strong>的近照。</p><br><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/SCA_toolbox_description.png" alt="figure"></p>
-</section></div><script src="/js/jquery.min.js"></script><script src="/js/highlight.min.js"></script><script src="/js/start.js"></script></body></html>
+extends _partial/layout
+
+block title
+  title= `${page.title} | ${config.title}`
+
+block content
+  article.content__post
+    h1.post__title= page.title
+    .post__date= page.date.format(config.date_format)
+    section !{page.content}
+    if page.tags
+      .post__tags
+        for tag in page.tags.toArray()
+          a(href=url_for(tag.path))= tag.name
+  include _partial/paginator_post
+
+
+block comment
+  include _partial/comment

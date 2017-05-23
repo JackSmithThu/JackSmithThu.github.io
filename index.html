@@ -1,1 +1,35 @@
-<!DOCTYPE html><html> <head><meta charset="utf-8"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="yes" name="apple-touch-fullscreen"><meta content="telephone=no,email=no" name="format-detection"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet"><script src="https://use.fontawesome.com/adaf0e149c.js"></script><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/monokai_sublime.min.css"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/css/post.css"><link rel="stylesheet" href="/css/markdown-github.css"><title>Jackie</title><script src="/js/googleAnalytics.js"></script></head><body><div id="particles-js"><div id="container"><div id="topnav"><br><br><span id="subtitle">Captain of Black Preal</span><br><br><span id="description"></span><br><br></div><!--导航栏div--><div id="nav"><div id="links" class="fa fa-link"><a href="https://github.com/shuiRong" target="_blanket" class="urls"><span id="github" class="fa fa-github fa-2x"></span></a><a href="https://www.zhihu.com/people/linShuiRong" target="_blanket" class="urls"><img id="zhihu" src="/images/zhihu.png"></a></div></div><!-- index的主要内容div--><div id="content"><!--这个函数是用来对数据根据时间排序的，倒序。--><!--到这里，数据就根据时间排好序了。--><div class="indexTitles"><a href="/2017/05/23/关于利用最小二乘法定位问题的讨论/">关于利用最小二乘法定位问题的讨论</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-23</span><span aria-hidden="true" class="indexTags fa fa-tags">三边定位 算法 最小二乘法 </span></div><div class="indexTitles"><a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-10</span><span aria-hidden="true" class="indexTags fa fa-tags">Redis MySQL Canal Windows </span></div><div class="indexTitles"><a href="/2017/05/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-8</span><span aria-hidden="true" class="indexTags fa fa-tags">MySQL Windows </span></div><div class="indexTitles"><a href="/2017/05/05/单台windows搭建redis集群/">单台windows搭建redis集群</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-5</span><span aria-hidden="true" class="indexTags fa fa-tags">Redis Windows </span></div><div class="indexTitles"><a href="/2017/05/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-4</span><span aria-hidden="true" class="indexTags fa fa-tags">Kafka Windows Zookeeper </span></div><div class="indexTitles"><a href="/2017/05/04/一次惊险的体验（伪）/">一次惊险的体验（伪）</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-4</span><span aria-hidden="true" class="indexTags fa fa-tags">直升机 </span></div><div class="indexTitles"><a href="/2017/05/04/Eclipse搭建SpringBoot/">Eclipse搭建SpringBoot</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-5-4</span><span aria-hidden="true" class="indexTags fa fa-tags">SpringBoot Ecilpse </span></div><div class="indexTitles"><a href="/2017/04/25/SCAtoolbox应用指南/">SCAtoolbox应用指南</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-4-25</span><span aria-hidden="true" class="indexTags fa fa-tags">SCAtoolbox Matlab </span></div><div class="indexTitles"><a href="/2017/04/24/kafka学习/">kafka学习</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-4-24</span><span aria-hidden="true" class="indexTags fa fa-tags">Kafka </span></div><div class="indexTitles"><a href="/2017/04/24/大神们的博客/">大神们的博客</a><br><span aria-hidden="true" class="indexTime fa fa-calendar">2017-4-24</span><span aria-hidden="true" class="indexTags fa fa-tags">Blog </span></div></div></div></div><script src="/js/particles.js"></script><script src="/js/mouseover.js"></script></body></html>
+extends _partial/layout
+
+block title
+  title= `${config.title} | ${config.subtitle}`
+
+block content
+  div.content__index
+    .posts.typo
+      for post in page.posts.toArray()
+          .post
+            h2.post__title
+              a(href=url_for(post.path))
+                = post.title
+            .post__date= post.date.format(config.date_format)
+            if post.description
+              .post__content
+                != post.description
+            else if post.excerpt
+              .post__content
+                != post.excerpt
+            else if post.content
+              - var br = post.content.indexOf('\n')
+              if br < 0
+                .post__content
+                  != post.content
+              else
+                .post__content
+                  != post.content.substring(0, br)
+            if post.tags
+              .post__tags
+                for tag in post.tags.toArray()
+                  a(href=url_for(tag.path))= tag.name
+
+block pagination
+  include _partial/paginator
