@@ -1,19 +1,396 @@
-extends _partial/layout
-
-block title
-  title= `${page.title} | ${config.title}`
-
-block content
-  article.content__post
-    h1.post__title= page.title
-    .post__date= page.date.format(config.date_format)
-    section !{page.content}
-    if page.tags
-      .post__tags
-        for tag in page.tags.toArray()
-          a(href=url_for(tag.path))= tag.name
-  include _partial/paginator_post
+<!DOCTYPE html>
+<html lang="Zh-Hans">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
-block comment
-  include _partial/comment
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="kafka学习"/>
+
+
+
+
+  <meta name="keywords" content="Kafka," />
+
+
+
+
+  <link rel="alternate" href="/default" title="Jackie">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/04/24/kafka学习/"/>
+
+
+<meta name="description" content="kafka简介首先，我们先来看一下 kafka 是用来干什么的根据kafka官网的介绍，kafka主要用来做这么两件事儿：  搭建一个实时的流数据管道以支持系统间的实时数据通信。 搭建一个对流数据进行转换或响应的实时流应用。  为了实现这个目标，kafka 实现了以下三大关键特性 支持记录流（stream of records）的发布和订阅（有点儿像消息队列）。 允许你以一种高容错的手段存储记录流">
+<meta name="keywords" content="Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka学习">
+<meta property="og:url" content="http://yoursite.com/2017/04/24/kafka学习/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="kafka简介首先，我们先来看一下 kafka 是用来干什么的根据kafka官网的介绍，kafka主要用来做这么两件事儿：  搭建一个实时的流数据管道以支持系统间的实时数据通信。 搭建一个对流数据进行转换或响应的实时流应用。  为了实现这个目标，kafka 实现了以下三大关键特性 支持记录流（stream of records）的发布和订阅（有点儿像消息队列）。 允许你以一种高容错的手段存储记录流">
+<meta property="og:updated_time" content="2017-05-04T09:39:59.931Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kafka学习">
+<meta name="twitter:description" content="kafka简介首先，我们先来看一下 kafka 是用来干什么的根据kafka官网的介绍，kafka主要用来做这么两件事儿：  搭建一个实时的流数据管道以支持系统间的实时数据通信。 搭建一个对流数据进行转换或响应的实时流应用。  为了实现这个目标，kafka 实现了以下三大关键特性 支持记录流（stream of records）的发布和订阅（有点儿像消息队列）。 允许你以一种高容错的手段存储记录流">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> kafka学习 · Jackie </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Jackie</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Jackie</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              Home
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              Archives
+            
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          kafka学习
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Apr 24, 2017
+        </span>
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka简介"><span class="toc-text">kafka简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先，我们先来看一下-kafka-是用来干什么的"><span class="toc-text">首先，我们先来看一下 kafka 是用来干什么的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为了实现这个目标，kafka-实现了以下三大关键特性"><span class="toc-text">为了实现这个目标，kafka 实现了以下三大关键特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初次之外，你可能还需要了解一些关于-kafka-其他的知识"><span class="toc-text">初次之外，你可能还需要了解一些关于 kafka 其他的知识</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka原理"><span class="toc-text">kafka原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kafka-的四大-API"><span class="toc-text">kafka 的四大 API</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><h3 id="首先，我们先来看一下-kafka-是用来干什么的"><a href="#首先，我们先来看一下-kafka-是用来干什么的" class="headerlink" title="首先，我们先来看一下 kafka 是用来干什么的"></a>首先，我们先来看一下 <strong>kafka</strong> 是用来干什么的</h3><p>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
+<ul>
+<li>搭建一个实时的流数据管道以支持系统间的实时数据通信。</li>
+<li>搭建一个对流数据进行转换或响应的实时流应用。</li>
+</ul>
+<h3 id="为了实现这个目标，kafka-实现了以下三大关键特性"><a href="#为了实现这个目标，kafka-实现了以下三大关键特性" class="headerlink" title="为了实现这个目标，kafka 实现了以下三大关键特性"></a>为了实现这个目标，<strong>kafka</strong> 实现了以下三大关键特性</h3><ul>
+<li>支持记录流（<strong>stream of records</strong>）的发布和订阅（有点儿像<strong>消息队列</strong>）。</li>
+<li>允许你以一种高容错的手段存储记录流。</li>
+<li>允许你实时地处理产生的记录。</li>
+</ul>
+<h3 id="初次之外，你可能还需要了解一些关于-kafka-其他的知识"><a href="#初次之外，你可能还需要了解一些关于-kafka-其他的知识" class="headerlink" title="初次之外，你可能还需要了解一些关于 kafka 其他的知识"></a>初次之外，你可能还需要了解一些关于 <strong>kafka</strong> 其他的知识</h3><ul>
+<li><p>首先，<strong>kafka</strong> 是运行在由一个或多个服务器组成的集群（<strong>cluster</strong>）上</p>
+</li>
+<li><p><strong>kafka</strong> 集群将流（<strong>stream</strong>）按照不同的分类存储，每个分类叫做一个主题（ <strong>topic</strong>）。</p>
+</li>
+<li><p>每一条记录（<strong>record</strong>）都包含一个键（<strong>key</strong>），一个值（<strong>value</strong>）和一个时间戳（<strong>timestamp</strong>）。</p>
+<hr>
+</li>
+</ul>
+<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h3 id="kafka-的四大-API"><a href="#kafka-的四大-API" class="headerlink" title="kafka 的四大 API"></a><strong>kafka</strong> 的四大 API</h3><ul>
+<li><strong>Producer API</strong> ：允许一个应用发布一个数据流到一个或多个 <strong>topic</strong> 上。</li>
+<li><strong>Consumer API</strong> ：允许一个应用订阅一个或多个 <strong>topic</strong> ，并对发送给它的数据进行处理。 </li>
+<li><strong>Streams API</strong> ： 允许一个应用作为流处理器（<strong>stream processor</strong>）工作，即从某个或某些 <strong>topic</strong> 订阅，处理之后再发布到其他 <strong>topic</strong> 上。</li>
+<li><strong>Connector API</strong> ： 用于构建可重用的 <strong>producer</strong> 或 <strong>constmer</strong> 来把<strong>kafka</strong> 的 <strong>topic</strong> 连接到已有的系统上。比如，一个关系型数据库上的 <strong>connector</strong> 可以捕捉该数据库上某张表的内一个变化。</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>作者: </span>
+      <span>Jack Smith</span>
+    </p>
+    <p class="copyright-item">
+      <span>来源: </span>
+      <a href="http://yoursite.com">http://yoursite.com</a>
+    </p>
+    <p class="copyright-item">
+      <span>链接: </span>
+      <a href="http://yoursite.com/2017/04/24/kafka学习/">http://yoursite.com/2017/04/24/kafka学习/</a>
+    </p>
+
+    <p class="copyright-item lincese">
+      
+      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Kafka/">Kafka</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/04/24/大神们的博客/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">大神们的博客</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/04/25/SCAtoolbox应用指南/">
+        <span class="next-text nav-default">SCAtoolbox应用指南</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack Smith</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+  
+  
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  </body>
+</html>
