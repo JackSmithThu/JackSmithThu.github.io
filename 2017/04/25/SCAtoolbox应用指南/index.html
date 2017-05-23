@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>SCAtoolbox应用指南 | Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先，什么是SCAtoolboxSCAtoolbox是一个用于求解最优化问题的开源工具，使用matlab实现。那么，什么是最优化问题呢？举个简单的例子：  z = x + y (0 &amp;lt; x &amp;lt; 1, 0 &amp;lt; y &amp;lt; 1)，求 z 的最大值  这就是一个简单版的最优化问题，其中：z = x + y 称作目标函数0 &amp;lt; x &amp;lt; 1, 0 &amp;lt; y &amp;lt; 1">
+<meta name="keywords" content="SCAtoolbox,Matlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCAtoolbox应用指南">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/SCAtoolbox应用指南/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="首先，什么是SCAtoolboxSCAtoolbox是一个用于求解最优化问题的开源工具，使用matlab实现。那么，什么是最优化问题呢？举个简单的例子：  z = x + y (0 &amp;lt; x &amp;lt; 1, 0 &amp;lt; y &amp;lt; 1)，求 z 的最大值  这就是一个简单版的最优化问题，其中：z = x + y 称作目标函数0 &amp;lt; x &amp;lt; 1, 0 &amp;lt; y &amp;lt; 1">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/SCA_toolbox_description.png">
+<meta property="og:updated_time" content="2017-05-04T09:37:16.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCAtoolbox应用指南">
+<meta name="twitter:description" content="首先，什么是SCAtoolboxSCAtoolbox是一个用于求解最优化问题的开源工具，使用matlab实现。那么，什么是最优化问题呢？举个简单的例子：  z = x + y (0 &amp;lt; x &amp;lt; 1, 0 &amp;lt; y &amp;lt; 1)，求 z 的最大值  这就是一个简单版的最优化问题，其中：z = x + y 称作目标函数0 &amp;lt; x &amp;lt; 1, 0 &amp;lt; y &amp;lt; 1">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/SCA_toolbox_description.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jackie" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jackie</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Captain of Black Preal</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SCAtoolbox应用指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/25/SCAtoolbox应用指南/" class="article-date">
+  <time datetime="2017-04-25T02:27:13.000Z" itemprop="datePublished">2017-04-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SCAtoolbox应用指南
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="首先，什么是SCAtoolbox"><a href="#首先，什么是SCAtoolbox" class="headerlink" title="首先，什么是SCAtoolbox"></a>首先，什么是SCAtoolbox</h2><p><strong>SCAtoolbox</strong>是一个用于求解<strong>最优化问题</strong>的开源工具，使用<strong>matlab</strong>实现。<br>那么，什么是最优化问题呢？举个简单的例子：</p>
+<hr>
+<p><strong>z = x + y (0 &lt; x &lt; 1, 0 &lt; y &lt; 1)，求 z 的最大值</strong></p>
+<hr>
+<p>这就是一个简单版的最优化问题，其中：<br><strong>z = x + y</strong> 称作<strong>目标函数</strong><br><strong>0 &lt; x &lt; 1, 0 &lt; y &lt; 1</strong> 称作<strong>约束条件</strong></p>
+<h2 id="接下来，我们来看看SCAtoolbox怎么用"><a href="#接下来，我们来看看SCAtoolbox怎么用" class="headerlink" title="接下来，我们来看看SCAtoolbox怎么用"></a>接下来，我们来看看SCAtoolbox怎么用</h2><p><strong>SCAtoolbox</strong>可以从以下链接获取。<br><a href="http://www.alimirjalili.com/SCA.html" target="_blank" rel="external">http://www.alimirjalili.com/SCA.html</a><br>解压之后，用<strong>matlab</strong>打开<strong>SCAtoolbox.m</strong>即可食用。</p>
+<hr>
+<p>我们先来看一张<strong>SCAtoolbox</strong>的近照。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/SCA_toolbox_description.png" alt="figure"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/25/SCAtoolbox应用指南/" data-id="cj31fa4l1001ch0ra2lhfb2kw" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/24/kafka学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          kafka学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/04/Eclipse搭建SpringBoot/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Eclipse搭建SpringBoot</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/室内定位/">室内定位</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/心情/">心情</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canal/">Canal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/三边定位/">三边定位</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/最小二乘法/">最小二乘法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直升机/">直升机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/Canal/" style="font-size: 10px;">Canal</a> <a href="/tags/Ecilpse/" style="font-size: 10px;">Ecilpse</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Matlab/" style="font-size: 10px;">Matlab</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/SCAtoolbox/" style="font-size: 10px;">SCAtoolbox</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/Windows/" style="font-size: 20px;">Windows</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/三边定位/" style="font-size: 10px;">三边定位</a> <a href="/tags/最小二乘法/" style="font-size: 10px;">最小二乘法</a> <a href="/tags/直升机/" style="font-size: 10px;">直升机</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/23/关于利用最小二乘法定位问题的讨论/">关于利用最小二乘法定位问题的讨论</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/05/单台windows搭建redis集群/">单台windows搭建redis集群</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
