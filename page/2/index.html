@@ -1,428 +1,374 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
   
-  <title>Jackie</title>
+
+  <!--Author-->
+  
+  <meta name="author" content="Jack Smith">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Jackie"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="Jackie"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="website" />
+  
+  <!--Page Cover-->
+  
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Jackie">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="Jackie">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jackie">
+
+  <!-- Title -->
   
-  
-  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
-  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-  
+  <title>Jackie - Captain of Black Preal</title>
+
+
+  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
+
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!----------------------------
+  https://github.com/GallenHu/hexo-theme-Daily
+
+ _____            _   _
+|  __ \          (_) | |
+| |  | |   __ _   _  | |  _   _
+| |  | |  / _` | | | | | | | | |
+| |__| | | (_| | | | | | | |_| |
+|_____/   \__,_| |_| |_|  \__, |
+                          __/ |
+                         |___/
+
+    ---------------------------><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
+
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
-    <header id="header">
-  <div id="header-outer" class="outer">
-    <div id="header-inner" class="inner">
-      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
-      <a id="logo" class="logo" href="/"></a>
-      <nav id="main-nav">
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    <div class="logo">
+      <a href="/" rel="home">
         
-      </nav>
-      <nav id="sub-nav">
-        <div id="search-form-wrap">
-          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-        </div>
-      </nav>
+        <img src="https://hexo.io/logo.svg" alt="Jackie" height="60">
+        
+      </a>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  home
+                
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  archive
+                
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
     </div>
   </div>
 </header>
-    <section id="main" class="outer">
-      <article id="post-后台开发知识点总结（六）大型网站架构" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
+
+
+  <!-- Main Content -->
+  <div class="site-content home">
+  <main class="content-area">
     
+      
+        <div class="even">
+          
+
+<div class="container">
+  <article class="post">
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/18/后台开发知识点总结（六）大型网站架构/">后台开发知识点总结（六）大型网站架构</a>
+    <h1 class="entry-title">
+      <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" rel="bookmark">
+        后台开发知识点总结（六）大型网站架构  
+      </a>
     </h1>
-  
-
-      </header>
     
-    <div class="article-meta">
-      <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" class="article-date">
-  <time datetime="2017-02-18T12:53:57.000Z" itemprop="datePublished">2017-02-18</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
 
+    <p class="posted-on">
+    2017-02-18
+    </p>
+    <div class="tags-links">
+      
+      <a href="/tags/大型网站架构/" rel="tag">
+        大型网站架构
+      </a>
       
     </div>
-    <div class="article-entry" itemprop="articleBody">
+  </article>
+</div>
+        </div> 
       
-        <h3 id="什么叫正向代理？什么叫反向代理？"><a href="#什么叫正向代理？什么叫反向代理？" class="headerlink" title="什么叫正向代理？什么叫反向代理？"></a>什么叫正向代理？什么叫反向代理？</h3><p>正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。</p>
-<h3 id="反向代理服务器与负载均衡服务器的区别？"><a href="#反向代理服务器与负载均衡服务器的区别？" class="headerlink" title="反向代理服务器与负载均衡服务器的区别？"></a>反向代理服务器与负载均衡服务器的区别？</h3><p>反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转发用户请求，不存储资源。</p>
-<h3 id="Redis的可排序集与集合的区别是什么？是怎么实现的？"><a href="#Redis的可排序集与集合的区别是什么？是怎么实现的？" class="headerlink" title="Redis的可排序集与集合的区别是什么？是怎么实现的？"></a>Redis的可排序集与集合的区别是什么？是怎么实现的？</h3><p>可排序集在排序上拥有更高的效率（集合排序的时间复杂度为O），可排序集是借助跳表实现的。</p>
-<h3 id="什么是跳表？"><a href="#什么是跳表？" class="headerlink" title="什么是跳表？"></a>什么是跳表？</h3><p>跳表是一种可以用来替代树的数据结构，它的效率和AVL树不相上下。跳表由很多层构成，每一层都是一个有序链表。最下层包含了链表的所有元素，在上层出现的元素，下层还会出现。跳表使用上层来作为下层的索引，每个节点包含两个指针，一个指向后一个节点，一个指向下面的节点。跳表的空间复杂度期望为2n，其查找、插入和删除的时间复杂度均为O(log(n))。</p>
-<h3 id="跳表如何进行插入和删除？"><a href="#跳表如何进行插入和删除？" class="headerlink" title="跳表如何进行插入和删除？"></a>跳表如何进行插入和删除？</h3><p>跳表的插入比较复杂，首先要确定插入的元素所在的层数（用丢硬币的方法，丢到正面继续丢，丢到反面则停止。抛硬币的次数就是层数），如果层数超过当前层数，则在最上面添加新的层。跳表的删除比较简单，直接按照链表的方式删除即可。</p>
-<h3 id="介绍一下你所知道的缓存算法？"><a href="#介绍一下你所知道的缓存算法？" class="headerlink" title="介绍一下你所知道的缓存算法？"></a>介绍一下你所知道的缓存算法？</h3><p>1.LRU 和 LFU：<br>LRU（按照上次使用时间排序）、LFU（按照使用频率排序）、LRU2（按照倒数第二次使用时间排序）。<br>2.LRU 升级版：<br>2Q（Double Queues，两个LRU队列，比例1:3，当对象被第二次访问，移入第二级队列），ARC（adaptive Replacement cache，LFU 的2Q版，两个队列，一个是最近被访问一次，另一个是最近被访问两次）。<br>3.基于 FIFO：<br>FIFO（先进先出）、Second Chance（带标记位的FIFO）、Clock（环形队列的Second Chance）。<br>4.基于时间：<br>绝对时间周期（相同寿命）、相对时间周期（相同时刻）、从上次访问开始算起的时间周期<br>5.移除最常用：<br>MRU（移除最近最多访问元素，因为找出最近最少被访问的时间复杂度高）。</p>
-<h3 id="Redis的优势在于哪？"><a href="#Redis的优势在于哪？" class="headerlink" title="Redis的优势在于哪？"></a>Redis的优势在于哪？</h3><p>首先，Redis支持多种数据类型（字符串、列表、哈希、集合、有序集合）以及它们的原子性操作。另外，Redis支持数据的持久化和 Master-Slave 模式的数据备份。</p>
-<h3 id="负载均衡服务器的三大特性？"><a href="#负载均衡服务器的三大特性？" class="headerlink" title="负载均衡服务器的三大特性？"></a>负载均衡服务器的三大特性？</h3><p>负载均衡算法（轮询、最小连接数、最快响应时间、比率、优先权、哈希、基于策略（自定义）、基于数据包）、健康检查（Ping、TCP、UDP、HTTP、FTP、DNS等，七层网络中的三到七层）和会话保持（同一用户访问到相同服务器）。</p>
-<h3 id="线程的状态有几种？"><a href="#线程的状态有几种？" class="headerlink" title="线程的状态有几种？"></a>线程的状态有几种？</h3><p>新建、就绪、运行、阻塞、死亡。</p>
-<h3 id="终止线程有几种方式？"><a href="#终止线程有几种方式？" class="headerlink" title="终止线程有几种方式？"></a>终止线程有几种方式？</h3><p>通过标志位控制退出（while(volatileexit)）、通过stop的方法来终止线程（thread.stop()）、通过中断的方法终止进程（thread.interuped()）。</p>
-<h3 id="什么叫缓存穿透？怎么预防？"><a href="#什么叫缓存穿透？怎么预防？" class="headerlink" title="什么叫缓存穿透？怎么预防？"></a>什么叫缓存穿透？怎么预防？</h3><p>缓存穿透指的是访问一个不存在的数据，由于这样缓存不可能命中，缓存就会去数据库中直接读这个数据，给数据库造成压力。预防的方式是使用一个布隆过滤器，即把数据库中所有可能的值 hash 到一个足够大的 bItmap 上去，请求到达时先用过滤器检测是否由该数据，如果有再去缓存中读取。<br>不同缓存系统中的缓存算法分别是怎样的？<br>Redis2.6/ Encache/ Hazelcast：随机找3条/ 8条/ 25条，删去其中空闲时间最长的数据。<br>Redis3.0：随机找五条，插入一个长度为16按空闲排序的队列里，每次删去最老的元素。<br>MemCached/ Guava Cache：纯粹的LRU，维持一个双向链表，插入到链表头，删除时把前后两个元素连接起来。</p>
-<h3 id="不同缓存系统对于过期键是怎么删除的？"><a href="#不同缓存系统对于过期键是怎么删除的？" class="headerlink" title="不同缓存系统对于过期键是怎么删除的？"></a>不同缓存系统对于过期键是怎么删除的？</h3><p>所有缓存系统对于过期键都采用惰性删除的方式，也就是说，并不是数据一过期就删除（因为执行检查的线程耗费cpu），而是只有元素被访问时，才会检查它是否超时了。为了防止不被访问的数据永远不被清理，不同缓存系统提供了不同的策略去清理这样的数据：<br>Redis：每100ms抽取20条进行检查。如果有超过1/4过期，那么立即进行下一轮检查。<br>MemCached：有一个检查线程从双链表队尾往前检查，每隔一段时间（默认100ms）执行一次。<br>Guava Cache：由于在这个系统中，同一个Cache里所有数据同时过期，因此只需要从队尾向前检查直到不过期为止。每次写入数据都会调用此方法。<br>Ehcache：只有惰性检查，没有主动过期。</p>
-<h3 id="设计缓存算法需要考虑的因素有哪些？"><a href="#设计缓存算法需要考虑的因素有哪些？" class="headerlink" title="设计缓存算法需要考虑的因素有哪些？"></a>设计缓存算法需要考虑的因素有哪些？</h3><p>成本：如果对象获取成本不同，难以获取的元素需要尽可能的保存。<br>容量：先清除大对象，这样就可以把更多的小对象换进内存。<br>时间：如果系统缓存着过期时间，那么对过期的数据进行清理。</p>
-<h3 id="Redis-和-Memcached-分别是怎么实现的？"><a href="#Redis-和-Memcached-分别是怎么实现的？" class="headerlink" title="Redis 和 Memcached 分别是怎么实现的？"></a>Redis 和 Memcached 分别是怎么实现的？</h3><p><a href="http://blog.csdn.net/u014743697/article/details/53442512" target="_blank" rel="external">http://blog.csdn.net/u014743697/article/details/53442512</a></p>
-<h3 id="Select、poll-和-epoll-的区别？"><a href="#Select、poll-和-epoll-的区别？" class="headerlink" title="Select、poll 和 epoll 的区别？"></a>Select、poll 和 epoll 的区别？</h3><p><a href="http://www.cnblogs.com/Anker/p/3265058.html" target="_blank" rel="external">http://www.cnblogs.com/Anker/p/3265058.html</a></p>
-<h3 id="数据库分区与分库分表（Sharding）的区别是什么？"><a href="#数据库分区与分库分表（Sharding）的区别是什么？" class="headerlink" title="数据库分区与分库分表（Sharding）的区别是什么？"></a>数据库分区与分库分表（Sharding）的区别是什么？</h3><p><a href="http://blog.csdn.net/heirenheiren/article/details/7896546" target="_blank" rel="external">http://blog.csdn.net/heirenheiren/article/details/7896546</a></p>
-<h3 id="数据库分库分表（Sharding）的步骤是什么？"><a href="#数据库分库分表（Sharding）的步骤是什么？" class="headerlink" title="数据库分库分表（Sharding）的步骤是什么？"></a>数据库分库分表（Sharding）的步骤是什么？</h3><p><a href="http://blog.csdn.net/bluishglc/article/details/6161475" target="_blank" rel="external">http://blog.csdn.net/bluishglc/article/details/6161475</a></p>
-<h3 id="多级缓存是怎么实现的？"><a href="#多级缓存是怎么实现的？" class="headerlink" title="多级缓存是怎么实现的？"></a>多级缓存是怎么实现的？</h3><p><a href="http://blog.csdn.net/huashen1621y/article/details/51594148" target="_blank" rel="external">http://blog.csdn.net/huashen1621y/article/details/51594148</a></p>
-
+    
       
-    </div>
+        <div class="odd">
+          
+
+<div class="container">
+  <article class="post">
     
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大型网站架构/">大型网站架构</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（五）设计模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/18/后台开发知识点总结（五）设计模式/">后台开发知识点总结（五）设计模式</a>
+    <h1 class="entry-title">
+      <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" rel="bookmark">
+        后台开发知识点总结（五）设计模式  
+      </a>
     </h1>
-  
-
-      </header>
     
-    <div class="article-meta">
-      <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" class="article-date">
-  <time datetime="2017-01-18T04:51:47.000Z" itemprop="datePublished">2017-01-18</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
 
+    <p class="posted-on">
+    2017-01-18
+    </p>
+    <div class="tags-links">
+      
+      <a href="/tags/设计模式/" rel="tag">
+        设计模式
+      </a>
       
     </div>
-    <div class="article-entry" itemprop="articleBody">
+  </article>
+</div>
+        </div>
       
-        <h3 id="什么是代理模式？"><a href="#什么是代理模式？" class="headerlink" title="什么是代理模式？"></a>什么是代理模式？</h3><p>代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。</p>
-<h3 id="什么是动态代理？它的优点是什么？"><a href="#什么是动态代理？它的优点是什么？" class="headerlink" title="什么是动态代理？它的优点是什么？"></a>什么是动态代理？它的优点是什么？</h3><p>按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。</p>
-<h3 id="如何实现一个动态代理？"><a href="#如何实现一个动态代理？" class="headerlink" title="如何实现一个动态代理？"></a>如何实现一个动态代理？</h3><p>实现一个动态代理有两种方法，一种是使用 JDK 实现动态代理，另一种是使用 Cglib 实现动态代理。<br>前者的代理类需要实现 InvocationHandler 接口（该接口要实现一个 Invoke() 方法），并用在Bind 方法中调用 Proxy 的 NewProxyInstance 方法创建代理实例。在创建代理实例的过程中，需要绑定委托类实现的（提供相关服务的）接口。如果委托类没有实现接口，那么这种方法不能使用。<br>后者是生成一个代理类的子类，需要实现 MethodInterceptor 接口（该接口要实现一个 intercept() 方法），并在 getNewInstance() 中创建一个实例，然后把其父类设定为委托类，并返回该实例。由于这种方法是基于继承的，因为 final 类不能使用。<br>参考链接：<a href="http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html" target="_blank" rel="external">http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html</a></p>
-<h3 id="如何利用动态代理实现-Spring-AOP？"><a href="#如何利用动态代理实现-Spring-AOP？" class="headerlink" title="如何利用动态代理实现 Spring AOP？"></a>如何利用动态代理实现 Spring AOP？</h3><p><a href="http://blog.csdn.net/moreevan/article/details/11977115/" target="_blank" rel="external">http://blog.csdn.net/moreevan/article/details/11977115/</a></p>
-
+    
       
-    </div>
+        <div class="even">
+          
+
+<div class="container">
+  <article class="post">
     
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（四）数据库" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/20/后台开发知识点总结（四）数据库/">后台开发知识点总结（四）数据库</a>
+    <h1 class="entry-title">
+      <a href="/2016/12/20/后台开发知识点总结（四）数据库/" rel="bookmark">
+        后台开发知识点总结（四）数据库  
+      </a>
     </h1>
-  
-
-      </header>
     
-    <div class="article-meta">
-      <a href="/2016/12/20/后台开发知识点总结（四）数据库/" class="article-date">
-  <time datetime="2016-12-20T01:47:07.000Z" itemprop="datePublished">2016-12-20</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
 
+    <p class="posted-on">
+    2016-12-20
+    </p>
+    <div class="tags-links">
+      
+      <a href="/tags/数据库/" rel="tag">
+        数据库
+      </a>
       
     </div>
-    <div class="article-entry" itemprop="articleBody">
+  </article>
+</div>
+        </div> 
       
-        <h3 id="位图索引"><a href="#位图索引" class="headerlink" title="位图索引"></a>位图索引</h3><p>所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。<br>使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位图索引做and操作，就能快速地得到结果。<br>位图索引适用于那种只有几个固定值而且不会频繁更新的列。<br>MySQL不支持这种索引。</p>
-<h3 id="MySQL数据库引擎有几种？"><a href="#MySQL数据库引擎有几种？" class="headerlink" title="MySQL数据库引擎有几种？"></a>MySQL数据库引擎有几种？</h3><p>ISAM、MYISAM、HEAP、INNODB、BERKELEYDB。</p>
-<h3 id="MYISAM-和-INNODB-有什么区别？分别适用于什么情况？"><a href="#MYISAM-和-INNODB-有什么区别？分别适用于什么情况？" class="headerlink" title="MYISAM 和 INNODB 有什么区别？分别适用于什么情况？"></a>MYISAM 和 INNODB 有什么区别？分别适用于什么情况？</h3><p>INNODB 支持事务、外键和行级锁，MYISAM 不支持。不过，INNODB 不支持 FULLTEXT 索引，也不保存表具体的行数。<br>INNODB 比较适合更新比较频繁，或者是要求事务的场景。而 MYISAM 比较适合查询频繁、不要求事务和频繁使用count 的场景。</p>
-<h3 id="INNODB-的行级锁什么时候有效？什么时候无效？"><a href="#INNODB-的行级锁什么时候有效？什么时候无效？" class="headerlink" title="INNODB 的行级锁什么时候有效？什么时候无效？"></a>INNODB 的行级锁什么时候有效？什么时候无效？</h3><p>只有在 WHERE 判断中是主键的时候有效，其他情况同样会锁全表。</p>
-<h3 id="INNODB-和-MYISAM-的索引是怎么实现的？"><a href="#INNODB-和-MYISAM-的索引是怎么实现的？" class="headerlink" title="INNODB 和 MYISAM 的索引是怎么实现的？"></a>INNODB 和 MYISAM 的索引是怎么实现的？</h3><p>INNODB 和 MYISAM 的索引都是基于 B+ 树实现的。两者的区别在于，MYISAM 主键索引和辅助索引记录的都是每条数据的地址。而 INNODB 主键索引记录的就是数据本身，辅助索引记录的是主键。因此 INNODB 使用辅助索引需要对主键进行二次索引。所以， 使用 INNODB 的时候应尽量把主键定义得小一些。</p>
-<h3 id="B-树、B-树、B-树有什么区别？"><a href="#B-树、B-树、B-树有什么区别？" class="headerlink" title="B+树、B-树、B*树有什么区别？"></a>B+树、B-树、B*树有什么区别？</h3><p>B+树与B-树的区别在于：B-树的关键字分布在整棵树中，且一个关键字只出现一次；而B+树中所有关键字都在叶子节点出现，且可以出现多次。另外，B+树为所有叶子节点增加了链指针，且要求非叶子节点子树指针与关键字个数相同。B*树为所有非根非叶子节点也添加了指向兄弟的指针。</p>
-<h3 id="INNODB-和-MYISAM-的缓存有什么异同？"><a href="#INNODB-和-MYISAM-的缓存有什么异同？" class="headerlink" title="INNODB 和 MYISAM 的缓存有什么异同？"></a>INNODB 和 MYISAM 的缓存有什么异同？</h3><p>INNODB 和 MYISAM 的缓存都是基于LRU算法实现的。区别在于，MYISAM 的缓存 Key Cache 只缓存索引，而 INNODB 的缓存 buffer pool 不仅缓存索引，还缓存数据。INNODB 通过存储日志把内存数据同步到磁盘（因为存储日志是连续存储，速度快；读写数据是随机读写，速度慢）。如果条件允许，可以开辟尽量大的空间作为 buffer pool，这样系统的性能更接近内存数据库。</p>
-<h3 id="数据库的锁有几种？"><a href="#数据库的锁有几种？" class="headerlink" title="数据库的锁有几种？"></a>数据库的锁有几种？</h3><p>三种。共享锁（S锁，只进行读操作时使用的锁，数据上存在共享锁时不得被更改，以单独去完成马上释放共享锁）、排他锁（X锁，可以防止资源的并发访问，其他事务既不能更改也不能读取上面有排他锁的资源）、更新锁（U锁，一次只有一个事务可以获得某资源的更新锁。如果事务对资源进行更新，则转换为排他锁。若仅进行读取则转换为共享锁。）。</p>
-<h3 id="更新锁和排他锁的区别是什么？"><a href="#更新锁和排他锁的区别是什么？" class="headerlink" title="更新锁和排他锁的区别是什么？"></a>更新锁和排他锁的区别是什么？</h3><p>更新锁的存在主要是为了防止事务之间发生死锁。事务在修改数据时，首先会获取该资源的共享锁，然后在更改时转换为排他锁。如果两个事务都获取了共享锁而等待另一个事务释放共享锁，那么就会发生死锁。由于更新锁一次只可以被一个事务获取，因此避免了这种死锁的发生。</p>
-<h3 id="MySQL数据库索引有几种？"><a href="#MySQL数据库索引有几种？" class="headerlink" title="MySQL数据库索引有几种？"></a>MySQL数据库索引有几种？</h3><p>四种。分别是FULLTEXT索引、HASH索引、BTREE索引、RTREE索引。</p>
-<h3 id="什么叫FULLTEXT索引？"><a href="#什么叫FULLTEXT索引？" class="headerlink" title="什么叫FULLTEXT索引？"></a>什么叫FULLTEXT索引？</h3><p>FULLTEXT索引主要是为了解决WHERE name LIKE “%word%” 操作而产生的。如果没有FULLTEXT索引，那么就要遍历全表。MySQL中，只有MYISAM支持这种索引。<br>FULLTXET索引依靠词典（所有的单词，所有的非字母和数字都会被认为是单词的分隔符）和倒排表（一个链表，记录了每个单词对应的所有包含该单词的记录（按照某种顺序）组成的链表）实现。查找同时包含两个单词的记录时，合并其对应的链表即可。</p>
-<h3 id="HASH索引和BTREE索引有什么区别？"><a href="#HASH索引和BTREE索引有什么区别？" class="headerlink" title="HASH索引和BTREE索引有什么区别？"></a>HASH索引和BTREE索引有什么区别？</h3><p>HSAH索引不能使用范围查询，也不能避免排序操作。另外，HSAH索引不能利用部分索引键查询。</p>
-<h3 id="简单介绍一下R树？"><a href="#简单介绍一下R树？" class="headerlink" title="简单介绍一下R树？"></a>简单介绍一下R树？</h3><p>R树是B树在高维空间的扩展。简单来说，B树每个节点描述的是一个线段，而R树所描述的是一个矩形或立方体（当然，也可能是更高维）。父节点表示的矩形应当能够包括所有子节点所包括的矩形。<br>这种数据结构主要用来搜索多维空间，比如一个人附近的餐厅。如果没有R树，就需要对所有餐厅的横纵坐标进行比较。而有了R树之后。只需要找到对应的节点就可以了。</p>
-
+    
       
-    </div>
+        <div class="odd">
+          
+
+<div class="container">
+  <article class="post">
     
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（三）Java并发" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/06/后台开发知识点总结（三）Java并发/">后台开发知识点总结（三）Java并发</a>
+    <h1 class="entry-title">
+      <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" rel="bookmark">
+        后台开发知识点总结（三）Java并发  
+      </a>
     </h1>
-  
-
-      </header>
     
-    <div class="article-meta">
-      <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" class="article-date">
-  <time datetime="2016-11-06T11:43:50.000Z" itemprop="datePublished">2016-11-06</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
 
+    <p class="posted-on">
+    2016-11-06
+    </p>
+    <div class="tags-links">
       
-    </div>
-    <div class="article-entry" itemprop="articleBody">
+      <a href="/tags/Java/" rel="tag">
+        Java
+      </a>
       
-        <h3 id="进程与线程的区别是什么？"><a href="#进程与线程的区别是什么？" class="headerlink" title="进程与线程的区别是什么？"></a>进程与线程的区别是什么？</h3><p>进程就是一段程序的执行过程（狭义）。是一个具有特定功能的程序关于某个数据集合运行的一次运行活动，是操作系统分配资源的最基本单位（广义）。线程也称轻量级进程，是程序执行流的基本单元。在引入线程的操作系统中，一般都是把进程作为分配资源的基本单位，把线程作为独立运行和独立调度的基本单位。</p>
-<h3 id="主线程退出会导致整个进程退出么？"><a href="#主线程退出会导致整个进程退出么？" class="headerlink" title="主线程退出会导致整个进程退出么？"></a>主线程退出会导致整个进程退出么？</h3><p>不一定。Java 中的 Thread 分为User Thread 和 Demon Thread（守护线程）。守护线程与用户线程的区别就在于，如果虚拟机中的线程都是守护线程的话，虚拟机（也就是进程。在java中，每个进程对应一个java虚拟机）将会退出。因此，在主线程退出的时候，如果虚拟机中还有其他的用户线程，虚拟机不会退出。否则，虚拟机中其他的线程都是守护线程，虚拟机将会退出。</p>
-<h3 id="守护线程和守护进程的区别是什么？"><a href="#守护线程和守护进程的区别是什么？" class="headerlink" title="守护线程和守护进程的区别是什么？"></a>守护线程和守护进程的区别是什么？</h3><p>在一般情况下，当进程的控制终端被关闭的时候，进程会被强行关闭。守护进程是一种能够脱离于终端在后台运行的一种进程。它从被执行的时候开始运转，直到整个系统结束才退出。<br>守护线程跟一般意义上的线程（用户线程）的唯一区别在于，如果虚拟机中的线程都是守护线程的话，虚拟机（也就是进程）将会退出。<br>所以说，守护进程的“守护”跟守护线程的“守护”并不是相同的概念。</p>
-<h3 id="如何创建守护进程？"><a href="#如何创建守护进程？" class="headerlink" title="如何创建守护进程？"></a>如何创建守护进程？</h3><p>1.创建子进程fork()，父进程退出exit();<br>创建子进程后父进程退出，会导致子进程成为孤儿进程。孤儿进程将会被系统中的1号进程（init）所收养。这样。原来的子进程就变为了init进程的子进程。<br>2.在子进程中调用setsid();<br>setsid() 的作用是创建一个新的会话组，并担任新会话的组长。这样做可以使子进程脱离原来的终端、进程组和会话（一个进程组包含一个或多个进程，一个会话包含一个或多个进程组，通常把一个用户从登录到退出过程中，他运行的所有进程归于一个会话）。<br>3.改变根目录为当前目录chdir();<br>4.重设文件权限掩码umask();<br>使用umask()函数将当前进程的umask（当前进程所创建文件的初始权限掩码）置为0。<br>5.关闭文件描述符;<br>关闭不需要的文件描述符。</p>
-<h3 id="孤儿进程和僵尸进程的区别？"><a href="#孤儿进程和僵尸进程的区别？" class="headerlink" title="孤儿进程和僵尸进程的区别？"></a>孤儿进程和僵尸进程的区别？</h3><p>孤儿进程指的是父进程结束而子进程没有结束，而僵尸进程指的是子进程结束而父进程没有wait（或waitpid）它。</p>
-<h3 id="僵尸进程的危害与清除？"><a href="#僵尸进程的危害与清除？" class="headerlink" title="僵尸进程的危害与清除？"></a>僵尸进程的危害与清除？</h3><p>僵尸进程既不占用内存，也不占用cpu。但是它占用了一个进程号，系统所能够使用的进程号是有限的，因此僵尸进程大量地占用进程号将会导致无法生成新的进程。<br>清除僵尸进程的方法是：kill产生僵尸进程的父进程。这样僵尸进程就会变成孤儿进程，然后被内核回收。</p>
-<h3 id="怎么防止僵尸进程的出现？"><a href="#怎么防止僵尸进程的出现？" class="headerlink" title="怎么防止僵尸进程的出现？"></a>怎么防止僵尸进程的出现？</h3><p>1.通过父进程使用 wait() 或 waitpid() 等待子进程，这会导致父进程被挂起。（不过waitpid() 提供了一个无阻塞的wait()，只要把参数设置成 WNOHANG 就行了）。<br>2.用 signal() 函数为SIGCHLD 安装handler，子进程结束后，父进程会收到信号，可在 handler 中回收。<br>3.用 signal(SIGCHLD,SIG_IGN) 通知内核，由内核代为回收。<br>4.先创建子进程，再创建孙进程，创建结束之后杀死子进程，孙进程就会被 init 收养，由 init 回收。</p>
-<h3 id="僵尸进程会造成内存泄漏吗？"><a href="#僵尸进程会造成内存泄漏吗？" class="headerlink" title="僵尸进程会造成内存泄漏吗？"></a>僵尸进程会造成内存泄漏吗？</h3><p>不会。内存泄漏指的是动态分配的内存空间，使用完之后未被释放。僵尸进程是不占用内存的（准确地说，是不占用java虚拟机的内存），就更谈不上内存泄漏了。</p>
-<h3 id="什么叫线程安全？"><a href="#什么叫线程安全？" class="headerlink" title="什么叫线程安全？"></a>什么叫线程安全？</h3><p>线程安全指的是在多线程环境下，程序执行的结果与各个线程的调度顺序无关。</p>
-<h3 id="使用线程池的好处？"><a href="#使用线程池的好处？" class="headerlink" title="使用线程池的好处？"></a>使用线程池的好处？</h3><p>一方面，使用线程池可以减小在创建和销毁线程时产生的时间开销和资源开销（因为在新任务到来时，不必再销毁和新建线程了）。另一方面，使用线程池可以管理线程，保证系统不会因为大量并发产生的资源不足而崩溃。</p>
-<h3 id="列举一下你所知道的线程池？"><a href="#列举一下你所知道的线程池？" class="headerlink" title="列举一下你所知道的线程池？"></a>列举一下你所知道的线程池？</h3><p>单线程线程池（NewSingleThreadExecutor）、固定数量的线程池（NewFixedThreadExecutor，达到最大数量后线程进入等待队列）、可缓存线程池（NewCachedThreadExecutor，自动回收60s未执行的线程）、大小无限制线程池（NewScheduleThreadExecutor）。</p>
-<h3 id="使用线程池的坏处是什么？"><a href="#使用线程池的坏处是什么？" class="headerlink" title="使用线程池的坏处是什么？"></a>使用线程池的坏处是什么？</h3><p>使用线程池可能带来额外的风险，比如：<br>线程池特有的死锁：所有线程都在阻塞等待某一任务的执行结果，而这一任务却因为没有线程而得不到执行。<br>资源不足：如果线程池太大可能引起不必要的资源浪费。<br>线程泄漏：有些线程被使用之后可能并不会返回线程池（比如等待某些资源或者用户输入），发生这种情况后线程池中可用线程数会减少。最后变得没有线程可以使用。
- </p>
-
+      <a href="/tags/多线程/" rel="tag">
+        多线程
+      </a>
       
     </div>
+  </article>
+</div>
+        </div>
+      
     
+      
+        <div class="even">
+          
+
+<div class="container">
+  <article class="post">
     
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（二）JVM虚拟机" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/">后台开发知识点总结（二）JVM虚拟机</a>
+    <h1 class="entry-title">
+      <a href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/" rel="bookmark">
+        后台开发知识点总结（二）JVM虚拟机  
+      </a>
     </h1>
-  
-
-      </header>
     
-    <div class="article-meta">
-      <a href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/" class="article-date">
-  <time datetime="2016-10-13T01:41:23.000Z" itemprop="datePublished">2016-10-13</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
 
+    <p class="posted-on">
+    2016-10-13
+    </p>
+    <div class="tags-links">
       
-    </div>
-    <div class="article-entry" itemprop="articleBody">
+      <a href="/tags/Java/" rel="tag">
+        Java
+      </a>
       
-        <h3 id="Java类加载过程？"><a href="#Java类加载过程？" class="headerlink" title="Java类加载过程？"></a>Java类加载过程？</h3><p>加载：类中的方法被放到方法区、堆中生成一个对象表示该类、<br>链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）<br>初始化：执行类构造器方法、如果父类未初始化，先初始化父类。</p>
-<h3 id="有几种类加载器？"><a href="#有几种类加载器？" class="headerlink" title="有几种类加载器？"></a>有几种类加载器？</h3><p>引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载器（Extensions Class Loader，加载Java扩展库）、应用程序类加载器（Application Class Loader，加载 Class Path 下的应用程序类）、自定义类加载器（主要是为了加密解密某些类的字节码）。</p>
-<h3 id="什么时候触发GC？"><a href="#什么时候触发GC？" class="headerlink" title="什么时候触发GC？"></a>什么时候触发GC？</h3><p>JavaGC分为两种，一种是ScavengeGC，另一种是FullGC。前者只对年轻代进行回收，后者对整个堆进行回收（包括年轻代、老年代和持久代）。<br>当Eden申请内存失败时，触发ScavengeGC。<br>当老年代（Tenured）被写满、持久代（Perm）被写满、System.gc() 被显示调用以及上一次GC之后Heap各域分配策略出现变化时，触发FullGC。</p>
-<h3 id="GC有几种算法？"><a href="#GC有几种算法？" class="headerlink" title="GC有几种算法？"></a>GC有几种算法？</h3><p>引用计数法（已弃用）、标记清除法、标记复制法（survivor区）、标记压缩法（老年代）、分代回收法。</p>
-<h3 id="Java的垃圾收集器都有哪些？"><a href="#Java的垃圾收集器都有哪些？" class="headerlink" title="Java的垃圾收集器都有哪些？"></a>Java的垃圾收集器都有哪些？</h3><p>Serial收集器（串行收集器）、Parallel 收集器（并行收集器）、CMS收集器（并发收集器）、G1收集器。</p>
-<h3 id="G1回收器的特点？"><a href="#G1回收器的特点？" class="headerlink" title="G1回收器的特点？"></a>G1回收器的特点？</h3><p>空间整合（G1采用标记压缩算法，不会出现分配大对象没有连续空间的情况）和可预测停顿（长度为 M ms的时间内，垃圾收集的时间不得超过 N ms）。</p>
-<h3 id="CMS收集器的特点？"><a href="#CMS收集器的特点？" class="headerlink" title="CMS收集器的特点？"></a>CMS收集器的特点？</h3><p>并发收集、低停顿。但是会产生内存碎片（标记清除法），每进行几次 GC 就要进行一次碎片整理。</p>
-<p> </p>
-
+      <a href="/tags/JVM/" rel="tag">
+        JVM
+      </a>
       
     </div>
+  </article>
+</div>
+        </div> 
+      
     
+      
+        <div class="odd">
+          
+
+<div class="container">
+  <article class="post">
     
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（一）java基础" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/24/后台开发知识点总结（一）java基础/">后台开发知识点总结（一）java基础</a>
+    <h1 class="entry-title">
+      <a href="/2016/09/24/后台开发知识点总结（一）java基础/" rel="bookmark">
+        后台开发知识点总结（一）java基础  
+      </a>
     </h1>
-  
-
-      </header>
     
-    <div class="article-meta">
-      <a href="/2016/09/24/后台开发知识点总结（一）java基础/" class="article-date">
-  <time datetime="2016-09-24T01:37:09.000Z" itemprop="datePublished">2016-09-24</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
 
+    <p class="posted-on">
+    2016-09-24
+    </p>
+    <div class="tags-links">
+      
+      <a href="/tags/Java/" rel="tag">
+        Java
+      </a>
       
     </div>
-    <div class="article-entry" itemprop="articleBody">
+  </article>
+</div>
+        </div>
       
-        <h3 id="Java八种基本数据类型："><a href="#Java八种基本数据类型：" class="headerlink" title="Java八种基本数据类型："></a>Java八种基本数据类型：</h3><p>byte、short、int、long、float、double、boolean、char。</p>
-<h3 id="Map在Java中的四种实现？"><a href="#Map在Java中的四种实现？" class="headerlink" title="Map在Java中的四种实现？"></a>Map在Java中的四种实现？</h3><p>HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。</p>
-<h3 id="List在Java中的三种实现？"><a href="#List在Java中的三种实现？" class="headerlink" title="List在Java中的三种实现？"></a>List在Java中的三种实现？</h3><p>ArrayList（数组）、LinkedList（链表）、Vector（线程安全的ArrayList）。</p>
-<h3 id="Set在Java中的四种实现？"><a href="#Set在Java中的四种实现？" class="headerlink" title="Set在Java中的四种实现？"></a>Set在Java中的四种实现？</h3><p>HashSet（由HashMap支持，相当于没有 value 的 HashMap） 和 LinkedHashSet（顺序访问）。</p>
-<h3 id="Java8的新特性"><a href="#Java8的新特性" class="headerlink" title="Java8的新特性"></a>Java8的新特性</h3><p>Lambda表达式：允许把函数作为参数传进方法中。<br>Stream：random.ints().limit(10).forEach(System.out::println);<br>Optional类：使用Optional类可以避免显式进行空值检测<br>Nashorn：Java中调用Js，JavaScript引擎。<br>方法引用：通过方法的名字指向一个方法（使用::）。<br>函数式接口：增加了java.util.function函数接口，用来支持函数式编程（支持闭包）<br>默认方法：接口可以通过defult实现默认方法。<br>新的日期时间API。<br>Base64：一种编解码器。</p>
-<h3 id="什么是Java-NIO？"><a href="#什么是Java-NIO？" class="headerlink" title="什么是Java NIO？"></a>什么是Java NIO？</h3><p>NIO就是非阻塞IO。</p>
-<h3 id="NIO的实现原理是什么？"><a href="#NIO的实现原理是什么？" class="headerlink" title="NIO的实现原理是什么？"></a>NIO的实现原理是什么？</h3><p>NIO使用双向的通道（channel）而非单向的流（stream）进行通信。在通道上我们可以注册总共四种事件：客户端连接、服务端接收客户端连接、读、写。客户端和服务端各自维护一个管理通道的对象（selector），接收一个或多个通道的事件。</p>
-<h3 id="为什么要用NIO？"><a href="#为什么要用NIO？" class="headerlink" title="为什么要用NIO？"></a>为什么要用NIO？</h3><p>对阻塞式IO而言，每一个客户端都要有一个对应的线程来进行处理。每个线程都要占用一些空间和CPU时间。另外，多个线程带来频繁的上下文切换，而这些切换很可能是无意义的。</p>
+    
 
-      
+    
+<div class="container" >
+  <ul class="pager">
+    
+      <li class="previous">
+        <a href="/">
+          Newer Posts <span class="meta-arraw meta-arraw-right"></span>
+        </a>
+      </li>
+    
+    
+  </ul>
+</div>
+
+
+  </main>
+</div>
+
+  <!-- Footer -->
+  <!-- Footer-widgets -->
+<div class="footer-widgets">
+  <div class="row inside-wrapper">
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">关于本站</h1>
+        <div class="custom-widget-content">
+          
+          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily">如何自定义这里的内容(配置教程)?</a></li></ul>
+        </div>
+      </aside>
     </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-      </nav>
-    </section>
-    <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 Jack Smith&nbsp;
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Contact</h1>
+        <div class="widget-text">
+          
+            
+              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
+            
+          
+        </div>
+      </aside>
+    </div>
+    <div class="col-1-3">
+      <aside>
+        <h1 class="widget-title">Search</h1>
+        <div class="widget-text">
+          <form onSubmit="return appDaily.submitSearch('')">
+            <p>
+              <input type="text" placeholder="search..." id="homeSearchInput">
+            </p>
+            <!-- <input type="submit" value="GO"> -->
+          </form>
+        </div>
+      </aside>
     </div>
   </div>
+</div>
+<!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>Jackie &copy; 2017</span>
+    
+      <span class="split">|</span>
+      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
+    
+  </p>
 </footer>
-    
-
-<script src="/js/jquery.min.js"></script>
 
 
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
-<script src="/js/script.js"></script>
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
 </body>
+
 </html>
