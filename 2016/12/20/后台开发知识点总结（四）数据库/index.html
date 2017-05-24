@@ -18,6 +18,8 @@
 <meta name="twitter:description" content="位图索引所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位">
   
   
+    <link rel="icon" href="/favicon.png">
+  
   <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
   <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
@@ -33,6 +35,18 @@
       <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
       <a id="logo" class="logo" href="/"></a>
       <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
         
       </nav>
       <nav id="sub-nav">
@@ -120,6 +134,17 @@
 
 
 
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
 
 
 
@@ -137,6 +162,9 @@
 
 <script src="/js/jquery.min.js"></script>
 
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 <script src="/js/script.js"></script>
