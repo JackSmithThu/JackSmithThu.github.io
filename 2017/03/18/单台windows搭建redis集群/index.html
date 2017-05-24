@@ -1,4 +1,107 @@
-<!DOCTYPE html><html lang="Zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>单台windows搭建redis集群 | Jackie</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">单台windows搭建redis集群</h1><a id="logo" href="/.">Jackie</a><p class="description">Captain of Black Preal</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">单台windows搭建redis集群</h1><div class="post-meta">Mar 18, 2017<span> | </span><span class="category"><a href="/categories/技术/">技术</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h2 id="1-下载和安装必要的工具"><a href="#1-下载和安装必要的工具" class="headerlink" title="1.下载和安装必要的工具"></a>1.下载和安装必要的工具</h2><h3 id="1-1-下载安装redis-for-windows"><a href="#1-1-下载安装redis-for-windows" class="headerlink" title="1.1.下载安装redis for windows"></a>1.1.下载安装redis for windows</h3><p>下载地址：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">https://github.com/MSOpenTech/redis/releases</a></p>
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>单台windows搭建redis集群 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
+<meta name="keywords" content="Redis,Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单台windows搭建redis集群">
+<meta property="og:url" content="http://yoursite.com/2017/03/18/单台windows搭建redis集群/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050005.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050006.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050007.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050008.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050009.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050010.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050012.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050014.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png">
+<meta property="og:updated_time" content="2017-05-24T01:59:15.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单台windows搭建redis集群">
+<meta name="twitter:description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-单台windows搭建redis集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      单台windows搭建redis集群
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/18/单台windows搭建redis集群/" class="article-date">
+  <time datetime="2017-03-18T06:02:38.000Z" itemprop="datePublished">2017-03-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-下载和安装必要的工具"><a href="#1-下载和安装必要的工具" class="headerlink" title="1.下载和安装必要的工具"></a>1.下载和安装必要的工具</h2><h3 id="1-1-下载安装redis-for-windows"><a href="#1-1-下载安装redis-for-windows" class="headerlink" title="1.1.下载安装redis for windows"></a>1.1.下载安装redis for windows</h3><p>下载地址：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">https://github.com/MSOpenTech/redis/releases</a></p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png" alt=""></p>
 <p>msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。</p>
 <h3 id="1-2-下载安装ruby"><a href="#1-2-下载安装ruby" class="headerlink" title="1.2.下载安装ruby"></a>1.2.下载安装ruby</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050002.png" alt=""></p>
@@ -40,4 +143,77 @@
 <h3 id="2-5-测试一下"><a href="#2-5-测试一下" class="headerlink" title="2.5.测试一下"></a>2.5.测试一下</h3><p>打开cmd，输入：redis-cli.exe -c -p 7000<br>再打开一个cmd，输入redis-cli.exe -c -p 7001<br>它们连接了不同的实例，我们现在要测试以下它们的数据是否是同步的。<br>我们在7000的cmd窗口中输入： set test helloworld<br>在7001的cmd窗口中输入：get test<br>可以看到redis输出：”helloworld”<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png" alt=""></p>
 <p>好，到这儿redis的集群就部署完成了。</p>
 <h2 id="3-参考链接："><a href="#3-参考链接：" class="headerlink" title="3.参考链接："></a>3.参考链接：</h2><p>Windows 部署 Redis 群集:<br><a href="http://www.cnblogs.com/xling/p/5253063.html" target="_blank" rel="external">http://www.cnblogs.com/xling/p/5253063.html</a><br>Redis安装：<br><a href="http://www.runoob.com/redis/redis-install.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-install.html</a></p>
-<h2 id="4-操作系统：Windows-10"><a href="#4-操作系统：Windows-10" class="headerlink" title="4.操作系统：Windows 10"></a>4.操作系统：Windows 10</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/03/18/单台windows搭建redis集群/" data-id="cj32e2892000ingrad7jpbogj" class="article-share-link">Aktie</a><div class="tags"><a href="/tags/Redis/">Redis</a><a href="/tags/Windows/">Windows</a></div><div class="post-nav"><a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" class="pre">后台开发知识点总结（六）大型网站架构</a><a href="/2017/03/24/kafka学习/" class="next">kafka学习</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/心情/">心情</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Canal/" style="font-size: 15px;">Canal</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/SCAtoolbox/" style="font-size: 15px;">SCAtoolbox</a> <a href="/tags/Matlab/" style="font-size: 15px;">Matlab</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/直升机/" style="font-size: 15px;">直升机</a> <a href="/tags/RockerMQ/" style="font-size: 15px;">RockerMQ</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Ecilpse/" style="font-size: 15px;">Ecilpse</a> <a href="/tags/Windows/" style="font-size: 15px;">Windows</a> <a href="/tags/Zookeeper/" style="font-size: 15px;">Zookeeper</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/大型网站架构/" style="font-size: 15px;">大型网站架构</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/Blog/" style="font-size: 15px;">Blog</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/一次惊险的体验（伪）/">一次惊险的体验（伪）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/SCAtoolbox应用指南/">SCAtoolbox应用指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/大神们的博客/">大神们的博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/几种消息队列的比较/">几种消息队列的比较</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/Eclipse搭建SpringBoot/">Eclipse搭建SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/kafka学习/">kafka学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/单台windows搭建redis集群/">单台windows搭建redis集群</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">Jackie.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<h2 id="4-操作系统：Windows-10"><a href="#4-操作系统：Windows-10" class="headerlink" title="4.操作系统：Windows 10"></a>4.操作系统：Windows 10</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          后台开发知识点总结（六）大型网站架构
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/24/kafka学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">kafka学习&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
