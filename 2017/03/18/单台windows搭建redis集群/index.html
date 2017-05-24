@@ -26,9 +26,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050012.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050014.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240002.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png">
-<meta property="og:updated_time" content="2017-05-24T01:59:15.495Z">
+<meta property="og:updated_time" content="2017-05-24T06:58:34.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单台windows搭建redis集群">
 <meta name="twitter:description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
@@ -130,8 +131,10 @@
 <p>双击redis.bat，弹出6个窗口，同时redis目录下会出现nodes-7000.conf 至 nodes-7005.conf 这几个文件。</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png" alt=""></p>
 <h3 id="2-4-在D-WorkSpace-redis目录下新建cluster-bat文件"><a href="#2-4-在D-WorkSpace-redis目录下新建cluster-bat文件" class="headerlink" title="2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件"></a>2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd D:\WorkSpace\redis</div><div class="line">redis-trib.rb create --replicas 1 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005</div></pre></td></tr></table></figure></p>
-<p>双击cluster.bat，黑框框一闪而过。没关系，应该是运行成功了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050014.png" alt=""></p>
+<p>双击cluster.bat，在询问是否要接受配置时输入“yes”。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240001.png" alt=""></p>
+<p>得到结果如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240002.png" alt=""></p>
 <h3 id="2-5-测试一下"><a href="#2-5-测试一下" class="headerlink" title="2.5.测试一下"></a>2.5.测试一下</h3><p>打开cmd，输入：redis-cli.exe -c -p 7000<br>再打开一个cmd，输入redis-cli.exe -c -p 7001<br>它们连接了不同的实例，我们现在要测试以下它们的数据是否是同步的。<br>我们在7000的cmd窗口中输入： set test helloworld<br>在7001的cmd窗口中输入：get test<br>可以看到redis输出：”helloworld”<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png" alt=""></p>
 <p>好，到这儿redis的集群就部署完成了。</p>
 <h2 id="3-参考链接："><a href="#3-参考链接：" class="headerlink" title="3.参考链接："></a>3.参考链接：</h2><p>Windows 部署 Redis 群集:<br><a href="http://www.cnblogs.com/xling/p/5253063.html" target="_blank" rel="external">http://www.cnblogs.com/xling/p/5253063.html</a><br>Redis安装：<br><a href="http://www.runoob.com/redis/redis-install.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-install.html</a></p>
