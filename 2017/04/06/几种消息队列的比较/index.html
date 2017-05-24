@@ -12,12 +12,12 @@
 
 
 
-  <meta name="description" content="大神们的博客"/>
+  <meta name="description" content="几种消息队列的比较"/>
 
 
 
 
-  <meta name="keywords" content="Blog," />
+  <meta name="keywords" content="Kafka,Redis,RockerMQ," />
 
 
 
@@ -31,20 +31,20 @@
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/04/24/大神们的博客/"/>
+<link rel="canonical" href="http://yoursite.com/2017/04/06/几种消息队列的比较/"/>
 
 
-<meta name="description" content="【学习用】huangjunhui 大神的博客【膜拜用】liuning 大神的博客">
-<meta name="keywords" content="Blog">
+<meta name="description" content="1.RabbitMQ  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。 2.ActiveMQ  Java开发，支持持久化，性能相对较差。 3.ZeroMQ  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。 4.Redis  C语言开发，速度快，支持持久化，但不可靠。 5.RocketMQ  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更">
+<meta name="keywords" content="Kafka,Redis,RockerMQ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大神们的博客">
-<meta property="og:url" content="http://yoursite.com/2017/04/24/大神们的博客/index.html">
+<meta property="og:title" content="几种消息队列的比较">
+<meta property="og:url" content="http://yoursite.com/2017/04/06/几种消息队列的比较/index.html">
 <meta property="og:site_name" content="Jackie">
-<meta property="og:description" content="【学习用】huangjunhui 大神的博客【膜拜用】liuning 大神的博客">
-<meta property="og:updated_time" content="2017-05-04T09:39:45.760Z">
+<meta property="og:description" content="1.RabbitMQ  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。 2.ActiveMQ  Java开发，支持持久化，性能相对较差。 3.ZeroMQ  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。 4.Redis  C语言开发，速度快，支持持久化，但不可靠。 5.RocketMQ  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更">
+<meta property="og:updated_time" content="2017-05-24T02:16:28.771Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大神们的博客">
-<meta name="twitter:description" content="【学习用】huangjunhui 大神的博客【膜拜用】liuning 大神的博客">
+<meta name="twitter:title" content="几种消息队列的比较">
+<meta name="twitter:description" content="1.RabbitMQ  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。 2.ActiveMQ  Java开发，支持持久化，性能相对较差。 3.ZeroMQ  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。 4.Redis  C语言开发，速度快，支持持久化，但不可靠。 5.RocketMQ  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
@@ -71,7 +71,7 @@
 
 
 
-    <title> 大神们的博客 · Jackie </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <title> 几种消息队列的比较 · Jackie </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -152,13 +152,13 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          大神们的博客
+          几种消息队列的比较
         
       </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          Apr 24, 2017
+          Apr 6, 2017
         </span>
       </div>
     </header>
@@ -168,14 +168,20 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#【学习用】huangjunhui-大神的博客"><span class="toc-text">【学习用】huangjunhui 大神的博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【膜拜用】liuning-大神的博客"><span class="toc-text">【膜拜用】liuning 大神的博客</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-RabbitMQ"><span class="toc-text">1.RabbitMQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ActiveMQ"><span class="toc-text">2.ActiveMQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ZeroMQ"><span class="toc-text">3.ZeroMQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Redis"><span class="toc-text">4.Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-RocketMQ"><span class="toc-text">5.RocketMQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Kafka"><span class="toc-text">6.Kafka</span></a></li></ol>
     </div>
   </div>
 
 
     <div class="post-content">
       
-        <h3 id="【学习用】huangjunhui-大神的博客"><a href="#【学习用】huangjunhui-大神的博客" class="headerlink" title="【学习用】huangjunhui 大神的博客"></a>【学习用】<a href="http://opiece.me/2015/04/09/hexo-guide/" target="_blank" rel="external">huangjunhui 大神的博客</a></h3><h3 id="【膜拜用】liuning-大神的博客"><a href="#【膜拜用】liuning-大神的博客" class="headerlink" title="【膜拜用】liuning 大神的博客"></a>【膜拜用】<a href="http://lnplayer.github.io/" target="_blank" rel="external">liuning 大神的博客</a></h3>
+        <h3 id="1-RabbitMQ"><a href="#1-RabbitMQ" class="headerlink" title="1.RabbitMQ"></a>1.RabbitMQ</h3><p>  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。</p>
+<h3 id="2-ActiveMQ"><a href="#2-ActiveMQ" class="headerlink" title="2.ActiveMQ"></a>2.ActiveMQ</h3><p>  Java开发，支持持久化，性能相对较差。</p>
+<h3 id="3-ZeroMQ"><a href="#3-ZeroMQ" class="headerlink" title="3.ZeroMQ"></a>3.ZeroMQ</h3><p>  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。</p>
+<h3 id="4-Redis"><a href="#4-Redis" class="headerlink" title="4.Redis"></a>4.Redis</h3><p>  C语言开发，速度快，支持持久化，但不可靠。</p>
+<h3 id="5-RocketMQ"><a href="#5-RocketMQ" class="headerlink" title="5.RocketMQ"></a>5.RocketMQ</h3><p>  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更多队列等。</p>
+<h3 id="6-Kafka"><a href="#6-Kafka" class="headerlink" title="6.Kafka"></a>6.Kafka</h3><p>  Scala开发，一次生产多次消费，可以当作消息队列使用，可持久化，速度快。</p>
+
       
     </div>
 
@@ -194,7 +200,7 @@
     </p>
     <p class="copyright-item">
       <span>Link: </span>
-      <a href="http://yoursite.com/2017/04/24/大神们的博客/">http://yoursite.com/2017/04/24/大神们的博客/</a>
+      <a href="http://yoursite.com/2017/04/06/几种消息队列的比较/">http://yoursite.com/2017/04/06/几种消息队列的比较/</a>
     </p>
 
     <p class="copyright-item lincese">
@@ -232,7 +238,11 @@
         
           <div class="post-tags">
             
-              <a href="/tags/Blog/">Blog</a>
+              <a href="/tags/Kafka/">Kafka</a>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+              <a href="/tags/RockerMQ/">RockerMQ</a>
             
           </div>
         
@@ -240,15 +250,15 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2017/04/08/单台windows搭建mysql主从机备份/">
+      <a class="prev" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">单台windows搭建mysql主从机备份</span>
+        <span class="prev-text nav-default">单台windows搭建zookeeper和kafka集群</span>
         <span class="prev-text nav-mobile">Prev</span>
       </a>
     
     
-      <a class="next" href="/2017/04/25/SCAtoolbox应用指南/">
-        <span class="next-text nav-default">SCAtoolbox应用指南</span>
+      <a class="next" href="/2017/04/08/单台windows搭建mysql主从机备份/">
+        <span class="next-text nav-default">单台windows搭建mysql主从机备份</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
