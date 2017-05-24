@@ -1,141 +1,76 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-<!-- Head tag -->
+<html>
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <!--Description-->
-  
-
-  <!--Author-->
-  
-  <meta name="author" content="Jack Smith">
-  
-
-  <!--Open Graph Title-->
-  
-      <meta property="og:title" content="后台开发知识点总结（二）JVM虚拟机"/>
-  
-  <!--Open Graph Description-->
-  
-  <!--Open Graph Site Name-->
-  <meta property="og:site_name" content="Jackie"/>
-  <!--Type page-->
-  
-      <meta property="og:type" content="article" />
-  
-  <!--Page Cover-->
-  
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- Title -->
   
   <title>后台开发知识点总结（二）JVM虚拟机 - Jackie</title>
-
-
-  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
-
-  <!-- Custom CSS/Sass -->
-  <link rel="stylesheet" href="/css/style.css">
-
-  <!----------------------------
-  https://github.com/GallenHu/hexo-theme-Daily
-
- _____            _   _
-|  __ \          (_) | |
-| |  | |   __ _   _  | |  _   _
-| |  | |  / _` | | | | | | | | |
-| |__| | | (_| | | | | | | |_| |
-|_____/   \__,_| |_| |_|  \__, |
-                          __/ |
-                         |___/
-
-    ---------------------------><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Java类加载过程？加载：类中的方法被放到方法区、堆中生成一个对象表示该类、链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）初始化：执行类构造器方法、如果父类未初始化，先初始化父类。 有几种类加载器？引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载">
+<meta name="keywords" content="Java,JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（二）JVM虚拟机">
+<meta property="og:url" content="http://yoursite.com/2016/10/13/后台开发知识点总结（二）JVM虚拟机/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="Java类加载过程？加载：类中的方法被放到方法区、堆中生成一个对象表示该类、链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）初始化：执行类构造器方法、如果父类未初始化，先初始化父类。 有几种类加载器？引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载">
+<meta property="og:updated_time" content="2017-05-24T01:43:16.601Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（二）JVM虚拟机">
+<meta name="twitter:description" content="Java类加载过程？加载：类中的方法被放到方法区、堆中生成一个对象表示该类、链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）初始化：执行类构造器方法、如果父类未初始化，先初始化父类。 有几种类加载器？引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载">
+  
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
 
 </head>
 
-
 <body>
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Nav -->
-  <header class="site-header">
-  <div class="header-inside">
-    <div class="logo">
-      <a href="/" rel="home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
         
-        <img src="https://hexo.io/logo.svg" alt="Jackie" height="60">
-        
-      </a>
-    </div>
-    <!-- Navigation -->
-    <nav class="navbar">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse">
-        <ul class="navbar-nav">
-          
-          
-            <li>
-              <a href="/.">
-                
-                  home
-                
-              </a>
-            </li>
-          
-            <li>
-              <a href="/archives">
-                
-                  archive
-                
-              </a>
-            </li>
-          
-        </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </nav>
-    <div class="button-wrap">
-      <button class="menu-toggle">Primary Menu</button>
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
     </div>
   </div>
 </header>
+    <section id="main" class="outer"><article id="post-后台开发知识点总结（二）JVM虚拟机" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      后台开发知识点总结（二）JVM虚拟机
+    </h1>
+  
 
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/" class="article-date">
+  <time datetime="2016-10-13T01:41:23.000Z" itemprop="datePublished">2016-10-13</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
 
-  <!-- Main Content -->
-  <div class="content-area">
-  <div class="post">
-    <!-- Post Content -->
-    <div class="container">
-      <article>
-        <!-- Title date & tags -->
-        <div class="post-header">
-          <h1 class="entry-title">
-            后台开发知识点总结（二）JVM虚拟机
-            
-          </h1>
-          <p class="posted-on">
-          2016-10-13
-          </p>
-          <div class="tags-links">
-            
-              
-                <a href="/tags/Java/" rel="tag">
-                  Java
-                </a>
-              
-                <a href="/tags/JVM/" rel="tag">
-                  JVM
-                </a>
-              
-            
-          </div>
-        </div>
-        <!-- Post Main Content -->
-        <div class="entry-content">
-          <h3 id="Java类加载过程？"><a href="#Java类加载过程？" class="headerlink" title="Java类加载过程？"></a>Java类加载过程？</h3><p>加载：类中的方法被放到方法区、堆中生成一个对象表示该类、<br>链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）<br>初始化：执行类构造器方法、如果父类未初始化，先初始化父类。</p>
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Java类加载过程？"><a href="#Java类加载过程？" class="headerlink" title="Java类加载过程？"></a>Java类加载过程？</h3><p>加载：类中的方法被放到方法区、堆中生成一个对象表示该类、<br>链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）<br>初始化：执行类构造器方法、如果父类未初始化，先初始化父类。</p>
 <h3 id="有几种类加载器？"><a href="#有几种类加载器？" class="headerlink" title="有几种类加载器？"></a>有几种类加载器？</h3><p>引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载器（Extensions Class Loader，加载Java扩展库）、应用程序类加载器（Application Class Loader，加载 Class Path 下的应用程序类）、自定义类加载器（主要是为了加密解密某些类的字节码）。</p>
 <h3 id="什么时候触发GC？"><a href="#什么时候触发GC？" class="headerlink" title="什么时候触发GC？"></a>什么时候触发GC？</h3><p>JavaGC分为两种，一种是ScavengeGC，另一种是FullGC。前者只对年轻代进行回收，后者对整个堆进行回收（包括年轻代、老年代和持久代）。<br>当Eden申请内存失败时，触发ScavengeGC。<br>当老年代（Tenured）被写满、持久代（Perm）被写满、System.gc() 被显示调用以及上一次GC之后Heap各域分配策略出现变化时，触发FullGC。</p>
 <h3 id="GC有几种算法？"><a href="#GC有几种算法？" class="headerlink" title="GC有几种算法？"></a>GC有几种算法？</h3><p>引用计数法（已弃用）、标记清除法、标记复制法（survivor区）、标记压缩法（老年代）、分代回收法。</p>
@@ -144,98 +79,62 @@
 <h3 id="CMS收集器的特点？"><a href="#CMS收集器的特点？" class="headerlink" title="CMS收集器的特点？"></a>CMS收集器的特点？</h3><p>并发收集、低停顿。但是会产生内存碎片（标记清除法），每进行几次 GC 就要进行一次碎片整理。</p>
 <p> </p>
 
-        </div>
-      </article>
-    </div>
-    <!-- Comments -->
-    <div class="container">
       
-<section id="comment">
-  <!-- <h1 class="title">Comments</h1> -->
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/24/后台开发知识点总结（一）java基础/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          后台开发知识点总结（一）java基础
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">后台开发知识点总结（三）Java并发&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
 
   
+</article>
+
+
+
+
+
+
+
 </section>
-
-
-    </div>
-    <!-- Pre or Next -->
-    <div class="nav-links">
-      
-        <div class="nav-previous">
-          <a href="/2016/09/24/后台开发知识点总结（一）java基础/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
-        </div>
-      
-      
-        <div class="nav-next">
-          <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
-        </div>
-      
-    </div>
-
-  </div>
-</div>
-
-
-  <!-- Footer -->
-  <!-- Footer-widgets -->
-<div class="footer-widgets">
-  <div class="row inside-wrapper">
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">关于本站</h1>
-        <div class="custom-widget-content">
-          
-          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily">如何自定义这里的内容(配置教程)?</a></li></ul>
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Contact</h1>
-        <div class="widget-text">
-          
-            
-              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
-            
-          
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Search</h1>
-        <div class="widget-text">
-          <form onSubmit="return appDaily.submitSearch('')">
-            <p>
-              <input type="text" placeholder="search..." id="homeSearchInput">
-            </p>
-            <!-- <input type="submit" value="GO"> -->
-          </form>
-        </div>
-      </aside>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>
-</div>
-<!-- Footer -->
-<footer class="site-info">
-  <p>
-    <span>Jackie &copy; 2017</span>
-    
-      <span class="split">|</span>
-      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
-    
-  </p>
 </footer>
+    
 
-
-  <!-- After footer scripts -->
-  <!-- scripts -->
-<script src="/js/app.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
+<script src="/js/jquery.min.js"></script>
 
 
 
-
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
-
 </html>

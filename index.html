@@ -1,526 +1,909 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-<!-- Head tag -->
+<html>
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <!--Description-->
   
-
-  <!--Author-->
-  
-  <meta name="author" content="Jack Smith">
-  
-
-  <!--Open Graph Title-->
-  
-      <meta property="og:title" content="Jackie"/>
-  
-  <!--Open Graph Description-->
-  
-  <!--Open Graph Site Name-->
-  <meta property="og:site_name" content="Jackie"/>
-  <!--Type page-->
-  
-      <meta property="og:type" content="website" />
-  
-  <!--Page Cover-->
-  
-
+  <title>Jackie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- Title -->
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Jackie">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jackie">
   
-  <title>Jackie - Captain of Black Preal</title>
-
-
-  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
-
-  <!-- Custom CSS/Sass -->
-  <link rel="stylesheet" href="/css/style.css">
-
-  <!----------------------------
-  https://github.com/GallenHu/hexo-theme-Daily
-
- _____            _   _
-|  __ \          (_) | |
-| |  | |   __ _   _  | |  _   _
-| |  | |  / _` | | | | | | | | |
-| |__| | | (_| | | | | | | |_| |
-|_____/   \__,_| |_| |_|  \__, |
-                          __/ |
-                         |___/
-
-    ---------------------------><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
 
 </head>
 
-
 <body>
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Nav -->
-  <header class="site-header">
-  <div class="header-inside">
-    <div class="logo">
-      <a href="/" rel="home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
         
-        <img src="https://hexo.io/logo.svg" alt="Jackie" height="60">
-        
-      </a>
-    </div>
-    <!-- Navigation -->
-    <nav class="navbar">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse">
-        <ul class="navbar-nav">
-          
-          
-            <li>
-              <a href="/.">
-                
-                  home
-                
-              </a>
-            </li>
-          
-            <li>
-              <a href="/archives">
-                
-                  archive
-                
-              </a>
-            </li>
-          
-        </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </nav>
-    <div class="button-wrap">
-      <button class="menu-toggle">Primary Menu</button>
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
     </div>
   </div>
 </header>
-
-
-  <!-- Main Content -->
-  <div class="site-content home">
-  <main class="content-area">
+    <section id="main" class="outer">
+      <article id="post-利用canal实现MySQL数据同步到redis（一）canal的搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      
-        <div class="even">
-          
-
-<div class="container">
-  <article class="post">
     
-    <h1 class="entry-title">
-      <a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/" rel="bookmark">
-        利用canal实现MySQL数据同步到redis（一）canal的搭建  
-      </a>
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-05-10
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/" class="article-date">
+  <time datetime="2017-05-10T09:20:22.000Z" itemprop="datePublished">2017-05-10</time>
+</a>
       
-      <a href="/tags/Redis/" rel="tag">
-        Redis
-      </a>
-      
-      <a href="/tags/MySQL/" rel="tag">
-        MySQL
-      </a>
-      
-      <a href="/tags/Windows/" rel="tag">
-        Windows
-      </a>
-      
-      <a href="/tags/Canal/" rel="tag">
-        Canal
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div> 
+    <div class="article-entry" itemprop="articleBody">
       
+        <h2 id="1-什么是cannal"><a href="#1-什么是cannal" class="headerlink" title="1.什么是cannal"></a>1.什么是cannal</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100001.jpg" alt=""></p>
+<p>cannal 的原理相对比较简单：</p>
+<ol>
+<li>canal 模拟 mysql slave 的交互协议，伪装自己为mysql slave，向 mysql master发送 dump 协议</li>
+<li>mysql master 收到 dump 请求，开始推送 binary log 给 slave (也就是 canal)</li>
+<li>canal 解析 binary log 对象(原始为 byte 流)</li>
+</ol>
+<h2 id="2-服务器端的配置"><a href="#2-服务器端的配置" class="headerlink" title="2.服务器端的配置"></a>2.服务器端的配置</h2><h3 id="2-1-配置MySQL"><a href="#2-1-配置MySQL" class="headerlink" title="2.1.配置MySQL"></a>2.1.配置MySQL</h3><h4 id="2-1-1-修改配置文件"><a href="#2-1-1-修改配置文件" class="headerlink" title="2.1.1.修改配置文件"></a>2.1.1.修改配置文件</h4><p>打开 MySQL 根目录，修改 my-default.ini 文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100002.png" alt=""></p>
+<p>添加如下内容至文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">log-bin=mysql-bin #添加这一行就ok</div><div class="line">binlog-format=ROW #选择row模式</div><div class="line">server_id=1 #配置mysql replaction需要定义，不能和canal的slaveId重复</div></pre></td></tr></table></figure>
+<p>添加结果如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100003.png" alt=""></p>
+<h4 id="2-1-2-新建一个名为-canal-的用户，赋予其相应的权限"><a href="#2-1-2-新建一个名为-canal-的用户，赋予其相应的权限" class="headerlink" title="2.1.2.新建一个名为 canal 的用户，赋予其相应的权限"></a>2.1.2.新建一个名为 canal 的用户，赋予其相应的权限</h4><p>SQL 语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CREATE USER canal IDENTIFIED BY &apos;canal&apos;;  </div><div class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;canal&apos;@&apos;localhost&apos;;</div><div class="line">-- GRANT ALL PRIVILEGES ON *.* TO &apos;canal&apos;@&apos;localhost&apos; ;</div><div class="line">FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
+<p>语句中的 localhost 在实际应用中需要改成 canal 服务器的 ip 地址。如果你和我一样使用本机进行配置，使用 localhost 即可。</p>
+<h3 id="2-2-下载-canal"><a href="#2-2-下载-canal" class="headerlink" title="2.2.下载 canal"></a>2.2.下载 canal</h3><p>下载地址：<a href="https://github.com/alibaba/canal/releases" target="_blank" rel="external">https://github.com/alibaba/canal/releases</a> </p>
+<p>我们下载下图中标红的两个文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100004.png" alt=""></p>
+<p>在你喜欢的位置（我的是D:\WOrkSapce\）建立一个名为 canal 的文件夹，将这两个压缩包放到里面，然后分别解压到各自的文件夹即可。</p>
+<h3 id="2-3-修改-canal-配置文件"><a href="#2-3-修改-canal-配置文件" class="headerlink" title="2.3.修改 canal 配置文件"></a>2.3.修改 canal 配置文件</h3><p>进入 D:\WorkSpace\canal\canal.deployer-1.0.24\conf\example 目录下</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100005.png" alt=""></p>
+<p>找到 instance.properties 文件，将数据库参数修改成你自己的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#################################################</div><div class="line">## mysql serverId</div><div class="line">canal.instance.mysql.slaveId = 1234</div><div class="line"></div><div class="line"># position info</div><div class="line">canal.instance.master.address = 127.0.0.1:3306</div><div class="line">canal.instance.master.journal.name = </div><div class="line">canal.instance.master.position = </div><div class="line">canal.instance.master.timestamp = </div><div class="line"></div><div class="line">#canal.instance.standby.address = </div><div class="line">#canal.instance.standby.journal.name =</div><div class="line">#canal.instance.standby.position = </div><div class="line">#canal.instance.standby.timestamp = </div><div class="line"></div><div class="line"># username/password</div><div class="line">canal.instance.dbUsername = canal</div><div class="line">canal.instance.dbPassword = canal</div><div class="line">canal.instance.defaultDatabaseName = test</div><div class="line">canal.instance.connectionCharset = UTF-8</div><div class="line"></div><div class="line"># table regex</div><div class="line">canal.instance.filter.regex = .*\\..*</div><div class="line"># table black regex</div><div class="line">canal.instance.filter.black.regex =  </div><div class="line"></div><div class="line">#################################################</div></pre></td></tr></table></figure>
+<h3 id="2-4-启动-canal-服务端"><a href="#2-4-启动-canal-服务端" class="headerlink" title="2.4.启动 canal 服务端"></a>2.4.启动 canal 服务端</h3><p>进入 D:\WorkSpace\canal\canal.deployer-1.0.24\bin 目录下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">startup.bat</div></pre></td></tr></table></figure>
+<p>启动 canal 服务端，得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100006.png" alt=""></p>
+<h2 id="3-客户端的配置"><a href="#3-客户端的配置" class="headerlink" title="3.客户端的配置"></a>3.客户端的配置</h2><h3 id="3-1-导入-maven-项目"><a href="#3-1-导入-maven-项目" class="headerlink" title="3.1.导入 maven 项目"></a>3.1.导入 maven 项目</h3><p>打开 eclipse，【File】-&gt;【Import】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100007.png" alt=""></p>
+<p>选择 【Maven】 -&gt; 【Existing Maven Projects】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100008.png" alt=""></p>
+<p>找到你刚才下载解压的 canal-canal-1.0.24 ，确定</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100009.png" alt=""></p>
+<p>你会发现这些项目已经导入进来了</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100010.png" alt=""></p>
+<h3 id="3-2-打开并运行-example"><a href="#3-2-打开并运行-example" class="headerlink" title="3.2.打开并运行 example"></a>3.2.打开并运行 example</h3><p>打开 canal.example ，找到 ClusterCanalClientTest ，运行</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100011.png" alt=""></p>
+<h3 id="3-3-更新数据库并测试"><a href="#3-3-更新数据库并测试" class="headerlink" title="3.3.更新数据库并测试"></a>3.3.更新数据库并测试</h3><p>打开 MySQL 终端，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">use test</div><div class="line">create table table0(id int);</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100012.png" alt=""></p>
+<p>这时查看 ClusterCanalClientTest 的终端，发现 binlog 信息已经被解析出来了</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100013.png" alt=""></p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p>alibaba/canal 项目介绍：<br><a href="https://github.com/alibaba/canal/wiki" target="_blank" rel="external">https://github.com/alibaba/canal/wiki</a></p>
+<h2 id="5-操作系统：Windows10"><a href="#5-操作系统：Windows10" class="headerlink" title="5.操作系统：Windows10"></a>5.操作系统：Windows10</h2>
+      
+    </div>
     
-      
-        <div class="odd">
-          
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canal/">Canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
 
-<div class="container">
-  <article class="post">
+      </footer>
     
-    <h1 class="entry-title">
-      <a href="/2017/05/04/一次惊险的体验（伪）/" rel="bookmark">
-        一次惊险的体验（伪）  
-      </a>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-一次惊险的体验（伪）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/04/一次惊险的体验（伪）/">一次惊险的体验（伪）</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-05-04
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/05/04/一次惊险的体验（伪）/" class="article-date">
+  <time datetime="2017-05-04T09:49:53.000Z" itemprop="datePublished">2017-05-04</time>
+</a>
       
-      <a href="/tags/直升机/" rel="tag">
-        直升机
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/心情/">心情</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div>
+    <div class="article-entry" itemprop="articleBody">
       
-    
-      
-        <div class="even">
-          
+        <h1 id="本故事纯属虚构，如有雷同，不可能。"><a href="#本故事纯属虚构，如有雷同，不可能。" class="headerlink" title="本故事纯属虚构，如有雷同，不可能。"></a>本故事纯属虚构，如有雷同，不可能。</h1><h3 id="今天我去公园玩，逛着逛着，发现天上有一架直升机。"><a href="#今天我去公园玩，逛着逛着，发现天上有一架直升机。" class="headerlink" title="今天我去公园玩，逛着逛着，发现天上有一架直升机。"></a>今天我去公园玩，逛着逛着，发现天上有一架直升机。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045001.jpg" alt=""></p>
+<hr>
+<h3 id="直升机越飞越近，而我却没有察觉到即将到来的危险。"><a href="#直升机越飞越近，而我却没有察觉到即将到来的危险。" class="headerlink" title="直升机越飞越近，而我却没有察觉到即将到来的危险。"></a>直升机越飞越近，而我却没有察觉到即将到来的危险。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045002.jpg" alt=""></p>
+<hr>
+<h1 id="突然，它投下了一枚炸弹！"><a href="#突然，它投下了一枚炸弹！" class="headerlink" title="突然，它投下了一枚炸弹！"></a>突然，它投下了一枚炸弹！</h1><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045003.jpg" alt=""></p>
+<hr>
+<h3 id="爆炸过后，惊慌失措的游客。"><a href="#爆炸过后，惊慌失措的游客。" class="headerlink" title="爆炸过后，惊慌失措的游客。"></a>爆炸过后，惊慌失措的游客。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045004.jpg" alt=""></p>
+<hr>
+<h3 id="看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！"><a href="#看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！" class="headerlink" title="看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！"></a>看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045005.jpg" alt=""></p>
 
-<div class="container">
-  <article class="post">
+      
+    </div>
     
-    <h1 class="entry-title">
-      <a href="/2017/04/25/SCAtoolbox应用指南/" rel="bookmark">
-        SCAtoolbox应用指南  
-      </a>
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/直升机/">直升机</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-SCAtoolbox应用指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/25/SCAtoolbox应用指南/">SCAtoolbox应用指南</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-04-25
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/25/SCAtoolbox应用指南/" class="article-date">
+  <time datetime="2017-04-25T02:27:13.000Z" itemprop="datePublished">2017-04-25</time>
+</a>
       
-      <a href="/tags/SCAtoolbox/" rel="tag">
-        SCAtoolbox
-      </a>
-      
-      <a href="/tags/Matlab/" rel="tag">
-        Matlab
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div> 
+    <div class="article-entry" itemprop="articleBody">
       
-    
-      
-        <div class="odd">
-          
+        <h2 id="首先，什么是SCAtoolbox"><a href="#首先，什么是SCAtoolbox" class="headerlink" title="首先，什么是SCAtoolbox"></a>首先，什么是SCAtoolbox</h2><p><strong>SCAtoolbox</strong>是一个用于求解<strong>最优化问题</strong>的开源工具，使用<strong>matlab</strong>实现。<br>那么，什么是最优化问题呢？举个简单的例子：</p>
+<hr>
+<p><strong>z = x + y (0 &lt; x &lt; 1, 0 &lt; y &lt; 1)，求 z 的最大值</strong></p>
+<hr>
+<p>这就是一个简单版的最优化问题，其中：<br><strong>z = x + y</strong> 称作<strong>目标函数</strong><br><strong>0 &lt; x &lt; 1, 0 &lt; y &lt; 1</strong> 称作<strong>约束条件</strong></p>
+<h2 id="接下来，我们来看看SCAtoolbox怎么用"><a href="#接下来，我们来看看SCAtoolbox怎么用" class="headerlink" title="接下来，我们来看看SCAtoolbox怎么用"></a>接下来，我们来看看SCAtoolbox怎么用</h2><p><strong>SCAtoolbox</strong>可以从以下链接获取。<br><a href="http://www.alimirjalili.com/SCA.html" target="_blank" rel="external">http://www.alimirjalili.com/SCA.html</a><br>解压之后，用<strong>matlab</strong>打开<strong>SCAtoolbox.m</strong>即可食用。</p>
+<hr>
+<p>我们先来看一张<strong>SCAtoolbox</strong>的近照。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/SCA_toolbox_description.png" alt="figure"></p>
 
-<div class="container">
-  <article class="post">
+      
+    </div>
     
-    <h1 class="entry-title">
-      <a href="/2017/04/24/大神们的博客/" rel="bookmark">
-        大神们的博客  
-      </a>
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-大神们的博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/24/大神们的博客/">大神们的博客</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-04-24
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/24/大神们的博客/" class="article-date">
+  <time datetime="2017-04-24T09:57:22.000Z" itemprop="datePublished">2017-04-24</time>
+</a>
       
-      <a href="/tags/Blog/" rel="tag">
-        Blog
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div>
+    <div class="article-entry" itemprop="articleBody">
       
+        <h3 id="【学习用】huangjunhui-大神的博客"><a href="#【学习用】huangjunhui-大神的博客" class="headerlink" title="【学习用】huangjunhui 大神的博客"></a>【学习用】<a href="http://opiece.me/2015/04/09/hexo-guide/" target="_blank" rel="external">huangjunhui 大神的博客</a></h3><h3 id="【膜拜用】liuning-大神的博客"><a href="#【膜拜用】liuning-大神的博客" class="headerlink" title="【膜拜用】liuning 大神的博客"></a>【膜拜用】<a href="http://lnplayer.github.io/" target="_blank" rel="external">liuning 大神的博客</a></h3>
+      
+    </div>
     
-      
-        <div class="even">
-          
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li></ul>
 
-<div class="container">
-  <article class="post">
+      </footer>
     
-    <h1 class="entry-title">
-      <a href="/2017/04/08/单台windows搭建mysql主从机备份/" rel="bookmark">
-        单台windows搭建mysql主从机备份  
-      </a>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-单台windows搭建mysql主从机备份" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-04-08
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/08/单台windows搭建mysql主从机备份/" class="article-date">
+  <time datetime="2017-04-08T06:04:11.000Z" itemprop="datePublished">2017-04-08</time>
+</a>
       
-      <a href="/tags/MySQL/" rel="tag">
-        MySQL
-      </a>
-      
-      <a href="/tags/Windows/" rel="tag">
-        Windows
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div> 
+    <div class="article-entry" itemprop="articleBody">
       
+        <h2 id="1-在一台window上搭建两个MySQL实例"><a href="#1-在一台window上搭建两个MySQL实例" class="headerlink" title="1.在一台window上搭建两个MySQL实例"></a>1.在一台window上搭建两个MySQL实例</h2><h3 id="1-1-下载-MySQL-5-6"><a href="#1-1-下载-MySQL-5-6" class="headerlink" title="1.1.下载 MySQL 5.6"></a>1.1.下载 MySQL 5.6</h3><p>下载地址：<a href="http://download.csdn.net/download/zzu_wang/8708049" target="_blank" rel="external">http://download.csdn.net/download/zzu_wang/8708049</a></p>
+<p>注意，一定要下载 5.6 版本，5.7版本会出现各种各样奇怪的问题。</p>
+<h3 id="1-2-建立对应目录"><a href="#1-2-建立对应目录" class="headerlink" title="1.2.建立对应目录"></a>1.2.建立对应目录</h3><p>在你喜欢的位置（我的是D:\WorkSpace\mysql\）建立两个文件夹，分别叫 mysql5601 和 mysql5602。将刚才下载到的 zip 文件分别复制到这两个文件夹中解压。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080001.png" alt=""></p>
+<p>解压完成之后应该是这个样子的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080002.png" alt=""></p>
+<h3 id="1-3-修改响应配置文件"><a href="#1-3-修改响应配置文件" class="headerlink" title="1.3.修改响应配置文件"></a>1.3.修改响应配置文件</h3><p>分别打开 mysql5601 和 mysql5602 ，修改 my-default.ini 文件</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080003.png" alt=""></p>
+<p>打开  my-default.ini 文件，修改下图中标记的位置</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080004.png" alt=""></p>
+<p>basedir 为 mysql 的解压目录，datadir 为 basedir\data，两个实例的 port 分别设置为 3306 和 3307，server_id 分别设置为 1 和 2。</p>
+<p>mysql5601：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">basedir = D:\WorkSpace\mysql\msql5601</div><div class="line">datadir = D:\WorkSpace\mysql\msql5601\data</div><div class="line">port = 3306</div><div class="line">server_id = 1</div></pre></td></tr></table></figure>
+<p>mysql5602：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">basedir = D:\WorkSpace\mysql\msql5602</div><div class="line">datadir = D:\WorkSpace\mysql\msql5602\data</div><div class="line">port = 3307</div><div class="line">server_id = 2</div></pre></td></tr></table></figure>
+<p>注意，只修改刚才提到的地方就好，其他地方暂时先不用管，后面会有提到。</p>
+<h3 id="1-4-启动-MySQL-服务"><a href="#1-4-启动-MySQL-服务" class="headerlink" title="1.4.启动 MySQL 服务"></a>1.4.启动 MySQL 服务</h3><p>在 windows 搜索框中搜索 cmd，得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080005.png" alt=""></p>
+<p>按下 Ctrl + Shift + Enter，以管理员身份进入 cmd，进入之后，如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080006.png" alt=""></p>
+<p>进入到 D:\WorkSpace\mysql\msql5601\bin 目录下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL1  --defaults-file=&quot;D:\WorkSpace\mysql\msql5601\my-default.ini&quot; ：</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080007.png" alt=""></p>
+<p>因为我已经安装过了，所以会显示 The service already exists! ，第一次安装应该显示 Service successfully installed.</p>
+<p>【MySQL1】是服务的名称，安装成功后，在 windows 搜索里输入【服务】，可以在服务中找到它。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080008.png" alt=""></p>
+<p>安装成功后，输入 net start MySQL1，启动这个服务：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080009.png" alt=""></p>
+<p>然后用同样的方法启动另一个服务，这回叫MySQL2：</p>
+<p>进入到 D:\WorkSpace\mysql\msql5602\bin 目录下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL2  --defaults-fil e= &quot;D:\WorkSpace\mysql\msql5602\my-default.ini&quot;</div></pre></td></tr></table></figure>
+<p>安装成功后，输入 net start MySQL2，启动这个服务，得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080010.png" alt=""></p>
+<p>两个服务都跑起来之后，我们就可以进入下一步：实现主从备份了。</p>
+<h2 id="2-搭建主从备份"><a href="#2-搭建主从备份" class="headerlink" title="2.搭建主从备份"></a>2.搭建主从备份</h2><h3 id="2-1-在两个-MySQL-实例创建数据库"><a href="#2-1-在两个-MySQL-实例创建数据库" class="headerlink" title="2.1.在两个 MySQL 实例创建数据库"></a>2.1.在两个 MySQL 实例创建数据库</h3><p>我们以 mysql5601 中的实例作为主库，以 mysql5602 中的实例作为从库。</p>
+<p>在这两个数据库中各自创建一个叫做 test 的库作为用来同步的库。具体操作如下：</p>
+<p>进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080011.png" alt=""></p>
+<p>在这个命令中，前一个小写的 p 是密码（password）的 p，后一个大写的 P 是端口（Port）的 P。</p>
+<p>然后输入：create database test;</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080012.png" alt=""></p>
+<p>我的因为已经建立过了，所以会报出 database exists。</p>
+<p>输入：show databases; </p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080013.png" alt=""></p>
+<p>显示现有的 database，我们可以看到，test已经在里面了。</p>
+<p>接下来我们建立从机的数据库，打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080014.png" alt=""></p>
+<p>然后输入：create database test;</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080015.png" alt=""></p>
+<p>这样两个数据库就建立好了。</p>
+<h3 id="2-2-修改主库配置文件"><a href="#2-2-修改主库配置文件" class="headerlink" title="2.2.修改主库配置文件"></a>2.2.修改主库配置文件</h3><p>打开 mysql5601，修改 my-default.ini 文件，在其中添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">server-id=1    #服务器 id </div><div class="line">log-bin=C:\Program Files\MySQL\MySQL Server 5.5\mysql-bin    #二进制文件存放路径</div><div class="line">binlog-do-db=test1    #待同步的数据库</div></pre></td></tr></table></figure>
+<p>添加完后，我们的 my-default.ini 文件就会像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir = D:\WorkSpace\mysql\msql5601</div><div class="line">datadir = D:\WorkSpace\mysql\msql5601\data</div><div class="line">port = 3306</div><div class="line">server_id = 1</div><div class="line"></div><div class="line">log-bin=D:\WorkSpace\mysql\msql5601\mysql-bin    #二进制文件存放路径</div><div class="line">binlog-do-db=test    #待同步的数据库</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure>
+<p>Windows 搜索【服务】，重启 MySQL1 服务。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080016.png" alt=""></p>
+<p>重启之后，你会看到 D:\WorkSpace\mysql\msql5601 目录下多出了两个文件（因为我重启过三遍所以多出来四个）：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080017.png" alt=""></p>
+<h3 id="2-3-给要连接的从服务器设置权限"><a href="#2-3-给要连接的从服务器设置权限" class="headerlink" title="2.3.给要连接的从服务器设置权限"></a>2.3.给要连接的从服务器设置权限</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
+<p>进入 mysql 命令行模式，输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grant replication slave,reload,super on *.* to slave@10.0.76.192 identified by &apos;root&apos;;</div></pre></td></tr></table></figure>
+<p>给主机10.0.76.192添加权限，用户名：slave，密码：root；</p>
+<p>注意，10.0.76.192是我的 ip 地址，这个地址需要改成你自己的 ip 地址（如果不是一台机器则要改成从机的 ip 地址）。查询 ip 地址的方法很简单，打开 cmd，输入 ipconfig 即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080018.png" alt=""></p>
+<h3 id="2-4-输入命令-show-master-status"><a href="#2-4-输入命令-show-master-status" class="headerlink" title="2.4.输入命令 show master status;"></a>2.4.输入命令 show master status;</h3><p>找到 File 和 Position 的值记录下来，这些值后面会用到。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080019.png" alt=""></p>
+<h3 id="2-5-修改从库配置文件"><a href="#2-5-修改从库配置文件" class="headerlink" title="2.5.修改从库配置文件"></a>2.5.修改从库配置文件</h3><p>打开mysql5602，修改my-default.ini文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">server-id=2    #服务器 id ，不能和主服务器一致</div><div class="line">replicate-do-db=test1    #待同步的数据库</div></pre></td></tr></table></figure>
+<p>修改后的 my-default.ini 文件如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir = D:\WorkSpace\mysql\msql5602</div><div class="line">datadir = D:\WorkSpace\mysql\msql5602\data</div><div class="line">port = 3307</div><div class="line">server_id = 2</div><div class="line">replicate-do-db=test    #待同步的数据库</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure>
+<p>重启 MySQL2 服务。</p>
+<h3 id="2-6-修改从库对主库的连接参数"><a href="#2-6-修改从库对主库的连接参数" class="headerlink" title="2.6.修改从库对主库的连接参数"></a>2.6.修改从库对主库的连接参数</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
+<p>进入 mysql 命令行模式，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">change master to master_host=&apos;10.0.76.192&apos;,master_user=&apos;slave&apos;,master_password=&apos;root&apos;, master_log_file=&apos;mysql-bin.000003&apos;,master_log_pos=120;</div></pre></td></tr></table></figure>
+<p>注意：这里输入的 mysql-bin.000003 和 120 请替换为步骤2.4中查询出来的值，master_host 替换为你自己的 ip。 </p>
+<h3 id="2-7-启动-salve-线程"><a href="#2-7-启动-salve-线程" class="headerlink" title="2.7.启动 salve 线程"></a>2.7.启动 salve 线程</h3><p>输入：start slave;</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080020.png" alt=""></p>
+<p>然后输入：show slave status\G   （没有分号）</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080021.png" alt=""></p>
+<p>看是否有以下两行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Slave_IO_Running: Yes</div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure>
+<p>这两个指标非常重要，任意一行为No都不能正常运行。我就曾经遇到了下面的这种问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ERROR] Slave I/O: error connecting to master &apos;slave@10.0.76.192:3306:3306&apos; - retry-time: 60  retries: 6, Error_code: 2005</div></pre></td></tr></table></figure>
+<p>解决方法很简单，重启以下 slave 的服务就可以了。</p>
+<h3 id="2-8-测试同步"><a href="#2-8-测试同步" class="headerlink" title="2.8.测试同步"></a>2.8.测试同步</h3><p>打开两个 cmd ，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，分别输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -proot -P3306（主机）</div><div class="line">mysql -uroot -proot -P3307（从机）</div></pre></td></tr></table></figure>
+<p>在主机上输入：use test;</p>
+<p>转到 test 数据库，然后输入：create table table1;</p>
+<p>新建一个名为 table1 的表。然后输入：show tables;</p>
+<p>得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080022.png" alt=""></p>
+<p>上面的操作只是在主机上的 test 数据库中建立了一张名为 table1 的表。</p>
+<p>接下来我们进入从机的 cmd，输入：use test;</p>
+<p>然后输入：show tables;</p>
+<p>得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080023.png" alt=""></p>
+<p>可以看到，两个数据库的数据已经开始自动同步了。</p>
+<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p>windows下mysql主从同步</p>
+<p><a href="http://www.cnblogs.com/xiaochangwei/p/4824355.html" target="_blank" rel="external">http://www.cnblogs.com/xiaochangwei/p/4824355.html</a></p>
+<p>mysql （master/slave）复制原理及配置</p>
+<p><a href="http://blog.csdn.net/mer1234567/article/details/7405775" target="_blank" rel="external">http://blog.csdn.net/mer1234567/article/details/7405775</a></p>
+<p>window下一台PC机器上安装多个mysql的方法</p>
+<p><a href="http://blog.csdn.net/zfqzpp/article/details/13630905" target="_blank" rel="external">http://blog.csdn.net/zfqzpp/article/details/13630905</a></p>
+<p>mysql 数据同步 出现Slave_IO_Running:No问题的解决方法小结</p>
+<p><a href="http://www.jb51.net/article/27220.htm" target="_blank" rel="external">http://www.jb51.net/article/27220.htm</a></p>
+<p>slave have equal MySQL Server UUIDs原因及解决</p>
+<p><a href="http://www.linuxidc.com/Linux/2015-02/113564.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-02/113564.htm</a></p>
+<h2 id="4-操作系统：windows10"><a href="#4-操作系统：windows10" class="headerlink" title="4.操作系统：windows10"></a>4.操作系统：windows10</h2>
+      
+    </div>
     
-      
-        <div class="odd">
-          
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
 
-<div class="container">
-  <article class="post">
+      </footer>
     
-    <h1 class="entry-title">
-      <a href="/2017/04/06/几种消息队列的比较/" rel="bookmark">
-        几种消息队列的比较  
-      </a>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-几种消息队列的比较" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/06/几种消息队列的比较/">几种消息队列的比较</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-04-06
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/06/几种消息队列的比较/" class="article-date">
+  <time datetime="2017-04-06T02:13:27.000Z" itemprop="datePublished">2017-04-06</time>
+</a>
       
-      <a href="/tags/Kafka/" rel="tag">
-        Kafka
-      </a>
-      
-      <a href="/tags/RockerMQ/" rel="tag">
-        RockerMQ
-      </a>
-      
-      <a href="/tags/Redis/" rel="tag">
-        Redis
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div>
+    <div class="article-entry" itemprop="articleBody">
       
-    
-      
-        <div class="even">
-          
+        <h3 id="1-RabbitMQ"><a href="#1-RabbitMQ" class="headerlink" title="1.RabbitMQ"></a>1.RabbitMQ</h3><p>  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。</p>
+<h3 id="2-ActiveMQ"><a href="#2-ActiveMQ" class="headerlink" title="2.ActiveMQ"></a>2.ActiveMQ</h3><p>  Java开发，支持持久化，性能相对较差。</p>
+<h3 id="3-ZeroMQ"><a href="#3-ZeroMQ" class="headerlink" title="3.ZeroMQ"></a>3.ZeroMQ</h3><p>  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。</p>
+<h3 id="4-Redis"><a href="#4-Redis" class="headerlink" title="4.Redis"></a>4.Redis</h3><p>  C语言开发，速度快，支持持久化，但不可靠。</p>
+<h3 id="5-RocketMQ"><a href="#5-RocketMQ" class="headerlink" title="5.RocketMQ"></a>5.RocketMQ</h3><p>  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更多队列等。</p>
+<h3 id="6-Kafka"><a href="#6-Kafka" class="headerlink" title="6.Kafka"></a>6.Kafka</h3><p>  Scala开发，一次生产多次消费，可以当作消息队列使用，可持久化，速度快。</p>
 
-<div class="container">
-  <article class="post">
+      
+    </div>
     
-    <h1 class="entry-title">
-      <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" rel="bookmark">
-        单台windows搭建zookeeper和kafka集群  
-      </a>
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RockerMQ/">RockerMQ</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-单台windows搭建zookeeper和kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-04-04
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" class="article-date">
+  <time datetime="2017-04-04T10:11:39.000Z" itemprop="datePublished">2017-04-04</time>
+</a>
       
-      <a href="/tags/Kafka/" rel="tag">
-        Kafka
-      </a>
-      
-      <a href="/tags/Windows/" rel="tag">
-        Windows
-      </a>
-      
-      <a href="/tags/Zookeeper/" rel="tag">
-        Zookeeper
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div> 
+    <div class="article-entry" itemprop="articleBody">
       
+        <p>我们的目标是在一台机器上部署三个zookeeper的server，并在此基础上部署三个zookeeper的server。</p>
+<h1 id="1-zookeeper的部署"><a href="#1-zookeeper的部署" class="headerlink" title="1.zookeeper的部署"></a>1.zookeeper的部署</h1><p>zookeeper的部署采用伪集群模式，即在一台电脑上部署多个server。</p>
+<h2 id="1-1-建立文件夹，存放项目"><a href="#1-1-建立文件夹，存放项目" class="headerlink" title="1.1.建立文件夹，存放项目"></a>1.1.建立文件夹，存放项目</h2><p>在你喜欢的位置（我的目录为D:\WorkSpace）建立一个名为zookeeper的文件夹，并在该文件夹下建立三个目录，分别名为server1，server2和server3。完成之后如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040011.png" alt=""></p>
+<h2 id="1-2-下载zookeeper"><a href="#1-2-下载zookeeper" class="headerlink" title="1.2.下载zookeeper"></a>1.2.下载zookeeper</h2><p>下载地址：<a href="http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。" target="_blank" rel="external">http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040012.png" alt=""></p>
+<h2 id="1-3-解压文件并创建一些目录"><a href="#1-3-解压文件并创建一些目录" class="headerlink" title="1.3.解压文件并创建一些目录"></a>1.3.解压文件并创建一些目录</h2><p>将下载好的压缩包解压到server1目录下，并在server1目录下建三个文件夹，分别名为data，dataLog和logs。完成之后应该是这样的。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040013.png" alt=""></p>
+<p>注意：压缩包解压的时候直接选【解压到当前文件夹】即可。所以上图中的zookeeper-3.4.10文件夹打开之后应该是这样的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040014.png" alt=""></p>
+<h2 id="1-4-在server1-data目录下，创建一个叫做myid的文件。"><a href="#1-4-在server1-data目录下，创建一个叫做myid的文件。" class="headerlink" title="1.4.在server1/data目录下，创建一个叫做myid的文件。"></a>1.4.在server1/data目录下，创建一个叫做myid的文件。</h2><p>注意，这个文件不需要任何扩展名，所以显示的形式如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040015.png" alt=""></p>
+<p>如果你看到的myid文件不是这样的，说明你的扩展名没有去除。在windows系统下，文件扩展名默认是被隐藏的。在【查看】选项卡里勾选【文件扩展名】，你就能看到被隐藏的扩展名了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040016.png" alt=""></p>
+<h2 id="1-5-打开myid文件，在里面添加对应的id"><a href="#1-5-打开myid文件，在里面添加对应的id" class="headerlink" title="1.5.打开myid文件，在里面添加对应的id"></a>1.5.打开myid文件，在里面添加对应的id</h2><p>因为我们目前配置的是server1，所以添加id为1，然后关闭即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040017.png" alt=""></p>
+<p>这里打开myid文件使用的编辑器是notepad++，如果没有安装的话，可以下载一个安装一下。下载地址：<a href="https://notepad-plus-plus.org/。" target="_blank" rel="external">https://notepad-plus-plus.org/。</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040018.png" alt=""></p>
+<h2 id="1-6-修改配置文件"><a href="#1-6-修改配置文件" class="headerlink" title="1.6.修改配置文件"></a>1.6.修改配置文件</h2><p>在server1/zookeeper-3.4.10/conf目录下，新建zoo.cfg文件，加入内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>注意，dataDir和dataLogDir中的D:/WorkSpace目录需要改成你自己的目录。</p>
+<p>这里对zoo.cfg中的内容进行简要地说明：</p>
+<p><strong>tickTime</strong>为客户端与服务器之间或服务器互相之间的心跳间隔，以ms为单位。</p>
+<p><strong>initLimit</strong>为leader与follower进行初始连接时最多能够容忍的心跳数。</p>
+<p><strong>syncLimit</strong>为follower与leader请求和应答之间最多能容忍的心跳数。</p>
+<p><strong>dataDir</strong>为数据文件目录。</p>
+<p><strong>dataLogDir</strong>为日志文件目录。</p>
+<p><strong>clientPort</strong>为客户端连接服务器的端口，zookeeper监听此接口接收客户端访问请求。</p>
+<p><strong>最后三行</strong>为集群中每个服务器的ip和端口号。前一个端口为leader和follower通信端口，后一个端口为选举新leader时所用的端口。一般来说，在多台电脑的情况下，每台服务器上的端口配置是一样的。不过我们现在使用同一台电脑配置三个server，为了避免冲突，只能把它们改成不一样。</p>
+<h2 id="1-7-复制server1中的内容到server2和server3中，并修改相应配置"><a href="#1-7-复制server1中的内容到server2和server3中，并修改相应配置" class="headerlink" title="1.7.复制server1中的内容到server2和server3中，并修改相应配置"></a>1.7.复制server1中的内容到server2和server3中，并修改相应配置</h2><p>将server1中的内容分别复制到server2和server3中，并修改/data/myid文件和/zookeeper-3.4.10/conf/zoo.cfg文件。</p>
+<p>myid文件只需要将其中的内容改成服务器的序号即可。</p>
+<p>zoo.cfg文件需要修改dataDir，dataLogDir和clientPort。修改后的三个文件如下：</p>
+<p>server1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>server2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server2/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server2/dataLog</div><div class="line">clientPort=2182</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>server3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server3/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server3/dataLog</div><div class="line">clientPort=2183</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<h2 id="1-8-启动服务器"><a href="#1-8-启动服务器" class="headerlink" title="1.8.启动服务器"></a>1.8.启动服务器</h2><p>分别进入三个server的/zookeeper-3.4.10/bin目录下，运行：zkServer start 。结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040019.png" alt=""></p>
+<p>第一个server启动的时候会报错，这是由于它想要和其他两个server进行通信，而另外两个server还没有搭建起来。不用理会这个错误，继续打开新的cmd窗口，启动其他server就好。注意，原来的窗口不要关！所有server都启动了之后，显示如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040020.png" alt=""></p>
+<p>如果报Invalid arguments, exiting abnormally 的异常的话，只需要在 zkServer start 命令中去掉start，即输入zkServer即可。</p>
+<h2 id="1-9-连接客户端"><a href="#1-9-连接客户端" class="headerlink" title="1.9.连接客户端"></a>1.9.连接客户端</h2><p>进入任意一个zookeeper-3.4.10目录下，用以下命令启动客户端：zkCli –server 127.0.0.1:2181<br>，显示如下结果：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040021.png" alt=""></p>
+<p>输入help，显示可以执行的指令。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040022.png" alt=""></p>
+<p>做到这一步，zookeeper集群的搭建就完成了。接下来我们要在此基础上搭建kafka的集群。</p>
+<h1 id="2-kafka的部署"><a href="#2-kafka的部署" class="headerlink" title="2.kafka的部署"></a>2.kafka的部署</h1><p>kafka在设计的时候就依赖于zookeeper，对于kafka而言，zookeeper相当于它的文件系统。每个节点的信息都保存在zookeeper对应的路径下。</p>
+<p><strong>（1）Broker注册</strong>：Broker在zookeeper中保存为一个临时节点，节点的路径是/brokers/ids/[brokerid],每个节点会保存对应broker的IP以及端口等信息。</p>
+<p><strong>（2）Topic注册</strong>：在kafka中,一个topic会被分成多个区并被分到多个broker上，分区的信息以及broker的分布情况都保存在zookeeper中，根节点路径为/brokers/topics,每个topic都会在topics下建立独立的子节点，每个topic节点下都会包含分区以及broker的对应信息。</p>
+<p><strong>（3）消费者与分区的对应关系</strong>：对于每个消费者分组，kafka都会为其分配一个全局唯一的Group ID,分组内的所有消费者会共享该ID,kafka还会为每个消费者分配一个consumer ID,通常采用hostname:uuid的形式。在kafka的设计中规定，对于topic的每个分区，最多只能被一个消费者进行消费，也就是消费者与分区的关系是一对多的关系。消费者与分区的关系被存储在zookeeper中节点的路径为 /consumers/[group_id]/owners/[topic]/[broker_id-partition_id],该节点的内容就是消费者的Consumer ID。</p>
+<p><strong>（4）消费者负载均衡</strong>：消费者服务启动时，会创建一个属于消费者节点的临时节点，节点的路径为 /consumers/[group_id]/ids/[consumer_id],该节点的内容是该消费者订阅的Topic信息。每个消费者会对/consumers/[group_id]/ids节点注册Watcher监听器，一旦消费者的数量增加或减少就会触发消费者的负载均衡。消费者还会对/brokers/ids/[brokerid]节点进行监听，如果发现服务器的Broker服务器列表发生变化，也会进行消费者的负载均衡。</p>
+<p><strong>（5）消费者的offset</strong>：在kafka的消费者API分为两种(1)High Level API：由zookeeper维护消费者的offset (2) Low Level API：自己的代码实现对offset的维护。由于自己维护offset往往比较复杂，所以多数情况下都是使用High Level的API offset在zookeeper中的节点路径为/consumers/[group_id]/offsets/[topic]/[broker_id-part_id],该节点的值就是对应的offset。</p>
+<p>看到这里，你就会明白kafka和zookeeper之间的关系了。我们现在就是要在已经配置好的zookeeper集群上配置kafka集群。</p>
+<h2 id="2-1-建立对应目录"><a href="#2-1-建立对应目录" class="headerlink" title="2.1.建立对应目录"></a>2.1.建立对应目录</h2><p>还是找到你喜欢的那个目录（我的是D:\WorkSpace）,建立一个叫做kafka的文件夹，里面建立三个子目录，分别叫做：kafka1，kafka2和kafka3。完成之后应该是这个样子：<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040023.png" alt=""></p>
+<h2 id="2-2-下载kafka并解压到每个文件夹"><a href="#2-2-下载kafka并解压到每个文件夹" class="headerlink" title="2.2.下载kafka并解压到每个文件夹"></a>2.2.下载kafka并解压到每个文件夹</h2><p>kafka下载地址：<br><a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz" target="_blank" rel="external">https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a><br>下载之后是一个压缩包，还是直接解压到kafka1，kafka2和kafka3这三个文件夹就行。解压完后，在 kafka1，kafka2和kafka3目录下分别添加一个kafkaLog目录。最后的结果应该是这个样子的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040024.png" alt=""></p>
+<h2 id="2-3-修改配置文件："><a href="#2-3-修改配置文件：" class="headerlink" title="2.3.修改配置文件："></a>2.3.修改配置文件：</h2><p>分别打开kafka1，kafka2和kafka3三个目录中的kafka_2.12-0.10.2.1/config路径下的consumer.properties文件，将里面的内容改成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">group.id=logGroup</div></pre></td></tr></table></figure>
+<p>再打开这三个目录下的server.properties文件，按照下面内容进行修改：</p>
+<p>kafka1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=0</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka1/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9092</div><div class="line">port=9092</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<p>kafka2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=1</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka2/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9093</div><div class="line">port=9093</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<p>kafka3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=2</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka3/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9094</div><div class="line">port=9094</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<h2 id="2-4-启动kafka服务器"><a href="#2-4-启动kafka服务器" class="headerlink" title="2.4.启动kafka服务器"></a>2.4.启动kafka服务器</h2><p>进入D:/WorkSpace/kafka/kafka1/目录下，输入<br>.\bin\windows\kafka-server-start.bat .\config\server.properties  命令，注意不要漏掉命令中的“.”。得到的结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040025.png" alt=""></p>
+<p>同样地，进入另外两个kafka2 和 kafka3目录下，把另外两个kafka服务器也启动起来。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040026.png" alt=""></p>
+<p>如果你最后得到的结果是这样的，那么恭喜你，zookeeper和kafka集群已经搭建完成了。</p>
+<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>（1）在单机上实现ZooKeeper伪机群/伪集群部署 ：</p>
+<p><a href="http://blog.csdn.net/poechant/article/details/6633923" target="_blank" rel="external">http://blog.csdn.net/poechant/article/details/6633923</a></p>
+<p>（2）一台机器上安装zookeeper和kafka集群：</p>
+<p><a href="http://blog.csdn.net/u013244038/article/details/53938997" target="_blank" rel="external">http://blog.csdn.net/u013244038/article/details/53938997</a></p>
+<h2 id="操作系统版本：windows-10"><a href="#操作系统版本：windows-10" class="headerlink" title="操作系统版本：windows 10"></a>操作系统版本：windows 10</h2><h2 id="zookeeper版本：3-4-10"><a href="#zookeeper版本：3-4-10" class="headerlink" title="zookeeper版本：3.4.10"></a>zookeeper版本：3.4.10</h2><h2 id="kafka版本：2-12-0-10-2-1"><a href="#kafka版本：2-12-0-10-2-1" class="headerlink" title="kafka版本：2.12-0.10.2.1"></a>kafka版本：2.12-0.10.2.1</h2>
+      
+    </div>
     
-      
-        <div class="odd">
-          
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
 
-<div class="container">
-  <article class="post">
+      </footer>
     
-    <h1 class="entry-title">
-      <a href="/2017/03/28/Eclipse搭建SpringBoot/" rel="bookmark">
-        Eclipse搭建SpringBoot  
-      </a>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Eclipse搭建SpringBoot" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/Eclipse搭建SpringBoot/">Eclipse搭建SpringBoot</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-03-28
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/28/Eclipse搭建SpringBoot/" class="article-date">
+  <time datetime="2017-03-28T07:44:49.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
       
-      <a href="/tags/SpringBoot/" rel="tag">
-        SpringBoot
-      </a>
-      
-      <a href="/tags/Ecilpse/" rel="tag">
-        Ecilpse
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div>
+    <div class="article-entry" itemprop="articleBody">
       
+        <h2 id="1-在Eclipse中安装STS插件"><a href="#1-在Eclipse中安装STS插件" class="headerlink" title="1.在Eclipse中安装STS插件"></a>1.在Eclipse中安装STS插件</h2><p>进入Eclipse，选择【help】→【Eclipse Marketplace 】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png" alt="1"></p>
+<p>搜索→【STS】,找到【SpringToolSuite】并下载。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040002.png" alt="2"></p>
+<h2 id="2-新建一个项目"><a href="#2-新建一个项目" class="headerlink" title="2.新建一个项目"></a>2.新建一个项目</h2><p>【file】-&gt;【new】-&gt;【project】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040003.png" alt="3"></p>
+<p>选择Spring Starter Project，然后【next】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040004.png" alt="4"></p>
+<p>给你的项目取个名字，我的叫【bootDemo】，点击【next】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040005.png" alt="5"></p>
+<p>添加你所需要的依赖，由于我们现在只是演示，就只添加【core】中的【AOP】和【web】中的【web】。选好之后，点击【next】-&gt;【Finish】。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040006.png" alt="6"></p>
+<p>建好之后，你会得到这样一个工程：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040007.png" alt="7"></p>
+<h2 id="3-运行程序"><a href="#3-运行程序" class="headerlink" title="3.运行程序"></a>3.运行程序</h2><p>点击运行按钮，运行程序。运行方式选 Spring Boot App。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040008.png" alt="8"><br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040009.png" alt="9"></p>
+<p>得到结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040010.png" alt="10"></p>
+<p>这样，一个Spring Boot 项目就搭建起来了。</p>
+<h2 id="4-可能会遇到的问题："><a href="#4-可能会遇到的问题：" class="headerlink" title="4.可能会遇到的问题："></a>4.可能会遇到的问题：</h2><p>建立新项目后下载依赖的时候，可能会出现卡在那里不动的情况。这是因为国内连国外的镜像连不上造成的。可以修改maven中的镜像源，具体操作如下：</p>
+<p>修改maven根目录下的conf文件夹中的setting.xml文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
+<p>改好之后，右击项目→【maven】→【update project】即可</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png" alt="11"></p>
+<p>如果还是不行的话，就去看看 用户名/.m2/目录下是否也存在一个settings.xml文件，这个配置文件的优先级是高于maven安装目录下的配置文件的。所以要把这个也改成阿里云的镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
+<h2 id="5-参考链接："><a href="#5-参考链接：" class="headerlink" title="5.参考链接："></a>5.参考链接：</h2><p>Eclipse中创建新的Spring Boot项目：<br><a href="http://blog.csdn.net/clementad/article/details/51334064" target="_blank" rel="external">http://blog.csdn.net/clementad/article/details/51334064</a><br>maven阿里云中央仓库：<br><a href="http://blog.csdn.net/u010717403/article/details/52188496" target="_blank" rel="external">http://blog.csdn.net/u010717403/article/details/52188496</a><br>Maven2的配置文件settings.xml：<br><a href="http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html" target="_blank" rel="external">http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html</a></p>
+<h2 id="6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip"><a href="#6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip" class="headerlink" title="6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip"></a>6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip</h2>
+      
+    </div>
     
-      
-        <div class="even">
-          
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
 
-<div class="container">
-  <article class="post">
+      </footer>
     
-    <h1 class="entry-title">
-      <a href="/2017/03/24/kafka学习/" rel="bookmark">
-        kafka学习  
-      </a>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-kafka学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/24/kafka学习/">kafka学习</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-03-24
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/24/kafka学习/" class="article-date">
+  <time datetime="2017-03-24T10:45:40.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
       
-      <a href="/tags/Kafka/" rel="tag">
-        Kafka
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div> 
+    <div class="article-entry" itemprop="articleBody">
       
-    
-      
-        <div class="odd">
-          
+        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><h3 id="首先，我们先来看一下-kafka-是用来干什么的"><a href="#首先，我们先来看一下-kafka-是用来干什么的" class="headerlink" title="首先，我们先来看一下 kafka 是用来干什么的"></a>首先，我们先来看一下 <strong>kafka</strong> 是用来干什么的</h3><p>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
+<ul>
+<li>搭建一个实时的流数据管道以支持系统间的实时数据通信。</li>
+<li>搭建一个对流数据进行转换或响应的实时流应用。</li>
+</ul>
+<h3 id="为了实现这个目标，kafka-实现了以下三大关键特性"><a href="#为了实现这个目标，kafka-实现了以下三大关键特性" class="headerlink" title="为了实现这个目标，kafka 实现了以下三大关键特性"></a>为了实现这个目标，<strong>kafka</strong> 实现了以下三大关键特性</h3><ul>
+<li>支持记录流（<strong>stream of records</strong>）的发布和订阅（有点儿像<strong>消息队列</strong>）。</li>
+<li>允许你以一种高容错的手段存储记录流。</li>
+<li>允许你实时地处理产生的记录。</li>
+</ul>
+<h3 id="初次之外，你可能还需要了解一些关于-kafka-其他的知识"><a href="#初次之外，你可能还需要了解一些关于-kafka-其他的知识" class="headerlink" title="初次之外，你可能还需要了解一些关于 kafka 其他的知识"></a>初次之外，你可能还需要了解一些关于 <strong>kafka</strong> 其他的知识</h3><ul>
+<li><p>首先，<strong>kafka</strong> 是运行在由一个或多个服务器组成的集群（<strong>cluster</strong>）上</p>
+</li>
+<li><p><strong>kafka</strong> 集群将流（<strong>stream</strong>）按照不同的分类存储，每个分类叫做一个主题（ <strong>topic</strong>）。</p>
+</li>
+<li><p>每一条记录（<strong>record</strong>）都包含一个键（<strong>key</strong>），一个值（<strong>value</strong>）和一个时间戳（<strong>timestamp</strong>）。</p>
+<hr>
+</li>
+</ul>
+<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h3 id="kafka-的四大-API"><a href="#kafka-的四大-API" class="headerlink" title="kafka 的四大 API"></a><strong>kafka</strong> 的四大 API</h3><ul>
+<li><strong>Producer API</strong> ：允许一个应用发布一个数据流到一个或多个 <strong>topic</strong> 上。</li>
+<li><strong>Consumer API</strong> ：允许一个应用订阅一个或多个 <strong>topic</strong> ，并对发送给它的数据进行处理。 </li>
+<li><strong>Streams API</strong> ： 允许一个应用作为流处理器（<strong>stream processor</strong>）工作，即从某个或某些 <strong>topic</strong> 订阅，处理之后再发布到其他 <strong>topic</strong> 上。</li>
+<li><strong>Connector API</strong> ： 用于构建可重用的 <strong>producer</strong> 或 <strong>constmer</strong> 来把<strong>kafka</strong> 的 <strong>topic</strong> 连接到已有的系统上。比如，一个关系型数据库上的 <strong>connector</strong> 可以捕捉该数据库上某张表的内一个变化。</li>
+</ul>
 
-<div class="container">
-  <article class="post">
+      
+    </div>
     
-    <h1 class="entry-title">
-      <a href="/2017/03/18/单台windows搭建redis集群/" rel="bookmark">
-        单台windows搭建redis集群  
-      </a>
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-单台windows搭建redis集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/18/单台windows搭建redis集群/">单台windows搭建redis集群</a>
     </h1>
-    
+  
 
-    <p class="posted-on">
-    2017-03-18
-    </p>
-    <div class="tags-links">
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/18/单台windows搭建redis集群/" class="article-date">
+  <time datetime="2017-03-18T06:02:38.000Z" itemprop="datePublished">2017-03-18</time>
+</a>
       
-      <a href="/tags/Redis/" rel="tag">
-        Redis
-      </a>
-      
-      <a href="/tags/Windows/" rel="tag">
-        Windows
-      </a>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
       
     </div>
-  </article>
-</div>
-        </div>
+    <div class="article-entry" itemprop="articleBody">
       
-    
-
-    
-<div class="container" >
-  <ul class="pager">
-    
-    
-      <li class="next">
-        <a href="/page/2/">
-          <span class="meta-arraw meta-arraw-left"> </span>Older Posts
-        </a>
-      </li>
-    
-  </ul>
-</div>
-
-
-  </main>
-</div>
-
-  <!-- Footer -->
-  <!-- Footer-widgets -->
-<div class="footer-widgets">
-  <div class="row inside-wrapper">
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">关于本站</h1>
-        <div class="custom-widget-content">
-          
-          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily">如何自定义这里的内容(配置教程)?</a></li></ul>
-        </div>
-      </aside>
+        <h2 id="1-下载和安装必要的工具"><a href="#1-下载和安装必要的工具" class="headerlink" title="1.下载和安装必要的工具"></a>1.下载和安装必要的工具</h2><h3 id="1-1-下载安装redis-for-windows"><a href="#1-1-下载安装redis-for-windows" class="headerlink" title="1.1.下载安装redis for windows"></a>1.1.下载安装redis for windows</h3><p>下载地址：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">https://github.com/MSOpenTech/redis/releases</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png" alt=""></p>
+<p>msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。</p>
+<h3 id="1-2-下载安装ruby"><a href="#1-2-下载安装ruby" class="headerlink" title="1.2.下载安装ruby"></a>1.2.下载安装ruby</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050002.png" alt=""></p>
+<p>下载地址：<a href="https://rubyinstaller.org/downloads/" target="_blank" rel="external">https://rubyinstaller.org/downloads/</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050003.png" alt=""></p>
+<p>我下载安装的版本是Ruby2.3.3（x64）。安装的时候，记得把下面三个选项勾选上（如下图所示），这样就不用我们自己去配置环境变量了。</p>
+<h3 id="1-3-下载安装GEM："><a href="#1-3-下载安装GEM：" class="headerlink" title="1.3.下载安装GEM："></a>1.3.下载安装GEM：</h3><p>下载地址：<a href="https://rubygems.org/pages/download" target="_blank" rel="external">https://rubygems.org/pages/download</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050004.png" alt=""></p>
+<p>下载zip文件就行，解压到你喜欢的位置（我解压到了D:/software目录下）。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050005.png" alt=""></p>
+<p>双击setup.rb，安装GEM。完成之后，把该文件夹的bin目录添加到系统变量中的path里面。<br>首先，复制该bin路径。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050006.png" alt=""></p>
+<p>然后右键【此电脑】-&gt;【属性】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050007.png" alt=""></p>
+<p>【高级系统设置】-&gt;【环境变量】-&gt;【系统变量】-&gt;【Path】-&gt;【编辑】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050008.png" alt=""></p>
+<p>单击【新建】，把bin路径粘贴到方框中，然后点击【确定】即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050009.png" alt=""></p>
+<h3 id="1-4-生成redis-trib-rb文件"><a href="#1-4-生成redis-trib-rb文件" class="headerlink" title="1.4.生成redis-trib.rb文件"></a>1.4.生成redis-trib.rb文件</h3><p>新建一个文本文件，把它的名字改成redis-trib.rb。注意在改名之前先把隐藏的扩展名显示出来，否则会生成redis-trib.rb.txt文件。建好之后，访问：</p>
+<p><a href="https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb" target="_blank" rel="external">https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050010.png" alt=""></p>
+<p>复制页面中的内容，粘贴到新建的redis-trib.rb文件中，保存。然后将此文件复制到redis的安装目录下（我的是D:\Software\Redis）。然后将这个目录也添加到系统变量的path中。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png" alt=""></p>
+<p>OK，这样准备工作就完成了。接下来我们要配置redis集群。</p>
+<h2 id="2-配置redis集群"><a href="#2-配置redis集群" class="headerlink" title="2.配置redis集群"></a>2.配置redis集群</h2><h3 id="2-1-创建相应目录："><a href="#2-1-创建相应目录：" class="headerlink" title="2.1.创建相应目录："></a>2.1.创建相应目录：</h3><p>在你喜欢的地方（我的是D:\WorkSpace）建立一个叫做redis的目录（注意，这个不是刚才安装redis的目录，而是一个你新建的目录，后文中如果没有特殊说明，redis目录都指这个新建的目录），里面创建6个子目录，分别叫7000,7001,7002,7003,7004,7005。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png" alt=""></p>
+<p>打开7000文件夹，建立一个redis.conf文件，将下面内容粘贴进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">port 7000</div><div class="line">cluster-enabled yes</div><div class="line">cluster-config-file nodes-7000.conf</div><div class="line">cluster-node-timeout 5000</div><div class="line">appendonly yes</div></pre></td></tr></table></figure>
+<p>同理，在其他5个文件夹也各自创建一个redis.conf文件，将上面内容粘贴进去。不过要将prot和cluster-config-file中的7000改成对应的数字。如在7001文件夹中就改成7001。</p>
+<h3 id="2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。"><a href="#2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。" class="headerlink" title="2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。"></a>2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050012.png" alt=""></p>
+<p>你显示的结果可能跟我稍微有些不一样，没关系，这是因为我刚才已经安装过了。</p>
+<p>由于 GFW的问题， GEM 的源有时会不可用，如果你遇到了这个问题，可以使用淘宝的映像：<br>添加：gem sources -a <a href="https://ruby.taobao.org" target="_blank" rel="external">https://ruby.taobao.org</a><br>查看已存在的源：gem sources -l<br>删除被墙的源：gem sources -r <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a></p>
+<h3 id="2-3-在D-WorkSpace-redis目录下创建redis-bat文件"><a href="#2-3-在D-WorkSpace-redis目录下创建redis-bat文件" class="headerlink" title="2.3.在D:\WorkSpace\redis目录下创建redis.bat文件"></a>2.3.在D:\WorkSpace\redis目录下创建redis.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">cd D:\WorkSpace\Redis</div><div class="line">start Redis-Server ./7000/redis.conf</div><div class="line">start Redis-Server ./7001/redis.conf</div><div class="line">start Redis-Server ./7002/redis.conf</div><div class="line">start Redis-Server ./7003/redis.conf</div><div class="line">start Redis-Server ./7004/redis.conf</div><div class="line">start Redis-Server ./7005/redis.conf</div></pre></td></tr></table></figure></p>
+<p>双击redis.bat，弹出6个窗口，同时redis目录下会出现nodes-7000.conf 至 nodes-7005.conf 这几个文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png" alt=""></p>
+<h3 id="2-4-在D-WorkSpace-redis目录下新建cluster-bat文件"><a href="#2-4-在D-WorkSpace-redis目录下新建cluster-bat文件" class="headerlink" title="2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件"></a>2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd D:\WorkSpace\redis</div><div class="line">redis-trib.rb create --replicas 1 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005</div></pre></td></tr></table></figure></p>
+<p>双击cluster.bat，黑框框一闪而过。没关系，应该是运行成功了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050014.png" alt=""></p>
+<h3 id="2-5-测试一下"><a href="#2-5-测试一下" class="headerlink" title="2.5.测试一下"></a>2.5.测试一下</h3><p>打开cmd，输入：redis-cli.exe -c -p 7000<br>再打开一个cmd，输入redis-cli.exe -c -p 7001<br>它们连接了不同的实例，我们现在要测试以下它们的数据是否是同步的。<br>我们在7000的cmd窗口中输入： set test helloworld<br>在7001的cmd窗口中输入：get test<br>可以看到redis输出：”helloworld”<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png" alt=""></p>
+<p>好，到这儿redis的集群就部署完成了。</p>
+<h2 id="3-参考链接："><a href="#3-参考链接：" class="headerlink" title="3.参考链接："></a>3.参考链接：</h2><p>Windows 部署 Redis 群集:<br><a href="http://www.cnblogs.com/xling/p/5253063.html" target="_blank" rel="external">http://www.cnblogs.com/xling/p/5253063.html</a><br>Redis安装：<br><a href="http://www.runoob.com/redis/redis-install.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-install.html</a></p>
+<h2 id="4-操作系统：Windows-10"><a href="#4-操作系统：Windows-10" class="headerlink" title="4.操作系统：Windows 10"></a>4.操作系统：Windows 10</h2>
+      
     </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Contact</h1>
-        <div class="widget-text">
-          
-            
-              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
-            
-          
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Search</h1>
-        <div class="widget-text">
-          <form onSubmit="return appDaily.submitSearch('')">
-            <p>
-              <input type="text" placeholder="search..." id="homeSearchInput">
-            </p>
-            <!-- <input type="submit" value="GO"> -->
-          </form>
-        </div>
-      </aside>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      </nav>
+    </section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>
-</div>
-<!-- Footer -->
-<footer class="site-info">
-  <p>
-    <span>Jackie &copy; 2017</span>
-    
-      <span class="split">|</span>
-      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
-    
-  </p>
 </footer>
+    
 
-
-  <!-- After footer scripts -->
-  <!-- scripts -->
-<script src="/js/app.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
+<script src="/js/jquery.min.js"></script>
 
 
 
-
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
-
 </html>

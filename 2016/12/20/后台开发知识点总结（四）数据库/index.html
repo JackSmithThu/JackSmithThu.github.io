@@ -1,137 +1,76 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-<!-- Head tag -->
+<html>
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <!--Description-->
-  
-
-  <!--Author-->
-  
-  <meta name="author" content="Jack Smith">
-  
-
-  <!--Open Graph Title-->
-  
-      <meta property="og:title" content="后台开发知识点总结（四）数据库"/>
-  
-  <!--Open Graph Description-->
-  
-  <!--Open Graph Site Name-->
-  <meta property="og:site_name" content="Jackie"/>
-  <!--Type page-->
-  
-      <meta property="og:type" content="article" />
-  
-  <!--Page Cover-->
-  
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- Title -->
   
   <title>后台开发知识点总结（四）数据库 - Jackie</title>
-
-
-  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
-
-  <!-- Custom CSS/Sass -->
-  <link rel="stylesheet" href="/css/style.css">
-
-  <!----------------------------
-  https://github.com/GallenHu/hexo-theme-Daily
-
- _____            _   _
-|  __ \          (_) | |
-| |  | |   __ _   _  | |  _   _
-| |  | |  / _` | | | | | | | | |
-| |__| | | (_| | | | | | | |_| |
-|_____/   \__,_| |_| |_|  \__, |
-                          __/ |
-                         |___/
-
-    ---------------------------><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="位图索引所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（四）数据库">
+<meta property="og:url" content="http://yoursite.com/2016/12/20/后台开发知识点总结（四）数据库/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="位图索引所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位">
+<meta property="og:updated_time" content="2017-05-24T01:50:21.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（四）数据库">
+<meta name="twitter:description" content="位图索引所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位">
+  
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
 
 </head>
 
-
 <body>
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Nav -->
-  <header class="site-header">
-  <div class="header-inside">
-    <div class="logo">
-      <a href="/" rel="home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
         
-        <img src="https://hexo.io/logo.svg" alt="Jackie" height="60">
-        
-      </a>
-    </div>
-    <!-- Navigation -->
-    <nav class="navbar">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse">
-        <ul class="navbar-nav">
-          
-          
-            <li>
-              <a href="/.">
-                
-                  home
-                
-              </a>
-            </li>
-          
-            <li>
-              <a href="/archives">
-                
-                  archive
-                
-              </a>
-            </li>
-          
-        </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </nav>
-    <div class="button-wrap">
-      <button class="menu-toggle">Primary Menu</button>
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
     </div>
   </div>
 </header>
+    <section id="main" class="outer"><article id="post-后台开发知识点总结（四）数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      后台开发知识点总结（四）数据库
+    </h1>
+  
 
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2016/12/20/后台开发知识点总结（四）数据库/" class="article-date">
+  <time datetime="2016-12-20T01:47:07.000Z" itemprop="datePublished">2016-12-20</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
 
-  <!-- Main Content -->
-  <div class="content-area">
-  <div class="post">
-    <!-- Post Content -->
-    <div class="container">
-      <article>
-        <!-- Title date & tags -->
-        <div class="post-header">
-          <h1 class="entry-title">
-            后台开发知识点总结（四）数据库
-            
-          </h1>
-          <p class="posted-on">
-          2016-12-20
-          </p>
-          <div class="tags-links">
-            
-              
-                <a href="/tags/数据库/" rel="tag">
-                  数据库
-                </a>
-              
-            
-          </div>
-        </div>
-        <!-- Post Main Content -->
-        <div class="entry-content">
-          <h3 id="位图索引"><a href="#位图索引" class="headerlink" title="位图索引"></a>位图索引</h3><p>所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。<br>使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位图索引做and操作，就能快速地得到结果。<br>位图索引适用于那种只有几个固定值而且不会频繁更新的列。<br>MySQL不支持这种索引。</p>
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="位图索引"><a href="#位图索引" class="headerlink" title="位图索引"></a>位图索引</h3><p>所谓位图索引，就是用一个二进制向量表示一张表中所有数据的某个属性。如一张User表中所有人的性别，或者是User表中所有人的已婚状况。像这种只有两个（或几个）固定值的属性，即使使用B树索引，还是需要取出一半的数据，因此并不能显著地提升效率。<br>使用位图索引的好处是，可以通过对两个索引进行and操作来快速地找到同时满足两个属性的样本。如要找出User中所有的未婚男性，只需要把性别和已婚状况两个位图索引做and操作，就能快速地得到结果。<br>位图索引适用于那种只有几个固定值而且不会频繁更新的列。<br>MySQL不支持这种索引。</p>
 <h3 id="MySQL数据库引擎有几种？"><a href="#MySQL数据库引擎有几种？" class="headerlink" title="MySQL数据库引擎有几种？"></a>MySQL数据库引擎有几种？</h3><p>ISAM、MYISAM、HEAP、INNODB、BERKELEYDB。</p>
 <h3 id="MYISAM-和-INNODB-有什么区别？分别适用于什么情况？"><a href="#MYISAM-和-INNODB-有什么区别？分别适用于什么情况？" class="headerlink" title="MYISAM 和 INNODB 有什么区别？分别适用于什么情况？"></a>MYISAM 和 INNODB 有什么区别？分别适用于什么情况？</h3><p>INNODB 支持事务、外键和行级锁，MYISAM 不支持。不过，INNODB 不支持 FULLTEXT 索引，也不保存表具体的行数。<br>INNODB 比较适合更新比较频繁，或者是要求事务的场景。而 MYISAM 比较适合查询频繁、不要求事务和频繁使用count 的场景。</p>
 <h3 id="INNODB-的行级锁什么时候有效？什么时候无效？"><a href="#INNODB-的行级锁什么时候有效？什么时候无效？" class="headerlink" title="INNODB 的行级锁什么时候有效？什么时候无效？"></a>INNODB 的行级锁什么时候有效？什么时候无效？</h3><p>只有在 WHERE 判断中是主键的时候有效，其他情况同样会锁全表。</p>
@@ -145,98 +84,62 @@
 <h3 id="HASH索引和BTREE索引有什么区别？"><a href="#HASH索引和BTREE索引有什么区别？" class="headerlink" title="HASH索引和BTREE索引有什么区别？"></a>HASH索引和BTREE索引有什么区别？</h3><p>HSAH索引不能使用范围查询，也不能避免排序操作。另外，HSAH索引不能利用部分索引键查询。</p>
 <h3 id="简单介绍一下R树？"><a href="#简单介绍一下R树？" class="headerlink" title="简单介绍一下R树？"></a>简单介绍一下R树？</h3><p>R树是B树在高维空间的扩展。简单来说，B树每个节点描述的是一个线段，而R树所描述的是一个矩形或立方体（当然，也可能是更高维）。父节点表示的矩形应当能够包括所有子节点所包括的矩形。<br>这种数据结构主要用来搜索多维空间，比如一个人附近的餐厅。如果没有R树，就需要对所有餐厅的横纵坐标进行比较。而有了R树之后。只需要找到对应的节点就可以了。</p>
 
-        </div>
-      </article>
-    </div>
-    <!-- Comments -->
-    <div class="container">
       
-<section id="comment">
-  <!-- <h1 class="title">Comments</h1> -->
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          后台开发知识点总结（三）Java并发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">后台开发知识点总结（五）设计模式&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
 
   
+</article>
+
+
+
+
+
+
+
 </section>
-
-
-    </div>
-    <!-- Pre or Next -->
-    <div class="nav-links">
-      
-        <div class="nav-previous">
-          <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
-        </div>
-      
-      
-        <div class="nav-next">
-          <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
-        </div>
-      
-    </div>
-
-  </div>
-</div>
-
-
-  <!-- Footer -->
-  <!-- Footer-widgets -->
-<div class="footer-widgets">
-  <div class="row inside-wrapper">
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">关于本站</h1>
-        <div class="custom-widget-content">
-          
-          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily">如何自定义这里的内容(配置教程)?</a></li></ul>
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Contact</h1>
-        <div class="widget-text">
-          
-            
-              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
-            
-          
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Search</h1>
-        <div class="widget-text">
-          <form onSubmit="return appDaily.submitSearch('')">
-            <p>
-              <input type="text" placeholder="search..." id="homeSearchInput">
-            </p>
-            <!-- <input type="submit" value="GO"> -->
-          </form>
-        </div>
-      </aside>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>
-</div>
-<!-- Footer -->
-<footer class="site-info">
-  <p>
-    <span>Jackie &copy; 2017</span>
-    
-      <span class="split">|</span>
-      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
-    
-  </p>
 </footer>
+    
 
-
-  <!-- After footer scripts -->
-  <!-- scripts -->
-<script src="/js/app.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
+<script src="/js/jquery.min.js"></script>
 
 
 
-
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
-
 </html>

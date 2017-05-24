@@ -1,137 +1,76 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-<!-- Head tag -->
+<html>
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <!--Description-->
-  
-
-  <!--Author-->
-  
-  <meta name="author" content="Jack Smith">
-  
-
-  <!--Open Graph Title-->
-  
-      <meta property="og:title" content="后台开发知识点总结（六）大型网站架构"/>
-  
-  <!--Open Graph Description-->
-  
-  <!--Open Graph Site Name-->
-  <meta property="og:site_name" content="Jackie"/>
-  <!--Type page-->
-  
-      <meta property="og:type" content="article" />
-  
-  <!--Page Cover-->
-  
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- Title -->
   
   <title>后台开发知识点总结（六）大型网站架构 - Jackie</title>
-
-
-  <link rel="shortcut icon" href="https://hexo.io/icon/favicon-96x96.png">
-
-  <!-- Custom CSS/Sass -->
-  <link rel="stylesheet" href="/css/style.css">
-
-  <!----------------------------
-  https://github.com/GallenHu/hexo-theme-Daily
-
- _____            _   _
-|  __ \          (_) | |
-| |  | |   __ _   _  | |  _   _
-| |  | |  / _` | | | | | | | | |
-| |__| | | (_| | | | | | | |_| |
-|_____/   \__,_| |_| |_|  \__, |
-                          __/ |
-                         |___/
-
-    ---------------------------><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么叫正向代理？什么叫反向代理？正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。 反向代理服务器与负载均衡服务器的区别？反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转">
+<meta name="keywords" content="大型网站架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（六）大型网站架构">
+<meta property="og:url" content="http://yoursite.com/2017/02/18/后台开发知识点总结（六）大型网站架构/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="什么叫正向代理？什么叫反向代理？正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。 反向代理服务器与负载均衡服务器的区别？反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转">
+<meta property="og:updated_time" content="2017-05-24T01:57:00.816Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（六）大型网站架构">
+<meta name="twitter:description" content="什么叫正向代理？什么叫反向代理？正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。 反向代理服务器与负载均衡服务器的区别？反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转">
+  
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
 
 </head>
 
-
 <body>
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Nav -->
-  <header class="site-header">
-  <div class="header-inside">
-    <div class="logo">
-      <a href="/" rel="home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
         
-        <img src="https://hexo.io/logo.svg" alt="Jackie" height="60">
-        
-      </a>
-    </div>
-    <!-- Navigation -->
-    <nav class="navbar">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse">
-        <ul class="navbar-nav">
-          
-          
-            <li>
-              <a href="/.">
-                
-                  home
-                
-              </a>
-            </li>
-          
-            <li>
-              <a href="/archives">
-                
-                  archive
-                
-              </a>
-            </li>
-          
-        </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </nav>
-    <div class="button-wrap">
-      <button class="menu-toggle">Primary Menu</button>
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
     </div>
   </div>
 </header>
+    <section id="main" class="outer"><article id="post-后台开发知识点总结（六）大型网站架构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      后台开发知识点总结（六）大型网站架构
+    </h1>
+  
 
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" class="article-date">
+  <time datetime="2017-02-18T12:53:57.000Z" itemprop="datePublished">2017-02-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
 
-  <!-- Main Content -->
-  <div class="content-area">
-  <div class="post">
-    <!-- Post Content -->
-    <div class="container">
-      <article>
-        <!-- Title date & tags -->
-        <div class="post-header">
-          <h1 class="entry-title">
-            后台开发知识点总结（六）大型网站架构
-            
-          </h1>
-          <p class="posted-on">
-          2017-02-18
-          </p>
-          <div class="tags-links">
-            
-              
-                <a href="/tags/大型网站架构/" rel="tag">
-                  大型网站架构
-                </a>
-              
-            
-          </div>
-        </div>
-        <!-- Post Main Content -->
-        <div class="entry-content">
-          <h3 id="什么叫正向代理？什么叫反向代理？"><a href="#什么叫正向代理？什么叫反向代理？" class="headerlink" title="什么叫正向代理？什么叫反向代理？"></a>什么叫正向代理？什么叫反向代理？</h3><p>正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。</p>
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么叫正向代理？什么叫反向代理？"><a href="#什么叫正向代理？什么叫反向代理？" class="headerlink" title="什么叫正向代理？什么叫反向代理？"></a>什么叫正向代理？什么叫反向代理？</h3><p>正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。</p>
 <h3 id="反向代理服务器与负载均衡服务器的区别？"><a href="#反向代理服务器与负载均衡服务器的区别？" class="headerlink" title="反向代理服务器与负载均衡服务器的区别？"></a>反向代理服务器与负载均衡服务器的区别？</h3><p>反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转发用户请求，不存储资源。</p>
 <h3 id="Redis的可排序集与集合的区别是什么？是怎么实现的？"><a href="#Redis的可排序集与集合的区别是什么？是怎么实现的？" class="headerlink" title="Redis的可排序集与集合的区别是什么？是怎么实现的？"></a>Redis的可排序集与集合的区别是什么？是怎么实现的？</h3><p>可排序集在排序上拥有更高的效率（集合排序的时间复杂度为O），可排序集是借助跳表实现的。</p>
 <h3 id="什么是跳表？"><a href="#什么是跳表？" class="headerlink" title="什么是跳表？"></a>什么是跳表？</h3><p>跳表是一种可以用来替代树的数据结构，它的效率和AVL树不相上下。跳表由很多层构成，每一层都是一个有序链表。最下层包含了链表的所有元素，在上层出现的元素，下层还会出现。跳表使用上层来作为下层的索引，每个节点包含两个指针，一个指向后一个节点，一个指向下面的节点。跳表的空间复杂度期望为2n，其查找、插入和删除的时间复杂度均为O(log(n))。</p>
@@ -150,98 +89,62 @@
 <h3 id="数据库分库分表（Sharding）的步骤是什么？"><a href="#数据库分库分表（Sharding）的步骤是什么？" class="headerlink" title="数据库分库分表（Sharding）的步骤是什么？"></a>数据库分库分表（Sharding）的步骤是什么？</h3><p><a href="http://blog.csdn.net/bluishglc/article/details/6161475" target="_blank" rel="external">http://blog.csdn.net/bluishglc/article/details/6161475</a></p>
 <h3 id="多级缓存是怎么实现的？"><a href="#多级缓存是怎么实现的？" class="headerlink" title="多级缓存是怎么实现的？"></a>多级缓存是怎么实现的？</h3><p><a href="http://blog.csdn.net/huashen1621y/article/details/51594148" target="_blank" rel="external">http://blog.csdn.net/huashen1621y/article/details/51594148</a></p>
 
-        </div>
-      </article>
-    </div>
-    <!-- Comments -->
-    <div class="container">
       
-<section id="comment">
-  <!-- <h1 class="title">Comments</h1> -->
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大型网站架构/">大型网站架构</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          后台开发知识点总结（五）设计模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/18/单台windows搭建redis集群/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单台windows搭建redis集群&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
 
   
+</article>
+
+
+
+
+
+
+
 </section>
-
-
-    </div>
-    <!-- Pre or Next -->
-    <div class="nav-links">
-      
-        <div class="nav-previous">
-          <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" rel="prev"><span class="meta-arraw meta-arraw-left"></span> Older Posts</a>
-        </div>
-      
-      
-        <div class="nav-next">
-          <a href="/2017/03/18/单台windows搭建redis集群/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
-        </div>
-      
-    </div>
-
-  </div>
-</div>
-
-
-  <!-- Footer -->
-  <!-- Footer-widgets -->
-<div class="footer-widgets">
-  <div class="row inside-wrapper">
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">关于本站</h1>
-        <div class="custom-widget-content">
-          
-          <ul><li><a href="https://github.com/GallenHu/hexo-theme-Daily">如何自定义这里的内容(配置教程)?</a></li></ul>
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Contact</h1>
-        <div class="widget-text">
-          
-            
-              <a href="https://github.com/GallenHu" class="icon icon-github" target="_blank">github</a>
-            
-          
-        </div>
-      </aside>
-    </div>
-    <div class="col-1-3">
-      <aside>
-        <h1 class="widget-title">Search</h1>
-        <div class="widget-text">
-          <form onSubmit="return appDaily.submitSearch('')">
-            <p>
-              <input type="text" placeholder="search..." id="homeSearchInput">
-            </p>
-            <!-- <input type="submit" value="GO"> -->
-          </form>
-        </div>
-      </aside>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>
-</div>
-<!-- Footer -->
-<footer class="site-info">
-  <p>
-    <span>Jackie &copy; 2017</span>
-    
-      <span class="split">|</span>
-      <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> with Theme <a href="https://github.com/GallenHu/hexo-theme-Daily" target="_blank">Daily</a></span>
-    
-  </p>
 </footer>
+    
 
-
-  <!-- After footer scripts -->
-  <!-- scripts -->
-<script src="/js/app.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
+<script src="/js/jquery.min.js"></script>
 
 
 
-
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
-
 </html>
