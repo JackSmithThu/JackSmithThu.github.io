@@ -1,5 +1,351 @@
-<!DOCTYPE html><html lang="Zh-Hans"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>后台开发知识点总结（五）设计模式 | Jackie</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">后台开发知识点总结（五）设计模式</h1><a id="logo" href="/.">Jackie</a><p class="description">Captain of Black Preal</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Inicio</i></a><a href="/archives/"><i class="fa fa-archive"> Archivo</i></a><a href="/about/"><i class="fa fa-user"> Acerca de</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">后台开发知识点总结（五）设计模式</h1><div class="post-meta">Jan 18, 2017<span> | </span><span class="category"><a href="/categories/技术/">技术</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="什么是代理模式？"><a href="#什么是代理模式？" class="headerlink" title="什么是代理模式？"></a>什么是代理模式？</h3><p>代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>后台开发知识点总结（五）设计模式 | Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="设计模式" />
+  
+  
+  
+  
+  <meta name="description" content="什么是代理模式？代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。 什么是动态代理？它的优点是什么？按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。 如何实现一个动态代理？">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（五）设计模式">
+<meta property="og:url" content="http://yoursite.com/2017/01/18/后台开发知识点总结（五）设计模式/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="什么是代理模式？代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。 什么是动态代理？它的优点是什么？按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。 如何实现一个动态代理？">
+<meta property="og:updated_time" content="2017-05-24T01:53:15.501Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（五）设计模式">
+<meta name="twitter:description" content="什么是代理模式？代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。 什么是动态代理？它的优点是什么？按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。 如何实现一个动态代理？">
+  
+    <link rel="alternate" href="/atom.xml" title="Jackie" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/"] = "Home"; 
+
+  themeMenus["/archives"] = "Archives"; 
+
+  themeMenus["/categories"] = "Categories"; 
+
+  themeMenus["/tags"] = "Tags"; 
+
+  themeMenus["/about"] = "About"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Jackie" rel="home"> Jackie </a>
+            
+          </h1>
+
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-后台开发知识点总结（五）设计模式" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      后台开发知识点总结（五）设计模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" class="article-date">
+	  <time datetime="2017-01-18T04:51:47.000Z" itemprop="datePublished">January 18, 2017</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是代理模式？"><a href="#什么是代理模式？" class="headerlink" title="什么是代理模式？"></a>什么是代理模式？</h3><p>代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。</p>
 <h3 id="什么是动态代理？它的优点是什么？"><a href="#什么是动态代理？它的优点是什么？" class="headerlink" title="什么是动态代理？它的优点是什么？"></a>什么是动态代理？它的优点是什么？</h3><p>按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。</p>
 <h3 id="如何实现一个动态代理？"><a href="#如何实现一个动态代理？" class="headerlink" title="如何实现一个动态代理？"></a>如何实现一个动态代理？</h3><p>实现一个动态代理有两种方法，一种是使用 JDK 实现动态代理，另一种是使用 Cglib 实现动态代理。<br>前者的代理类需要实现 InvocationHandler 接口（该接口要实现一个 Invoke() 方法），并用在Bind 方法中调用 Proxy 的 NewProxyInstance 方法创建代理实例。在创建代理实例的过程中，需要绑定委托类实现的（提供相关服务的）接口。如果委托类没有实现接口，那么这种方法不能使用。<br>后者是生成一个代理类的子类，需要实现 MethodInterceptor 接口（该接口要实现一个 intercept() 方法），并在 getNewInstance() 中创建一个实例，然后把其父类设定为委托类，并返回该实例。由于这种方法是基于继承的，因为 final 类不能使用。<br>参考链接：<a href="http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html" target="_blank" rel="external">http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html</a></p>
 <h3 id="如何利用动态代理实现-Spring-AOP？"><a href="#如何利用动态代理实现-Spring-AOP？" class="headerlink" title="如何利用动态代理实现 Spring AOP？"></a>如何利用动态代理实现 Spring AOP？</h3><p><a href="http://blog.csdn.net/moreevan/article/details/11977115/" target="_blank" rel="external">http://blog.csdn.net/moreevan/article/details/11977115/</a></p>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/01/18/后台开发知识点总结（五）设计模式/" data-id="cj32e289j000vngraoivd2utm" class="article-share-link">Cuota</a><div class="tags"><a href="/tags/设计模式/">设计模式</a></div><div class="post-nav"><a href="/2016/12/20/后台开发知识点总结（四）数据库/" class="pre">后台开发知识点总结（四）数据库</a><a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" class="next">后台开发知识点总结（六）大型网站架构</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categorías</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/心情/">心情</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Etiquetas</i></div><div class="tagcloud"><a href="/tags/Canal/" style="font-size: 15px;">Canal</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/SCAtoolbox/" style="font-size: 15px;">SCAtoolbox</a> <a href="/tags/Matlab/" style="font-size: 15px;">Matlab</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/直升机/" style="font-size: 15px;">直升机</a> <a href="/tags/RockerMQ/" style="font-size: 15px;">RockerMQ</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Ecilpse/" style="font-size: 15px;">Ecilpse</a> <a href="/tags/Windows/" style="font-size: 15px;">Windows</a> <a href="/tags/Zookeeper/" style="font-size: 15px;">Zookeeper</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/多线程/" style="font-size: 15px;">多线程</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/大型网站架构/" style="font-size: 15px;">大型网站架构</a> <a href="/tags/数据库/" style="font-size: 15px;">数据库</a> <a href="/tags/Blog/" style="font-size: 15px;">Blog</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recientes</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/04/一次惊险的体验（伪）/">一次惊险的体验（伪）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/SCAtoolbox应用指南/">SCAtoolbox应用指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/24/大神们的博客/">大神们的博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/几种消息队列的比较/">几种消息队列的比较</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/Eclipse搭建SpringBoot/">Eclipse搭建SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/kafka学习/">kafka学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/单台windows搭建redis集群/">单台windows搭建redis集群</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">Jackie.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yODAyOS80NjA2">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/20/后台开发知识点总结（四）数据库/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          后台开发知识点总结（四）数据库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">后台开发知识点总结（六）大型网站架构</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是代理模式？"><span class="nav-number">1.</span> <span class="nav-text">什么是代理模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是动态代理？它的优点是什么？"><span class="nav-number">2.</span> <span class="nav-text">什么是动态代理？它的优点是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何实现一个动态代理？"><span class="nav-number">3.</span> <span class="nav-text">如何实现一个动态代理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何利用动态代理实现-Spring-AOP？"><span class="nav-number">4.</span> <span class="nav-text">如何利用动态代理实现 Spring AOP？</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2017 Jackie All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
