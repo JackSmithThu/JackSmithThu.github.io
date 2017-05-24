@@ -31,14 +31,14 @@
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/05/05/单台windows搭建redis集群/"/>
+<link rel="canonical" href="http://yoursite.com/2017/03/18/单台windows搭建redis集群/"/>
 
 
 <meta name="description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
 <meta name="keywords" content="Redis,Windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="单台windows搭建redis集群">
-<meta property="og:url" content="http://yoursite.com/2017/05/05/单台windows搭建redis集群/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/03/18/单台windows搭建redis集群/index.html">
 <meta property="og:site_name" content="Jackie">
 <meta property="og:description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png">
@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050014.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png">
-<meta property="og:updated_time" content="2017-05-05T06:19:51.547Z">
+<meta property="og:updated_time" content="2017-05-24T01:59:15.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单台windows搭建redis集群">
 <meta name="twitter:description" content="1.下载和安装必要的工具1.1.下载安装redis for windows下载地址：https://github.com/MSOpenTech/redis/releases  msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。 1.2.下载安装ruby 下载地址：https://rubyinstaller.o">
@@ -139,7 +139,7 @@
           <a class="menu-item-link" href="/">
             
             
-              首页
+              Home
             
           </a>
         </li>
@@ -148,7 +148,7 @@
           <a class="menu-item-link" href="/archives/">
             
             
-              归档
+              Archives
             
           </a>
         </li>
@@ -175,7 +175,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          May 5, 2017
+          Mar 18, 2017
         </span>
       </div>
     </header>
@@ -183,7 +183,7 @@
     
     
   <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
+    <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-下载和安装必要的工具"><span class="toc-text">1.下载和安装必要的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-下载安装redis-for-windows"><span class="toc-text">1.1.下载安装redis for windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-下载安装ruby"><span class="toc-text">1.2.下载安装ruby</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-下载安装GEM："><span class="toc-text">1.3.下载安装GEM：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-生成redis-trib-rb文件"><span class="toc-text">1.4.生成redis-trib.rb文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-配置redis集群"><span class="toc-text">2.配置redis集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-创建相应目录："><span class="toc-text">2.1.创建相应目录：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。"><span class="toc-text">2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-在D-WorkSpace-redis目录下创建redis-bat文件"><span class="toc-text">2.3.在D:\WorkSpace\redis目录下创建redis.bat文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-在D-WorkSpace-redis目录下新建cluster-bat文件"><span class="toc-text">2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-测试一下"><span class="toc-text">2.5.测试一下</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-参考链接："><span class="toc-text">3.参考链接：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-操作系统：Windows-10"><span class="toc-text">4.操作系统：Windows 10</span></a></li></ol>
     </div>
@@ -253,7 +253,7 @@
     </p>
     <p class="copyright-item">
       <span>链接: </span>
-      <a href="http://yoursite.com/2017/05/05/单台windows搭建redis集群/">http://yoursite.com/2017/05/05/单台windows搭建redis集群/</a>
+      <a href="http://yoursite.com/2017/03/18/单台windows搭建redis集群/">http://yoursite.com/2017/03/18/单台windows搭建redis集群/</a>
     </p>
 
     <p class="copyright-item lincese">
@@ -301,16 +301,16 @@
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2017/05/04/单台windows搭建zookeeper和kafka集群/">
+      <a class="prev" href="/2017/02/18/后台开发知识点总结（六）大型网站架构/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">单台windows搭建zookeeper和kafka集群</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+        <span class="prev-text nav-default">后台开发知识点总结（六）大型网站架构</span>
+        <span class="prev-text nav-mobile">Prev</span>
       </a>
     
     
-      <a class="next" href="/2017/05/08/单台windows搭建mysql主从机备份/">
-        <span class="next-text nav-default">单台windows搭建mysql主从机备份</span>
-        <span class="prev-text nav-mobile">下一篇</span>
+      <a class="next" href="/2017/03/24/kafka学习/">
+        <span class="next-text nav-default">kafka学习</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     
@@ -370,11 +370,11 @@
 
 <div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
