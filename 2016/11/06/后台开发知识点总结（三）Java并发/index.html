@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="Zh-Hans">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="后台开发知识点总结（三）Java并发"/>
+
+
+
+
+  <meta name="keywords" content="Java,多线程," />
+
+
+
+
+  <link rel="alternate" href="/default" title="Jackie">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2016/11/06/后台开发知识点总结（三）Java并发/"/>
+
+
+<meta name="description" content="进程与线程的区别是什么？进程就是一段程序的执行过程（狭义）。是一个具有特定功能的程序关于某个数据集合运行的一次运行活动，是操作系统分配资源的最基本单位（广义）。线程也称轻量级进程，是程序执行流的基本单元。在引入线程的操作系统中，一般都是把进程作为分配资源的基本单位，把线程作为独立运行和独立调度的基本单位。 主线程退出会导致整个进程退出么？不一定。Java 中的 Thread 分为User Thre">
+<meta name="keywords" content="Java,多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（三）Java并发">
+<meta property="og:url" content="http://yoursite.com/2016/11/06/后台开发知识点总结（三）Java并发/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="进程与线程的区别是什么？进程就是一段程序的执行过程（狭义）。是一个具有特定功能的程序关于某个数据集合运行的一次运行活动，是操作系统分配资源的最基本单位（广义）。线程也称轻量级进程，是程序执行流的基本单元。在引入线程的操作系统中，一般都是把进程作为分配资源的基本单位，把线程作为独立运行和独立调度的基本单位。 主线程退出会导致整个进程退出么？不一定。Java 中的 Thread 分为User Thre">
+<meta property="og:updated_time" content="2017-05-24T01:47:31.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（三）Java并发">
+<meta name="twitter:description" content="进程与线程的区别是什么？进程就是一段程序的执行过程（狭义）。是一个具有特定功能的程序关于某个数据集合运行的一次运行活动，是操作系统分配资源的最基本单位（广义）。线程也称轻量级进程，是程序执行流的基本单元。在引入线程的操作系统中，一般都是把进程作为分配资源的基本单位，把线程作为独立运行和独立调度的基本单位。 主线程退出会导致整个进程退出么？不一定。Java 中的 Thread 分为User Thre">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> 后台开发知识点总结（三）Java并发 · Jackie </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Jackie</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Jackie</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          后台开发知识点总结（三）Java并发
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Nov 6, 2016
+        </span>
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程与线程的区别是什么？"><span class="toc-text">进程与线程的区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主线程退出会导致整个进程退出么？"><span class="toc-text">主线程退出会导致整个进程退出么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#守护线程和守护进程的区别是什么？"><span class="toc-text">守护线程和守护进程的区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何创建守护进程？"><span class="toc-text">如何创建守护进程？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#孤儿进程和僵尸进程的区别？"><span class="toc-text">孤儿进程和僵尸进程的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#僵尸进程的危害与清除？"><span class="toc-text">僵尸进程的危害与清除？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么防止僵尸进程的出现？"><span class="toc-text">怎么防止僵尸进程的出现？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#僵尸进程会造成内存泄漏吗？"><span class="toc-text">僵尸进程会造成内存泄漏吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么叫线程安全？"><span class="toc-text">什么叫线程安全？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用线程池的好处？"><span class="toc-text">使用线程池的好处？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列举一下你所知道的线程池？"><span class="toc-text">列举一下你所知道的线程池？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用线程池的坏处是什么？"><span class="toc-text">使用线程池的坏处是什么？</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h3 id="进程与线程的区别是什么？"><a href="#进程与线程的区别是什么？" class="headerlink" title="进程与线程的区别是什么？"></a>进程与线程的区别是什么？</h3><p>进程就是一段程序的执行过程（狭义）。是一个具有特定功能的程序关于某个数据集合运行的一次运行活动，是操作系统分配资源的最基本单位（广义）。线程也称轻量级进程，是程序执行流的基本单元。在引入线程的操作系统中，一般都是把进程作为分配资源的基本单位，把线程作为独立运行和独立调度的基本单位。</p>
+<h3 id="主线程退出会导致整个进程退出么？"><a href="#主线程退出会导致整个进程退出么？" class="headerlink" title="主线程退出会导致整个进程退出么？"></a>主线程退出会导致整个进程退出么？</h3><p>不一定。Java 中的 Thread 分为User Thread 和 Demon Thread（守护线程）。守护线程与用户线程的区别就在于，如果虚拟机中的线程都是守护线程的话，虚拟机（也就是进程。在java中，每个进程对应一个java虚拟机）将会退出。因此，在主线程退出的时候，如果虚拟机中还有其他的用户线程，虚拟机不会退出。否则，虚拟机中其他的线程都是守护线程，虚拟机将会退出。</p>
+<h3 id="守护线程和守护进程的区别是什么？"><a href="#守护线程和守护进程的区别是什么？" class="headerlink" title="守护线程和守护进程的区别是什么？"></a>守护线程和守护进程的区别是什么？</h3><p>在一般情况下，当进程的控制终端被关闭的时候，进程会被强行关闭。守护进程是一种能够脱离于终端在后台运行的一种进程。它从被执行的时候开始运转，直到整个系统结束才退出。<br>守护线程跟一般意义上的线程（用户线程）的唯一区别在于，如果虚拟机中的线程都是守护线程的话，虚拟机（也就是进程）将会退出。<br>所以说，守护进程的“守护”跟守护线程的“守护”并不是相同的概念。</p>
+<h3 id="如何创建守护进程？"><a href="#如何创建守护进程？" class="headerlink" title="如何创建守护进程？"></a>如何创建守护进程？</h3><p>1.创建子进程fork()，父进程退出exit();<br>创建子进程后父进程退出，会导致子进程成为孤儿进程。孤儿进程将会被系统中的1号进程（init）所收养。这样。原来的子进程就变为了init进程的子进程。<br>2.在子进程中调用setsid();<br>setsid() 的作用是创建一个新的会话组，并担任新会话的组长。这样做可以使子进程脱离原来的终端、进程组和会话（一个进程组包含一个或多个进程，一个会话包含一个或多个进程组，通常把一个用户从登录到退出过程中，他运行的所有进程归于一个会话）。<br>3.改变根目录为当前目录chdir();<br>4.重设文件权限掩码umask();<br>使用umask()函数将当前进程的umask（当前进程所创建文件的初始权限掩码）置为0。<br>5.关闭文件描述符;<br>关闭不需要的文件描述符。</p>
+<h3 id="孤儿进程和僵尸进程的区别？"><a href="#孤儿进程和僵尸进程的区别？" class="headerlink" title="孤儿进程和僵尸进程的区别？"></a>孤儿进程和僵尸进程的区别？</h3><p>孤儿进程指的是父进程结束而子进程没有结束，而僵尸进程指的是子进程结束而父进程没有wait（或waitpid）它。</p>
+<h3 id="僵尸进程的危害与清除？"><a href="#僵尸进程的危害与清除？" class="headerlink" title="僵尸进程的危害与清除？"></a>僵尸进程的危害与清除？</h3><p>僵尸进程既不占用内存，也不占用cpu。但是它占用了一个进程号，系统所能够使用的进程号是有限的，因此僵尸进程大量地占用进程号将会导致无法生成新的进程。<br>清除僵尸进程的方法是：kill产生僵尸进程的父进程。这样僵尸进程就会变成孤儿进程，然后被内核回收。</p>
+<h3 id="怎么防止僵尸进程的出现？"><a href="#怎么防止僵尸进程的出现？" class="headerlink" title="怎么防止僵尸进程的出现？"></a>怎么防止僵尸进程的出现？</h3><p>1.通过父进程使用 wait() 或 waitpid() 等待子进程，这会导致父进程被挂起。（不过waitpid() 提供了一个无阻塞的wait()，只要把参数设置成 WNOHANG 就行了）。<br>2.用 signal() 函数为SIGCHLD 安装handler，子进程结束后，父进程会收到信号，可在 handler 中回收。<br>3.用 signal(SIGCHLD,SIG_IGN) 通知内核，由内核代为回收。<br>4.先创建子进程，再创建孙进程，创建结束之后杀死子进程，孙进程就会被 init 收养，由 init 回收。</p>
+<h3 id="僵尸进程会造成内存泄漏吗？"><a href="#僵尸进程会造成内存泄漏吗？" class="headerlink" title="僵尸进程会造成内存泄漏吗？"></a>僵尸进程会造成内存泄漏吗？</h3><p>不会。内存泄漏指的是动态分配的内存空间，使用完之后未被释放。僵尸进程是不占用内存的（准确地说，是不占用java虚拟机的内存），就更谈不上内存泄漏了。</p>
+<h3 id="什么叫线程安全？"><a href="#什么叫线程安全？" class="headerlink" title="什么叫线程安全？"></a>什么叫线程安全？</h3><p>线程安全指的是在多线程环境下，程序执行的结果与各个线程的调度顺序无关。</p>
+<h3 id="使用线程池的好处？"><a href="#使用线程池的好处？" class="headerlink" title="使用线程池的好处？"></a>使用线程池的好处？</h3><p>一方面，使用线程池可以减小在创建和销毁线程时产生的时间开销和资源开销（因为在新任务到来时，不必再销毁和新建线程了）。另一方面，使用线程池可以管理线程，保证系统不会因为大量并发产生的资源不足而崩溃。</p>
+<h3 id="列举一下你所知道的线程池？"><a href="#列举一下你所知道的线程池？" class="headerlink" title="列举一下你所知道的线程池？"></a>列举一下你所知道的线程池？</h3><p>单线程线程池（NewSingleThreadExecutor）、固定数量的线程池（NewFixedThreadExecutor，达到最大数量后线程进入等待队列）、可缓存线程池（NewCachedThreadExecutor，自动回收60s未执行的线程）、大小无限制线程池（NewScheduleThreadExecutor）。</p>
+<h3 id="使用线程池的坏处是什么？"><a href="#使用线程池的坏处是什么？" class="headerlink" title="使用线程池的坏处是什么？"></a>使用线程池的坏处是什么？</h3><p>使用线程池可能带来额外的风险，比如：<br>线程池特有的死锁：所有线程都在阻塞等待某一任务的执行结果，而这一任务却因为没有线程而得不到执行。<br>资源不足：如果线程池太大可能引起不必要的资源浪费。<br>线程泄漏：有些线程被使用之后可能并不会返回线程池（比如等待某些资源或者用户输入），发生这种情况后线程池中可用线程数会减少。最后变得没有线程可以使用。
+ </p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>作者: </span>
+      <span>Jack Smith</span>
+    </p>
+    <p class="copyright-item">
+      <span>来源: </span>
+      <a href="http://yoursite.com">http://yoursite.com</a>
+    </p>
+    <p class="copyright-item">
+      <span>链接: </span>
+      <a href="http://yoursite.com/2016/11/06/后台开发知识点总结（三）Java并发/">http://yoursite.com/2016/11/06/后台开发知识点总结（三）Java并发/</a>
+    </p>
+
+    <p class="copyright-item lincese">
+      
+      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Java/">Java</a>
+            
+              <a href="/tags/多线程/">多线程</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">后台开发知识点总结（二）JVM虚拟机</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/12/20/后台开发知识点总结（四）数据库/">
+        <span class="next-text nav-default">后台开发知识点总结（四）数据库</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack Smith</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+  
+  
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  </body>
+</html>

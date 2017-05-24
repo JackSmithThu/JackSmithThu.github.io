@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="Zh-Hans">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="后台开发知识点总结（一）java基础"/>
+
+
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+  <link rel="alternate" href="/default" title="Jackie">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2016/09/24/后台开发知识点总结（一）java基础/"/>
+
+
+<meta name="description" content="Java八种基本数据类型：byte、short、int、long、float、double、boolean、char。 Map在Java中的四种实现？HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。 List在Java中的三种实现？ArrayList（数组）、LinkedList（链表）、Vector">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（一）java基础">
+<meta property="og:url" content="http://yoursite.com/2016/09/24/后台开发知识点总结（一）java基础/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="Java八种基本数据类型：byte、short、int、long、float、double、boolean、char。 Map在Java中的四种实现？HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。 List在Java中的三种实现？ArrayList（数组）、LinkedList（链表）、Vector">
+<meta property="og:updated_time" content="2017-05-24T01:39:54.512Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（一）java基础">
+<meta name="twitter:description" content="Java八种基本数据类型：byte、short、int、long、float、double、boolean、char。 Map在Java中的四种实现？HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。 List在Java中的三种实现？ArrayList（数组）、LinkedList（链表）、Vector">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> 后台开发知识点总结（一）java基础 · Jackie </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Jackie</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Jackie</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          后台开发知识点总结（一）java基础
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Sep 24, 2016
+        </span>
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java八种基本数据类型："><span class="toc-text">Java八种基本数据类型：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map在Java中的四种实现？"><span class="toc-text">Map在Java中的四种实现？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List在Java中的三种实现？"><span class="toc-text">List在Java中的三种实现？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set在Java中的四种实现？"><span class="toc-text">Set在Java中的四种实现？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java8的新特性"><span class="toc-text">Java8的新特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Java-NIO？"><span class="toc-text">什么是Java NIO？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NIO的实现原理是什么？"><span class="toc-text">NIO的实现原理是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用NIO？"><span class="toc-text">为什么要用NIO？</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h3 id="Java八种基本数据类型："><a href="#Java八种基本数据类型：" class="headerlink" title="Java八种基本数据类型："></a>Java八种基本数据类型：</h3><p>byte、short、int、long、float、double、boolean、char。</p>
+<h3 id="Map在Java中的四种实现？"><a href="#Map在Java中的四种实现？" class="headerlink" title="Map在Java中的四种实现？"></a>Map在Java中的四种实现？</h3><p>HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。</p>
+<h3 id="List在Java中的三种实现？"><a href="#List在Java中的三种实现？" class="headerlink" title="List在Java中的三种实现？"></a>List在Java中的三种实现？</h3><p>ArrayList（数组）、LinkedList（链表）、Vector（线程安全的ArrayList）。</p>
+<h3 id="Set在Java中的四种实现？"><a href="#Set在Java中的四种实现？" class="headerlink" title="Set在Java中的四种实现？"></a>Set在Java中的四种实现？</h3><p>HashSet（由HashMap支持，相当于没有 value 的 HashMap） 和 LinkedHashSet（顺序访问）。</p>
+<h3 id="Java8的新特性"><a href="#Java8的新特性" class="headerlink" title="Java8的新特性"></a>Java8的新特性</h3><p>Lambda表达式：允许把函数作为参数传进方法中。<br>Stream：random.ints().limit(10).forEach(System.out::println);<br>Optional类：使用Optional类可以避免显式进行空值检测<br>Nashorn：Java中调用Js，JavaScript引擎。<br>方法引用：通过方法的名字指向一个方法（使用::）。<br>函数式接口：增加了java.util.function函数接口，用来支持函数式编程（支持闭包）<br>默认方法：接口可以通过defult实现默认方法。<br>新的日期时间API。<br>Base64：一种编解码器。</p>
+<h3 id="什么是Java-NIO？"><a href="#什么是Java-NIO？" class="headerlink" title="什么是Java NIO？"></a>什么是Java NIO？</h3><p>NIO就是非阻塞IO。</p>
+<h3 id="NIO的实现原理是什么？"><a href="#NIO的实现原理是什么？" class="headerlink" title="NIO的实现原理是什么？"></a>NIO的实现原理是什么？</h3><p>NIO使用双向的通道（channel）而非单向的流（stream）进行通信。在通道上我们可以注册总共四种事件：客户端连接、服务端接收客户端连接、读、写。客户端和服务端各自维护一个管理通道的对象（selector），接收一个或多个通道的事件。</p>
+<h3 id="为什么要用NIO？"><a href="#为什么要用NIO？" class="headerlink" title="为什么要用NIO？"></a>为什么要用NIO？</h3><p>对阻塞式IO而言，每一个客户端都要有一个对应的线程来进行处理。每个线程都要占用一些空间和CPU时间。另外，多个线程带来频繁的上下文切换，而这些切换很可能是无意义的。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>作者: </span>
+      <span>Jack Smith</span>
+    </p>
+    <p class="copyright-item">
+      <span>来源: </span>
+      <a href="http://yoursite.com">http://yoursite.com</a>
+    </p>
+    <p class="copyright-item">
+      <span>链接: </span>
+      <a href="http://yoursite.com/2016/09/24/后台开发知识点总结（一）java基础/">http://yoursite.com/2016/09/24/后台开发知识点总结（一）java基础/</a>
+    </p>
+
+    <p class="copyright-item lincese">
+      
+      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Java/">Java</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/">
+        <span class="next-text nav-default">后台开发知识点总结（二）JVM虚拟机</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack Smith</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+  
+  
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  </body>
+</html>

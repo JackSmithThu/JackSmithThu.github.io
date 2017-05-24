@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="Zh-Hans">
+  <head>
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="后台开发知识点总结（二）JVM虚拟机"/>
+
+
+
+
+  <meta name="keywords" content="Java,JVM," />
+
+
+
+
+  <link rel="alternate" href="/default" title="Jackie">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2016/10/13/后台开发知识点总结（二）JVM虚拟机/"/>
+
+
+<meta name="description" content="Java类加载过程？加载：类中的方法被放到方法区、堆中生成一个对象表示该类、链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）初始化：执行类构造器方法、如果父类未初始化，先初始化父类。 有几种类加载器？引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载">
+<meta name="keywords" content="Java,JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台开发知识点总结（二）JVM虚拟机">
+<meta property="og:url" content="http://yoursite.com/2016/10/13/后台开发知识点总结（二）JVM虚拟机/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="Java类加载过程？加载：类中的方法被放到方法区、堆中生成一个对象表示该类、链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）初始化：执行类构造器方法、如果父类未初始化，先初始化父类。 有几种类加载器？引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载">
+<meta property="og:updated_time" content="2017-05-24T01:43:16.601Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后台开发知识点总结（二）JVM虚拟机">
+<meta name="twitter:description" content="Java类加载过程？加载：类中的方法被放到方法区、堆中生成一个对象表示该类、链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）初始化：执行类构造器方法、如果父类未初始化，先初始化父类。 有几种类加载器？引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> 后台开发知识点总结（二）JVM虚拟机 · Jackie </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="mobile-header-logo">
+    <a href="/." class="logo">Jackie</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Jackie</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          后台开发知识点总结（二）JVM虚拟机
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          Oct 13, 2016
+        </span>
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java类加载过程？"><span class="toc-text">Java类加载过程？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有几种类加载器？"><span class="toc-text">有几种类加载器？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么时候触发GC？"><span class="toc-text">什么时候触发GC？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GC有几种算法？"><span class="toc-text">GC有几种算法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java的垃圾收集器都有哪些？"><span class="toc-text">Java的垃圾收集器都有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1回收器的特点？"><span class="toc-text">G1回收器的特点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS收集器的特点？"><span class="toc-text">CMS收集器的特点？</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h3 id="Java类加载过程？"><a href="#Java类加载过程？" class="headerlink" title="Java类加载过程？"></a>Java类加载过程？</h3><p>加载：类中的方法被放到方法区、堆中生成一个对象表示该类、<br>链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）<br>初始化：执行类构造器方法、如果父类未初始化，先初始化父类。</p>
+<h3 id="有几种类加载器？"><a href="#有几种类加载器？" class="headerlink" title="有几种类加载器？"></a>有几种类加载器？</h3><p>引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载器（Extensions Class Loader，加载Java扩展库）、应用程序类加载器（Application Class Loader，加载 Class Path 下的应用程序类）、自定义类加载器（主要是为了加密解密某些类的字节码）。</p>
+<h3 id="什么时候触发GC？"><a href="#什么时候触发GC？" class="headerlink" title="什么时候触发GC？"></a>什么时候触发GC？</h3><p>JavaGC分为两种，一种是ScavengeGC，另一种是FullGC。前者只对年轻代进行回收，后者对整个堆进行回收（包括年轻代、老年代和持久代）。<br>当Eden申请内存失败时，触发ScavengeGC。<br>当老年代（Tenured）被写满、持久代（Perm）被写满、System.gc() 被显示调用以及上一次GC之后Heap各域分配策略出现变化时，触发FullGC。</p>
+<h3 id="GC有几种算法？"><a href="#GC有几种算法？" class="headerlink" title="GC有几种算法？"></a>GC有几种算法？</h3><p>引用计数法（已弃用）、标记清除法、标记复制法（survivor区）、标记压缩法（老年代）、分代回收法。</p>
+<h3 id="Java的垃圾收集器都有哪些？"><a href="#Java的垃圾收集器都有哪些？" class="headerlink" title="Java的垃圾收集器都有哪些？"></a>Java的垃圾收集器都有哪些？</h3><p>Serial收集器（串行收集器）、Parallel 收集器（并行收集器）、CMS收集器（并发收集器）、G1收集器。</p>
+<h3 id="G1回收器的特点？"><a href="#G1回收器的特点？" class="headerlink" title="G1回收器的特点？"></a>G1回收器的特点？</h3><p>空间整合（G1采用标记压缩算法，不会出现分配大对象没有连续空间的情况）和可预测停顿（长度为 M ms的时间内，垃圾收集的时间不得超过 N ms）。</p>
+<h3 id="CMS收集器的特点？"><a href="#CMS收集器的特点？" class="headerlink" title="CMS收集器的特点？"></a>CMS收集器的特点？</h3><p>并发收集、低停顿。但是会产生内存碎片（标记清除法），每进行几次 GC 就要进行一次碎片整理。</p>
+<p> </p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>作者: </span>
+      <span>Jack Smith</span>
+    </p>
+    <p class="copyright-item">
+      <span>来源: </span>
+      <a href="http://yoursite.com">http://yoursite.com</a>
+    </p>
+    <p class="copyright-item">
+      <span>链接: </span>
+      <a href="http://yoursite.com/2016/10/13/后台开发知识点总结（二）JVM虚拟机/">http://yoursite.com/2016/10/13/后台开发知识点总结（二）JVM虚拟机/</a>
+    </p>
+
+    <p class="copyright-item lincese">
+      
+      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Java/">Java</a>
+            
+              <a href="/tags/JVM/">JVM</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/09/24/后台开发知识点总结（一）java基础/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">后台开发知识点总结（一）java基础</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/06/后台开发知识点总结（三）Java并发/">
+        <span class="next-text nav-default">后台开发知识点总结（三）Java并发</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jack Smith</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+  
+  
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  </body>
+</html>
