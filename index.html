@@ -72,11 +72,11 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-什么是Docker"><a href="#1-什么是Docker" class="headerlink" title="1.什么是Docker"></a>1.什么是Docker</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</div></pre></td></tr></table></figure>
+        <h2 id="1-什么是Docker"><a href="#1-什么是Docker" class="headerlink" title="1.什么是Docker"></a>1.什么是Docker</h2><p><strong>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</strong></p>
 <p>通俗地说，Docker 是一种虚拟机（广义上的，准确的说法应该是<strong>容器</strong>）。Docker 与其他虚拟机（如：VMWare，Vitrual Box）的区别在于，Docker是一种高度特化的虚拟机。<strong>Docker的效率更高，但是它只能运行与其所运行在的操作系统相同的系统。</strong>也就是说，如果你的服务器上安装的是Ubuntu，那么你所有的 Docker 虚拟机都必须是 Ubuntu 系统。</p>
-<h2 id="2-什么时候使用Docker"><a href="#2-什么时候使用Docker" class="headerlink" title="2.什么时候使用Docker"></a>2.什么时候使用Docker</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">如果你只是想让尽可能多的服务器应用实例在尽可能少的硬件上运行，可能不大关心运行多个操作系统虚拟机。要是同一应用程序的多个副本正是你需要的，那么你会喜欢上容器。</div></pre></td></tr></table></figure>
+<h2 id="2-什么时候使用Docker"><a href="#2-什么时候使用Docker" class="headerlink" title="2.什么时候使用Docker"></a>2.什么时候使用Docker</h2><p><strong>如果你只是想让尽可能多的服务器应用实例在尽可能少的硬件上运行，可能不大关心运行多个操作系统虚拟机。要是同一应用程序的多个副本正是你需要的，那么你会喜欢上容器。</strong></p>
 <p>虚拟机管理程序能做容器做不了的一件事就是，使用不同的操作系统或内核。由于所有的容器都需要使用同样的操作系统和内核，因此如果你想仅依靠 Docker 在一台电脑上同时部署 Windows 和 Linux 是一件不可能的事情。不过，这并不影响 Docker 的广泛使用，毕竟 Docker 的效率远高于普通虚拟机，而这意味着更低的成本。</p>
-<h2 id="3-Docker到底有多快"><a href="#3-Docker到底有多快" class="headerlink" title="3.Docker到底有多快"></a>3.Docker到底有多快</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker相对于物理机其计算能力几乎没有损耗，而虚拟机对比物理机则有着非常明显的损耗。虚拟机的计算能力损耗在50%左右。</div></pre></td></tr></table></figure>
+<h2 id="3-Docker到底有多快"><a href="#3-Docker到底有多快" class="headerlink" title="3.Docker到底有多快"></a>3.Docker到底有多快</h2><p><strong>docker相对于物理机其计算能力几乎没有损耗，而虚拟机对比物理机则有着非常明显的损耗。虚拟机的计算能力损耗在50%左右。</strong></p>
 <p>下图是在IBM x3650 M4 服务器运算 Linpack 程序得到的测试结果：</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020002.png" alt=""></p>
 <p>我们可以看到，使用 Docker 和不使用任何虚拟技术得到的结果基本没什么差别，而使用 KVM（一种虚拟机）则要慢的多了。</p>
@@ -860,7 +860,7 @@
 
     
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Далее &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
