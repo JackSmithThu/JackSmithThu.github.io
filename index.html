@@ -45,6 +45,104 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-ActiveMQ入门之（一）ActiveMQ的安装及使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/05/ActiveMQ入门之（一）ActiveMQ的安装及使用/">ActiveMQ入门之（一）ActiveMQ的安装及使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/05/ActiveMQ入门之（一）ActiveMQ的安装及使用/" class="article-date">
+  <time datetime="2017-06-05T02:30:12.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是ActiveMQ"><a href="#1-什么是ActiveMQ" class="headerlink" title="1.什么是ActiveMQ"></a>1.什么是ActiveMQ</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050001.png" alt=""></p>
+<p>与 Kafka 类似，ActiveMQ 也是一种消息队列。与 Kafka 相比，其性能不如 Kafka 强大。那么，为什么要用 ActiveMQ 呢？最重要的原因在于它的易用性。Kafka 虽然强大，但是在使用 Kafka 的过程中需要部署 ZooKeeper。<strong>而 ActiveMQ 不需要提前安装依赖，部署简单，与各种语言亲和度高，这给了ActiveMQ 极强的生命力。</strong></p>
+<h2 id="2-ActiveMQ的安装与部署"><a href="#2-ActiveMQ的安装与部署" class="headerlink" title="2.ActiveMQ的安装与部署"></a>2.ActiveMQ的安装与部署</h2><h3 id="2-1-下载ActiveMQ"><a href="#2-1-下载ActiveMQ" class="headerlink" title="2.1.下载ActiveMQ"></a>2.1.下载ActiveMQ</h3><p>下载地址：<a href="http://activemq.apache.org/download.html" target="_blank" rel="external">http://activemq.apache.org/download.html</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050002.png" alt=""></p>
+<p>如上图所示，当前最高的版本是 5.14.5 Release。点击红色方框中的超链接，进入下载页。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050003.png" alt=""></p>
+<p>因为我们使用的是 Windows 操作系统，因此下载 zip 压缩包即可。</p>
+<h3 id="2-2-解压缩"><a href="#2-2-解压缩" class="headerlink" title="2.2.解压缩"></a>2.2.解压缩</h3><p>下载好之后，解压到你想要的位置，我的是 D:\WorkSpace 目录。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050004.png" alt=""></p>
+<h3 id="2-3-启动服务"><a href="#2-3-启动服务" class="headerlink" title="2.3.启动服务"></a>2.3.启动服务</h3><p>双击 D:\WorkSpace\ActiveMQ\apache-activemq-5.14.5\bin\win64 目录下的 activemq.bat 文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050005.png" alt=""></p>
+<p>服务启动，如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050006.png" alt=""></p>
+<h3 id="2-4-浏览器登录"><a href="#2-4-浏览器登录" class="headerlink" title="2.4.浏览器登录"></a>2.4.浏览器登录</h3><p>在浏览器输入：</p>
+<p> <a href="http://127.0.0.1:8161/admin/" target="_blank" rel="external">http://127.0.0.1:8161/admin/</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050007.png" alt=""></p>
+<p>用户名和密码都是：admin。输入之后，显示如下界面。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050008.png" alt=""></p>
+<p>这说明 ActiveMQ 已经部署成功了。</p>
+<h2 id="3-ActiveMQ的使用（Java为例）"><a href="#3-ActiveMQ的使用（Java为例）" class="headerlink" title="3.ActiveMQ的使用（Java为例）"></a>3.ActiveMQ的使用（Java为例）</h2><h3 id="3-1-建立项目"><a href="#3-1-建立项目" class="headerlink" title="3.1.建立项目"></a>3.1.建立项目</h3><p>打开 Eclipse，新建一个项目，名为Active。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050009.png" alt=""></p>
+<p>命名之后，点击 【Finish】即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050010.png" alt=""></p>
+<h3 id="3-2-添加代码"><a href="#3-2-添加代码" class="headerlink" title="3.2.添加代码"></a>3.2.添加代码</h3><p>在 src 目录下添加一个叫做 active 的包，并在该包添加两个类，分别名为：JMSProducer 和 JMSConsumer。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050011.png" alt=""></p>
+<p><strong>JMSPruducer：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">package active;</div><div class="line"></div><div class="line">import javax.jms.Connection;</div><div class="line">import javax.jms.ConnectionFactory;</div><div class="line">import javax.jms.Destination;</div><div class="line">import javax.jms.JMSException;</div><div class="line">import javax.jms.MessageProducer;</div><div class="line">import javax.jms.Session;</div><div class="line">import javax.jms.TextMessage;</div><div class="line"></div><div class="line">import org.apache.activemq.ActiveMQConnection;</div><div class="line">import org.apache.activemq.ActiveMQConnectionFactory;</div><div class="line">/**</div><div class="line"> * 消息的生产者（发送者） </div><div class="line"> */</div><div class="line">public class JMSProducer &#123;</div><div class="line"></div><div class="line">    //默认连接用户名</div><div class="line">    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;</div><div class="line">    //默认连接密码</div><div class="line">    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;</div><div class="line">    //默认连接地址</div><div class="line">    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;</div><div class="line">    //发送的消息数量</div><div class="line">    private static final int SENDNUM = 10;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        //连接工厂</div><div class="line">        ConnectionFactory connectionFactory;</div><div class="line">        //连接</div><div class="line">        Connection connection = null;</div><div class="line">        //会话 接受或者发送消息的线程</div><div class="line">        Session session;</div><div class="line">        //消息的目的地</div><div class="line">        Destination destination;</div><div class="line">        //消息生产者</div><div class="line">        MessageProducer messageProducer;</div><div class="line">        //实例化连接工厂</div><div class="line">        connectionFactory = new ActiveMQConnectionFactory(JMSProducer.USERNAME, JMSProducer.PASSWORD, JMSProducer.BROKEURL);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //通过连接工厂获取连接</div><div class="line">            connection = connectionFactory.createConnection();</div><div class="line">            //启动连接</div><div class="line">            connection.start();</div><div class="line">            //创建session</div><div class="line">            session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);</div><div class="line">            //创建一个名称为HelloWorld的消息队列</div><div class="line">            destination = session.createQueue(&quot;HelloWorld&quot;);</div><div class="line">            //创建消息生产者</div><div class="line">            messageProducer = session.createProducer(destination);</div><div class="line">            //发送消息</div><div class="line">            sendMessage(session, messageProducer);</div><div class="line"></div><div class="line">            session.commit();</div><div class="line"></div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally&#123;</div><div class="line">            if(connection != null)&#123;</div><div class="line">                try &#123;</div><div class="line">                    connection.close();</div><div class="line">                &#125; catch (JMSException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    /**</div><div class="line">     * 发送消息</div><div class="line">     * @param session</div><div class="line">     * @param messageProducer  消息生产者</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    public static void sendMessage(Session session,MessageProducer messageProducer) throws Exception&#123;</div><div class="line">        for (int i = 0; i &lt; JMSProducer.SENDNUM; i++) &#123;</div><div class="line">            //创建一条文本消息 </div><div class="line">            TextMessage message = session.createTextMessage(&quot;ActiveMQ 发送消息&quot; +i);</div><div class="line">            System.out.println(&quot;发送消息：Activemq 发送消息&quot; + i);</div><div class="line">            //通过消息生产者发出消息 </div><div class="line">            messageProducer.send(message);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>JMSConsumer:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">package active;</div><div class="line"></div><div class="line">import javax.jms.Connection;</div><div class="line">import javax.jms.ConnectionFactory;</div><div class="line">import javax.jms.Destination;</div><div class="line">import javax.jms.JMSException;</div><div class="line">import javax.jms.MessageConsumer;</div><div class="line">import javax.jms.Session;</div><div class="line">import javax.jms.TextMessage;</div><div class="line"></div><div class="line">import org.apache.activemq.ActiveMQConnection;</div><div class="line">import org.apache.activemq.ActiveMQConnectionFactory;</div><div class="line">/*</div><div class="line"> * 消息的消费者（接受者）</div><div class="line"> */</div><div class="line">public class JMSConsumer &#123;</div><div class="line"></div><div class="line">    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;//默认连接用户名</div><div class="line">    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;//默认连接密码</div><div class="line">    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;//默认连接地址</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ConnectionFactory connectionFactory;//连接工厂</div><div class="line">        Connection connection = null;//连接</div><div class="line"></div><div class="line">        Session session;//会话 接受或者发送消息的线程</div><div class="line">        Destination destination;//消息的目的地</div><div class="line"></div><div class="line">        MessageConsumer messageConsumer;//消息的消费者</div><div class="line"></div><div class="line">        //实例化连接工厂</div><div class="line">        connectionFactory = new ActiveMQConnectionFactory(JMSConsumer.USERNAME, JMSConsumer.PASSWORD, JMSConsumer.BROKEURL);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //通过连接工厂获取连接</div><div class="line">            connection = connectionFactory.createConnection();</div><div class="line">            //启动连接</div><div class="line">            connection.start();</div><div class="line">            //创建session</div><div class="line">            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);</div><div class="line">            //创建一个连接HelloWorld的消息队列</div><div class="line">            destination = session.createQueue(&quot;HelloWorld&quot;);</div><div class="line">            //创建消息消费者</div><div class="line">            messageConsumer = session.createConsumer(destination);</div><div class="line"></div><div class="line">            while (true) &#123;</div><div class="line">                TextMessage textMessage = (TextMessage) messageConsumer.receive(100000);</div><div class="line">                if(textMessage != null)&#123;</div><div class="line">                    System.out.println(&quot;收到的消息:&quot; + textMessage.getText());</div><div class="line">                &#125;else &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125; catch (JMSException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在代码还不能运行，因为没有引用 AvtiveMQ 的依赖包。</p>
+<h3 id="3-3-引入jar包"><a href="#3-3-引入jar包" class="headerlink" title="3.3.引入jar包"></a>3.3.引入jar包</h3><p>在项目上右键，然后选择【properties】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050012.png" alt=""></p>
+<p>然后选择【java Build Path】-&gt; 【Libraries】 -&gt; 【Add Externals JARs】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050013.png" alt=""></p>
+<p>在刚才加压的压缩包里，有一个 activemq-all-5.14.4.jar 文件，引用进来。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050014.png" alt=""></p>
+<p>这时项目里就没有 error 了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050015.png" alt=""></p>
+<h3 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4.测试"></a>3.4.测试</h3><p>右键 JMSProducer.java，选择【Run as】 -&gt; 【Java Application】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050016.png" alt=""></p>
+<p>可以看到控制台输出如下消息：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050017.png" alt=""></p>
+<p>打开浏览器，点击【Queues】，可以看到刚才发送的消息：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050018.png" alt=""></p>
+<p>右键 JMSConsumer.java，选择【Run as】 -&gt; 【Java Application】，可以看到消费了的消息：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050019.png" alt=""></p>
+<p>再打开浏览器，刷新，发现这些消息已经出队了：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050020.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ActiveMQ/">ActiveMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Docker入门（一）什么是Docer" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -782,85 +880,8 @@
 
 
     
-      <article id="post-Eclipse搭建SpringBoot" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Eclipse搭建SpringBoot/">Eclipse搭建SpringBoot</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/03/28/Eclipse搭建SpringBoot/" class="article-date">
-  <time datetime="2017-03-28T07:44:49.000Z" itemprop="datePublished">2017-03-28</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-在Eclipse中安装STS插件"><a href="#1-在Eclipse中安装STS插件" class="headerlink" title="1.在Eclipse中安装STS插件"></a>1.在Eclipse中安装STS插件</h2><p>进入Eclipse，选择【help】→【Eclipse Marketplace 】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png" alt="1"></p>
-<p>搜索→【STS】,找到【SpringToolSuite】并下载。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040002.png" alt="2"></p>
-<h2 id="2-新建一个项目"><a href="#2-新建一个项目" class="headerlink" title="2.新建一个项目"></a>2.新建一个项目</h2><p>【file】-&gt;【new】-&gt;【project】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040003.png" alt="3"></p>
-<p>选择Spring Starter Project，然后【next】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040004.png" alt="4"></p>
-<p>给你的项目取个名字，我的叫【bootDemo】，点击【next】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040005.png" alt="5"></p>
-<p>添加你所需要的依赖，由于我们现在只是演示，就只添加【core】中的【AOP】和【web】中的【web】。选好之后，点击【next】-&gt;【Finish】。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040006.png" alt="6"></p>
-<p>建好之后，你会得到这样一个工程：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040007.png" alt="7"></p>
-<h2 id="3-运行程序"><a href="#3-运行程序" class="headerlink" title="3.运行程序"></a>3.运行程序</h2><p>点击运行按钮，运行程序。运行方式选 Spring Boot App。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040008.png" alt="8"><br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040009.png" alt="9"></p>
-<p>得到结果如下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040010.png" alt="10"></p>
-<p>这样，一个Spring Boot 项目就搭建起来了。</p>
-<h2 id="4-可能会遇到的问题："><a href="#4-可能会遇到的问题：" class="headerlink" title="4.可能会遇到的问题："></a>4.可能会遇到的问题：</h2><p>建立新项目后下载依赖的时候，可能会出现卡在那里不动的情况。这是因为国内连国外的镜像连不上造成的。可以修改maven中的镜像源，具体操作如下：</p>
-<p>修改maven根目录下的conf文件夹中的setting.xml文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
-<p>改好之后，右击项目→【maven】→【update project】即可</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png" alt="11"></p>
-<p>如果还是不行的话，就去看看 用户名/.m2/目录下是否也存在一个settings.xml文件，这个配置文件的优先级是高于maven安装目录下的配置文件的。所以要把这个也改成阿里云的镜像。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
-<h2 id="5-参考链接："><a href="#5-参考链接：" class="headerlink" title="5.参考链接："></a>5.参考链接：</h2><p>Eclipse中创建新的Spring Boot项目：<br><a href="http://blog.csdn.net/clementad/article/details/51334064" target="_blank" rel="external">http://blog.csdn.net/clementad/article/details/51334064</a><br>maven阿里云中央仓库：<br><a href="http://blog.csdn.net/u010717403/article/details/52188496" target="_blank" rel="external">http://blog.csdn.net/u010717403/article/details/52188496</a><br>Maven2的配置文件settings.xml：<br><a href="http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html" target="_blank" rel="external">http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html</a></p>
-<h2 id="6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip"><a href="#6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip" class="headerlink" title="6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip"></a>6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Далее &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
