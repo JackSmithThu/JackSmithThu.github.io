@@ -75,70 +75,70 @@
         <h2 id="1-Docker的安装"><a href="#1-Docker的安装" class="headerlink" title="1.Docker的安装"></a>1.Docker的安装</h2><h3 id="1-1-安装-curl-包"><a href="#1-1-安装-curl-包" class="headerlink" title="1.1.安装 curl 包"></a>1.1.安装 curl 包</h3><p>按 Ctrl + Alt +T 打开终端，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
 <p>然后输入密码。</p>
-<p><img src="D:\WorkSpace\images\201706070001.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070001.png" alt=""></p>
 <p>获取超级用户权限之后，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ apt-get update </div><div class="line">$ apt-get install curl</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070002.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070002.png" alt=""></p>
 <h3 id="1-2-用-curl-获取最新的-docker-安装包"><a href="#1-2-用-curl-获取最新的-docker-安装包" class="headerlink" title="1.2.用 curl 获取最新的 docker 安装包"></a>1.2.用 curl 获取最新的 docker 安装包</h3><p>在终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -sSL https://get.docker.com/ | sh</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070003.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070003.png" alt=""></p>
 <h3 id="1-3-检查-docker-是否安装成功"><a href="#1-3-检查-docker-是否安装成功" class="headerlink" title="1.3.检查 docker 是否安装成功"></a>1.3.检查 docker 是否安装成功</h3><p>在终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run hello-world</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070004.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070004.png" alt=""></p>
 <p>由于本地没有 hello-world 镜像，docker 会自动从网上下载这个镜像，然后运行。</p>
 <h2 id="2-Docker的使用"><a href="#2-Docker的使用" class="headerlink" title="2.Docker的使用"></a>2.Docker的使用</h2><p>为了演示 Docker 的使用方法，我们新建一个镜像并在里面安装一个 vim，然后上传到云端。</p>
 <h3 id="2-1-账号注册"><a href="#2-1-账号注册" class="headerlink" title="2.1.账号注册"></a>2.1.账号注册</h3><p>首先你需要一个 Docker 的账号，登陆：<a href="https://www.docker.com/" target="_blank" rel="external">https://www.docker.com/</a></p>
-<p><img src="D:\WorkSpace\images\201706070005.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070005.png" alt=""></p>
 <p>点击上图标红部分，进入账号申请页面：</p>
-<p><img src="D:\WorkSpace\images\201706070006.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070006.png" alt=""></p>
 <p>填写好信息之后点击 【Sign Up】。注意，到这一步注册还没有完全成功，因为它会给你的邮箱发一封验证邮件，在你去邮箱验证该邮件之前账号都是不能使用的。</p>
 <h4 id="所以千万不要忘了验证邮件！！！"><a href="#所以千万不要忘了验证邮件！！！" class="headerlink" title="所以千万不要忘了验证邮件！！！"></a>所以千万不要忘了验证邮件！！！</h4><h3 id="2-2-登录账号"><a href="#2-2-登录账号" class="headerlink" title="2.2.登录账号"></a>2.2.登录账号</h3><p>在终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker login</div></pre></td></tr></table></figure>
 <p>此时会提示输入账号密码，输入完成后会提示登录成功。</p>
-<p><img src="D:\WorkSpace\images\201706070007.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070007.png" alt=""></p>
 <h3 id="2-3-启动一个容器"><a href="#2-3-启动一个容器" class="headerlink" title="2.3.启动一个容器"></a>2.3.启动一个容器</h3><p>在终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -t -i ubuntu:16.04</div></pre></td></tr></table></figure>
 <p>此时会下载 ubuntu 16.04 的镜像并启动。 -i 的意思是以交互模式运行，-t 的意思是打开一个该容器的伪终端。</p>
-<p><img src="D:\WorkSpace\images\201706070008.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070008.png" alt=""></p>
 <p>根据提示我们可以看出，我们已经进入了一个 docker 容器的伪终端。</p>
 <h3 id="2-4-安装-vim"><a href="#2-4-安装-vim" class="headerlink" title="2.4.安装 vim"></a>2.4.安装 vim</h3><p>在新打开的伪终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get update</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070009.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070009.png" alt=""></p>
 <p>然后输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get install vim</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070010.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070010.png" alt=""></p>
 <p>询问是否继续（<strong>Y/n</strong>）时，输入 y。</p>
-<p><img src="D:\WorkSpace\images\201706070011.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070011.png" alt=""></p>
 <h3 id="2-5-测试vim"><a href="#2-5-测试vim" class="headerlink" title="2.5.测试vim"></a>2.5.测试vim</h3><p>在伪终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
 <p>建立一个叫做 a.txt 的文件。</p>
-<p><img src="D:\WorkSpace\images\201706070012.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070012.png" alt=""></p>
 <p>打开 vim 程序如图所示：</p>
-<p><img src="D:\WorkSpace\images\201706070013.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070013.png" alt=""></p>
 <p>按下键盘上的 <strong>i</strong> ，进入插入模式（<strong>i</strong>nsert），随便输入一点字符。</p>
-<p><img src="D:\WorkSpace\images\201706070014.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070014.png" alt=""></p>
 <p>然后按下 Esc 进入命令模式，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
 <p>保存文件并退出。</p>
-<p><img src="D:\WorkSpace\images\201706070015.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070015.png" alt=""></p>
 <p>我们已经建立了一个 a.txt 的文档，接下来输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat a.txt</div></pre></td></tr></table></figure>
 <p>查看文档是否存在，以及其内容是否为我们输入的内容。</p>
-<p><img src="D:\WorkSpace\images\201706070016.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070016.png" alt=""></p>
 <h2 id="3-Docker镜像的保存"><a href="#3-Docker镜像的保存" class="headerlink" title="3.Docker镜像的保存"></a>3.Docker镜像的保存</h2><h3 id="3-1-提交镜像"><a href="#3-1-提交镜像" class="headerlink" title="3.1.提交镜像"></a>3.1.提交镜像</h3><p>在伪终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ exit</div></pre></td></tr></table></figure>
 <p>从伪终端退出。</p>
-<p><img src="D:\WorkSpace\images\201706070017.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070017.png" alt=""></p>
 <p>然后输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker commit f0a jacksmith/demo</div></pre></td></tr></table></figure>
 <p>其中 f0a 是虚拟机容器序号的前三位，jacksmith 需要改成你自己的用户名，demo 是你给你自己镜像取的名字。</p>
-<p><img src="D:\WorkSpace\images\201706070018.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070018.png" alt=""></p>
 <h3 id="3-2-上传镜像"><a href="#3-2-上传镜像" class="headerlink" title="3.2.上传镜像"></a>3.2.上传镜像</h3><p>在终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker push jacksmith demo</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070019.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070019.png" alt=""></p>
 <h3 id="3-3-查看镜像是否上传成功"><a href="#3-3-查看镜像是否上传成功" class="headerlink" title="3.3.查看镜像是否上传成功"></a>3.3.查看镜像是否上传成功</h3><p>在终端输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker search jacksmith</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070020.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070020.png" alt=""></p>
 <p>可见已经上传已经成功了。</p>
 <h2 id="4-重用Docker镜像"><a href="#4-重用Docker镜像" class="headerlink" title="4.重用Docker镜像"></a>4.重用Docker镜像</h2><p>Ctrl + Alt +T，打开一个新终端，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
@@ -146,9 +146,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -i -t jacksmith/demo</div></pre></td></tr></table></figure>
 <p>打开伪终端，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
-<p><img src="D:\WorkSpace\images\201706070021.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070021.png" alt=""></p>
 <p>可以看到这就是我们刚才发布的镜像：</p>
-<p><img src="D:\WorkSpace\images\201706070022.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070022.png" alt=""></p>
 <h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="http://www.runoob.com/docker/docker-command-manual.html" target="_blank" rel="external">Docker 命令大全</a></p>
 <p><a href="http://www.docker.org.cn/book/" target="_blank" rel="external">Docker手册</a></p>
 
@@ -885,7 +885,7 @@
 
     
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Далее &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
