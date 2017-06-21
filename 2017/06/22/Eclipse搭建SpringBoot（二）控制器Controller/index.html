@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Eclipse搭建SpringBoot（二）控制器Controller - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.新建项目首先，我们重新创建一个名为 yun 的 SpringBoot 项目，创建完成后项目结构如图所示：  2.修改 YunApplication.java我们将 YunApplication.java 中的内容按照如下代码修改： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta name="keywords" content="SpringBoot,Ecilpse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse搭建SpringBoot（二）控制器Controller">
+<meta property="og:url" content="http://yoursite.com/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.新建项目首先，我们重新创建一个名为 yun 的 SpringBoot 项目，创建完成后项目结构如图所示：  2.修改 YunApplication.java我们将 YunApplication.java 中的内容按照如下代码修改： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta property="og:image" content="e:/images/201706220001.png">
+<meta property="og:image" content="e:/images/201706220002.png">
+<meta property="og:image" content="e:/images/201706220003.png">
+<meta property="og:image" content="e:/images/201706220004.png">
+<meta property="og:image" content="e:/images/201706220005.png">
+<meta property="og:updated_time" content="2017-06-21T17:51:32.096Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eclipse搭建SpringBoot（二）控制器Controller">
+<meta name="twitter:description" content="1.新建项目首先，我们重新创建一个名为 yun 的 SpringBoot 项目，创建完成后项目结构如图所示：  2.修改 YunApplication.java我们将 YunApplication.java 中的内容按照如下代码修改： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta name="twitter:image" content="e:/images/201706220001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-Eclipse搭建SpringBoot（二）控制器Controller" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Eclipse搭建SpringBoot（二）控制器Controller
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/" class="article-date">
+  <time datetime="2017-06-21T16:07:54.000Z" itemprop="datePublished">2017-06-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-新建项目"><a href="#1-新建项目" class="headerlink" title="1.新建项目"></a>1.新建项目</h2><p>首先，我们重新创建一个名为 yun 的 SpringBoot 项目，创建完成后项目结构如图所示：</p>
+<p><img src="E:\images\201706220001.png" alt=""></p>
+<h2 id="2-修改-YunApplication-java"><a href="#2-修改-YunApplication-java" class="headerlink" title="2.修改 YunApplication.java"></a>2.修改 YunApplication.java</h2><p>我们将 <strong>YunApplication.java</strong> 中的内容按照如下代码修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line">package com.example.demo;</div><div class="line"></div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.ui.Model;</div><div class="line">import org.springframework.web.bind.annotation.PathVariable;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RequestParam;</div><div class="line">import org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line">/*</div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@Controller</div><div class="line">public class YunApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(YunApplication.class, args);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 返回字符串</div><div class="line">	 * 调用示例 : localhost:8080</div><div class="line">	 */</div><div class="line">	@ResponseBody </div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;	</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 不带参数的模版渲染</div><div class="line">	 * 调用示例 : localhost:8080/index</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/index&quot;)</div><div class="line">	public String index() &#123;	</div><div class="line">		return &quot;index&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（/风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello/1/jackie</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/hello/&#123;id&#125;/&#123;name&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) String id, @PathVariable(&quot;name&quot;) String name,Model model) &#123;</div><div class="line">        model.addAttribute(&quot;id&quot;, id);</div><div class="line">        model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（?风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello?id=1$name=jackie</div><div class="line">	 */</div><div class="line">    @RequestMapping(value = &quot;/hello&quot;)</div><div class="line">    public String getBrokerNameList(@RequestParam String id, @RequestParam String name, Model model) &#123;</div><div class="line">    	model.addAttribute(&quot;id&quot;, id);</div><div class="line">    	model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="下面进行一些解释："><a href="#下面进行一些解释：" class="headerlink" title="下面进行一些解释："></a>下面进行一些解释：</h4><h5 id="我们在相应请求时，主要分为两种情况："><a href="#我们在相应请求时，主要分为两种情况：" class="headerlink" title="我们在相应请求时，主要分为两种情况："></a>我们在相应请求时，主要分为两种情况：</h5><ol>
+<li>我们想要返回一个字符串（可能是一个 <strong>json</strong> 串）。</li>
+<li>我们想要返回一个页面。</li>
+</ol>
+<p>对于前一种情况，我们可以使用 <strong>@ResponseBody</strong> 注解使返回的内容为我们想要返回的字符串。对于后一种情况，我们其实返回的是两样东西：</p>
+<ol>
+<li>一个前端页面（我们称之为 <strong>templates</strong>）。</li>
+<li>该页面所需要的数据（我们称之为 <strong>model</strong>）。</li>
+</ol>
+<p>一个被返回的页面同时包括这两种东西，其中 <strong>model</strong> 可以直接用如下语句赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.addAttribute(&quot;id&quot;, id);</div></pre></td></tr></table></figure>
+<p><strong>model</strong> 的每一个属性既可以是一个基本类型，也可以是字符串，列表（<strong>List</strong>）等。</p>
+<p><strong>templates</strong> 位于 <strong>src/main/resources/templates</strong> 下，后面我们会详细介绍。</p>
+<h5 id="下面介绍前面使用过的几种注解。"><a href="#下面介绍前面使用过的几种注解。" class="headerlink" title="下面介绍前面使用过的几种注解。"></a>下面介绍前面使用过的几种注解。</h5><p><strong>@Controller</strong> 注解的类会被当作一个控制器 Controller，专门用来处理不同请求不同的URL，从而有针对性的返回内容。</p>
+<p><strong>@RequestMapping</strong> 注解是用来处理请求地址映射的注解，可以用在类或方法上，如果用在类上，则表示所有该类中的响应方法都是以该地址作为父路径。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@RequestMapping(&quot;/root&quot;)</div><div class="line">public class YunApplication &#123;</div><div class="line">	</div><div class="line">	// 调用示例 : http://localhost:8080/root</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String hello() &#123;</div><div class="line">		return &quot; Hello World1!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	// 调用示例 : http://localhost:8080/root/hello2</div><div class="line">	@RequestMapping(&quot;/hello2&quot;)</div><div class="line">	public String hello2() &#123;</div><div class="line">		return &quot;Hello World2!&quot;;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@ResponseBody</strong> 注解的类或方法在响应请求时只返回字符串，因此不能返回被渲染的模板。如我们上面提到的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@ResponseBody </div><div class="line">@RequestMapping(&quot;/&quot;)</div><div class="line">public String greeting() &#123;	</div><div class="line">	return &quot;Hello World!&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@RestController</strong> 注解整合了 <strong>@Controller</strong> 和 <strong>@ResponseBody</strong>。在该类中所有的请求都只会返回字符串。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RestController;</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@RestController</div><div class="line">public class YunApplication &#123;</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(App.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-修改-pom-xml-文件"><a href="#3-修改-pom-xml-文件" class="headerlink" title="3.修改 pom.xml 文件"></a>3.修改 pom.xml 文件</h2><p>为了使我们的应用能够自动地去对应的位置去寻找 <strong>templates</strong>，我们需要使用<strong>thymeleaf</strong>模板引擎进行渲染。我们唯一需要做的事就是在 <strong>dependencies</strong> 标签中添加如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p>添加完成的结果应该是这个样子的：</p>
+<p><img src="E:\images\201706220002.png" alt=""></p>
+<h2 id="4-创建模板文件"><a href="#4-创建模板文件" class="headerlink" title="4.创建模板文件"></a>4.创建模板文件</h2><p>在 <strong>src/main/resources/templates</strong> 文件夹下创建模板文件 <strong>index.html</strong>，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;Hello SomeOne&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p&gt; hello index! &lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>再在该文件夹下创建 <strong>hello.html</strong>，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;Hello SomeOne&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p th:text=&quot;&apos;Hello &apos; + $&#123;name&#125; + &apos;, your id is &apos; + $&#123;id&#125; + &apos;!&apos;&quot; /&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>从上面的代码中，我们是可以看到模板文件是如何调用 <strong>model</strong> 中的属性的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$&#123;属性名&#125;</div></pre></td></tr></table></figure>
+<h2 id="5-测试结果"><a href="#5-测试结果" class="headerlink" title="5.测试结果"></a>5.测试结果</h2><p>完整的项目结构如下图所示：</p>
+<p><img src="E:\images\201706220003.png" alt=""></p>
+<p>右键 <strong>Yunapplication.java</strong> ，点击<strong>Run as</strong>，然后选择 <strong>Java Application</strong> ：</p>
+<p><img src="E:\images\201706220004.png" alt=""></p>
+<p>控制台输出如下所示：</p>
+<p><img src="E:\images\201706220005.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Docker入门之（二）Docker的安装与基本操作
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
