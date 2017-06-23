@@ -5,19 +5,19 @@
   
   <title>如何解决github上传每次都要输入账号密码的问题 - Jackie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push –">
+  <meta name="description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push o">
 <meta name="keywords" content="SCAtoolbox,Matlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何解决github上传每次都要输入账号密码的问题">
 <meta property="og:url" content="http://yoursite.com/2017/06/23/如何解决github上传每次都要输入账号密码的问题/index.html">
 <meta property="og:site_name" content="Jackie">
-<meta property="og:description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push –">
+<meta property="og:description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push o">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png">
-<meta property="og:updated_time" content="2017-06-23T14:51:26.338Z">
+<meta property="og:updated_time" content="2017-06-23T16:13:02.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何解决github上传每次都要输入账号密码的问题">
-<meta name="twitter:description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push –">
+<meta name="twitter:description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push o">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png">
   
   
@@ -85,10 +85,12 @@
 <li>git remote -v</li>
 <li>git remote rm origin</li>
 <li>git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git</li>
+<li>git push origin</li>
 <li>git push –set-upstream origin master</li>
 </ol>
-<p>上面的 <strong>jackSmithThu</strong> 和 <strong>MarkDownPhotos</strong> 需要改成你 <strong>github</strong> 的<strong>用户名</strong>和<strong>项目名</strong>。</p>
+<p>上面的 <strong>jackSmithThu</strong> 和 <strong>MarkDownPhotos</strong> 需要改成你 <strong>github</strong> 的<strong>用户名</strong>和<strong>项目名</strong>( 第5步中，set 前面是两个 “-”，出于 hexo 的原因。直接复制可能无法使用，建议粘贴 <strong>git bash</strong> 里面的提示)。</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png" alt=""></p>
+<h3 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h3><p><a href="http://blog.csdn.net/yuquan0821/article/details/8210944" target="_blank" rel="external">push到github时，每次都要输入用户名和密码的问题</a></p>
 
       
     </div>
