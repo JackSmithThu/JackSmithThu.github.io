@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>如何解决github上传每次都要输入账号密码的问题 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push –">
+<meta name="keywords" content="SCAtoolbox,Matlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何解决github上传每次都要输入账号密码的问题">
+<meta property="og:url" content="http://yoursite.com/2017/06/23/如何解决github上传每次都要输入账号密码的问题/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push –">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png">
+<meta property="og:updated_time" content="2017-06-23T14:51:26.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何解决github上传每次都要输入账号密码的问题">
+<meta name="twitter:description" content="1.需要输入账号密码的原因 之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。 2.操作步骤 git remote -v git remote rm origin git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git git push –">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-如何解决github上传每次都要输入账号密码的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何解决github上传每次都要输入账号密码的问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/" class="article-date">
+  <time datetime="2017-06-23T14:35:01.000Z" itemprop="datePublished">2017-06-23</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-需要输入账号密码的原因"><a href="#1-需要输入账号密码的原因" class="headerlink" title="1.需要输入账号密码的原因"></a>1.需要输入账号密码的原因</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png" alt=""></p>
+<p>之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。</p>
+<h3 id="2-操作步骤"><a href="#2-操作步骤" class="headerlink" title="2.操作步骤"></a>2.操作步骤</h3><ol>
+<li>git remote -v</li>
+<li>git remote rm origin</li>
+<li>git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git</li>
+<li>git push –set-upstream origin master</li>
+</ol>
+<p>上面的 <strong>jackSmithThu</strong> 和 <strong>MarkDownPhotos</strong> 需要改成你 <strong>github</strong> 的<strong>用户名</strong>和<strong>项目名</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Eclipse搭建SpringBoot（二）控制器Controller
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
