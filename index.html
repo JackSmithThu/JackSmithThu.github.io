@@ -45,6 +45,80 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Spring如何自动装配的歧义性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Spring如何自动装配的歧义性/">Spring如何自动装配的歧义性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Spring如何自动装配的歧义性/" class="article-date">
+  <time datetime="2017-06-24T16:28:14.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说明：本文为 <strong>Spring in action</strong> 的读书笔记，其内容部分参考该书。</p>
+<h2 id="1-Spring-自动装配的歧义性"><a href="#1-Spring-自动装配的歧义性" class="headerlink" title="1.Spring 自动装配的歧义性"></a>1.Spring 自动装配的歧义性</h2><p>我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 <strong>bean</strong> 能够匹配的话，<strong>Spring</strong> 就无法进行自动装配了。</p>
+<p>举个例子，我们使用 <strong>@Autowired</strong> 注解标注了 <strong>setDessert()</strong> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>与此同时，我们有两个类实现了这个接口，一个叫做 <strong>Cake</strong>，另一个叫做 <strong>IceCream</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cake</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
+<p>那么此时 <strong>Spring</strong> 究竟是应当注入 <strong>Cake</strong> 呢？还是注入 <strong>IceCream</strong> 呢？Spring 也无法判断，因此它会抛出一个 <strong>NoUniqueBeanDedinitionException</strong> 的异常。</p>
+<h2 id="2-如何解决自动装配的歧义性"><a href="#2-如何解决自动装配的歧义性" class="headerlink" title="2.如何解决自动装配的歧义性"></a>2.如何解决自动装配的歧义性</h2><p>Spring 提供了多种方法来解决这个问题，说明如下：</p>
+<h3 id="2-1-使用-primary-注解"><a href="#2-1-使用-primary-注解" class="headerlink" title="2.1.使用 @primary 注解"></a>2.1.使用 @primary 注解</h3><p><strong>@Primary</strong> 注解的使用方式如下： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Primary</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
+<p><strong>@Primary</strong> 注解使得在有多个满足条件的 <strong>bean</strong> 同时存在是，提供一种优先的解决方案。</p>
+<h3 id="2-2-使用-Qualifier-注解"><a href="#2-2-使用-Qualifier-注解" class="headerlink" title="2.2.使用 @Qualifier 注解"></a>2.2.使用 @Qualifier 注解</h3><p><strong>@Qualifier</strong> 注解的使用方式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="meta">@Quatifier</span>(<span class="string">"iceCream"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@Qualifier</strong>  注解中的 <strong>iceCream</strong> 为 <strong>IceCream</strong> 类名首字母变为小写的结果。</p>
+<p>当然，你也可以像这样使用 <strong>@Qualifier</strong>  注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Qualifier</span>(<span class="string">"cold"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div><div class="line"></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Qualifier</span>(<span class="string">"cold"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的使用方式有利于解耦和代码重构。</p>
+<h3 id="2-3-自定义的注解"><a href="#2-3-自定义的注解" class="headerlink" title="2.3.自定义的注解"></a>2.3.自定义的注解</h3><p>除此之外，我们还可以创建新的注解（如 <strong>@Cold</strong>）来代替 <strong>@Qualifier(“cold”)</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentPolicy.Runtime)</div><div class="line"><span class="meta">@Qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Cold &#123; &#125;</div></pre></td></tr></table></figure>
+<p>这样我们就可以直接使用注解 <strong>@Clod</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，我们也可以同时使用多个注解来缩减范围：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="meta">@Creamy</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p><a href="http://www.jianshu.com/p/f2a92091f4ae" target="_blank" rel="external">Spring高级装配之处理自动装配的歧义性</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring实战/">Spring实战</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -811,65 +885,6 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/直升机/">直升机</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-SCAtoolbox应用指南" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/25/SCAtoolbox应用指南/">SCAtoolbox应用指南</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/04/25/SCAtoolbox应用指南/" class="article-date">
-  <time datetime="2017-04-25T02:27:13.000Z" itemprop="datePublished">2017-04-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="首先，什么是SCAtoolbox"><a href="#首先，什么是SCAtoolbox" class="headerlink" title="首先，什么是SCAtoolbox"></a>首先，什么是SCAtoolbox</h2><p><strong>SCAtoolbox</strong>是一个用于求解<strong>最优化问题</strong>的开源工具，使用<strong>matlab</strong>实现。<br>那么，什么是最优化问题呢？举个简单的例子：</p>
-<hr>
-<p><strong>z = x + y (0 &lt; x &lt; 1, 0 &lt; y &lt; 1)，求 z 的最大值</strong></p>
-<hr>
-<p>这就是一个简单版的最优化问题，其中：<br><strong>z = x + y</strong> 称作<strong>目标函数</strong><br><strong>0 &lt; x &lt; 1, 0 &lt; y &lt; 1</strong> 称作<strong>约束条件</strong></p>
-<h2 id="接下来，我们来看看SCAtoolbox怎么用"><a href="#接下来，我们来看看SCAtoolbox怎么用" class="headerlink" title="接下来，我们来看看SCAtoolbox怎么用"></a>接下来，我们来看看SCAtoolbox怎么用</h2><p><strong>SCAtoolbox</strong>可以从以下链接获取。<br><a href="http://www.alimirjalili.com/SCA.html" target="_blank" rel="external">http://www.alimirjalili.com/SCA.html</a><br>解压之后，用<strong>matlab</strong>打开<strong>SCAtoolbox.m</strong>即可食用。</p>
-<hr>
-<p>我们先来看一张<strong>SCAtoolbox</strong>的近照。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/SCA_toolbox_description.png" alt="figure"></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
 
       </footer>
     
