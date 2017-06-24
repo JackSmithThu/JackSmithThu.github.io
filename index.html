@@ -74,7 +74,7 @@
       
         <h2 id="1-为什么要用到-Spring-的作用域"><a href="#1-为什么要用到-Spring-的作用域" class="headerlink" title="1.为什么要用到 Spring 的作用域"></a>1.为什么要用到 Spring 的作用域</h2><p>默认情况下，<strong>Spring</strong> 中所有的 <strong>bean</strong> 都是以单例（<strong>singleton</strong>）模式创建的。但是在有些情况下，这种方式创建的 <strong>bean</strong> 可能无法满足我们的需要。</p>
 <p>比如，我们要创建一个购物车的 <strong>bean</strong> 。如果购物车是以单例模式创建的话，那么所有顾客的商品都会被添加到同一个购物车里。显然，这不是我们想要的结果。</p>
-<h2 id="2-Spring-的四种作用域"><a href="#2-Spring-的四种作用域" class="headerlink" title="2.Spring 的四种作用域"></a>2.Spring 的四种作用域</h2><p><strong>Spring</strong> 定义了四种作用域，包括：</p>
+<h2 id="2-Spring-的作用域"><a href="#2-Spring-的作用域" class="headerlink" title="2.Spring 的作用域"></a>2.Spring 的作用域</h2><p><strong>Spring</strong> 定义了几种作用域，下面是常用的四种：</p>
 <ol>
 <li>单例（<strong>Singleton</strong>）：整个应用中只创建一个 <strong>bean</strong> 的实例。</li>
 <li>原型（<strong>Prototype</strong>）：每次注入或者通过 <strong>Spring</strong> 上下文获取的时候，创建一个新的 <strong>bean</strong> 实例。</li>
