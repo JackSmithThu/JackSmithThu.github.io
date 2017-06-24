@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/25/Spring如何处理自动装配的歧义性/index.html">
 <meta property="og:site_name" content="Jackie">
 <meta property="og:description" content="说明：本文为 Spring in action 的读书笔记，其内容部分参考该书。 1.Spring 自动装配的歧义性我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 bean 能够匹配的话，Spring 就无法进行自动装配了。 举个例子，我们使用 @Autowired 注解标注了 setDessert() 方法： 1234@Autowiredpublic">
-<meta property="og:updated_time" content="2017-06-24T17:19:37.748Z">
+<meta property="og:updated_time" content="2017-06-24T18:17:25.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring如何处理自动装配的歧义性">
 <meta name="twitter:description" content="说明：本文为 Spring in action 的读书笔记，其内容部分参考该书。 1.Spring 自动装配的歧义性我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 bean 能够匹配的话，Spring 就无法进行自动装配了。 举个例子，我们使用 @Autowired 注解标注了 setDessert() 方法： 1234@Autowiredpublic">
@@ -95,7 +95,7 @@
 <p>上面的使用方式有利于解耦和代码重构。</p>
 <h3 id="2-3-自定义的注解"><a href="#2-3-自定义的注解" class="headerlink" title="2.3.自定义的注解"></a>2.3.自定义的注解</h3><p>除此之外，我们还可以创建新的注解（如 <strong>@Cold</strong>）来代替 <strong>@Qualifier(“cold”)</strong>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentPolicy.Runtime)</div><div class="line"><span class="meta">@Qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Cold &#123; &#125;</div></pre></td></tr></table></figure>
-<p>这样我们就可以直接使用注解 <strong>@Clod</strong>：</p>
+<p>一般情况下，这个接口放在 <strong>Cold.java</strong> 里。这样我们就可以直接使用注解 <strong>@Clod</strong>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>当然，我们也可以同时使用多个注解来缩减范围：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="meta">@Creamy</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
