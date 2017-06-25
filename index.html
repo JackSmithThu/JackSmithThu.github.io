@@ -45,6 +45,90 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Spring中bean的生命周期" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Spring中bean的生命周期/">Spring中bean的生命周期</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Spring中bean的生命周期/" class="article-date">
+  <time datetime="2017-06-25T13:44:28.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-传统-Java-应用-bean-的生命周期"><a href="#1-传统-Java-应用-bean-的生命周期" class="headerlink" title="1.传统 Java 应用 bean 的生命周期"></a>1.传统 Java 应用 bean 的生命周期</h2><ol>
+<li>使用 <strong>Java</strong> 关键字 <strong>new</strong> 进行 <strong>bean</strong> 实例化。</li>
+<li>使用这个 <strong>bean</strong>。</li>
+<li><strong>Java</strong> 自动进行垃圾回收。</li>
+</ol>
+<h2 id="2-Spring-中-bean-的生命周期"><a href="#2-Spring-中-bean-的生命周期" class="headerlink" title="2.Spring 中 bean 的生命周期"></a>2.Spring 中 bean 的生命周期</h2><ol>
+<li>实例化。</li>
+<li>填充属性。</li>
+<li>调用 <strong>BeanNameAware</strong> 的 <strong>setBeanName()</strong> 方法。</li>
+<li>调用 <strong>BeanFactoryAware</strong> 的 <strong>setBeanFactory()</strong> 方法。</li>
+<li>调用 <strong>ApplicationContextAware</strong> 的 <strong>setApplicationContext()</strong> 方法。</li>
+<li>调用 <strong>BeanPostProcessor</strong> 的预初始化方法。</li>
+<li>调用 <strong>InitalizingBean</strong> 的 <strong>afterPropertiesSet()</strong> 方法。</li>
+<li>调用自定义的初始化方法。</li>
+<li>调用 <strong>BeanPostProcessor</strong> 的初始化后方法。</li>
+<li><strong>使用 bean。</strong></li>
+<li>调用 <strong>DisposableBean</strong> 的 <strong>destory()</strong> 方法。</li>
+<li>调用自定义的销毁方法。</li>
+</ol>
+<h2 id="3-Spring-中-bean-生命周期的解释"><a href="#3-Spring-中-bean-生命周期的解释" class="headerlink" title="3.Spring 中 bean 生命周期的解释"></a>3.Spring 中 bean 生命周期的解释</h2><h3 id="3-1-bean-生命周期的本质"><a href="#3-1-bean-生命周期的本质" class="headerlink" title="3.1.bean 生命周期的本质"></a>3.1.bean 生命周期的本质</h3><p>就一个对象而言，其声明周期可以概括为：</p>
+<ol>
+<li>创建（实例化 + 初始化）</li>
+<li>使用</li>
+<li>销毁</li>
+</ol>
+<p>就 <strong>Spring</strong> 中的 <strong>bean</strong> 而言，<strong>Spring</strong> 只是提供了一些接口，允许开发者在：<strong>实例化</strong>、<strong>初始化</strong>和<strong>销毁</strong></p>
+<p>的前后进行一些操作。</p>
+<h3 id="3-2-bean-相关方法分类"><a href="#3-2-bean-相关方法分类" class="headerlink" title="3.2.bean 相关方法分类"></a>3.2.bean 相关方法分类</h3><ol>
+<li><strong>Bean自身方法</strong>：<strong>init-method/destroy-method</strong>，通过为配置文件<strong>bean</strong>定义中添加相应属性指定相应执行方法。</li>
+<li><strong>Bean级生命周期接口</strong>：<strong>BeanNameAware</strong>、<strong>BeanFactoryAware</strong>、和<strong>InitializingBean</strong> 。这些接口的方法，每个 <strong>bean</strong> 选择实现，可选择各自的个性化操作。</li>
+<li><strong>容器级生命周期接口方法</strong>：<strong>BeanPostProcessor</strong> 等 ，一般称它们的实现类为“后处理器”，这些接口是每个 <strong>bean</strong> 实例化或初始化时候都会调用。</li>
+</ol>
+<h3 id="3-3-简单描述"><a href="#3-3-简单描述" class="headerlink" title="3.3.简单描述"></a>3.3.简单描述</h3><p><strong>bean</strong> 的生命周期，主要就是在<strong>实例化</strong>和<strong>填充属性</strong>之后，让 bean 知道自己的<strong>名称</strong>， <strong>工厂</strong>和<strong>上下文</strong> ，并在自定义的初始化方法前后调用<strong>预初始化（前）、填充属性后（前）</strong>和<strong>初始化后（后）</strong>方法。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/a327369238/article/details/52193822" target="_blank" rel="external">Spring Bean生命周期详解</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Spring中bean的作用域的实验" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -811,76 +895,6 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ActiveMQ/">ActiveMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Docker入门（一）什么是Docker" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/02/Docker入门（一）什么是Docker/">Docker入门（一）什么是Docker</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/02/Docker入门（一）什么是Docker/" class="article-date">
-  <time datetime="2017-06-02T08:57:55.000Z" itemprop="datePublished">2017-06-02</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-什么是Docker"><a href="#1-什么是Docker" class="headerlink" title="1.什么是Docker"></a>1.什么是Docker</h2><p><em>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</em></p>
-<p>通俗地说，Docker 是一种虚拟机（广义上的，准确的说法应该是<strong>容器</strong>）。Docker 与其他虚拟机（如：VMWare，Vitrual Box）的区别在于，Docker是一种高度特化的虚拟机。<strong>Docker的效率更高，但是它只能运行与其所运行在的操作系统相同的系统。</strong>也就是说，如果你的服务器上安装的是Ubuntu，那么你所有的 Docker 虚拟机都必须是 Ubuntu 系统。</p>
-<h2 id="2-什么时候使用Docker"><a href="#2-什么时候使用Docker" class="headerlink" title="2.什么时候使用Docker"></a>2.什么时候使用Docker</h2><p><em>如果你只是想让尽可能多的服务器应用实例在尽可能少的硬件上运行，可能不大关心运行多个操作系统虚拟机。要是同一应用程序的多个副本正是你需要的，那么你会喜欢上容器。</em></p>
-<p>虚拟机管理程序能做容器做不了的一件事就是，使用不同的操作系统或内核。由于所有的容器都需要使用同样的操作系统和内核，因此如果你想仅依靠 Docker 在一台电脑上同时部署 Windows 和 Linux 是一件不可能的事情。不过，这并不影响 Docker 的广泛使用，毕竟 Docker 的效率远高于普通虚拟机，而这意味着更低的成本。</p>
-<h2 id="3-Docker到底有多快"><a href="#3-Docker到底有多快" class="headerlink" title="3.Docker到底有多快"></a>3.Docker到底有多快</h2><p><em>docker相对于物理机其计算能力几乎没有损耗，而虚拟机对比物理机则有着非常明显的损耗。虚拟机的计算能力损耗在50%左右。</em></p>
-<p>下图是在IBM x3650 M4 服务器运算 Linpack 程序得到的测试结果：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020002.png" alt=""></p>
-<p>我们可以看到，使用 Docker 和不使用任何虚拟技术得到的结果基本没什么差别，而使用 KVM（一种虚拟机）则要慢的多了。</p>
-<p>那么，为什么 Docker 能够达到如此高的效率呢？我们来看两张图：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020001.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020003.png" alt=""></p>
-<p>上边是传统虚拟机的架构图，下边是 Docker 。总的来说，Docker 比传统虚拟机快主要在于以下两点原因：</p>
-<ol>
-<li>docker有着比虚拟机更少的抽象层。</li>
-<li>docker利用的是宿主机的内核，而不需要Guest OS。</li>
-</ol>
-<p>Docker 和传统虚拟机的区别，就好比前者是在集装箱里面打了隔板，而后者则是在集装箱里有塞进去了小的集装箱。因此前者的效率比后者更高也就不足为奇了。</p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://cloud.51cto.com/art/201410/453718.htm" target="_blank" rel="external">Docker到底是什么？为什么它这么火！</a></p>
-<p><a href="https://www.zhihu.com/question/28300645" target="_blank" rel="external">如何通俗解释Docker是什么？</a></p>
-<p><a href="http://blog.csdn.net/cbl709/article/details/43955687" target="_blank" rel="external"> docker与虚拟机性能比较</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/">Dcoker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器/">容器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
 
       </footer>
     
