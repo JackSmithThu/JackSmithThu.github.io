@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Eclipse搭建SpringBoot（四）使用LogBack - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.为什么使用 Logback我们在使用调试 java 代码的时候，一般使用： 1System.out.println(&quot;Hello worold!&quot;); 来输出一些信息到控制台。 但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。Logback 一般使用一下四个级别： 1234logger.debug(&quot;This is a debug">
+<meta name="keywords" content="Eclipse,SpringBoot,Logger">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse搭建SpringBoot（四）使用LogBack">
+<meta property="og:url" content="http://yoursite.com/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.为什么使用 Logback我们在使用调试 java 代码的时候，一般使用： 1System.out.println(&quot;Hello worold!&quot;); 来输出一些信息到控制台。 但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。Logback 一般使用一下四个级别： 1234logger.debug(&quot;This is a debug">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250002.png">
+<meta property="og:updated_time" content="2017-06-25T09:10:49.546Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eclipse搭建SpringBoot（四）使用LogBack">
+<meta name="twitter:description" content="1.为什么使用 Logback我们在使用调试 java 代码的时候，一般使用： 1System.out.println(&quot;Hello worold!&quot;); 来输出一些信息到控制台。 但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。Logback 一般使用一下四个级别： 1234logger.debug(&quot;This is a debug">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-Eclipse搭建SpringBoot（四）使用LogBack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Eclipse搭建SpringBoot（四）使用LogBack
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/" class="article-date">
+  <time datetime="2017-06-25T08:10:01.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-为什么使用-Logback"><a href="#1-为什么使用-Logback" class="headerlink" title="1.为什么使用 Logback"></a>1.为什么使用 Logback</h2><p>我们在使用调试 <strong>java</strong> 代码的时候，一般使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.out.println(<span class="string">"Hello worold!"</span>);</div></pre></td></tr></table></figure>
+<p>来输出一些信息到控制台。</p>
+<p>但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。<strong>Logback</strong> 一般使用一下四个级别：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">logger.error(<span class="string">"This is an error message"</span>);</div></pre></td></tr></table></figure>
+<h2 id="2-如何使用Logback"><a href="#2-如何使用Logback" class="headerlink" title="2.如何使用Logback"></a>2.如何使用Logback</h2><p><strong>Logback</strong> 的使用仅需要很简单的配置：</p>
+<h3 id="2-1-引入相关包"><a href="#2-1-引入相关包" class="headerlink" title="2.1.引入相关包"></a>2.1.引入相关包</h3><p>下面是一个使用 <strong>Logback</strong> 的简单示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoggerService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass()); </div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">        logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">        logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">        logger.error(<span class="string">"This is an error message"</span>); </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250001.png" alt=""></p>
+<p>为什么没有 debug 的信息呢？这是因为默认的日志级别只到 info。为了输出 debug 的信息，我们需要进行一些额外的配置。</p>
+<h3 id="2-2-控制输出级别"><a href="#2-2-控制输出级别" class="headerlink" title="2.2.控制输出级别"></a>2.2.控制输出级别</h3><p>在 <strong>application.yml</strong> 中添加如下配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">logging:</span></div><div class="line"><span class="attr">  file:</span> <span class="string">yun.log</span>  </div><div class="line"><span class="attr">  level:</span></div><div class="line">    <span class="string">ROOT</span> <span class="string">:</span> <span class="string">debug</span></div></pre></td></tr></table></figure>
+<p>再运行一下，就能看到有 debug 信息的输出结果了：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250002.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logger/">Logger</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/25/Spring中bean的作用域/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Spring中bean的作用域
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/25/Spring中Bean的作用域的实验/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring中Bean的作用域的实验&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
