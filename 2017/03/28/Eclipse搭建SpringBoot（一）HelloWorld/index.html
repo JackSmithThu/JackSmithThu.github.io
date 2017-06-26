@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Eclipse搭建SpringBoot（一）HelloWorld - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.在Eclipse中安装STS插件进入Eclipse，选择【help】→【Eclipse Marketplace 】  搜索→【STS】,找到【SpringToolSuite】并下载。  2.新建一个项目【file】-&amp;gt;【new】-&amp;gt;【project】  选择Spring Starter Project，然后【next】  给你的项目取个名字，我的叫【bootDemo】，点击【nex">
+<meta name="keywords" content="SpringBoot,Ecilpse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse搭建SpringBoot（一）HelloWorld">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/Eclipse搭建SpringBoot（一）HelloWorld/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.在Eclipse中安装STS插件进入Eclipse，选择【help】→【Eclipse Marketplace 】  搜索→【STS】,找到【SpringToolSuite】并下载。  2.新建一个项目【file】-&amp;gt;【new】-&amp;gt;【project】  选择Spring Starter Project，然后【next】  给你的项目取个名字，我的叫【bootDemo】，点击【nex">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040005.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040006.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040007.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040008.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040009.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040010.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png">
+<meta property="og:updated_time" content="2017-06-26T08:17:22.048Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eclipse搭建SpringBoot（一）HelloWorld">
+<meta name="twitter:description" content="1.在Eclipse中安装STS插件进入Eclipse，选择【help】→【Eclipse Marketplace 】  搜索→【STS】,找到【SpringToolSuite】并下载。  2.新建一个项目【file】-&amp;gt;【new】-&amp;gt;【project】  选择Spring Starter Project，然后【next】  给你的项目取个名字，我的叫【bootDemo】，点击【nex">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-Eclipse搭建SpringBoot（一）HelloWorld" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Eclipse搭建SpringBoot（一）HelloWorld
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/28/Eclipse搭建SpringBoot（一）HelloWorld/" class="article-date">
+  <time datetime="2017-03-28T07:44:49.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-在Eclipse中安装STS插件"><a href="#1-在Eclipse中安装STS插件" class="headerlink" title="1.在Eclipse中安装STS插件"></a>1.在Eclipse中安装STS插件</h2><p>进入Eclipse，选择【help】→【Eclipse Marketplace 】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png" alt="1"></p>
+<p>搜索→【STS】,找到【SpringToolSuite】并下载。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040002.png" alt="2"></p>
+<h2 id="2-新建一个项目"><a href="#2-新建一个项目" class="headerlink" title="2.新建一个项目"></a>2.新建一个项目</h2><p>【file】-&gt;【new】-&gt;【project】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040003.png" alt="3"></p>
+<p>选择Spring Starter Project，然后【next】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040004.png" alt="4"></p>
+<p>给你的项目取个名字，我的叫【bootDemo】，点击【next】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040005.png" alt="5"></p>
+<p>添加你所需要的依赖，由于我们现在只是演示，就只添加【core】中的【AOP】和【web】中的【web】。选好之后，点击【next】-&gt;【Finish】。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040006.png" alt="6"></p>
+<p>建好之后，你会得到这样一个工程：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040007.png" alt="7"></p>
+<h2 id="3-运行程序"><a href="#3-运行程序" class="headerlink" title="3.运行程序"></a>3.运行程序</h2><p>点击运行按钮，运行程序。运行方式选 Spring Boot App。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040008.png" alt="8"><br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040009.png" alt="9"></p>
+<p>得到结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040010.png" alt="10"></p>
+<p>这样，一个Spring Boot 项目就搭建起来了。</p>
+<h2 id="4-可能会遇到的问题："><a href="#4-可能会遇到的问题：" class="headerlink" title="4.可能会遇到的问题："></a>4.可能会遇到的问题：</h2><p>建立新项目后下载依赖的时候，可能会出现卡在那里不动的情况。这是因为国内连国外的镜像连不上造成的。可以修改maven中的镜像源，具体操作如下：</p>
+<p>修改maven根目录下的conf文件夹中的setting.xml文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
+<p>改好之后，右击项目→【maven】→【update project】即可</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png" alt="11"></p>
+<p>如果还是不行的话，就去看看 用户名/.m2/目录下是否也存在一个settings.xml文件，这个配置文件的优先级是高于maven安装目录下的配置文件的。所以要把这个也改成阿里云的镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
+<h2 id="5-参考链接："><a href="#5-参考链接：" class="headerlink" title="5.参考链接："></a>5.参考链接：</h2><p><a href="http://blog.csdn.net/clementad/article/details/51334064" target="_blank" rel="external">Eclipse中创建新的Spring Boot项目</a><br><a href="http://blog.csdn.net/u010717403/article/details/52188496" target="_blank" rel="external">maven阿里云中央仓库</a><br><a href="http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html" target="_blank" rel="external">Maven2的配置文件settings.xml</a></p>
+<h2 id="6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip"><a href="#6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip" class="headerlink" title="6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip"></a>6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/24/kafka学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          kafka学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单台windows搭建zookeeper和kafka集群&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
