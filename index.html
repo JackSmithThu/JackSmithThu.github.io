@@ -45,6 +45,69 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Spring中的AOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/26/Spring中的AOP/">Spring中的AOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/26/Spring中的AOP/" class="article-date">
+  <time datetime="2017-06-26T10:09:22.000Z" itemprop="datePublished">2017-06-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是AOP"><a href="#1-什么是AOP" class="headerlink" title="1.什么是AOP"></a>1.什么是AOP</h2><p><strong>AOP</strong>（面向切面编程）给我们提供了很好的非入侵式（<strong>在不修改源代码的情况下</strong>）的手段为现有的类增加新的功能。本文通过演示 <strong>Spring AOP</strong> 是如何使用的来介绍什么是 <strong>AOP</strong>。</p>
+<p>我们会首先演示如何使用基于注解的 <strong>Spring AOP</strong>，然后演示如何使用基于 <strong>XML</strong> 的 <strong>Spring AOP</strong>。最后对 <strong>Spring AOP</strong> 进行简要的总结。</p>
+<p>首先我们需要定义一个目标对象（接口），这个对象在调用某些方法时（<strong>之前或之后</strong>）会被拦截，然后执行我们自己的代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Performance</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">perform</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假定上面的对象就是我们的目标类。我们希望在该类调用 <strong>perform()</strong> 方法之前和之后分别输出一些提示，但是处于某些原因，我们又不想修改它的源代码。为了实现这一目标，我们需要使用 <strong>AOP</strong> 来达到我们的目的。</p>
+<h2 id="2-基于注解的-Spring-AOP"><a href="#2-基于注解的-Spring-AOP" class="headerlink" title="2.基于注解的 Spring AOP"></a>2.基于注解的 Spring AOP</h2><p>下面是一个 <strong>Audience</strong> 类，它在本文中作为一个切面来使用。也就是说，在 <strong>Performance</strong> 类调用 <strong>perform()</strong> 前后输出的提示，其实是由 <strong>Audience</strong> 提供的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterThrowing;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="comment">// 把 Performance 的 perform 方法定义为名为 performance 的切点</span></div><div class="line">  <span class="meta">@Pointcut</span>(<span class="string">"execution(** concert.Performance.perform(..))"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performance</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之前输出</span></div><div class="line">  <span class="meta">@Before</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之后输出</span></div><div class="line">  <span class="meta">@AfterReturning</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演失败（抛出异常）输出</span></div><div class="line">  <span class="meta">@AfterThrowing</span>（“Performance()”)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了使 Spring 能够识别 @Aspect 注解，我们需要在 JavaConfig 中启用 AspectJ 注解的自动代理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Bean；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.ComponentScan；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Configuration；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.EnableAspectJAutoProxy；</div><div class="line">  </div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableAspectJAutoProxy</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcertConfig</span> </span>&#123;</div><div class="line">  <span class="meta">@Bean</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Audience <span class="title">audience</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Audience();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-基于-XML-的-Spring-AOP"><a href="#3-基于-XML-的-Spring-AOP" class="headerlink" title="3.基于 XML 的 Spring AOP"></a>3.基于 XML 的 Spring AOP</h2><p>使用注解的 AOP 能够在不侵入目标类的情况下，对目标类的方法进行监控。但是，如果切面 Audience 的代码中有许多注解。试想，如果我们连切面的代码都不想修改，或者无法修改切面的源代码，我们又该如何使用 AOP 呢？XML 为我们提供了一种解决方案：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125; </div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们去掉了 Audience 中所有的注解，当然这样的一个类是无法实现 AOP 的，因此我们需要在XML 中进行配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"audience"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"performance"</span></div><div class="line">        <span class="attr">expression</span>=<span class="string">"execution(** concert.Performance.perform(..))"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:before</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"soliencePhones"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-returning</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"clap"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-throwing</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"refund"</span>/&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Eclipse搭建SpringBoot（五）使用拦截器验证用户登录" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -739,135 +802,6 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Docker入门之（二）Docker的安装与基本操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/">Docker入门之（二）Docker的安装与基本操作</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/" class="article-date">
-  <time datetime="2017-06-07T06:33:21.000Z" itemprop="datePublished">2017-06-07</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-Docker的安装"><a href="#1-Docker的安装" class="headerlink" title="1.Docker的安装"></a>1.Docker的安装</h2><h3 id="1-1-安装-curl-包"><a href="#1-1-安装-curl-包" class="headerlink" title="1.1.安装 curl 包"></a>1.1.安装 curl 包</h3><p>按 Ctrl + Alt +T 打开终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
-<p>然后输入密码。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070001.png" alt=""></p>
-<p>获取超级用户权限之后，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ apt-get update </div><div class="line">$ apt-get install curl</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070002.png" alt=""></p>
-<h3 id="1-2-用-curl-获取最新的-docker-安装包"><a href="#1-2-用-curl-获取最新的-docker-安装包" class="headerlink" title="1.2.用 curl 获取最新的 docker 安装包"></a>1.2.用 curl 获取最新的 docker 安装包</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -sSL https://get.docker.com/ | sh</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070003.png" alt=""></p>
-<h3 id="1-3-检查-docker-是否安装成功"><a href="#1-3-检查-docker-是否安装成功" class="headerlink" title="1.3.检查 docker 是否安装成功"></a>1.3.检查 docker 是否安装成功</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run hello-world</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070004.png" alt=""></p>
-<p>由于本地没有 hello-world 镜像，docker 会自动从网上下载这个镜像，然后运行。</p>
-<h2 id="2-Docker的使用"><a href="#2-Docker的使用" class="headerlink" title="2.Docker的使用"></a>2.Docker的使用</h2><p>为了演示 Docker 的使用方法，我们新建一个镜像并在里面安装一个 vim，然后上传到云端。</p>
-<h3 id="2-1-账号注册"><a href="#2-1-账号注册" class="headerlink" title="2.1.账号注册"></a>2.1.账号注册</h3><p>首先你需要一个 Docker 的账号，登录：<a href="https://www.docker.com/" target="_blank" rel="external">https://www.docker.com/</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070005.png" alt=""></p>
-<p>点击上图标红部分，进入账号申请页面：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070006.png" alt=""></p>
-<p>填写好信息之后点击 【Sign Up】。注意，到这一步注册还没有完全成功，因为它会给你的邮箱发一封验证邮件，在你去邮箱验证该邮件之前账号都是不能使用的。</p>
-<h4 id="所以千万不要忘了验证邮件！！！"><a href="#所以千万不要忘了验证邮件！！！" class="headerlink" title="所以千万不要忘了验证邮件！！！"></a>所以千万不要忘了验证邮件！！！</h4><h3 id="2-2-登录账号"><a href="#2-2-登录账号" class="headerlink" title="2.2.登录账号"></a>2.2.登录账号</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker login</div></pre></td></tr></table></figure>
-<p>此时会提示输入账号密码，输入完成后会提示登录成功。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070007.png" alt=""></p>
-<h3 id="2-3-启动一个容器"><a href="#2-3-启动一个容器" class="headerlink" title="2.3.启动一个容器"></a>2.3.启动一个容器</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -t -i ubuntu:16.04</div></pre></td></tr></table></figure>
-<p>此时会下载 ubuntu 16.04 的镜像并启动。 -i 的意思是以交互模式运行，-t 的意思是打开一个该容器的伪终端。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070008.png" alt=""></p>
-<p>根据提示我们可以看出，我们已经进入了一个 docker 容器的伪终端。</p>
-<h3 id="2-4-安装-vim"><a href="#2-4-安装-vim" class="headerlink" title="2.4.安装 vim"></a>2.4.安装 vim</h3><p>在新打开的伪终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get update</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070009.png" alt=""></p>
-<p>然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get install vim</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070010.png" alt=""></p>
-<p>询问是否继续（<strong>Y/n</strong>）时，输入 y。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070011.png" alt=""></p>
-<h3 id="2-5-测试vim"><a href="#2-5-测试vim" class="headerlink" title="2.5.测试vim"></a>2.5.测试vim</h3><p>在伪终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
-<p>建立一个叫做 a.txt 的文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070012.png" alt=""></p>
-<p>打开 vim 程序如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070013.png" alt=""></p>
-<p>按下键盘上的 <strong>i</strong> ，进入插入模式（<strong>i</strong>nsert），随便输入一点字符。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070014.png" alt=""></p>
-<p>然后按下 Esc 进入命令模式，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
-<p>保存文件并退出。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070015.png" alt=""></p>
-<p>我们已经建立了一个 a.txt 的文档，接下来输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat a.txt</div></pre></td></tr></table></figure>
-<p>查看文档是否存在，以及其内容是否为我们输入的内容。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070016.png" alt=""></p>
-<h2 id="3-Docker镜像的保存"><a href="#3-Docker镜像的保存" class="headerlink" title="3.Docker镜像的保存"></a>3.Docker镜像的保存</h2><h3 id="3-1-提交镜像"><a href="#3-1-提交镜像" class="headerlink" title="3.1.提交镜像"></a>3.1.提交镜像</h3><p>在伪终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ exit</div></pre></td></tr></table></figure>
-<p>从伪终端退出。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070017.png" alt=""></p>
-<p>然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker commit f0a jacksmith/demo</div></pre></td></tr></table></figure>
-<p>其中 f0a 是虚拟机容器序号的前三位，jacksmith 需要改成你自己的用户名，demo 是你给你自己镜像取的名字。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070018.png" alt=""></p>
-<h3 id="3-2-上传镜像"><a href="#3-2-上传镜像" class="headerlink" title="3.2.上传镜像"></a>3.2.上传镜像</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker push jacksmith demo</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070019.png" alt=""></p>
-<h3 id="3-3-查看镜像是否上传成功"><a href="#3-3-查看镜像是否上传成功" class="headerlink" title="3.3.查看镜像是否上传成功"></a>3.3.查看镜像是否上传成功</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker search jacksmith</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070020.png" alt=""></p>
-<p>可见已经上传已经成功了。</p>
-<h2 id="4-重用Docker镜像"><a href="#4-重用Docker镜像" class="headerlink" title="4.重用Docker镜像"></a>4.重用Docker镜像</h2><p>Ctrl + Alt +T，打开一个新终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
-<p>输入密码之后，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -i -t jacksmith/demo</div></pre></td></tr></table></figure>
-<p>打开伪终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070021.png" alt=""></p>
-<p>可以看到这就是我们刚才发布的镜像：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070022.png" alt=""></p>
-<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="http://www.runoob.com/docker/docker-command-manual.html" target="_blank" rel="external">Docker 命令大全</a></p>
-<p><a href="http://www.docker.org.cn/book/" target="_blank" rel="external">Docker手册</a></p>
-<h2 id="6-操作系统-Ubuntu-16-04"><a href="#6-操作系统-Ubuntu-16-04" class="headerlink" title="6.操作系统 Ubuntu 16.04"></a>6.操作系统 Ubuntu 16.04</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
 
       </footer>
     
