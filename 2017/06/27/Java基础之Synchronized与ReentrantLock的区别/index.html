@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/27/Java基础之Synchronized与ReentrantLock的区别/index.html">
 <meta property="og:site_name" content="Jackie">
 <meta property="og:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
-<meta property="og:updated_time" content="2017-06-27T10:54:56.403Z">
+<meta property="og:updated_time" content="2017-06-27T10:55:45.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java基础之Synchronized与ReentrantLock的区别">
 <meta name="twitter:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
@@ -100,6 +100,7 @@
 <li><strong>tryLock(long timeout,TimeUnit unit)</strong>， 如果获取了锁定立即返回true，如果别的线程正持有锁，会等待参数给定的时间，在等待的过程中，如果获取了锁定，就返回true，如果等待超时，返回false。</li>
 <li><strong>lockInterruptibly()</strong> ，如果获取了锁定立即返回，如果没有获取锁定，当前线程处于休眠状态，直到或者锁定，或者当前线程被别的线程中断。</li>
 </ol>
+<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p><a href="http://www.cnblogs.com/nsw2018/p/5821738.html" target="_blank" rel="external">Lock与synchronized 的区别</a></p>
 
       
     </div>
