@@ -85,17 +85,28 @@
 <li>不可重复读</li>
 <li>幻读</li>
 </ol>
+<p>最简单的情况就是<strong>读未提交</strong>，其本质是：</p>
+<p><strong>事务在修改数据的时候只对数据增加行级共享锁。</strong></p>
+<p><strong>事务在读数据的时候并未对数据加锁。</strong></p>
+<p>读未提交会引起脏读的问题。</p>
 <h3 id="2-1-脏读"><a href="#2-1-脏读" class="headerlink" title="2.1.脏读"></a>2.1.脏读</h3><p>假设 <strong>A</strong> 给 <strong>B</strong> 打 <strong>5000</strong> 块钱，修改了数据库当时还没有提交。此时 <strong>B</strong> 读取数据库中的自己账户的余额，以为自己收到了 <strong>5000</strong> 块钱。然而之后 <strong>A</strong> 并没有提交，而是回滚了该数据，所以最终 <strong>B</strong> 的账余额并没有增加。所以 <strong>B</strong> 读取到的是错误的信息，这就是<strong>脏读</strong>。</p>
-<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>读已提交</strong>。其本质是：<strong>如果一个事务要进行写操作，那么在其提交之前，其他事务不能读。</strong></p>
+<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>读已提交</strong>。其本质是：</p>
+<p><strong>事务对当前被读取的数据加 行级共享锁（当读到时才加锁），一旦读完该行，立即释放该行级共享锁。</strong></p>
+<p><strong>事务在更新某数据的瞬间（就是发生更新的瞬间），必须先对其加 行级排他锁，直到事务结束才释放。</strong></p>
 <h3 id="2-2-不可重复读"><a href="#2-2-不可重复读" class="headerlink" title="2.2.不可重复读"></a>2.2.不可重复读</h3><p>假设一个账户中有 <strong>5000</strong> 块钱， <strong>A</strong> 和 <strong>B</strong> 同时从这个账户中取钱，当 A 查看余额时发现账户中有 <strong>5000</strong> 块钱，之后 <strong>B</strong> 取走了这 <strong>5000</strong> 块钱，当 <strong>A</strong> 再取钱的时候发现钱已经被取走了。也就是说，在同一事务中，<strong>A</strong> 对自己的账户进行的两次查询得到了不同的结果，这就是<strong>不可重复读</strong>。</p>
 <p>不可重复读与脏读的区别在于，脏读读出的数据是<strong>无效的未提交的信息</strong>（脏读也称为<strong>无效数据读出</strong>）。而不可重复读两次读取的信息都是<strong>有效的已提交的信息</strong>，只不过在这两次读取期间数据被提交了而已。</p>
-<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>可重复读</strong>。其本质是：<strong>如果一个事务要进行读操作，那么在该事务结束之前，其他事务不能提交。</strong></p>
+<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>可重复读</strong>。其本质是：</p>
+<p><strong>事务在读取某数据的瞬间（就是开始读取的瞬间），必须先对其加 行级共享锁，直到事务结束才释放。</strong></p>
+<p><strong>事务在更新某数据的瞬间（就是发生更新的瞬间），必须先对其加 行级排他锁，直到事务结束才释放。</strong></p>
 <h3 id="2-3-幻读"><a href="#2-3-幻读" class="headerlink" title="2.3.幻读"></a>2.3.幻读</h3><p>假设 <strong>A</strong> 正在查询自己银行卡中的本月的消费记录，恰好此时 <strong>B</strong> 拿着 <strong>A</strong> 的信用卡刷了一笔钱。也就是说，在同一事务中，<strong>A</strong> 读到的两次消费记录不一致。新的结果中出现了<strong>幻影行</strong>，这就是<strong>幻读</strong>。</p>
 <p>幻读与不可重复读的区别在于，不可重复读可以通过加锁来避免。然而，<strong>你不可能给一条还未插入到数据库中的数据进行加锁</strong>，因此幻读是无法通过加锁的这种机制来避免的。</p>
-<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>串行化</strong>。这种手段使用的不是共享锁，而是<strong>行版本控制</strong>。其本质是：<strong>一个事务执行时，不允许其他事务执行。</strong></p>
+<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>串行化</strong>。这种手段使用的不是共享锁，而是<strong>行版本控制</strong>。其本质是：</p>
+<p><strong>事务在读取数据时，必须先对其加 表级共享锁 ，直到事务结束才释放；</strong></p>
+<p><strong>事务在更新数据时，必须先对其加 表级排他锁 ，直到事务结束才释放。</strong></p>
 <h2 id="3-数据库的默认隔离级别"><a href="#3-数据库的默认隔离级别" class="headerlink" title="3.数据库的默认隔离级别"></a>3.数据库的默认隔离级别</h2><p><strong>MySQL</strong> 的默认隔离级别是可重复读.</p>
 <p>大多数数据库如 <strong>Sql Server</strong> , <strong>Oracle</strong> 的默认级别是读已提交。</p>
 <h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/fg2006/article/details/6937413" target="_blank" rel="external">数据库事务隔离级别</a></p>
+<p><a href="http://www.hollischuang.com/archives/943" target="_blank" rel="external">深入分析事务的隔离级别</a></p>
 
       
     </div>
