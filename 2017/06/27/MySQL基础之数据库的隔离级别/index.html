@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>MySQL基础之数据库的隔离级别 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.隔离级别数据库的隔离级别有以下四种：  读未提交 读已提交 可重复读 串行化  2.数据库读取中的问题隔离级别主要用来解决以下三个问题：  脏读 不可重复读 幻读  2.1.脏读假设 A 给 B 打 5000 块钱，修改了数据库当时还没有提交。此时 B 读取数据库中的自己账户的余额，以为自己收到了 5000 块钱。然而之后 A 并没有提交，而是回滚了该数据，所以最终 B 的账余额并没有增加。所">
+<meta name="keywords" content="数据库,隔离级别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL基础之数据库的隔离级别">
+<meta property="og:url" content="http://yoursite.com/2017/06/27/MySQL基础之数据库的隔离级别/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.隔离级别数据库的隔离级别有以下四种：  读未提交 读已提交 可重复读 串行化  2.数据库读取中的问题隔离级别主要用来解决以下三个问题：  脏读 不可重复读 幻读  2.1.脏读假设 A 给 B 打 5000 块钱，修改了数据库当时还没有提交。此时 B 读取数据库中的自己账户的余额，以为自己收到了 5000 块钱。然而之后 A 并没有提交，而是回滚了该数据，所以最终 B 的账余额并没有增加。所">
+<meta property="og:updated_time" content="2017-06-27T16:39:05.203Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL基础之数据库的隔离级别">
+<meta name="twitter:description" content="1.隔离级别数据库的隔离级别有以下四种：  读未提交 读已提交 可重复读 串行化  2.数据库读取中的问题隔离级别主要用来解决以下三个问题：  脏读 不可重复读 幻读  2.1.脏读假设 A 给 B 打 5000 块钱，修改了数据库当时还没有提交。此时 B 读取数据库中的自己账户的余额，以为自己收到了 5000 块钱。然而之后 A 并没有提交，而是回滚了该数据，所以最终 B 的账余额并没有增加。所">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-MySQL基础之数据库的隔离级别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL基础之数据库的隔离级别
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/27/MySQL基础之数据库的隔离级别/" class="article-date">
+  <time datetime="2017-06-27T14:17:14.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-隔离级别"><a href="#1-隔离级别" class="headerlink" title="1.隔离级别"></a>1.隔离级别</h2><p>数据库的隔离级别有以下四种：</p>
+<ol>
+<li>读未提交</li>
+<li>读已提交</li>
+<li>可重复读</li>
+<li>串行化</li>
+</ol>
+<h2 id="2-数据库读取中的问题"><a href="#2-数据库读取中的问题" class="headerlink" title="2.数据库读取中的问题"></a>2.数据库读取中的问题</h2><p>隔离级别主要用来解决以下三个问题：</p>
+<ol>
+<li>脏读</li>
+<li>不可重复读</li>
+<li>幻读</li>
+</ol>
+<h3 id="2-1-脏读"><a href="#2-1-脏读" class="headerlink" title="2.1.脏读"></a>2.1.脏读</h3><p>假设 <strong>A</strong> 给 <strong>B</strong> 打 <strong>5000</strong> 块钱，修改了数据库当时还没有提交。此时 <strong>B</strong> 读取数据库中的自己账户的余额，以为自己收到了 <strong>5000</strong> 块钱。然而之后 <strong>A</strong> 并没有提交，而是回滚了该数据，所以最终 <strong>B</strong> 的账余额并没有增加。所以 <strong>B</strong> 读取到的是错误的信息，这就是<strong>脏读</strong>。</p>
+<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>读已提交</strong>。其本质是：<strong>如果一个事务要进行写操作，那么在其提交之前，其他事务不能读。</strong></p>
+<h3 id="2-2-不可重复读"><a href="#2-2-不可重复读" class="headerlink" title="2.2.不可重复读"></a>2.2.不可重复读</h3><p>假设一个账户中有 <strong>5000</strong> 块钱， <strong>A</strong> 和 <strong>B</strong> 同时从这个账户中取钱，当 A 查看余额时发现账户中有 <strong>5000</strong> 块钱，之后 <strong>B</strong> 取走了这 <strong>5000</strong> 块钱，当 <strong>A</strong> 再取钱的时候发现钱已经被取走了。也就是说，在同一事务中，<strong>A</strong> 对自己的账户进行的两次查询得到了不同的结果，这就是<strong>不可重复读</strong>。</p>
+<p>不可重复读与脏读的区别在于，脏读读出的数据是<strong>无效的未提交的信息</strong>（脏读也称为<strong>无效数据读出</strong>）。而不可重复读两次读取的信息都是<strong>有效的已提交的信息</strong>，只不过在这两次读取期间数据被提交了而已。</p>
+<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>可重复读</strong>。其本质是：<strong>如果一个事务要进行读操作，那么在该事务结束之前，其他事务不能提交。</strong></p>
+<h3 id="2-3-幻读"><a href="#2-3-幻读" class="headerlink" title="2.3.幻读"></a>2.3.幻读</h3><p>假设 <strong>A</strong> 正在查询自己银行卡中的本月的消费记录，恰好此时 <strong>B</strong> 拿着 <strong>A</strong> 的信用卡刷了一笔钱。也就是说，在同一事务中，<strong>A</strong> 读到的两次消费记录不一致。新的结果中出现了<strong>幻影行</strong>，这就是<strong>幻读</strong>。</p>
+<p>幻读与不可重复读的区别在于，不可重复读可以通过加锁来避免。然而，<strong>你不可能给一条还未插入到数据库中的数据进行加锁</strong>，因此幻读是无法通过加锁的这种机制来避免的。</p>
+<p>为了避免这种情况，需要把数据库的隔离级别设置为<strong>串行化</strong>。这种手段使用的不是共享锁，而是<strong>行版本控制</strong>。其本质是：<strong>一个事务执行时，不允许其他事务执行。</strong></p>
+<h2 id="3-数据库的默认隔离级别"><a href="#3-数据库的默认隔离级别" class="headerlink" title="3.数据库的默认隔离级别"></a>3.数据库的默认隔离级别</h2><p><strong>MySQL</strong> 的默认隔离级别是可重复读.</p>
+<p>大多数数据库如 <strong>Sql Server</strong> , <strong>Oracle</strong> 的默认级别是读已提交。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/fg2006/article/details/6937413" target="_blank" rel="external">数据库事务隔离级别</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/隔离级别/">隔离级别</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/27/Java基础之Synchronized与ReentrantLock的区别/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Java基础之Synchronized与ReentrantLock的区别
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
