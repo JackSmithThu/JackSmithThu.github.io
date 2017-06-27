@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Jackie">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jackie">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer">
+      <article id="post-后台开发知识点总结（一）java基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/24/后台开发知识点总结（一）java基础/">后台开发知识点总结（一）java基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2016/09/24/后台开发知识点总结（一）java基础/" class="article-date">
+  <time datetime="2016-09-24T01:37:09.000Z" itemprop="datePublished">2016-09-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Java八种基本数据类型："><a href="#Java八种基本数据类型：" class="headerlink" title="Java八种基本数据类型："></a>Java八种基本数据类型：</h3><p>byte、short、int、long、float、double、boolean、char。</p>
+<h3 id="Map在Java中的四种实现？"><a href="#Map在Java中的四种实现？" class="headerlink" title="Map在Java中的四种实现？"></a>Map在Java中的四种实现？</h3><p>HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。</p>
+<h3 id="List在Java中的三种实现？"><a href="#List在Java中的三种实现？" class="headerlink" title="List在Java中的三种实现？"></a>List在Java中的三种实现？</h3><p>ArrayList（数组）、LinkedList（链表）、Vector（线程安全的ArrayList）。</p>
+<h3 id="Set在Java中的四种实现？"><a href="#Set在Java中的四种实现？" class="headerlink" title="Set在Java中的四种实现？"></a>Set在Java中的四种实现？</h3><p>HashSet（由HashMap支持，相当于没有 value 的 HashMap） 和 LinkedHashSet（顺序访问）。</p>
+<h3 id="Java8的新特性"><a href="#Java8的新特性" class="headerlink" title="Java8的新特性"></a>Java8的新特性</h3><p>Lambda表达式：允许把函数作为参数传进方法中。<br>Stream：random.ints().limit(10).forEach(System.out::println);<br>Optional类：使用Optional类可以避免显式进行空值检测<br>Nashorn：Java中调用Js，JavaScript引擎。<br>方法引用：通过方法的名字指向一个方法（使用::）。<br>函数式接口：增加了java.util.function函数接口，用来支持函数式编程（支持闭包）<br>默认方法：接口可以通过defult实现默认方法。<br>新的日期时间API。<br>Base64：一种编解码器。</p>
+<h3 id="什么是Java-NIO？"><a href="#什么是Java-NIO？" class="headerlink" title="什么是Java NIO？"></a>什么是Java NIO？</h3><p>NIO就是非阻塞IO。</p>
+<h3 id="NIO的实现原理是什么？"><a href="#NIO的实现原理是什么？" class="headerlink" title="NIO的实现原理是什么？"></a>NIO的实现原理是什么？</h3><p>NIO使用双向的通道（channel）而非单向的流（stream）进行通信。在通道上我们可以注册总共四种事件：客户端连接、服务端接收客户端连接、读、写。客户端和服务端各自维护一个管理通道的对象（selector），接收一个或多个通道的事件。</p>
+<h3 id="为什么要用NIO？"><a href="#为什么要用NIO？" class="headerlink" title="为什么要用NIO？"></a>为什么要用NIO？</h3><p>对阻塞式IO而言，每一个客户端都要有一个对应的线程来进行处理。每个线程都要占用一些空间和CPU时间。另外，多个线程带来频繁的上下文切换，而这些切换很可能是无意义的。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <nav id="page-nav">
+        <a class="extend prev" rel="prev" href="/page/3/">&laquo; Назад</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+      </nav>
+    </section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

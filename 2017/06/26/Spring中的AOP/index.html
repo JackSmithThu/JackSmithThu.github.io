@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/26/Spring中的AOP/index.html">
 <meta property="og:site_name" content="Jackie">
 <meta property="og:description" content="1.什么是AOPAOP（面向切面编程）给我们提供了很好的非入侵式（在不修改源代码的情况下）的手段为现有的类增加新的功能。本文通过演示 Spring AOP 是如何使用的来介绍什么是 AOP。 我们会首先演示如何使用基于注解的 Spring AOP，然后演示如何使用基于 XML 的 Spring AOP。最后对 Spring AOP 进行简要的总结。 首先我们需要定义一个目标对象（接口），这个对象在">
-<meta property="og:updated_time" content="2017-06-26T10:58:43.106Z">
+<meta property="og:updated_time" content="2017-06-27T00:29:39.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring中的AOP">
 <meta name="twitter:description" content="1.什么是AOPAOP（面向切面编程）给我们提供了很好的非入侵式（在不修改源代码的情况下）的手段为现有的类增加新的功能。本文通过演示 Spring AOP 是如何使用的来介绍什么是 AOP。 我们会首先演示如何使用基于注解的 Spring AOP，然后演示如何使用基于 XML 的 Spring AOP。最后对 Spring AOP 进行简要的总结。 首先我们需要定义一个目标对象（接口），这个对象在">
@@ -89,6 +89,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125; </div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们去掉了 Audience 中所有的注解，当然这样的一个类是无法实现 AOP 的，因此我们需要在XML 中进行配置：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"audience"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"performance"</span></div><div class="line">        <span class="attr">expression</span>=<span class="string">"execution(** concert.Performance.perform(..))"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:before</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"soliencePhones"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-returning</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"clap"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-throwing</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"refund"</span>/&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样一来，我们就可以在两个类都是完全的 <strong>pojo</strong> 类（纯 <strong>java</strong> 代码实现的普通类）的情况下实现 <strong>aop</strong> 了。</p>
 
       
     </div>
@@ -113,6 +114,10 @@
       </div>
     </a>
   
+  
+    <a href="/2017/06/27/Java基础之Synchronized与ReentrantLock的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java基础之Synchronized与ReentrantLock的区别&nbsp;<span>&gt;</span></div>
+    </a>
   
 </nav>
 

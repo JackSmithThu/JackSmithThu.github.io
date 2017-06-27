@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Java基础之Synchronized与ReentrantLock的区别 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
+<meta name="keywords" content="Java,JVM,Synchronized,Lock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础之Synchronized与ReentrantLock的区别">
+<meta property="og:url" content="http://yoursite.com/2017/06/27/Java基础之Synchronized与ReentrantLock的区别/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
+<meta property="og:updated_time" content="2017-06-27T10:54:56.403Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础之Synchronized与ReentrantLock的区别">
+<meta name="twitter:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-Java基础之Synchronized与ReentrantLock的区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java基础之Synchronized与ReentrantLock的区别
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/27/Java基础之Synchronized与ReentrantLock的区别/" class="article-date">
+  <time datetime="2017-06-27T10:38:37.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-不同同步手段之间的区别"><a href="#1-不同同步手段之间的区别" class="headerlink" title="1.不同同步手段之间的区别"></a>1.不同同步手段之间的区别</h2><h3 id="1-1-Synchronized"><a href="#1-1-Synchronized" class="headerlink" title="1.1.Synchronized"></a>1.1.Synchronized</h3><p>在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，<strong>synchronized</strong> 是很合适的。</p>
+<ol>
+<li>原因在于，编译程序通常会尽可能的进行优化 <strong>synchronized</strong>，</li>
+<li><strong>synchronized</strong> 另外可读性非常好。</li>
+</ol>
+<p>###　1.2.ReentrantLock</p>
+<p><strong>ReentrantLock</strong> 适用于资源竞争比较激烈的情况。</p>
+<ol>
+<li>在资源竞争不激烈的情形下，性能稍微比<strong>synchronized</strong>差点点。</li>
+<li>当同步非常激烈的时候，<strong>synchronized</strong> 的性能一下子能下降好几十倍。而 <strong>ReentrantLock</strong> 还能维持常态。</li>
+<li>可以实现多样化的同步，比如<strong>有时间限制的</strong>同步，可以被 <strong>Interrupt</strong> 的同步等。</li>
+</ol>
+<h3 id="1-3-Atomic"><a href="#1-3-Atomic" class="headerlink" title="1.3.Atomic"></a>1.3.Atomic</h3><p><strong>Atomic</strong> 同样适用于资源竞争比较激烈的情况。</p>
+<ol>
+<li>不激烈情况下，性能比<strong>synchronized</strong> 略逊。</li>
+<li>资源竞争激烈的时候，也能维持常态。<strong>Atomic</strong> 的性能会优于<strong>ReentrantLock</strong>一倍左右。</li>
+<li><strong>Atomic</strong> 有一个缺点，就是只能同步一个值，一段代码中只能出现一个<strong>Atomic</strong> 的变量，多于一个同步无效。因为他不能在多个<strong>Atomic</strong>之间同步。</li>
+</ol>
+<h2 id="2-RentranLock-的使用方式"><a href="#2-RentranLock-的使用方式" class="headerlink" title="2.RentranLock 的使用方式"></a>2.RentranLock 的使用方式</h2><ol>
+<li><strong>lock()</strong> ，如果获取了锁立即返回，如果别的线程持有锁，当前线程则一直处于休眠状态，直到获取锁</li>
+<li><strong>tryLock()</strong> ，如果获取了锁立即返回true，如果别的线程正持有锁，立即返回false。</li>
+<li><strong>tryLock(long timeout,TimeUnit unit)</strong>， 如果获取了锁定立即返回true，如果别的线程正持有锁，会等待参数给定的时间，在等待的过程中，如果获取了锁定，就返回true，如果等待超时，返回false。</li>
+<li><strong>lockInterruptibly()</strong> ，如果获取了锁定立即返回，如果没有获取锁定，当前线程处于休眠状态，直到或者锁定，或者当前线程被别的线程中断。</li>
+</ol>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lock/">Lock</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/26/Spring中的AOP/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Spring中的AOP
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
