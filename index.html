@@ -77,8 +77,7 @@
 <li>原因在于，编译程序通常会尽可能的进行优化 <strong>synchronized</strong>，</li>
 <li><strong>synchronized</strong> 另外可读性非常好。</li>
 </ol>
-<p>###　1.2.ReentrantLock</p>
-<p><strong>ReentrantLock</strong> 适用于资源竞争比较激烈的情况。</p>
+<h3 id="1-2-ReentrantLock"><a href="#1-2-ReentrantLock" class="headerlink" title="1.2.ReentrantLock"></a>1.2.ReentrantLock</h3><p><strong>ReentrantLock</strong> 适用于资源竞争比较激烈的情况。</p>
 <ol>
 <li>在资源竞争不激烈的情形下，性能稍微比<strong>synchronized</strong>差点点。</li>
 <li>当同步非常激烈的时候，<strong>synchronized</strong> 的性能一下子能下降好几十倍。而 <strong>ReentrantLock</strong> 还能维持常态。</li>

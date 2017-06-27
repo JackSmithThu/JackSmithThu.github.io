@@ -5,17 +5,17 @@
   
   <title>Java基础之Synchronized与ReentrantLock的区别 - Jackie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
+  <meta name="description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  1.2.ReentrantLockReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下，性能稍微">
 <meta name="keywords" content="Java,JVM,Synchronized,Lock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java基础之Synchronized与ReentrantLock的区别">
 <meta property="og:url" content="http://yoursite.com/2017/06/27/Java基础之Synchronized与ReentrantLock的区别/index.html">
 <meta property="og:site_name" content="Jackie">
-<meta property="og:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
-<meta property="og:updated_time" content="2017-06-27T10:55:45.400Z">
+<meta property="og:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  1.2.ReentrantLockReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下，性能稍微">
+<meta property="og:updated_time" content="2017-06-27T13:22:58.189Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java基础之Synchronized与ReentrantLock的区别">
-<meta name="twitter:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  ###　1.2.ReentrantLock ReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下">
+<meta name="twitter:description" content="1.不同同步手段之间的区别1.1.Synchronized在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized 是很合适的。  原因在于，编译程序通常会尽可能的进行优化 synchronized， synchronized 另外可读性非常好。  1.2.ReentrantLockReentrantLock 适用于资源竞争比较激烈的情况。  在资源竞争不激烈的情形下，性能稍微">
   
   
     <link rel="icon" href="/favicon.png">
@@ -81,8 +81,7 @@
 <li>原因在于，编译程序通常会尽可能的进行优化 <strong>synchronized</strong>，</li>
 <li><strong>synchronized</strong> 另外可读性非常好。</li>
 </ol>
-<p>###　1.2.ReentrantLock</p>
-<p><strong>ReentrantLock</strong> 适用于资源竞争比较激烈的情况。</p>
+<h3 id="1-2-ReentrantLock"><a href="#1-2-ReentrantLock" class="headerlink" title="1.2.ReentrantLock"></a>1.2.ReentrantLock</h3><p><strong>ReentrantLock</strong> 适用于资源竞争比较激烈的情况。</p>
 <ol>
 <li>在资源竞争不激烈的情形下，性能稍微比<strong>synchronized</strong>差点点。</li>
 <li>当同步非常激烈的时候，<strong>synchronized</strong> 的性能一下子能下降好几十倍。而 <strong>ReentrantLock</strong> 还能维持常态。</li>
