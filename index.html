@@ -45,6 +45,62 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-TCP的三次握手与四次挥手" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/28/TCP的三次握手与四次挥手/">TCP的三次握手与四次挥手</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/28/TCP的三次握手与四次挥手/" class="article-date">
+  <time datetime="2017-06-28T09:49:08.000Z" itemprop="datePublished">2017-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-TCP-建立与断开流程"><a href="#1-TCP-建立与断开流程" class="headerlink" title="1.TCP 建立与断开流程"></a>1.TCP 建立与断开流程</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706280001.png" alt="figure"></p>
+<h2 id="2-为什么是三次握手"><a href="#2-为什么是三次握手" class="headerlink" title="2.为什么是三次握手"></a>2.为什么是三次握手</h2><p><strong>如果两次握手</strong>，那么只要客户端发送请求，就会建立连接。在这种情况下，如果有请求在信道上发生滞留，服务端就会收到一个失效的报文端，并误以为是客户端新的请求。由于客户端并不会对服务端的响应进行应答，所以在这种情况下，服务端以为连接建立了，而客户端并没有发出连接请求，所以永远也不会想服务端发送数据。</p>
+<p>所以，三次握手是保证双方能够就发送数据这一问题达成一致所需要的最小值。</p>
+<h2 id="3-为什么是四次挥手"><a href="#3-为什么是四次挥手" class="headerlink" title="3.为什么是四次挥手"></a>3.为什么是四次挥手</h2><p>因为 <strong>TCP</strong> 是双工协议，当客户端没有想要发送的东西的时候，服务端可能还有想发送的东西。所以客户端只能单方面地承诺自己不再发送。而 <strong>TCP</strong> 真正的结束应该是服务端也承诺不再发送并得到应答才可以。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://www.cnblogs.com/Jessy/p/3535612.html" target="_blank" rel="external">TCP的三次握手(建立连接）和四次挥手(关闭连接）</a></p>
+<p><a href="https://www.zhihu.com/question/24853633" target="_blank" rel="external">TCP 为什么是三次握手，为什么不是两次或四次？</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-JVM中如何判断一个对象是否可以回收" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -697,82 +753,8 @@
 
 
     
-      <article id="post-Spring中如何处理自动装配的歧义性" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/Spring中如何处理自动装配的歧义性/">Spring中如何处理自动装配的歧义性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/25/Spring中如何处理自动装配的歧义性/" class="article-date">
-  <time datetime="2017-06-24T16:28:14.000Z" itemprop="datePublished">2017-06-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>说明：本文为 <strong>Spring in action</strong> 的读书笔记，其内容部分参考该书。</p>
-<h2 id="1-Spring-自动装配的歧义性"><a href="#1-Spring-自动装配的歧义性" class="headerlink" title="1.Spring 自动装配的歧义性"></a>1.Spring 自动装配的歧义性</h2><p>我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 <strong>bean</strong> 能够匹配的话，<strong>Spring</strong> 就无法进行自动装配了。</p>
-<p>举个例子，我们使用 <strong>@Autowired</strong> 注解标注了 <strong>setDessert()</strong> 方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>与此同时，我们有两个类实现了这个接口，一个叫做 <strong>Cake</strong>，另一个叫做 <strong>IceCream</strong>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cake</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
-<p>那么此时 <strong>Spring</strong> 究竟是应当注入 <strong>Cake</strong> 呢？还是注入 <strong>IceCream</strong> 呢？Spring 也无法判断，因此它会抛出一个 <strong>NoUniqueBeanDedinitionException</strong> 的异常。</p>
-<h2 id="2-如何解决自动装配的歧义性"><a href="#2-如何解决自动装配的歧义性" class="headerlink" title="2.如何解决自动装配的歧义性"></a>2.如何解决自动装配的歧义性</h2><p>Spring 提供了多种方法来解决这个问题，说明如下：</p>
-<h3 id="2-1-使用-primary-注解"><a href="#2-1-使用-primary-注解" class="headerlink" title="2.1.使用 @primary 注解"></a>2.1.使用 @primary 注解</h3><p><strong>@Primary</strong> 注解的使用方式如下： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Primary</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
-<p><strong>@Primary</strong> 注解使得在有多个满足条件的 <strong>bean</strong> 同时存在是，提供一种优先的解决方案。</p>
-<h3 id="2-2-使用-Qualifier-注解"><a href="#2-2-使用-Qualifier-注解" class="headerlink" title="2.2.使用 @Qualifier 注解"></a>2.2.使用 @Qualifier 注解</h3><p><strong>@Qualifier</strong> 注解的使用方式如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="meta">@Quatifier</span>(<span class="string">"iceCream"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>@Qualifier</strong>  注解中的 <strong>iceCream</strong> 为 <strong>IceCream</strong> 类名首字母变为小写的结果。</p>
-<p>当然，你也可以像这样使用 <strong>@Qualifier</strong>  注解。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Qualifier</span>(<span class="string">"cold"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div><div class="line"></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Qualifier</span>(<span class="string">"cold"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的使用方式有利于解耦和代码重构。</p>
-<h3 id="2-3-自定义的注解"><a href="#2-3-自定义的注解" class="headerlink" title="2.3.自定义的注解"></a>2.3.自定义的注解</h3><p>除此之外，我们还可以创建新的注解（如 <strong>@Cold</strong>）来代替 <strong>@Qualifier(“cold”)</strong>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentPolicy.Runtime)</div><div class="line"><span class="meta">@Qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Cold &#123; &#125;</div></pre></td></tr></table></figure>
-<p>一般情况下，这个接口放在 <strong>Cold.java</strong> 里。这样我们就可以直接使用注解 <strong>@Clod</strong>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当然，我们也可以同时使用多个注解来缩减范围：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="meta">@Creamy</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p><a href="http://www.jianshu.com/p/f2a92091f4ae" target="_blank" rel="external">Spring高级装配之处理自动装配的歧义性</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring实战/">Spring实战</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Далее &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">

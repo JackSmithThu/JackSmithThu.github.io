@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>TCP的三次握手与四次挥手 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.TCP 建立与断开流程 2.为什么是三次握手如果两次握手，那么只要客户端发送请求，就会建立连接。在这种情况下，如果有请求在信道上发生滞留，服务端就会收到一个失效的报文端，并误以为是客户端新的请求。由于客户端并不会对服务端的响应进行应答，所以在这种情况下，服务端以为连接建立了，而客户端并没有发出连接请求，所以永远也不会想服务端发送数据。 所以，三次握手是保证双方能够就发送数据这一问题达成一致所需">
+<meta name="keywords" content="TCP,网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP的三次握手与四次挥手">
+<meta property="og:url" content="http://yoursite.com/2017/06/28/TCP的三次握手与四次挥手/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.TCP 建立与断开流程 2.为什么是三次握手如果两次握手，那么只要客户端发送请求，就会建立连接。在这种情况下，如果有请求在信道上发生滞留，服务端就会收到一个失效的报文端，并误以为是客户端新的请求。由于客户端并不会对服务端的响应进行应答，所以在这种情况下，服务端以为连接建立了，而客户端并没有发出连接请求，所以永远也不会想服务端发送数据。 所以，三次握手是保证双方能够就发送数据这一问题达成一致所需">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706280001.png">
+<meta property="og:updated_time" content="2017-06-28T10:09:26.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP的三次握手与四次挥手">
+<meta name="twitter:description" content="1.TCP 建立与断开流程 2.为什么是三次握手如果两次握手，那么只要客户端发送请求，就会建立连接。在这种情况下，如果有请求在信道上发生滞留，服务端就会收到一个失效的报文端，并误以为是客户端新的请求。由于客户端并不会对服务端的响应进行应答，所以在这种情况下，服务端以为连接建立了，而客户端并没有发出连接请求，所以永远也不会想服务端发送数据。 所以，三次握手是保证双方能够就发送数据这一问题达成一致所需">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706280001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-TCP的三次握手与四次挥手" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TCP的三次握手与四次挥手
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/28/TCP的三次握手与四次挥手/" class="article-date">
+  <time datetime="2017-06-28T09:49:08.000Z" itemprop="datePublished">2017-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-TCP-建立与断开流程"><a href="#1-TCP-建立与断开流程" class="headerlink" title="1.TCP 建立与断开流程"></a>1.TCP 建立与断开流程</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706280001.png" alt="figure"></p>
+<h2 id="2-为什么是三次握手"><a href="#2-为什么是三次握手" class="headerlink" title="2.为什么是三次握手"></a>2.为什么是三次握手</h2><p><strong>如果两次握手</strong>，那么只要客户端发送请求，就会建立连接。在这种情况下，如果有请求在信道上发生滞留，服务端就会收到一个失效的报文端，并误以为是客户端新的请求。由于客户端并不会对服务端的响应进行应答，所以在这种情况下，服务端以为连接建立了，而客户端并没有发出连接请求，所以永远也不会想服务端发送数据。</p>
+<p>所以，三次握手是保证双方能够就发送数据这一问题达成一致所需要的最小值。</p>
+<h2 id="3-为什么是四次挥手"><a href="#3-为什么是四次挥手" class="headerlink" title="3.为什么是四次挥手"></a>3.为什么是四次挥手</h2><p>因为 <strong>TCP</strong> 是双工协议，当客户端没有想要发送的东西的时候，服务端可能还有想发送的东西。所以客户端只能单方面地承诺自己不再发送。而 <strong>TCP</strong> 真正的结束应该是服务端也承诺不再发送并得到应答才可以。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://www.cnblogs.com/Jessy/p/3535612.html" target="_blank" rel="external">TCP的三次握手(建立连接）和四次挥手(关闭连接）</a></p>
+<p><a href="https://www.zhihu.com/question/24853633" target="_blank" rel="external">TCP 为什么是三次握手，为什么不是两次或四次？</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/28/JVM中如何判断一个对象是否可以回收/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          JVM中如何判断一个对象是否可以回收
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
