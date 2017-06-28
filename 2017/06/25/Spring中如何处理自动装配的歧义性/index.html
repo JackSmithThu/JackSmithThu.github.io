@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Spring中如何处理自动装配的歧义性 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="说明：本文为 Spring in action 的读书笔记，其内容部分参考该书。 1.Spring 自动装配的歧义性我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 bean 能够匹配的话，Spring 就无法进行自动装配了。 举个例子，我们使用 @Autowired 注解标注了 setDessert() 方法： 1234@Autowiredpublic">
+<meta name="keywords" content="Spring,Spring实战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring中如何处理自动装配的歧义性">
+<meta property="og:url" content="http://yoursite.com/2017/06/25/Spring中如何处理自动装配的歧义性/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="说明：本文为 Spring in action 的读书笔记，其内容部分参考该书。 1.Spring 自动装配的歧义性我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 bean 能够匹配的话，Spring 就无法进行自动装配了。 举个例子，我们使用 @Autowired 注解标注了 setDessert() 方法： 1234@Autowiredpublic">
+<meta property="og:updated_time" content="2017-06-28T07:58:18.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring中如何处理自动装配的歧义性">
+<meta name="twitter:description" content="说明：本文为 Spring in action 的读书笔记，其内容部分参考该书。 1.Spring 自动装配的歧义性我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 bean 能够匹配的话，Spring 就无法进行自动装配了。 举个例子，我们使用 @Autowired 注解标注了 setDessert() 方法： 1234@Autowiredpublic">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-Spring中如何处理自动装配的歧义性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring中如何处理自动装配的歧义性
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Spring中如何处理自动装配的歧义性/" class="article-date">
+  <time datetime="2017-06-24T16:28:14.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说明：本文为 <strong>Spring in action</strong> 的读书笔记，其内容部分参考该书。</p>
+<h2 id="1-Spring-自动装配的歧义性"><a href="#1-Spring-自动装配的歧义性" class="headerlink" title="1.Spring 自动装配的歧义性"></a>1.Spring 自动装配的歧义性</h2><p>我们已经知道，利用自动装配可以减少显式配置的数量，为我们带来很大的方便。但是，如果不仅有一个 <strong>bean</strong> 能够匹配的话，<strong>Spring</strong> 就无法进行自动装配了。</p>
+<p>举个例子，我们使用 <strong>@Autowired</strong> 注解标注了 <strong>setDessert()</strong> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>与此同时，我们有两个类实现了这个接口，一个叫做 <strong>Cake</strong>，另一个叫做 <strong>IceCream</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cake</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
+<p>那么此时 <strong>Spring</strong> 究竟是应当注入 <strong>Cake</strong> 呢？还是注入 <strong>IceCream</strong> 呢？Spring 也无法判断，因此它会抛出一个 <strong>NoUniqueBeanDedinitionException</strong> 的异常。</p>
+<h2 id="2-如何解决自动装配的歧义性"><a href="#2-如何解决自动装配的歧义性" class="headerlink" title="2.如何解决自动装配的歧义性"></a>2.如何解决自动装配的歧义性</h2><p>Spring 提供了多种方法来解决这个问题，说明如下：</p>
+<h3 id="2-1-使用-primary-注解"><a href="#2-1-使用-primary-注解" class="headerlink" title="2.1.使用 @primary 注解"></a>2.1.使用 @primary 注解</h3><p><strong>@Primary</strong> 注解的使用方式如下： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Primary</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div></pre></td></tr></table></figure>
+<p><strong>@Primary</strong> 注解使得在有多个满足条件的 <strong>bean</strong> 同时存在是，提供一种优先的解决方案。</p>
+<h3 id="2-2-使用-Qualifier-注解"><a href="#2-2-使用-Qualifier-注解" class="headerlink" title="2.2.使用 @Qualifier 注解"></a>2.2.使用 @Qualifier 注解</h3><p><strong>@Qualifier</strong> 注解的使用方式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line"><span class="meta">@Quatifier</span>(<span class="string">"iceCream"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@Qualifier</strong>  注解中的 <strong>iceCream</strong> 为 <strong>IceCream</strong> 类名首字母变为小写的结果。</p>
+<p>当然，你也可以像这样使用 <strong>@Qualifier</strong>  注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Qualifier</span>(<span class="string">"cold"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IceCream</span> <span class="keyword">implements</span> <span class="title">Dessert</span> </span>&#123;...&#125;</div><div class="line"></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Qualifier</span>(<span class="string">"cold"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的使用方式有利于解耦和代码重构。</p>
+<h3 id="2-3-自定义的注解"><a href="#2-3-自定义的注解" class="headerlink" title="2.3.自定义的注解"></a>2.3.自定义的注解</h3><p>除此之外，我们还可以创建新的注解（如 <strong>@Cold</strong>）来代替 <strong>@Qualifier(“cold”)</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentPolicy.Runtime)</div><div class="line"><span class="meta">@Qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Cold &#123; &#125;</div></pre></td></tr></table></figure>
+<p>一般情况下，这个接口放在 <strong>Cold.java</strong> 里。这样我们就可以直接使用注解 <strong>@Clod</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，我们也可以同时使用多个注解来缩减范围：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="meta">@Cold</span></div><div class="line"><span class="meta">@Creamy</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDessert</span><span class="params">(Dessert dessert)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.dessert = dessert;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p><a href="http://www.jianshu.com/p/f2a92091f4ae" target="_blank" rel="external">Spring高级装配之处理自动装配的歧义性</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring实战/">Spring实战</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/23/Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/25/Spring中bean的作用域/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring中bean的作用域&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
