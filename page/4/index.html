@@ -45,6 +45,500 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-单台windows搭建zookeeper和kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" class="article-date">
+  <time datetime="2017-04-04T10:11:39.000Z" itemprop="datePublished">2017-04-04</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们的目标是在一台机器上部署三个zookeeper的server，并在此基础上部署三个zookeeper的server。</p>
+<h1 id="1-zookeeper的部署"><a href="#1-zookeeper的部署" class="headerlink" title="1.zookeeper的部署"></a>1.zookeeper的部署</h1><p>zookeeper的部署采用伪集群模式，即在一台电脑上部署多个server。</p>
+<h2 id="1-1-建立文件夹，存放项目"><a href="#1-1-建立文件夹，存放项目" class="headerlink" title="1.1.建立文件夹，存放项目"></a>1.1.建立文件夹，存放项目</h2><p>在你喜欢的位置（我的目录为D:\WorkSpace）建立一个名为zookeeper的文件夹，并在该文件夹下建立三个目录，分别名为server1，server2和server3。完成之后如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040011.png" alt=""></p>
+<h2 id="1-2-下载zookeeper"><a href="#1-2-下载zookeeper" class="headerlink" title="1.2.下载zookeeper"></a>1.2.下载zookeeper</h2><p>下载地址：<a href="http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。" target="_blank" rel="external">http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040012.png" alt=""></p>
+<h2 id="1-3-解压文件并创建一些目录"><a href="#1-3-解压文件并创建一些目录" class="headerlink" title="1.3.解压文件并创建一些目录"></a>1.3.解压文件并创建一些目录</h2><p>将下载好的压缩包解压到server1目录下，并在server1目录下建三个文件夹，分别名为data，dataLog和logs。完成之后应该是这样的。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040013.png" alt=""></p>
+<p>注意：压缩包解压的时候直接选【解压到当前文件夹】即可。所以上图中的zookeeper-3.4.10文件夹打开之后应该是这样的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040014.png" alt=""></p>
+<h2 id="1-4-在server1-data目录下，创建一个叫做myid的文件。"><a href="#1-4-在server1-data目录下，创建一个叫做myid的文件。" class="headerlink" title="1.4.在server1/data目录下，创建一个叫做myid的文件。"></a>1.4.在server1/data目录下，创建一个叫做myid的文件。</h2><p>注意，这个文件不需要任何扩展名，所以显示的形式如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040015.png" alt=""></p>
+<p>如果你看到的myid文件不是这样的，说明你的扩展名没有去除。在windows系统下，文件扩展名默认是被隐藏的。在【查看】选项卡里勾选【文件扩展名】，你就能看到被隐藏的扩展名了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040016.png" alt=""></p>
+<h2 id="1-5-打开myid文件，在里面添加对应的id"><a href="#1-5-打开myid文件，在里面添加对应的id" class="headerlink" title="1.5.打开myid文件，在里面添加对应的id"></a>1.5.打开myid文件，在里面添加对应的id</h2><p>因为我们目前配置的是server1，所以添加id为1，然后关闭即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040017.png" alt=""></p>
+<p>这里打开myid文件使用的编辑器是notepad++，如果没有安装的话，可以下载一个安装一下。下载地址：<a href="https://notepad-plus-plus.org/。" target="_blank" rel="external">https://notepad-plus-plus.org/。</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040018.png" alt=""></p>
+<h2 id="1-6-修改配置文件"><a href="#1-6-修改配置文件" class="headerlink" title="1.6.修改配置文件"></a>1.6.修改配置文件</h2><p>在server1/zookeeper-3.4.10/conf目录下，新建zoo.cfg文件，加入内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>注意，dataDir和dataLogDir中的D:/WorkSpace目录需要改成你自己的目录。</p>
+<p>这里对zoo.cfg中的内容进行简要地说明：</p>
+<p><strong>tickTime</strong>为客户端与服务器之间或服务器互相之间的心跳间隔，以ms为单位。</p>
+<p><strong>initLimit</strong>为leader与follower进行初始连接时最多能够容忍的心跳数。</p>
+<p><strong>syncLimit</strong>为follower与leader请求和应答之间最多能容忍的心跳数。</p>
+<p><strong>dataDir</strong>为数据文件目录。</p>
+<p><strong>dataLogDir</strong>为日志文件目录。</p>
+<p><strong>clientPort</strong>为客户端连接服务器的端口，zookeeper监听此接口接收客户端访问请求。</p>
+<p><strong>最后三行</strong>为集群中每个服务器的ip和端口号。前一个端口为leader和follower通信端口，后一个端口为选举新leader时所用的端口。一般来说，在多台电脑的情况下，每台服务器上的端口配置是一样的。不过我们现在使用同一台电脑配置三个server，为了避免冲突，只能把它们改成不一样。</p>
+<h2 id="1-7-复制server1中的内容到server2和server3中，并修改相应配置"><a href="#1-7-复制server1中的内容到server2和server3中，并修改相应配置" class="headerlink" title="1.7.复制server1中的内容到server2和server3中，并修改相应配置"></a>1.7.复制server1中的内容到server2和server3中，并修改相应配置</h2><p>将server1中的内容分别复制到server2和server3中，并修改/data/myid文件和/zookeeper-3.4.10/conf/zoo.cfg文件。</p>
+<p>myid文件只需要将其中的内容改成服务器的序号即可。</p>
+<p>zoo.cfg文件需要修改dataDir，dataLogDir和clientPort。修改后的三个文件如下：</p>
+<p>server1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>server2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server2/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server2/dataLog</div><div class="line">clientPort=2182</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>server3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server3/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server3/dataLog</div><div class="line">clientPort=2183</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<h2 id="1-8-启动服务器"><a href="#1-8-启动服务器" class="headerlink" title="1.8.启动服务器"></a>1.8.启动服务器</h2><p>分别进入三个server的/zookeeper-3.4.10/bin目录下，运行：zkServer start 。结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040019.png" alt=""></p>
+<p>第一个server启动的时候会报错，这是由于它想要和其他两个server进行通信，而另外两个server还没有搭建起来。不用理会这个错误，继续打开新的cmd窗口，启动其他server就好。注意，原来的窗口不要关！所有server都启动了之后，显示如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040020.png" alt=""></p>
+<p>如果报Invalid arguments, exiting abnormally 的异常的话，只需要在 zkServer start 命令中去掉start，即输入zkServer即可。</p>
+<h2 id="1-9-连接客户端"><a href="#1-9-连接客户端" class="headerlink" title="1.9.连接客户端"></a>1.9.连接客户端</h2><p>进入任意一个zookeeper-3.4.10目录下，用以下命令启动客户端：zkCli –server 127.0.0.1:2181<br>，显示如下结果：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040021.png" alt=""></p>
+<p>输入help，显示可以执行的指令。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040022.png" alt=""></p>
+<p>做到这一步，zookeeper集群的搭建就完成了。接下来我们要在此基础上搭建kafka的集群。</p>
+<h1 id="2-kafka的部署"><a href="#2-kafka的部署" class="headerlink" title="2.kafka的部署"></a>2.kafka的部署</h1><p>kafka在设计的时候就依赖于zookeeper，对于kafka而言，zookeeper相当于它的文件系统。每个节点的信息都保存在zookeeper对应的路径下。</p>
+<p><strong>（1）Broker注册</strong>：Broker在zookeeper中保存为一个临时节点，节点的路径是/brokers/ids/[brokerid],每个节点会保存对应broker的IP以及端口等信息。</p>
+<p><strong>（2）Topic注册</strong>：在kafka中,一个topic会被分成多个区并被分到多个broker上，分区的信息以及broker的分布情况都保存在zookeeper中，根节点路径为/brokers/topics,每个topic都会在topics下建立独立的子节点，每个topic节点下都会包含分区以及broker的对应信息。</p>
+<p><strong>（3）消费者与分区的对应关系</strong>：对于每个消费者分组，kafka都会为其分配一个全局唯一的Group ID,分组内的所有消费者会共享该ID,kafka还会为每个消费者分配一个consumer ID,通常采用hostname:uuid的形式。在kafka的设计中规定，对于topic的每个分区，最多只能被一个消费者进行消费，也就是消费者与分区的关系是一对多的关系。消费者与分区的关系被存储在zookeeper中节点的路径为 /consumers/[group_id]/owners/[topic]/[broker_id-partition_id],该节点的内容就是消费者的Consumer ID。</p>
+<p><strong>（4）消费者负载均衡</strong>：消费者服务启动时，会创建一个属于消费者节点的临时节点，节点的路径为 /consumers/[group_id]/ids/[consumer_id],该节点的内容是该消费者订阅的Topic信息。每个消费者会对/consumers/[group_id]/ids节点注册Watcher监听器，一旦消费者的数量增加或减少就会触发消费者的负载均衡。消费者还会对/brokers/ids/[brokerid]节点进行监听，如果发现服务器的Broker服务器列表发生变化，也会进行消费者的负载均衡。</p>
+<p><strong>（5）消费者的offset</strong>：在kafka的消费者API分为两种(1)High Level API：由zookeeper维护消费者的offset (2) Low Level API：自己的代码实现对offset的维护。由于自己维护offset往往比较复杂，所以多数情况下都是使用High Level的API offset在zookeeper中的节点路径为/consumers/[group_id]/offsets/[topic]/[broker_id-part_id],该节点的值就是对应的offset。</p>
+<p>看到这里，你就会明白kafka和zookeeper之间的关系了。我们现在就是要在已经配置好的zookeeper集群上配置kafka集群。</p>
+<h2 id="2-1-建立对应目录"><a href="#2-1-建立对应目录" class="headerlink" title="2.1.建立对应目录"></a>2.1.建立对应目录</h2><p>还是找到你喜欢的那个目录（我的是D:\WorkSpace）,建立一个叫做kafka的文件夹，里面建立三个子目录，分别叫做：kafka1，kafka2和kafka3。完成之后应该是这个样子：<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040023.png" alt=""></p>
+<h2 id="2-2-下载kafka并解压到每个文件夹"><a href="#2-2-下载kafka并解压到每个文件夹" class="headerlink" title="2.2.下载kafka并解压到每个文件夹"></a>2.2.下载kafka并解压到每个文件夹</h2><p>kafka下载地址：<br><a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz" target="_blank" rel="external">https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a><br>下载之后是一个压缩包，还是直接解压到kafka1，kafka2和kafka3这三个文件夹就行。解压完后，在 kafka1，kafka2和kafka3目录下分别添加一个kafkaLog目录。最后的结果应该是这个样子的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040024.png" alt=""></p>
+<h2 id="2-3-修改配置文件："><a href="#2-3-修改配置文件：" class="headerlink" title="2.3.修改配置文件："></a>2.3.修改配置文件：</h2><p>分别打开kafka1，kafka2和kafka3三个目录中的kafka_2.12-0.10.2.1/config路径下的consumer.properties文件，将里面的内容改成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">group.id=logGroup</div></pre></td></tr></table></figure>
+<p>再打开这三个目录下的server.properties文件，按照下面内容进行修改：</p>
+<p>kafka1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=0</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka1/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9092</div><div class="line">port=9092</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<p>kafka2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=1</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka2/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9093</div><div class="line">port=9093</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<p>kafka3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=2</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka3/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9094</div><div class="line">port=9094</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<h2 id="2-4-启动kafka服务器"><a href="#2-4-启动kafka服务器" class="headerlink" title="2.4.启动kafka服务器"></a>2.4.启动kafka服务器</h2><p>进入D:/WorkSpace/kafka/kafka1/目录下，输入<br>.\bin\windows\kafka-server-start.bat .\config\server.properties  命令，注意不要漏掉命令中的“.”。得到的结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040025.png" alt=""></p>
+<p>同样地，进入另外两个kafka2 和 kafka3目录下，把另外两个kafka服务器也启动起来。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040026.png" alt=""></p>
+<p>如果你最后得到的结果是这样的，那么恭喜你，zookeeper和kafka集群已经搭建完成了。</p>
+<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>（1）在单机上实现ZooKeeper伪机群/伪集群部署 ：</p>
+<p><a href="http://blog.csdn.net/poechant/article/details/6633923" target="_blank" rel="external">http://blog.csdn.net/poechant/article/details/6633923</a></p>
+<p>（2）一台机器上安装zookeeper和kafka集群：</p>
+<p><a href="http://blog.csdn.net/u013244038/article/details/53938997" target="_blank" rel="external">http://blog.csdn.net/u013244038/article/details/53938997</a></p>
+<h2 id="操作系统版本：windows-10"><a href="#操作系统版本：windows-10" class="headerlink" title="操作系统版本：windows 10"></a>操作系统版本：windows 10</h2><h2 id="zookeeper版本：3-4-10"><a href="#zookeeper版本：3-4-10" class="headerlink" title="zookeeper版本：3.4.10"></a>zookeeper版本：3.4.10</h2><h2 id="kafka版本：2-12-0-10-2-1"><a href="#kafka版本：2-12-0-10-2-1" class="headerlink" title="kafka版本：2.12-0.10.2.1"></a>kafka版本：2.12-0.10.2.1</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Eclipse搭建SpringBoot（一）HelloWorld" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/Eclipse搭建SpringBoot（一）HelloWorld/">Eclipse搭建SpringBoot（一）HelloWorld</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/28/Eclipse搭建SpringBoot（一）HelloWorld/" class="article-date">
+  <time datetime="2017-03-28T07:44:49.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-在Eclipse中安装STS插件"><a href="#1-在Eclipse中安装STS插件" class="headerlink" title="1.在Eclipse中安装STS插件"></a>1.在Eclipse中安装STS插件</h2><p>进入Eclipse，选择【help】→【Eclipse Marketplace 】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png" alt="1"></p>
+<p>搜索→【STS】,找到【SpringToolSuite】并下载。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040002.png" alt="2"></p>
+<h2 id="2-新建一个项目"><a href="#2-新建一个项目" class="headerlink" title="2.新建一个项目"></a>2.新建一个项目</h2><p>【file】-&gt;【new】-&gt;【project】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040003.png" alt="3"></p>
+<p>选择Spring Starter Project，然后【next】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040004.png" alt="4"></p>
+<p>给你的项目取个名字，我的叫【bootDemo】，点击【next】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040005.png" alt="5"></p>
+<p>添加你所需要的依赖，由于我们现在只是演示，就只添加【core】中的【AOP】和【web】中的【web】。选好之后，点击【next】-&gt;【Finish】。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040006.png" alt="6"></p>
+<p>建好之后，你会得到这样一个工程：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040007.png" alt="7"></p>
+<h2 id="3-运行程序"><a href="#3-运行程序" class="headerlink" title="3.运行程序"></a>3.运行程序</h2><p>点击运行按钮，运行程序。运行方式选 Spring Boot App。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040008.png" alt="8"><br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040009.png" alt="9"></p>
+<p>得到结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040010.png" alt="10"></p>
+<p>这样，一个Spring Boot 项目就搭建起来了。</p>
+<h2 id="4-可能会遇到的问题："><a href="#4-可能会遇到的问题：" class="headerlink" title="4.可能会遇到的问题："></a>4.可能会遇到的问题：</h2><p>建立新项目后下载依赖的时候，可能会出现卡在那里不动的情况。这是因为国内连国外的镜像连不上造成的。可以修改maven中的镜像源，具体操作如下：</p>
+<p>修改maven根目录下的conf文件夹中的setting.xml文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
+<p>改好之后，右击项目→【maven】→【update project】即可</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png" alt="11"></p>
+<p>如果还是不行的话，就去看看 用户名/.m2/目录下是否也存在一个settings.xml文件，这个配置文件的优先级是高于maven安装目录下的配置文件的。所以要把这个也改成阿里云的镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
+<h2 id="5-参考链接："><a href="#5-参考链接：" class="headerlink" title="5.参考链接："></a>5.参考链接：</h2><p><a href="http://blog.csdn.net/clementad/article/details/51334064" target="_blank" rel="external">Eclipse中创建新的Spring Boot项目</a><br><a href="http://blog.csdn.net/u010717403/article/details/52188496" target="_blank" rel="external">maven阿里云中央仓库</a><br><a href="http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html" target="_blank" rel="external">Maven2的配置文件settings.xml</a></p>
+<h2 id="6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip"><a href="#6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip" class="headerlink" title="6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip"></a>6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-kafka学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/24/kafka学习/">kafka学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/24/kafka学习/" class="article-date">
+  <time datetime="2017-03-24T10:45:40.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><h3 id="首先，我们先来看一下-kafka-是用来干什么的"><a href="#首先，我们先来看一下-kafka-是用来干什么的" class="headerlink" title="首先，我们先来看一下 kafka 是用来干什么的"></a>首先，我们先来看一下 <strong>kafka</strong> 是用来干什么的</h3><p>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
+<ul>
+<li>搭建一个实时的流数据管道以支持系统间的实时数据通信。</li>
+<li>搭建一个对流数据进行转换或响应的实时流应用。</li>
+</ul>
+<h3 id="为了实现这个目标，kafka-实现了以下三大关键特性"><a href="#为了实现这个目标，kafka-实现了以下三大关键特性" class="headerlink" title="为了实现这个目标，kafka 实现了以下三大关键特性"></a>为了实现这个目标，<strong>kafka</strong> 实现了以下三大关键特性</h3><ul>
+<li>支持记录流（<strong>stream of records</strong>）的发布和订阅（有点儿像<strong>消息队列</strong>）。</li>
+<li>允许你以一种高容错的手段存储记录流。</li>
+<li>允许你实时地处理产生的记录。</li>
+</ul>
+<h3 id="初次之外，你可能还需要了解一些关于-kafka-其他的知识"><a href="#初次之外，你可能还需要了解一些关于-kafka-其他的知识" class="headerlink" title="初次之外，你可能还需要了解一些关于 kafka 其他的知识"></a>初次之外，你可能还需要了解一些关于 <strong>kafka</strong> 其他的知识</h3><ul>
+<li><p>首先，<strong>kafka</strong> 是运行在由一个或多个服务器组成的集群（<strong>cluster</strong>）上</p>
+</li>
+<li><p><strong>kafka</strong> 集群将流（<strong>stream</strong>）按照不同的分类存储，每个分类叫做一个主题（ <strong>topic</strong>）。</p>
+</li>
+<li><p>每一条记录（<strong>record</strong>）都包含一个键（<strong>key</strong>），一个值（<strong>value</strong>）和一个时间戳（<strong>timestamp</strong>）。</p>
+<hr>
+</li>
+</ul>
+<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h3 id="kafka-的四大-API"><a href="#kafka-的四大-API" class="headerlink" title="kafka 的四大 API"></a><strong>kafka</strong> 的四大 API</h3><ul>
+<li><strong>Producer API</strong> ：允许一个应用发布一个数据流到一个或多个 <strong>topic</strong> 上。</li>
+<li><strong>Consumer API</strong> ：允许一个应用订阅一个或多个 <strong>topic</strong> ，并对发送给它的数据进行处理。 </li>
+<li><strong>Streams API</strong> ： 允许一个应用作为流处理器（<strong>stream processor</strong>）工作，即从某个或某些 <strong>topic</strong> 订阅，处理之后再发布到其他 <strong>topic</strong> 上。</li>
+<li><strong>Connector API</strong> ： 用于构建可重用的 <strong>producer</strong> 或 <strong>constmer</strong> 来把<strong>kafka</strong> 的 <strong>topic</strong> 连接到已有的系统上。比如，一个关系型数据库上的 <strong>connector</strong> 可以捕捉该数据库上某张表的内一个变化。</li>
+</ul>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-单台windows搭建redis集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/18/单台windows搭建redis集群/">单台windows搭建redis集群</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/18/单台windows搭建redis集群/" class="article-date">
+  <time datetime="2017-03-18T06:02:38.000Z" itemprop="datePublished">2017-03-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-下载和安装必要的工具"><a href="#1-下载和安装必要的工具" class="headerlink" title="1.下载和安装必要的工具"></a>1.下载和安装必要的工具</h2><h3 id="1-1-下载安装redis-for-windows"><a href="#1-1-下载安装redis-for-windows" class="headerlink" title="1.1.下载安装redis for windows"></a>1.1.下载安装redis for windows</h3><p>下载地址：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">https://github.com/MSOpenTech/redis/releases</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png" alt=""></p>
+<p>msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。</p>
+<h3 id="1-2-下载安装ruby"><a href="#1-2-下载安装ruby" class="headerlink" title="1.2.下载安装ruby"></a>1.2.下载安装ruby</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050002.png" alt=""></p>
+<p>下载地址：<a href="https://rubyinstaller.org/downloads/" target="_blank" rel="external">https://rubyinstaller.org/downloads/</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050003.png" alt=""></p>
+<p>我下载安装的版本是Ruby2.3.3（x64）。安装的时候，记得把下面三个选项勾选上（如下图所示），这样就不用我们自己去配置环境变量了。</p>
+<h3 id="1-3-下载安装GEM："><a href="#1-3-下载安装GEM：" class="headerlink" title="1.3.下载安装GEM："></a>1.3.下载安装GEM：</h3><p>下载地址：<a href="https://rubygems.org/pages/download" target="_blank" rel="external">https://rubygems.org/pages/download</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050004.png" alt=""></p>
+<p>下载zip文件就行，解压到你喜欢的位置（我解压到了D:/software目录下）。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050005.png" alt=""></p>
+<p>双击setup.rb，安装GEM。完成之后，把该文件夹的bin目录添加到系统变量中的path里面。<br>首先，复制该bin路径。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050006.png" alt=""></p>
+<p>然后右键【此电脑】-&gt;【属性】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050007.png" alt=""></p>
+<p>【高级系统设置】-&gt;【环境变量】-&gt;【系统变量】-&gt;【Path】-&gt;【编辑】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050008.png" alt=""></p>
+<p>单击【新建】，把bin路径粘贴到方框中，然后点击【确定】即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050009.png" alt=""></p>
+<h3 id="1-4-生成redis-trib-rb文件"><a href="#1-4-生成redis-trib-rb文件" class="headerlink" title="1.4.生成redis-trib.rb文件"></a>1.4.生成redis-trib.rb文件</h3><p>新建一个文本文件，把它的名字改成redis-trib.rb。注意在改名之前先把隐藏的扩展名显示出来，否则会生成redis-trib.rb.txt文件。建好之后，访问：</p>
+<p><a href="https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb" target="_blank" rel="external">https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050010.png" alt=""></p>
+<p>复制页面中的内容，粘贴到新建的redis-trib.rb文件中，保存。然后将此文件复制到redis的安装目录下（我的是D:\Software\Redis）。然后将这个目录也添加到系统变量的path中。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png" alt=""></p>
+<p>OK，这样准备工作就完成了。接下来我们要配置redis集群。</p>
+<h2 id="2-配置redis集群"><a href="#2-配置redis集群" class="headerlink" title="2.配置redis集群"></a>2.配置redis集群</h2><h3 id="2-1-创建相应目录："><a href="#2-1-创建相应目录：" class="headerlink" title="2.1.创建相应目录："></a>2.1.创建相应目录：</h3><p>在你喜欢的地方（我的是D:\WorkSpace）建立一个叫做redis的目录（注意，这个不是刚才安装redis的目录，而是一个你新建的目录，后文中如果没有特殊说明，redis目录都指这个新建的目录），里面创建6个子目录，分别叫7000,7001,7002,7003,7004,7005。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png" alt=""></p>
+<p>打开7000文件夹，建立一个redis.conf文件，将下面内容粘贴进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">port 7000</div><div class="line">cluster-enabled yes</div><div class="line">cluster-config-file nodes-7000.conf</div><div class="line">cluster-node-timeout 5000</div><div class="line">appendonly yes</div></pre></td></tr></table></figure>
+<p>同理，在其他5个文件夹也各自创建一个redis.conf文件，将上面内容粘贴进去。不过要将prot和cluster-config-file中的7000改成对应的数字。如在7001文件夹中就改成7001。</p>
+<h3 id="2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。"><a href="#2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。" class="headerlink" title="2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。"></a>2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050012.png" alt=""></p>
+<p>你显示的结果可能跟我稍微有些不一样，没关系，这是因为我刚才已经安装过了。</p>
+<p>由于 GFW的问题， GEM 的源有时会不可用，如果你遇到了这个问题，可以使用淘宝的映像：<br>添加：gem sources -a <a href="https://ruby.taobao.org" target="_blank" rel="external">https://ruby.taobao.org</a><br>查看已存在的源：gem sources -l<br>删除被墙的源：gem sources -r <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a></p>
+<h3 id="2-3-在D-WorkSpace-redis目录下创建redis-bat文件"><a href="#2-3-在D-WorkSpace-redis目录下创建redis-bat文件" class="headerlink" title="2.3.在D:\WorkSpace\redis目录下创建redis.bat文件"></a>2.3.在D:\WorkSpace\redis目录下创建redis.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">cd D:\WorkSpace\Redis</div><div class="line">start Redis-Server ./7000/redis.conf</div><div class="line">start Redis-Server ./7001/redis.conf</div><div class="line">start Redis-Server ./7002/redis.conf</div><div class="line">start Redis-Server ./7003/redis.conf</div><div class="line">start Redis-Server ./7004/redis.conf</div><div class="line">start Redis-Server ./7005/redis.conf</div></pre></td></tr></table></figure></p>
+<p>双击redis.bat，弹出6个窗口，同时redis目录下会出现nodes-7000.conf 至 nodes-7005.conf 这几个文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png" alt=""></p>
+<h3 id="2-4-在D-WorkSpace-redis目录下新建cluster-bat文件"><a href="#2-4-在D-WorkSpace-redis目录下新建cluster-bat文件" class="headerlink" title="2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件"></a>2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd D:\WorkSpace\redis</div><div class="line">redis-trib.rb create --replicas 1 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005</div></pre></td></tr></table></figure></p>
+<p>双击cluster.bat，在询问是否要接受配置时输入“yes”。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240001.png" alt=""></p>
+<p>得到结果如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240002.png" alt=""></p>
+<h3 id="2-5-测试一下"><a href="#2-5-测试一下" class="headerlink" title="2.5.测试一下"></a>2.5.测试一下</h3><p>打开cmd，输入：redis-cli.exe -c -p 7000<br>再打开一个cmd，输入redis-cli.exe -c -p 7001<br>它们连接了不同的实例，我们现在要测试以下它们的数据是否是同步的。<br>我们在7000的cmd窗口中输入： set test helloworld<br>在7001的cmd窗口中输入：get test<br>可以看到redis输出：”helloworld”<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png" alt=""></p>
+<p>好，到这儿redis的集群就部署完成了。</p>
+<h2 id="3-参考链接："><a href="#3-参考链接：" class="headerlink" title="3.参考链接："></a>3.参考链接：</h2><p>Windows 部署 Redis 群集:<br><a href="http://www.cnblogs.com/xling/p/5253063.html" target="_blank" rel="external">http://www.cnblogs.com/xling/p/5253063.html</a><br>Redis安装：<br><a href="http://www.runoob.com/redis/redis-install.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-install.html</a></p>
+<h2 id="4-操作系统：Windows-10"><a href="#4-操作系统：Windows-10" class="headerlink" title="4.操作系统：Windows 10"></a>4.操作系统：Windows 10</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-后台开发知识点总结（六）大型网站架构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/18/后台开发知识点总结（六）大型网站架构/">后台开发知识点总结（六）大型网站架构</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" class="article-date">
+  <time datetime="2017-02-18T12:53:57.000Z" itemprop="datePublished">2017-02-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么叫正向代理？什么叫反向代理？"><a href="#什么叫正向代理？什么叫反向代理？" class="headerlink" title="什么叫正向代理？什么叫反向代理？"></a>什么叫正向代理？什么叫反向代理？</h3><p>正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。</p>
+<h3 id="反向代理服务器与负载均衡服务器的区别？"><a href="#反向代理服务器与负载均衡服务器的区别？" class="headerlink" title="反向代理服务器与负载均衡服务器的区别？"></a>反向代理服务器与负载均衡服务器的区别？</h3><p>反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转发用户请求，不存储资源。</p>
+<h3 id="Redis的可排序集与集合的区别是什么？是怎么实现的？"><a href="#Redis的可排序集与集合的区别是什么？是怎么实现的？" class="headerlink" title="Redis的可排序集与集合的区别是什么？是怎么实现的？"></a>Redis的可排序集与集合的区别是什么？是怎么实现的？</h3><p>可排序集在排序上拥有更高的效率（集合排序的时间复杂度为O），可排序集是借助跳表实现的。</p>
+<h3 id="什么是跳表？"><a href="#什么是跳表？" class="headerlink" title="什么是跳表？"></a>什么是跳表？</h3><p>跳表是一种可以用来替代树的数据结构，它的效率和AVL树不相上下。跳表由很多层构成，每一层都是一个有序链表。最下层包含了链表的所有元素，在上层出现的元素，下层还会出现。跳表使用上层来作为下层的索引，每个节点包含两个指针，一个指向后一个节点，一个指向下面的节点。跳表的空间复杂度期望为2n，其查找、插入和删除的时间复杂度均为O(log(n))。</p>
+<h3 id="跳表如何进行插入和删除？"><a href="#跳表如何进行插入和删除？" class="headerlink" title="跳表如何进行插入和删除？"></a>跳表如何进行插入和删除？</h3><p>跳表的插入比较复杂，首先要确定插入的元素所在的层数（用丢硬币的方法，丢到正面继续丢，丢到反面则停止。抛硬币的次数就是层数），如果层数超过当前层数，则在最上面添加新的层。跳表的删除比较简单，直接按照链表的方式删除即可。</p>
+<h3 id="介绍一下你所知道的缓存算法？"><a href="#介绍一下你所知道的缓存算法？" class="headerlink" title="介绍一下你所知道的缓存算法？"></a>介绍一下你所知道的缓存算法？</h3><p>1.LRU 和 LFU：<br>LRU（按照上次使用时间排序）、LFU（按照使用频率排序）、LRU2（按照倒数第二次使用时间排序）。<br>2.LRU 升级版：<br>2Q（Double Queues，两个LRU队列，比例1:3，当对象被第二次访问，移入第二级队列），ARC（adaptive Replacement cache，LFU 的2Q版，两个队列，一个是最近被访问一次，另一个是最近被访问两次）。<br>3.基于 FIFO：<br>FIFO（先进先出）、Second Chance（带标记位的FIFO）、Clock（环形队列的Second Chance）。<br>4.基于时间：<br>绝对时间周期（相同寿命）、相对时间周期（相同时刻）、从上次访问开始算起的时间周期<br>5.移除最常用：<br>MRU（移除最近最多访问元素，因为找出最近最少被访问的时间复杂度高）。</p>
+<h3 id="Redis的优势在于哪？"><a href="#Redis的优势在于哪？" class="headerlink" title="Redis的优势在于哪？"></a>Redis的优势在于哪？</h3><p>首先，Redis支持多种数据类型（字符串、列表、哈希、集合、有序集合）以及它们的原子性操作。另外，Redis支持数据的持久化和 Master-Slave 模式的数据备份。</p>
+<h3 id="负载均衡服务器的三大特性？"><a href="#负载均衡服务器的三大特性？" class="headerlink" title="负载均衡服务器的三大特性？"></a>负载均衡服务器的三大特性？</h3><p>负载均衡算法（轮询、最小连接数、最快响应时间、比率、优先权、哈希、基于策略（自定义）、基于数据包）、健康检查（Ping、TCP、UDP、HTTP、FTP、DNS等，七层网络中的三到七层）和会话保持（同一用户访问到相同服务器）。</p>
+<h3 id="线程的状态有几种？"><a href="#线程的状态有几种？" class="headerlink" title="线程的状态有几种？"></a>线程的状态有几种？</h3><p>新建、就绪、运行、阻塞、死亡。</p>
+<h3 id="终止线程有几种方式？"><a href="#终止线程有几种方式？" class="headerlink" title="终止线程有几种方式？"></a>终止线程有几种方式？</h3><p>通过标志位控制退出（while(volatileexit)）、通过stop的方法来终止线程（thread.stop()）、通过中断的方法终止进程（thread.interuped()）。</p>
+<h3 id="什么叫缓存穿透？怎么预防？"><a href="#什么叫缓存穿透？怎么预防？" class="headerlink" title="什么叫缓存穿透？怎么预防？"></a>什么叫缓存穿透？怎么预防？</h3><p>缓存穿透指的是访问一个不存在的数据，由于这样缓存不可能命中，缓存就会去数据库中直接读这个数据，给数据库造成压力。预防的方式是使用一个布隆过滤器，即把数据库中所有可能的值 hash 到一个足够大的 bItmap 上去，请求到达时先用过滤器检测是否由该数据，如果有再去缓存中读取。<br>不同缓存系统中的缓存算法分别是怎样的？<br>Redis2.6/ Encache/ Hazelcast：随机找3条/ 8条/ 25条，删去其中空闲时间最长的数据。<br>Redis3.0：随机找五条，插入一个长度为16按空闲排序的队列里，每次删去最老的元素。<br>MemCached/ Guava Cache：纯粹的LRU，维持一个双向链表，插入到链表头，删除时把前后两个元素连接起来。</p>
+<h3 id="不同缓存系统对于过期键是怎么删除的？"><a href="#不同缓存系统对于过期键是怎么删除的？" class="headerlink" title="不同缓存系统对于过期键是怎么删除的？"></a>不同缓存系统对于过期键是怎么删除的？</h3><p>所有缓存系统对于过期键都采用惰性删除的方式，也就是说，并不是数据一过期就删除（因为执行检查的线程耗费cpu），而是只有元素被访问时，才会检查它是否超时了。为了防止不被访问的数据永远不被清理，不同缓存系统提供了不同的策略去清理这样的数据：<br>Redis：每100ms抽取20条进行检查。如果有超过1/4过期，那么立即进行下一轮检查。<br>MemCached：有一个检查线程从双链表队尾往前检查，每隔一段时间（默认100ms）执行一次。<br>Guava Cache：由于在这个系统中，同一个Cache里所有数据同时过期，因此只需要从队尾向前检查直到不过期为止。每次写入数据都会调用此方法。<br>Ehcache：只有惰性检查，没有主动过期。</p>
+<h3 id="设计缓存算法需要考虑的因素有哪些？"><a href="#设计缓存算法需要考虑的因素有哪些？" class="headerlink" title="设计缓存算法需要考虑的因素有哪些？"></a>设计缓存算法需要考虑的因素有哪些？</h3><p>成本：如果对象获取成本不同，难以获取的元素需要尽可能的保存。<br>容量：先清除大对象，这样就可以把更多的小对象换进内存。<br>时间：如果系统缓存着过期时间，那么对过期的数据进行清理。</p>
+<h3 id="Redis-和-Memcached-分别是怎么实现的？"><a href="#Redis-和-Memcached-分别是怎么实现的？" class="headerlink" title="Redis 和 Memcached 分别是怎么实现的？"></a>Redis 和 Memcached 分别是怎么实现的？</h3><p><a href="http://blog.csdn.net/u014743697/article/details/53442512" target="_blank" rel="external">http://blog.csdn.net/u014743697/article/details/53442512</a></p>
+<h3 id="Select、poll-和-epoll-的区别？"><a href="#Select、poll-和-epoll-的区别？" class="headerlink" title="Select、poll 和 epoll 的区别？"></a>Select、poll 和 epoll 的区别？</h3><p><a href="http://www.cnblogs.com/Anker/p/3265058.html" target="_blank" rel="external">http://www.cnblogs.com/Anker/p/3265058.html</a></p>
+<h3 id="数据库分区与分库分表（Sharding）的区别是什么？"><a href="#数据库分区与分库分表（Sharding）的区别是什么？" class="headerlink" title="数据库分区与分库分表（Sharding）的区别是什么？"></a>数据库分区与分库分表（Sharding）的区别是什么？</h3><p><a href="http://blog.csdn.net/heirenheiren/article/details/7896546" target="_blank" rel="external">http://blog.csdn.net/heirenheiren/article/details/7896546</a></p>
+<h3 id="数据库分库分表（Sharding）的步骤是什么？"><a href="#数据库分库分表（Sharding）的步骤是什么？" class="headerlink" title="数据库分库分表（Sharding）的步骤是什么？"></a>数据库分库分表（Sharding）的步骤是什么？</h3><p><a href="http://blog.csdn.net/bluishglc/article/details/6161475" target="_blank" rel="external">http://blog.csdn.net/bluishglc/article/details/6161475</a></p>
+<h3 id="多级缓存是怎么实现的？"><a href="#多级缓存是怎么实现的？" class="headerlink" title="多级缓存是怎么实现的？"></a>多级缓存是怎么实现的？</h3><p><a href="http://blog.csdn.net/huashen1621y/article/details/51594148" target="_blank" rel="external">http://blog.csdn.net/huashen1621y/article/details/51594148</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大型网站架构/">大型网站架构</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-后台开发知识点总结（五）设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/18/后台开发知识点总结（五）设计模式/">后台开发知识点总结（五）设计模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" class="article-date">
+  <time datetime="2017-01-18T04:51:47.000Z" itemprop="datePublished">2017-01-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是代理模式？"><a href="#什么是代理模式？" class="headerlink" title="什么是代理模式？"></a>什么是代理模式？</h3><p>代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。</p>
+<h3 id="什么是动态代理？它的优点是什么？"><a href="#什么是动态代理？它的优点是什么？" class="headerlink" title="什么是动态代理？它的优点是什么？"></a>什么是动态代理？它的优点是什么？</h3><p>按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。</p>
+<h3 id="如何实现一个动态代理？"><a href="#如何实现一个动态代理？" class="headerlink" title="如何实现一个动态代理？"></a>如何实现一个动态代理？</h3><p>实现一个动态代理有两种方法，一种是使用 JDK 实现动态代理，另一种是使用 Cglib 实现动态代理。<br>前者的代理类需要实现 InvocationHandler 接口（该接口要实现一个 Invoke() 方法），并用在Bind 方法中调用 Proxy 的 NewProxyInstance 方法创建代理实例。在创建代理实例的过程中，需要绑定委托类实现的（提供相关服务的）接口。如果委托类没有实现接口，那么这种方法不能使用。<br>后者是生成一个代理类的子类，需要实现 MethodInterceptor 接口（该接口要实现一个 intercept() 方法），并在 getNewInstance() 中创建一个实例，然后把其父类设定为委托类，并返回该实例。由于这种方法是基于继承的，因为 final 类不能使用。<br>参考链接：<a href="http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html" target="_blank" rel="external">http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html</a></p>
+<h3 id="如何利用动态代理实现-Spring-AOP？"><a href="#如何利用动态代理实现-Spring-AOP？" class="headerlink" title="如何利用动态代理实现 Spring AOP？"></a>如何利用动态代理实现 Spring AOP？</h3><p><a href="http://blog.csdn.net/moreevan/article/details/11977115/" target="_blank" rel="external">http://blog.csdn.net/moreevan/article/details/11977115/</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-后台开发知识点总结（四）数据库" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     

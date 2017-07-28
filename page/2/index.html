@@ -45,6 +45,622 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Spring中bean的作用域的实验" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Spring中bean的作用域的实验/">Spring中bean的作用域的实验</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Spring中bean的作用域的实验/" class="article-date">
+  <time datetime="2017-06-25T08:10:47.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文是 <a href="https://jacksmiththu.github.io/2017/06/25/Spring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F/" target="_blank" rel="external">Spring中bean的作用域</a> 的相关实验，目的是演示 <strong>bean</strong> 的作用域是如何使用的。</p>
+<h2 id="1-实验内容"><a href="#1-实验内容" class="headerlink" title="1.实验内容"></a>1.实验内容</h2><p>我们要进行一个实验，看看 bean 的作用域是否能整的响起描述的那样运作。为此，我们选了三种作用域：<strong>单例</strong>、<strong>请求</strong>和<strong>会话</strong>。我们为每一中作用域建立一个 <strong>Service</strong>，这样我们就能看到何时会创建新的 <strong>bean</strong> 来注入。</p>
+<p>值得一提的是，因为我们的 <strong>Service</strong> 类并没有实现接口，因此我们就不能使用基于接口的 <strong>JDK</strong> 动态代理。所以我们就只好使用基于 <strong>CgLib</strong> 的动态代理。</p>
+<p>在 Spring 中，两种动态代理的设置方式分别为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 基于 CgLib 的动态代理</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123; ... &#125;</div><div class="line"></div><div class="line"><span class="comment">// 基于 JDK 的动态代理</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.INTERFACES)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+<p>本实验中我们使用的是前者，</p>
+<h2 id="2-实验代码"><a href="#2-实验代码" class="headerlink" title="2.实验代码"></a>2.实验代码</h2><p>在 <strong>com.yun.service</strong> 包下创建四个 <strong>Service</strong>，分别名为 <strong>ScopeService</strong>，<strong>SingletonService</strong>，<strong>SingletonService</strong> 和 <strong>SessionService</strong>。并修改 <strong>YunApplication</strong> 中的内容，其内容分别如下：</p>
+<h3 id="2-1-ScopeService-java"><a href="#2-1-ScopeService-java" class="headerlink" title="2.1.ScopeService.java"></a>2.1.ScopeService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScopeService</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> SingletonService singletonService;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span> </div><div class="line">	<span class="keyword">private</span> SessionService sessionService;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> RequestService requestService;</div><div class="line">	</div><div class="line"></div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getScopeId</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.info(<span class="string">"========================================="</span>);</div><div class="line">		logger.info(<span class="string">"requestService id is:"</span> + requestService.getId());</div><div class="line">		logger.info(<span class="string">"sessionService id is:"</span> + sessionService.getId());</div><div class="line">		logger.info(<span class="string">"singletonService id is:"</span> + singletonService.getId());</div><div class="line">		<span class="keyword">return</span> <span class="string">"request id is : "</span> + requestService.getId() + <span class="string">" | "</span> + </div><div class="line">			   <span class="string">"session id is : "</span> + sessionService.getId() + <span class="string">" | "</span> +</div><div class="line">			   <span class="string">"singleton id is : "</span> + singletonService.getId();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setScopeId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		requestService.setId(id);</div><div class="line">		sessionService.setId(id);</div><div class="line">		singletonService.setId(id);</div><div class="line">		logger.info(<span class="string">"========================================="</span>);</div><div class="line">		logger.info(<span class="string">"requestService id set:"</span> + id);</div><div class="line">		logger.info(<span class="string">"sessionService id set:"</span> + id);</div><div class="line">		logger.info(<span class="string">"singletonService id set:"</span> + id);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-2-SingletonService-java"><a href="#2-2-SingletonService-java" class="headerlink" title="2.2.SingletonService.java"></a>2.2.SingletonService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.ConfigurableBeanFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_SINGLETON)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-3-RequestService-java"><a href="#2-3-RequestService-java" class="headerlink" title="2.3.RequestService.java"></a>2.3.RequestService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ScopedProxyMode;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.WebApplicationContext;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-4-SessionService-java"><a href="#2-4-SessionService-java" class="headerlink" title="2.4.SessionService.java"></a>2.4.SessionService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ScopedProxyMode;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.WebApplicationContext;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">	value=WebApplicationContext.SCOPE_SESSION,</div><div class="line">	proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SessionService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-5-YunApplication-java"><a href="#2-5-YunApplication-java" class="headerlink" title="2.5.YunApplication.java"></a>2.5.YunApplication.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.ui.Model;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.service.ScopeService;</div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YunApplication</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> ScopeService scopeService;</div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/setscopeid/&#123;id&#125;"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">setScopeId</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Integer id) </span>&#123;</div><div class="line">        scopeService.setScopeId(id);</div><div class="line">        <span class="keyword">return</span> <span class="string">"id is set by "</span> + id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/getscopeid"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getScopeId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> scopeService.getScopeId();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-实验结果"><a href="#3-实验结果" class="headerlink" title="3.实验结果"></a>3.实验结果</h2><h3 id="3-1-本地测试"><a href="#3-1-本地测试" class="headerlink" title="3.1.本地测试"></a>3.1.本地测试</h3><h4 id="3-1-1-设定-bean-的属性值"><a href="#3-1-1-设定-bean-的属性值" class="headerlink" title="3.1.1.设定 bean 的属性值"></a>3.1.1.设定 bean 的属性值</h4><p>在浏览器输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/setscopeid/25</div></pre></td></tr></table></figure>
+<p>得到结果如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250003.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250004.png" alt=""></p>
+<h4 id="3-1-2-读取-bean-的属性值"><a href="#3-1-2-读取-bean-的属性值" class="headerlink" title="3.1.2.读取 bean 的属性值"></a>3.1.2.读取 bean 的属性值</h4><p>在浏览器输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/getscopeid</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250005.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250006.png" alt=""></p>
+<p>可见，作用域是 request 的属性值已经读取不到了，但是 session 和 singleton 的仍然能够读取到。</p>
+<h3 id="3-2-远程测试"><a href="#3-2-远程测试" class="headerlink" title="3.2.远程测试"></a>3.2.远程测试</h3><h4 id="3-2-1-获取本机-ip"><a href="#3-2-1-获取本机-ip" class="headerlink" title="3.2.1.获取本机 ip"></a>3.2.1.获取本机 ip</h4><p>为了测试 session 作用域的效果，我们使用另一台设备对我们的应用进行访问。在那之前，我们需要知道本机的 ip 地址。在控制台输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ipconfig</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250007.png" alt=""></p>
+<p>如图所示，我的本机 ip 为 10.29.138.44。</p>
+<h4 id="3-2-2-远程访问"><a href="#3-2-2-远程访问" class="headerlink" title="3.2.2.远程访问"></a>3.2.2.远程访问</h4><p>如果我要在另一台设备上访问我的主机，那么我就需要在浏览器输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10.29.138.44:8080/getscopeid</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250008.png" alt=""></p>
+<p>可见 <strong>session</strong> 在另一台机器上已经不能用了，然而 <strong>singleton</strong> 依旧保持着原来的值。</p>
+<h4 id="3-2-3-在本机上使用不同的-session"><a href="#3-2-3-在本机上使用不同的-session" class="headerlink" title="3.2.3.在本机上使用不同的 session"></a>3.2.3.在本机上使用不同的 session</h4><p>当然，如果你不想使用另一台计算机的话，在同一计算机上的另一个浏览器也是不同的 <strong>session</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250009.png" alt=""></p>
+<p>或者你把原来的浏览器重启一下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250010.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Eclipse搭建SpringBoot（四）使用LogBack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/">Eclipse搭建SpringBoot（四）使用LogBack</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/" class="article-date">
+  <time datetime="2017-06-25T08:10:01.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-为什么使用-Logback"><a href="#1-为什么使用-Logback" class="headerlink" title="1.为什么使用 Logback"></a>1.为什么使用 Logback</h2><p>我们在使用调试 <strong>java</strong> 代码的时候，一般使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.out.println(<span class="string">"Hello worold!"</span>);</div></pre></td></tr></table></figure>
+<p>来输出一些信息到控制台。</p>
+<p>但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。<strong>Logback</strong> 一般使用一下四个级别：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">logger.error(<span class="string">"This is an error message"</span>);</div></pre></td></tr></table></figure>
+<h2 id="2-如何使用Logback"><a href="#2-如何使用Logback" class="headerlink" title="2.如何使用Logback"></a>2.如何使用Logback</h2><p><strong>Logback</strong> 的使用仅需要很简单的配置：</p>
+<h3 id="2-1-引入相关包"><a href="#2-1-引入相关包" class="headerlink" title="2.1.引入相关包"></a>2.1.引入相关包</h3><p>下面是一个使用 <strong>Logback</strong> 的简单示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoggerService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass()); </div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">        logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">        logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">        logger.error(<span class="string">"This is an error message"</span>); </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250001.png" alt=""></p>
+<p>为什么没有 debug 的信息呢？这是因为默认的日志级别只到 info。为了输出 debug 的信息，我们需要进行一些额外的配置。</p>
+<h3 id="2-2-控制输出级别"><a href="#2-2-控制输出级别" class="headerlink" title="2.2.控制输出级别"></a>2.2.控制输出级别</h3><p>在 <strong>application.yml</strong> 中添加如下配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">logging:</span></div><div class="line"><span class="attr">  file:</span> <span class="string">yun.log</span>  </div><div class="line"><span class="attr">  level:</span></div><div class="line">    <span class="string">ROOT</span> <span class="string">:</span> <span class="string">debug</span></div></pre></td></tr></table></figure>
+<p>再运行一下，就能看到有 debug 信息的输出结果了：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250002.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logger/">Logger</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-蓝牙协议入门（二）传输层协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/蓝牙协议入门（二）传输层协议/">蓝牙协议入门（二）传输层协议</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/蓝牙协议入门（二）传输层协议/" class="article-date">
+  <time datetime="2017-06-25T03:38:37.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-传输层协议"><a href="#1-传输层协议" class="headerlink" title="1.传输层协议"></a>1.传输层协议</h2><p><img src="E:/images/201707270002.png" alt=""></p>
+<p>传输层位于蓝牙系统的底层，负责蓝牙设备间，互相确认对方的位置，以及建立和管理蓝牙设备间的物理链路。其又分为射频层、基带层和链路管理层三部分。</p>
+<h2 id="2-射频层协议"><a href="#2-射频层协议" class="headerlink" title="2.射频层协议"></a>2.射频层协议</h2><h3 id="2-1-工作频率"><a href="#2-1-工作频率" class="headerlink" title="2.1.工作频率"></a>2.1.工作频率</h3><p>蓝牙工作在 <strong>2.4 GHz ISM</strong> 频段上，蓝牙采用跳频扩谱技术主动的避免工作频段受干扰。我国的蓝牙频率在 <strong>2.402 GHz～2.483 GHz</strong>,蓝牙每个频道的宽度为<strong>1 MHz</strong>，为了减少带外辐射的干扰，保留上、下保护为<strong>3.5 MHz</strong> 和 <strong>2 MHz</strong>，<strong>79</strong> 个跳频点中至少 <strong>75</strong> 个伪随机码跳动，<strong>30 s</strong> 内任何一个频点使用时长不能超过 <strong>0.4 s</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>地理位置</th>
+<th>ISM频段范围</th>
+<th>射频信道频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中国、美国、欧洲</td>
+<td>2400.0～2483.5MHz</td>
+<td>F=(2402+k)MHz,k在0、1、……78中随机取值</td>
+</tr>
+<tr>
+<td>法国</td>
+<td>2446.5～2483.5MHz</td>
+<td>F=(2454+k)MHz,k在0、1、……22中随机取值</td>
+</tr>
+<tr>
+<td>日本</td>
+<td>2471.0～2497.0MHz</td>
+<td>F=(2473+k)MHz,k在0、1、……22中随机取值</td>
+</tr>
+<tr>
+<td>西班牙</td>
+<td>2445.0～2475.0MHz</td>
+<td>F=(2449+k)MHz,k在0、1、……22中随机取值</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-2-跳频技术、发射功率、时隙"><a href="#2-2-跳频技术、发射功率、时隙" class="headerlink" title="2.2.跳频技术、发射功率、时隙"></a>2.2.跳频技术、发射功率、时隙</h3><ul>
+<li>发射功率：蓝牙发射功率分三级：一级功率<strong>100 mW</strong>( <strong>20 dBm</strong>)；二级功率 <strong>2.5 mW</strong>( <strong>4 dBm</strong>)；三级功率<strong>1 mW</strong>( <strong>0 dBm</strong>)；</li>
+<li>物理信道：蓝牙物理信道有伪随机序列控制的 <strong>79</strong> 个跳频点构成，不同跳频序列代表不同的信道。</li>
+<li>时隙：蓝牙跳频速率为<strong>1600</strong> 次/<strong>s</strong>,每个时间为 <strong>625 us</strong> (<strong>1 s/1600</strong>) 称为一个时隙；</li>
+</ul>
+<h2 id="3-基带层协议"><a href="#3-基带层协议" class="headerlink" title="3.基带层协议"></a>3.基带层协议</h2><p>蓝牙发送数据时，基带部分将来自高层的数据进行信道编码，向下发给射频进行发送；接收数据时，将解调恢复空中数据并上传给基带，基带进行信道编码传送给上层。</p>
+<h3 id="3-1-蓝牙地址"><a href="#3-1-蓝牙地址" class="headerlink" title="3.1.蓝牙地址"></a>3.1.蓝牙地址</h3><p>蓝牙设备编码采取小端模式，即高位在后面。它的前 24 位是制造商分配的产品编号（<strong>LAP</strong>，低地址部分），中间8 位是 SIG 给制造商分配的编号（<strong>UAP</strong>，高地址部分），最后 16 位保留无效（<strong>NAP</strong>，无效地址部分）。</p>
+<p><img src="E:/images/201707270004.png" alt=""></p>
+<h3 id="3-2-蓝牙时钟"><a href="#3-2-蓝牙时钟" class="headerlink" title="3.2.蓝牙时钟"></a>3.2.蓝牙时钟</h3><p>每个蓝牙设备都有一个独立运行的内部系统时钟，称为本地时钟（Local Clock），决定定时器的收发跳频。为了与其他设备同步，本地时钟要加一个偏移量（offset），提供给其他设备同步。 具体说来，蓝牙系统中的时钟分为以下几种：</p>
+<ul>
+<li><strong>CLKN：</strong>本地时钟：</li>
+<li><strong>CLKE：</strong>预计时钟，扫描寻呼过程中用到；</li>
+<li><strong>CLK：</strong>设备实际运行的时钟。</li>
+</ul>
+<p>这三者之间存在着相关关系，具体说来 <strong>CLKE</strong>、<strong>CLK</strong> 由 <strong>CLKN</strong> 加上一个偏移量得到的。</p>
+<ul>
+<li><strong>主设备</strong>：<strong>CLK = CLKN</strong></li>
+<li><p><strong>从设备</strong>：<strong>CLK = CLKN + offset</strong></p>
+<h3 id="3-3-蓝牙物理链路"><a href="#3-3-蓝牙物理链路" class="headerlink" title="3.3.蓝牙物理链路"></a>3.3.蓝牙物理链路</h3></li>
+</ul>
+<p>通信设备间物理层的数据连接通道就是物理链路。</p>
+<ul>
+<li><strong>ACL</strong>（A<strong>synchronous Connectionless</strong>）异步无连接链路；对时间要求不敏感的数据通信，如文件数据、控制信令等。</li>
+<li><strong>SCO</strong>（<strong>Synochronous Connection Oriented</strong>）同步面向连接链路；对时间比较敏感的通信，如：语音；最多只支持3条 <strong>SCO</strong> 链路，不支持重传。</li>
+</ul>
+<h3 id="3-4-蓝牙基带分组"><a href="#3-4-蓝牙基带分组" class="headerlink" title="3.4.蓝牙基带分组"></a>3.4.蓝牙基带分组</h3><p><img src="E:/images/201707270005.png" alt=""></p>
+<p>基带分组至少包括：接入码、分组头、有效载荷；</p>
+<ul>
+<li><strong>接入码</strong>用于同步、直流、载频泄漏偏置补偿标识；</li>
+<li><strong>分组头</strong>包含链路信息，确保纠正较多的错误。</li>
+</ul>
+<p>详细分组类型如下：</p>
+<table>
+<thead>
+<tr>
+<th>分组类别</th>
+<th>Type (b3b2b1b0)</th>
+<th>时隙</th>
+<th>SCO</th>
+<th>ACL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>链路控制分组</strong></td>
+<td>0000</td>
+<td>1</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td></td>
+<td>0001</td>
+<td></td>
+<td>POLL</td>
+<td>POLL</td>
+</tr>
+<tr>
+<td></td>
+<td>0010</td>
+<td></td>
+<td>FHS</td>
+<td>FHS</td>
+</tr>
+<tr>
+<td></td>
+<td>0011</td>
+<td></td>
+<td>DM1</td>
+<td>DM1</td>
+</tr>
+<tr>
+<td><strong>单时隙分组</strong></td>
+<td>0100</td>
+<td>1</td>
+<td>未定义</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td></td>
+<td>0101</td>
+<td></td>
+<td>HV1</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>0110</td>
+<td></td>
+<td>HV2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>0111</td>
+<td></td>
+<td>HV3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1000</td>
+<td></td>
+<td>DV</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1001</td>
+<td></td>
+<td>NULL</td>
+<td>AUX1</td>
+</tr>
+<tr>
+<td><strong>三时隙分组</strong></td>
+<td>1010</td>
+<td>3</td>
+<td>未定义</td>
+<td>DM3</td>
+</tr>
+<tr>
+<td></td>
+<td>1011</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1100</td>
+<td></td>
+<td></td>
+<td>未定义</td>
+</tr>
+<tr>
+<td></td>
+<td>1101</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>五时隙分组</strong></td>
+<td>1110</td>
+<td>5</td>
+<td>未定义</td>
+<td>DM5</td>
+</tr>
+<tr>
+<td></td>
+<td>1111</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><strong>ACL分组形式为：D(M|H)（1|3|5）,D</strong>代表数据分组，<strong>M</strong>代表用<strong>2/3</strong>比例的 <strong>FEC</strong> 的中等速率分组；<strong>H</strong> 代表不使用纠错码的高速率分组；<strong>1、3、5</strong>分别代表分组所占用的时隙数目；</p>
+<p>​DM1、DM3、DM5、DH1、DH3、DH5</p>
+</li>
+<li><p><strong>SCO分组形式为：HV(1|2|3)。HV</strong>代表高质量语言分组，<strong>1、2、3</strong> 有效载荷所采用的纠错码方法。<strong>1</strong>为<strong>1/3</strong>比例 <strong>FEC</strong>，设备<strong>2</strong>个时隙发送一个单时隙分组；<strong>2</strong> 为 <strong>2/3</strong> 比例 <strong>FEC</strong> ，设备<strong>4</strong>个时隙发送一个单时隙分组；<strong>3</strong>为不使用纠错码，设备<strong>6</strong>个时隙发送一个单时隙分组。</p>
+<p>​HV1、HV2、HV3</p>
+</li>
+</ul>
+<h4 id="3-4-1-ACL分组"><a href="#3-4-1-ACL分组" class="headerlink" title="3.4.1.ACL分组"></a>3.4.1.ACL分组</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>有效载荷头/字节</th>
+<th>用户有效载荷/字节</th>
+<th>FEC</th>
+<th>CRC</th>
+<th>对称最大速率/kbps</th>
+<th>非对称速率/kbps</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>前向</td>
+<td>后向</td>
+</tr>
+<tr>
+<td>DM1</td>
+<td>1</td>
+<td>0～17</td>
+<td>2/3</td>
+<td>有</td>
+<td>108.8</td>
+<td>108.8</td>
+<td>108.8</td>
+</tr>
+<tr>
+<td>DH1</td>
+<td>1</td>
+<td>0～27</td>
+<td>无</td>
+<td>有</td>
+<td>172.8</td>
+<td>172.8</td>
+<td>172.8</td>
+</tr>
+<tr>
+<td>DM3</td>
+<td>2</td>
+<td>0～121</td>
+<td>2/3</td>
+<td>有</td>
+<td>258.1</td>
+<td>387.2</td>
+<td>54.4</td>
+</tr>
+<tr>
+<td>DH3</td>
+<td>2</td>
+<td>0～183</td>
+<td>无</td>
+<td>有</td>
+<td>390.4</td>
+<td>585.6</td>
+<td>86.4</td>
+</tr>
+<tr>
+<td>DM5</td>
+<td>2</td>
+<td>0～224</td>
+<td>2/3</td>
+<td>有</td>
+<td>286.7</td>
+<td>477.8</td>
+<td>36.3</td>
+</tr>
+<tr>
+<td>MH5</td>
+<td>2</td>
+<td>0～339</td>
+<td>无</td>
+<td>有</td>
+<td>433.9</td>
+<td>723.2</td>
+<td>57.6</td>
+</tr>
+<tr>
+<td>AUX1</td>
+<td>1</td>
+<td>0～29</td>
+<td>无</td>
+<td>无</td>
+<td>185.6</td>
+<td>185.6</td>
+<td>185.6</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-4-2-SCO分组"><a href="#3-4-2-SCO分组" class="headerlink" title="3.4.2.SCO分组"></a>3.4.2.SCO分组</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>有效载荷头/字节</th>
+<th>用户有效载荷/字节</th>
+<th>FEC</th>
+<th>CRC</th>
+<th>有效载荷长度</th>
+<th>同步速率/kbps</th>
+<th>占用Tsco数目/语言长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HV1</td>
+<td>无</td>
+<td>10</td>
+<td>1/3</td>
+<td></td>
+<td>240位</td>
+<td>64</td>
+<td>2/1.25ms</td>
+</tr>
+<tr>
+<td>HV2</td>
+<td></td>
+<td>20</td>
+<td>2/3</td>
+<td></td>
+<td></td>
+<td></td>
+<td>4/2.5ms</td>
+</tr>
+<tr>
+<td>HV3</td>
+<td></td>
+<td>30</td>
+<td>无</td>
+<td></td>
+<td></td>
+<td></td>
+<td>6/3.75ms</td>
+</tr>
+<tr>
+<td>6/3.75ms</td>
+<td>1D</td>
+<td>10+(0-9)D</td>
+<td>2/3D</td>
+<td>有D</td>
+<td></td>
+<td>64+57.6D</td>
+</tr>
+</tbody>
+</table>
+<p>注释：<strong>D</strong> 表示只对数据段有用，<strong>DV</strong> 表示分组包含数据段，也包含语言段。</p>
+<h2 id="X-参考链接"><a href="#X-参考链接" class="headerlink" title="X.参考链接"></a>X.参考链接</h2><p><a href="http://blog.csdn.net/xubin341719/article/details/38303881" target="_blank" rel="external">蓝牙核心技术概述（三）： 蓝牙协议规范（射频、基带链路控制、链路管理）</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Spring中bean的作用域" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Spring中bean的作用域/">Spring中bean的作用域</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Spring中bean的作用域/" class="article-date">
+  <time datetime="2017-06-24T17:41:59.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-为什么要用到-Spring-的作用域"><a href="#1-为什么要用到-Spring-的作用域" class="headerlink" title="1.为什么要用到 Spring 的作用域"></a>1.为什么要用到 Spring 的作用域</h2><p>默认情况下，<strong>Spring</strong> 中所有的 <strong>bean</strong> 都是以单例（<strong>singleton</strong>）模式创建的。但是在有些情况下，这种方式创建的 <strong>bean</strong> 可能无法满足我们的需要。</p>
+<p>比如，我们要创建一个购物车的 <strong>bean</strong> 。如果购物车是以单例模式创建的话，那么所有顾客的商品都会被添加到同一个购物车里。显然，这不是我们想要的结果。</p>
+<h2 id="2-Spring-的作用域"><a href="#2-Spring-的作用域" class="headerlink" title="2.Spring 的作用域"></a>2.Spring 的作用域</h2><p><strong>Spring</strong> 定义了几种作用域，下面是常用的四种：</p>
+<ol>
+<li>单例（<strong>Singleton</strong>）：整个应用中只创建一个 <strong>bean</strong> 的实例。</li>
+<li>原型（<strong>Prototype</strong>）：每次注入或者通过 <strong>Spring</strong> 上下文获取的时候，创建一个新的 <strong>bean</strong> 实例。</li>
+<li>会话（<strong>Session</strong>）：在 <strong>Web</strong> 应用中，为每个会话创建一个 <strong>bean</strong> 实例。</li>
+<li>请求（<strong>Request</strong>）：在 <strong>Web</strong> 应用中，为每个请求创建一个 <strong>bean</strong> 实例。</li>
+</ol>
+<p>关于 <strong>Spring</strong> 上下文的相关内容，可以参考下面这篇文章: </p>
+<p><a href="http://blog.csdn.net/crazylzxlzx/article/details/53648625" target="_blank" rel="external">spring中的web上下文，spring上下文，springmvc上下文区别(超详细)</a></p>
+<p>关于原型 <strong>Bean</strong> 作用域的相关内容，可以参考这篇文章：</p>
+<p><a href="http://blog.csdn.net/ethanwhite/article/details/51476238" target="_blank" rel="external">Spring核心技术（五）——Spring中Bean的作用域</a></p>
+<h2 id="3-Spring-作用域的使用"><a href="#3-Spring-作用域的使用" class="headerlink" title="3.Spring 作用域的使用"></a>3.Spring 作用域的使用</h2><p>Spring 使用 @Scope 注解来使用作用域，使用示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 使用 @Scope 的一种方式</div><div class="line">@Component</div><div class="line">@Scope(ConfigurableBeanFactory.SCOPR_PROTOTYPE)</div><div class="line">public class Notepad &#123;...&#125;</div><div class="line"></div><div class="line">// 使用 @Scope 的另一种方式</div><div class="line">@Component</div><div class="line">@Scope(&quot;prototype&quot;)</div><div class="line">public class Notepad &#123;...&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/crazylzxlzx/article/details/53648625" target="_blank" rel="external">spring中的web上下文，spring上下文，springmvc上下文区别(超详细)</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Spring中如何处理自动装配的歧义性" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -104,6 +720,114 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring实战/">Spring实战</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-蓝牙协议入门（一）简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/24/蓝牙协议入门（一）简介/">蓝牙协议入门（一）简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/24/蓝牙协议入门（一）简介/" class="article-date">
+  <time datetime="2017-06-24T03:38:37.000Z" itemprop="datePublished">2017-06-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-蓝牙简史"><a href="#1-蓝牙简史" class="headerlink" title="1.蓝牙简史"></a>1.蓝牙简史</h2><p>蓝牙这个名称来自于第十世纪的一位丹麦国王哈拉尔蓝牙王，因为国王喜欢吃蓝莓，吃到牙齿都是蓝色的所以叫蓝牙。后来人们就用它的名字命名一种无线通讯技术，其结果就是我们今日的蓝牙。</p>
+<p>蓝牙由阿里新公司研发，目前其发展主要由 <strong>Bluetooth SIG</strong> 控制，该组织现在有200多家联盟成员公司以及约6000家应用成员企业。</p>
+<p>蓝牙共有六个版本<strong>V 1.1/1.2/2.0/2.1/3.0/4.0</strong>。我们这里列举几个重要的版本的信息：</p>
+<ul>
+<li><p><strong>V 1.1版本</strong> 传输率约在 <strong>748~810 kb/s</strong>，因是早期设计，容易受到同频率之产品所干扰下影响通讯质量。</p>
+</li>
+<li><p><strong>V 3.0版本</strong> 蓝牙3.0的核心是” <strong>GenericAlternate MAC/PHY”(AMP)</strong> ，这是一种全新的交替射频技术，允许蓝牙协议栈针对任一任务动态地选择正确射频。最初被期望用于新规范的技术包括 <strong>802.11</strong> 以及 <strong>UMB</strong> ，但是新规范中取消了 <strong>UMB</strong> 的应用。</p>
+</li>
+<li><p><strong>V 4.0 版本</strong> 蓝牙 <strong>4.0</strong> 包括三个子规范，即<strong>传统蓝牙技术</strong>、<strong>高速蓝牙</strong>和新的<strong>蓝牙低功耗技术</strong>。蓝牙 <strong>4.0</strong> 的改进之处主要体现在三个方面，电池续航时间、节能和设备种类上。拥有低成本，跨厂商互操作性，<strong>3</strong> 毫秒低延迟、<strong>100</strong> 米以上超长距离、<strong>AES-128</strong> 加密等诸多特色此外，蓝牙 <strong>4.0</strong> 的有效传输距离也有所提升。<strong>3.0</strong> 版本的蓝牙的有效传输距离为<strong>10</strong> 米，而蓝牙4.0的有效传输距离最高可达到 <strong>100</strong> 米。</p>
+<p>​</p>
+</li>
+</ul>
+<h2 id="2-蓝牙技术特性"><a href="#2-蓝牙技术特性" class="headerlink" title="2.蓝牙技术特性"></a>2.蓝牙技术特性</h2><ul>
+<li><strong>工作频段</strong>：<strong>2.4 GHz</strong> 的工科医（<strong>ISM</strong>）频段，无需申请许可证。大多数国家使用79个频点，载频为<strong>(2402+k)MHz（k=0，1, 2…78）</strong>，载频间隔 <strong>1 MHz</strong> 。采用 <strong>TDD</strong> 时分双工方式。</li>
+<li><strong>传输速率</strong>：<strong>1 Mb/s</strong></li>
+<li><strong>采用跳频技术</strong>：跳频速率为<strong>1600</strong> 跳/秒，在建链时（包括寻呼和查询）提高为 <strong>3200</strong> 跳/秒。蓝牙通过快跳频和短分组技术减少同频干扰，保证传输的可靠性。</li>
+<li><strong>支持电路交换和分组交换业务</strong>：蓝牙支持实时的同步定向联接（<strong>SCO</strong> 链路）和非实时的异步不定向联接（ <strong>ACL</strong> 链路），<strong>前者主要传送语音等实时性强的信息，后者以数据包为主。</strong>语音和数据可以单独或同时传输。蓝牙支持一个异步数据通道，或三个并发的同步话音通道，或同时传送异步数据和同步话音的通道。每个话音通道支持 <strong>64 kbps</strong> 的同步话音；异步通道支持 <strong>723.2/57.6 kbps</strong> 的非对称双工通信或 <strong>433.9 kbps</strong> 的对称全双工通信。</li>
+<li><strong>支持点对点及点对多点通信</strong>：蓝牙设备按特定方式可组成两种网络：微微网( <strong>Piconet</strong> )和分布式网络( <strong>Scatternet</strong> )，其中微微网的建立由两台设备的连接开始，最多可由八台设备组成。在一个微微网中，只有一台为主设备（<strong>Master</strong>），其它均为从设备（<strong>Slave</strong>），不同的主从设备对可以采用不同的链接方式，在一次通信中，链接方式也可以任意改变。几个相互独立的微微网以特定方式链接在一起便构成了分布式网络。所有的蓝牙设备都是对等的，所以在蓝牙中没有基站的概念。</li>
+<li><strong>工作距离</strong>：蓝牙设备分为三个功率等级，分别是：<strong>100 mW</strong>（<strong>20 dBm</strong>）、<strong>2.5 mW</strong>（<strong>4 dBm</strong>）和<strong>1 mW</strong>（<strong>0 dBm</strong>），相应的有效工作范围为：<strong>100</strong> 米、<strong>10</strong> 米和 <strong>1</strong> 米。</li>
+</ul>
+<h2 id="3-蓝牙系统组成"><a href="#3-蓝牙系统组成" class="headerlink" title="3.蓝牙系统组成"></a>3.蓝牙系统组成</h2><p><img src="E:/images/201707270001.png" alt=""></p>
+<p>蓝牙系统由以下几部分组成：</p>
+<ul>
+<li>传输层（底层硬件模块）</li>
+<li>中介层（中间协议层）</li>
+<li>应用层</li>
+</ul>
+<p>其中，底层硬件模块包括以下部分：</p>
+<ul>
+<li>射频层：负责数据和语音的发送和接收，特点是短距离、低功耗。蓝牙天线一般体积小、重量轻，属于微带天线。</li>
+<li>基带层：进行射频信号与数字或语音信号的相互转化，实现基带协议和其它的底层连接规程。</li>
+<li>链路管理层：负责管理蓝牙设备之间的通信，实现链路的建立、验证、链路配置等操作。</li>
+</ul>
+<h2 id="4-蓝牙协议规范"><a href="#4-蓝牙协议规范" class="headerlink" title="4.蓝牙协议规范"></a>4.蓝牙协议规范</h2><p>传输层、中介层、应用层拥有着各自的协议。</p>
+<h3 id="4-1-传输协议"><a href="#4-1-传输协议" class="headerlink" title="4.1.传输协议"></a>4.1.传输协议</h3><p>传输协议负责蓝牙设备间，互相确认对方的位置，以及建立和管理蓝牙设备间的物理链路；</p>
+<ul>
+<li><strong>底层传输协议</strong>：蓝牙射频（<strong>Radio</strong>）部分、基带链路管理控制器（<strong>Baseband &amp; Link Controller</strong>）、链路管理协议（<strong>Link ManagerProtocol</strong> ）<strong>LMP</strong>。负责语言、数据无线传输的物理实现以及蓝牙设备间的联网组网。</li>
+<li><strong>高层传输协议</strong>：逻辑链路控制与适配器（<strong>LogicalLink Control and Adaptation Protocol</strong>）<strong>L2CAP</strong> 、主机控制接口（<strong>HostControl Interface</strong>，<strong>HCI</strong>）。为高层应用屏蔽了跳频序列选择等底层传输操作，为高层程序提供有效、有利于实现数据分组格式。</li>
+</ul>
+<h3 id="4-2-中介协议"><a href="#4-2-中介协议" class="headerlink" title="4.2.中介协议"></a>4.2.中介协议</h3><p>中介协议为高层应用协议或者程序，在蓝牙逻辑链路上工作提供必要的支持，为应用提供不同标准接口，包括：</p>
+<ul>
+<li>串口仿真协议：<strong>RFCOMM</strong></li>
+<li>服务发现协议：<strong>SDP</strong></li>
+<li>互操作协议：<strong>IrDA</strong></li>
+<li>网络访问协议：<strong>PPP、IP、TCP、UDP</strong></li>
+<li>电话控制协议：<strong>TCS</strong>、<strong>AT</strong> 指令集</li>
+</ul>
+<h3 id="4-3-应用协议"><a href="#4-3-应用协议" class="headerlink" title="4.3.应用协议"></a>4.3.应用协议</h3><p>蓝牙协议栈之上的应用软件和所涉及到的协议，如：拨号上网、语言功能的应用程序，包括：</p>
+<ul>
+<li>通用应用类框架：查询、建立连接服务等</li>
+<li>蓝牙电话应用类框架：电话控制、语言</li>
+<li>蓝牙连网应用类框架：网络应用相关</li>
+<li>对象交互服务类框架：<strong>IrDA、OBEX</strong></li>
+<li>蓝牙音视频控制类框架</li>
+</ul>
+<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="https://wenku.baidu.com/view/7e32bd22c5da50e2524d7fa5.html" target="_blank" rel="external">蓝牙简介</a></p>
+<p><a href="http://blog.csdn.net/augusdi/article/details/25956039" target="_blank" rel="external">BlueTooth: 蓝牙技术及其系统原理</a></p>
+<p><a href="http://blog.csdn.net/xubin341719/article/details/38145507" target="_blank" rel="external">蓝牙核心技术概述（一）:蓝牙概述</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
 
       </footer>
     
@@ -497,394 +1221,6 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-ActiveMQ入门之（一）ActiveMQ的安装及使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/05/ActiveMQ入门之（一）ActiveMQ的安装及使用/">ActiveMQ入门之（一）ActiveMQ的安装及使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/05/ActiveMQ入门之（一）ActiveMQ的安装及使用/" class="article-date">
-  <time datetime="2017-06-05T02:30:12.000Z" itemprop="datePublished">2017-06-05</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-什么是ActiveMQ"><a href="#1-什么是ActiveMQ" class="headerlink" title="1.什么是ActiveMQ"></a>1.什么是ActiveMQ</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050001.png" alt=""></p>
-<p>与 Kafka 类似，ActiveMQ 也是一种消息队列。与 Kafka 相比，其性能不如 Kafka 强大。那么，为什么要用 ActiveMQ 呢？最重要的原因在于它的易用性。Kafka 虽然强大，但是在使用 Kafka 的过程中需要部署 ZooKeeper。<strong>而 ActiveMQ 不需要提前安装依赖，部署简单，与各种语言亲和度高，这给了ActiveMQ 极强的生命力。</strong></p>
-<h2 id="2-ActiveMQ的安装与部署"><a href="#2-ActiveMQ的安装与部署" class="headerlink" title="2.ActiveMQ的安装与部署"></a>2.ActiveMQ的安装与部署</h2><h3 id="2-1-下载ActiveMQ"><a href="#2-1-下载ActiveMQ" class="headerlink" title="2.1.下载ActiveMQ"></a>2.1.下载ActiveMQ</h3><p>下载地址：<a href="http://activemq.apache.org/download.html" target="_blank" rel="external">http://activemq.apache.org/download.html</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050002.png" alt=""></p>
-<p>如上图所示，当前最高的版本是 5.14.5 Release。点击红色方框中的超链接，进入下载页。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050003.png" alt=""></p>
-<p>因为我们使用的是 Windows 操作系统，因此下载 zip 压缩包即可。</p>
-<h3 id="2-2-解压缩"><a href="#2-2-解压缩" class="headerlink" title="2.2.解压缩"></a>2.2.解压缩</h3><p>下载好之后，解压到你想要的位置，我的是 D:\WorkSpace 目录。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050004.png" alt=""></p>
-<h3 id="2-3-启动服务"><a href="#2-3-启动服务" class="headerlink" title="2.3.启动服务"></a>2.3.启动服务</h3><p>双击 D:\WorkSpace\ActiveMQ\apache-activemq-5.14.5\bin\win64 目录下的 activemq.bat 文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050005.png" alt=""></p>
-<p>服务启动，如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050006.png" alt=""></p>
-<h3 id="2-4-浏览器登录"><a href="#2-4-浏览器登录" class="headerlink" title="2.4.浏览器登录"></a>2.4.浏览器登录</h3><p>在浏览器输入：</p>
-<p> <a href="http://127.0.0.1:8161/admin/" target="_blank" rel="external">http://127.0.0.1:8161/admin/</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050007.png" alt=""></p>
-<p>用户名和密码都是：admin。输入之后，显示如下界面。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050008.png" alt=""></p>
-<p>这说明 ActiveMQ 已经部署成功了。</p>
-<h2 id="3-ActiveMQ的使用（Java为例）"><a href="#3-ActiveMQ的使用（Java为例）" class="headerlink" title="3.ActiveMQ的使用（Java为例）"></a>3.ActiveMQ的使用（Java为例）</h2><h3 id="3-1-建立项目"><a href="#3-1-建立项目" class="headerlink" title="3.1.建立项目"></a>3.1.建立项目</h3><p>打开 Eclipse，新建一个项目，名为Active。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050009.png" alt=""></p>
-<p>命名之后，点击 【Finish】即可。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050010.png" alt=""></p>
-<h3 id="3-2-添加代码"><a href="#3-2-添加代码" class="headerlink" title="3.2.添加代码"></a>3.2.添加代码</h3><p>在 src 目录下添加一个叫做 active 的包，并在该包添加两个类，分别名为：JMSProducer 和 JMSConsumer。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050011.png" alt=""></p>
-<p><strong>JMSPruducer：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">package active;</div><div class="line"></div><div class="line">import javax.jms.Connection;</div><div class="line">import javax.jms.ConnectionFactory;</div><div class="line">import javax.jms.Destination;</div><div class="line">import javax.jms.JMSException;</div><div class="line">import javax.jms.MessageProducer;</div><div class="line">import javax.jms.Session;</div><div class="line">import javax.jms.TextMessage;</div><div class="line"></div><div class="line">import org.apache.activemq.ActiveMQConnection;</div><div class="line">import org.apache.activemq.ActiveMQConnectionFactory;</div><div class="line">/**</div><div class="line"> * 消息的生产者（发送者） </div><div class="line"> */</div><div class="line">public class JMSProducer &#123;</div><div class="line"></div><div class="line">    //默认连接用户名</div><div class="line">    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;</div><div class="line">    //默认连接密码</div><div class="line">    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;</div><div class="line">    //默认连接地址</div><div class="line">    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;</div><div class="line">    //发送的消息数量</div><div class="line">    private static final int SENDNUM = 10;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        //连接工厂</div><div class="line">        ConnectionFactory connectionFactory;</div><div class="line">        //连接</div><div class="line">        Connection connection = null;</div><div class="line">        //会话 接受或者发送消息的线程</div><div class="line">        Session session;</div><div class="line">        //消息的目的地</div><div class="line">        Destination destination;</div><div class="line">        //消息生产者</div><div class="line">        MessageProducer messageProducer;</div><div class="line">        //实例化连接工厂</div><div class="line">        connectionFactory = new ActiveMQConnectionFactory(JMSProducer.USERNAME, JMSProducer.PASSWORD, JMSProducer.BROKEURL);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //通过连接工厂获取连接</div><div class="line">            connection = connectionFactory.createConnection();</div><div class="line">            //启动连接</div><div class="line">            connection.start();</div><div class="line">            //创建session</div><div class="line">            session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);</div><div class="line">            //创建一个名称为HelloWorld的消息队列</div><div class="line">            destination = session.createQueue(&quot;HelloWorld&quot;);</div><div class="line">            //创建消息生产者</div><div class="line">            messageProducer = session.createProducer(destination);</div><div class="line">            //发送消息</div><div class="line">            sendMessage(session, messageProducer);</div><div class="line"></div><div class="line">            session.commit();</div><div class="line"></div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally&#123;</div><div class="line">            if(connection != null)&#123;</div><div class="line">                try &#123;</div><div class="line">                    connection.close();</div><div class="line">                &#125; catch (JMSException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    /**</div><div class="line">     * 发送消息</div><div class="line">     * @param session</div><div class="line">     * @param messageProducer  消息生产者</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    public static void sendMessage(Session session,MessageProducer messageProducer) throws Exception&#123;</div><div class="line">        for (int i = 0; i &lt; JMSProducer.SENDNUM; i++) &#123;</div><div class="line">            //创建一条文本消息 </div><div class="line">            TextMessage message = session.createTextMessage(&quot;ActiveMQ 发送消息&quot; +i);</div><div class="line">            System.out.println(&quot;发送消息：Activemq 发送消息&quot; + i);</div><div class="line">            //通过消息生产者发出消息 </div><div class="line">            messageProducer.send(message);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>JMSConsumer:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">package active;</div><div class="line"></div><div class="line">import javax.jms.Connection;</div><div class="line">import javax.jms.ConnectionFactory;</div><div class="line">import javax.jms.Destination;</div><div class="line">import javax.jms.JMSException;</div><div class="line">import javax.jms.MessageConsumer;</div><div class="line">import javax.jms.Session;</div><div class="line">import javax.jms.TextMessage;</div><div class="line"></div><div class="line">import org.apache.activemq.ActiveMQConnection;</div><div class="line">import org.apache.activemq.ActiveMQConnectionFactory;</div><div class="line">/*</div><div class="line"> * 消息的消费者（接受者）</div><div class="line"> */</div><div class="line">public class JMSConsumer &#123;</div><div class="line"></div><div class="line">    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;//默认连接用户名</div><div class="line">    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;//默认连接密码</div><div class="line">    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;//默认连接地址</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ConnectionFactory connectionFactory;//连接工厂</div><div class="line">        Connection connection = null;//连接</div><div class="line"></div><div class="line">        Session session;//会话 接受或者发送消息的线程</div><div class="line">        Destination destination;//消息的目的地</div><div class="line"></div><div class="line">        MessageConsumer messageConsumer;//消息的消费者</div><div class="line"></div><div class="line">        //实例化连接工厂</div><div class="line">        connectionFactory = new ActiveMQConnectionFactory(JMSConsumer.USERNAME, JMSConsumer.PASSWORD, JMSConsumer.BROKEURL);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //通过连接工厂获取连接</div><div class="line">            connection = connectionFactory.createConnection();</div><div class="line">            //启动连接</div><div class="line">            connection.start();</div><div class="line">            //创建session</div><div class="line">            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);</div><div class="line">            //创建一个连接HelloWorld的消息队列</div><div class="line">            destination = session.createQueue(&quot;HelloWorld&quot;);</div><div class="line">            //创建消息消费者</div><div class="line">            messageConsumer = session.createConsumer(destination);</div><div class="line"></div><div class="line">            while (true) &#123;</div><div class="line">                TextMessage textMessage = (TextMessage) messageConsumer.receive(100000);</div><div class="line">                if(textMessage != null)&#123;</div><div class="line">                    System.out.println(&quot;收到的消息:&quot; + textMessage.getText());</div><div class="line">                &#125;else &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125; catch (JMSException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>现在代码还不能运行，因为没有引用 AvtiveMQ 的依赖包。</p>
-<h3 id="3-3-引入jar包"><a href="#3-3-引入jar包" class="headerlink" title="3.3.引入jar包"></a>3.3.引入jar包</h3><p>在项目上右键，然后选择【properties】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050012.png" alt=""></p>
-<p>然后选择【java Build Path】-&gt; 【Libraries】 -&gt; 【Add Externals JARs】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050013.png" alt=""></p>
-<p>在刚才加压的压缩包里，有一个 activemq-all-5.14.4.jar 文件，引用进来。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050014.png" alt=""></p>
-<p>这时项目里就没有 error 了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050015.png" alt=""></p>
-<h3 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4.测试"></a>3.4.测试</h3><p>右键 JMSProducer.java，选择【Run as】 -&gt; 【Java Application】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050016.png" alt=""></p>
-<p>可以看到控制台输出如下消息：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050017.png" alt=""></p>
-<p>打开浏览器，点击【Queues】，可以看到刚才发送的消息：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050018.png" alt=""></p>
-<p>右键 JMSConsumer.java，选择【Run as】 -&gt; 【Java Application】，可以看到消费了的消息：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050019.png" alt=""></p>
-<p>再打开浏览器，刷新，发现这些消息已经出队了：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050020.png" alt=""></p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/jiuqiyuliang/article/details/46701559" target="_blank" rel="external">深入浅出JMS(一)–JMS基本概念</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ActiveMQ/">ActiveMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Docker入门之（一）什么是Docker" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/02/Docker入门之（一）什么是Docker/">Docker入门之（一）什么是Docker</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/02/Docker入门之（一）什么是Docker/" class="article-date">
-  <time datetime="2017-06-02T08:57:55.000Z" itemprop="datePublished">2017-06-02</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-什么是Docker"><a href="#1-什么是Docker" class="headerlink" title="1.什么是Docker"></a>1.什么是Docker</h2><p><em>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</em></p>
-<p>通俗地说，Docker 是一种虚拟机（广义上的，准确的说法应该是<strong>容器</strong>）。Docker 与其他虚拟机（如：VMWare，Vitrual Box）的区别在于，Docker是一种高度特化的虚拟机。<strong>Docker的效率更高，但是它只能运行与其所运行在的操作系统相同的系统。</strong>也就是说，如果你的服务器上安装的是Ubuntu，那么你所有的 Docker 虚拟机都必须是 Ubuntu 系统。</p>
-<h2 id="2-什么时候使用Docker"><a href="#2-什么时候使用Docker" class="headerlink" title="2.什么时候使用Docker"></a>2.什么时候使用Docker</h2><p><em>如果你只是想让尽可能多的服务器应用实例在尽可能少的硬件上运行，可能不大关心运行多个操作系统虚拟机。要是同一应用程序的多个副本正是你需要的，那么你会喜欢上容器。</em></p>
-<p>虚拟机管理程序能做容器做不了的一件事就是，使用不同的操作系统或内核。由于所有的容器都需要使用同样的操作系统和内核，因此如果你想仅依靠 Docker 在一台电脑上同时部署 Windows 和 Linux 是一件不可能的事情。不过，这并不影响 Docker 的广泛使用，毕竟 Docker 的效率远高于普通虚拟机，而这意味着更低的成本。</p>
-<h2 id="3-Docker到底有多快"><a href="#3-Docker到底有多快" class="headerlink" title="3.Docker到底有多快"></a>3.Docker到底有多快</h2><p><em>docker相对于物理机其计算能力几乎没有损耗，而虚拟机对比物理机则有着非常明显的损耗。虚拟机的计算能力损耗在50%左右。</em></p>
-<p>下图是在IBM x3650 M4 服务器运算 Linpack 程序得到的测试结果：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020002.png" alt=""></p>
-<p>我们可以看到，使用 Docker 和不使用任何虚拟技术得到的结果基本没什么差别，而使用 KVM（一种虚拟机）则要慢的多了。</p>
-<p>那么，为什么 Docker 能够达到如此高的效率呢？我们来看两张图：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020001.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020003.png" alt=""></p>
-<p>上边是传统虚拟机的架构图，下边是 Docker 。总的来说，Docker 比传统虚拟机快主要在于以下两点原因：</p>
-<ol>
-<li>docker有着比虚拟机更少的抽象层。</li>
-<li>docker利用的是宿主机的内核，而不需要Guest OS。</li>
-</ol>
-<p>Docker 和传统虚拟机的区别，就好比前者是在集装箱里面打了隔板，而后者则是在集装箱里有塞进去了小的集装箱。因此前者的效率比后者更高也就不足为奇了。</p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://cloud.51cto.com/art/201410/453718.htm" target="_blank" rel="external">Docker到底是什么？为什么它这么火！</a></p>
-<p><a href="https://www.zhihu.com/question/28300645" target="_blank" rel="external">如何通俗解释Docker是什么？</a></p>
-<p><a href="http://blog.csdn.net/cbl709/article/details/43955687" target="_blank" rel="external"> docker与虚拟机性能比较</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/">Dcoker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器/">容器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/24/利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群/">利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/05/24/利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群/" class="article-date">
-  <time datetime="2017-05-24T07:11:23.000Z" itemprop="datePublished">2017-05-24</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-如何同步"><a href="#1-如何同步" class="headerlink" title="1.如何同步"></a>1.如何同步</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240003.png" alt="">我们已经解析了能够从 canal 服务器获取 解析过的 MySQL 的 binlog。接下来我们需要根据解析过的 binlog 将相同的数据写入到 redis 中。</p>
-<h2 id="2-同步程序"><a href="#2-同步程序" class="headerlink" title="2.同步程序"></a>2.同步程序</h2><p>我们在 canal.example 的目录下建立两个新的 java 类，分别名为 ClusterSample.java 和 ClusterUtil.java。文件结构如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240004.png" alt=""></p>
-<p>在我的目录中，还有一些其他的 java 文件，它们都是不必要的，不必理会就好。只要你的目录中最后有 ClusterSample.java 和 ClusterUtil.java 两个文件就可以。</p>
-<h3 id="ClusterSample-java"><a href="#ClusterSample-java" class="headerlink" title="ClusterSample.java"></a>ClusterSample.java</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div></pre></td><td class="code"><pre><div class="line">package com.alibaba.otter.canal.example;</div><div class="line"></div><div class="line">import redis.clients.jedis.Jedis;  </div><div class="line">import redis.clients.jedis.JedisPool;  </div><div class="line">import redis.clients.jedis.JedisPoolConfig;  </div><div class="line">  </div><div class="line">public class RedisUtil &#123;  </div><div class="line">  </div><div class="line">    // Redis服务器IP  </div><div class="line">    private static String ADDR = &quot;127.0.0.1&quot;;  </div><div class="line">  </div><div class="line">    // Redis的端口号  </div><div class="line">    private static int PORT = 7002;  </div><div class="line">  </div><div class="line">    // 访问密码  </div><div class="line">    //private static String AUTH = &quot;admin&quot;;  </div><div class="line">  </div><div class="line">    // 可用连接实例的最大数目，默认值为8；  </div><div class="line">    // 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。  </div><div class="line">    private static int MAX_ACTIVE = 1024;  </div><div class="line">  </div><div class="line">    // 控制一个pool最多有多少个状态为idle(空闲的)的jedis实例，默认值也是8。  </div><div class="line">    private static int MAX_IDLE = 200;  </div><div class="line">  </div><div class="line">    // 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException；  </div><div class="line">    private static int MAX_WAIT = 10000;  </div><div class="line">  </div><div class="line">    // 过期时间  </div><div class="line">    protected static int  expireTime = 660 * 660 *24;  </div><div class="line">      </div><div class="line">    // 连接池  </div><div class="line">    protected static JedisPool pool;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 静态代码，只在初次调用一次 </div><div class="line">     */  </div><div class="line">    static &#123;  </div><div class="line">        JedisPoolConfig config = new JedisPoolConfig();  </div><div class="line">        //最大连接数  </div><div class="line">        config.setMaxTotal(MAX_ACTIVE);  </div><div class="line">        //最多空闲实例  </div><div class="line">        config.setMaxIdle(MAX_IDLE);  </div><div class="line">        //超时时间  </div><div class="line">        config.setMaxWaitMillis(MAX_WAIT);  </div><div class="line">        //  </div><div class="line">        config.setTestOnBorrow(false);  </div><div class="line">        pool = new JedisPool(config, ADDR, PORT, 1000);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 获取jedis实例 </div><div class="line">     */  </div><div class="line">    protected static synchronized Jedis getJedis() &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = pool.getResource();  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">            if (jedis != null) &#123;  </div><div class="line">                pool.returnBrokenResource(jedis);  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        return jedis;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 释放jedis资源 </div><div class="line">     *  </div><div class="line">     * @param jedis </div><div class="line">     * @param isBroken </div><div class="line">     */  </div><div class="line">    protected static void closeResource(Jedis jedis, boolean isBroken) &#123;  </div><div class="line">        try &#123;  </div><div class="line">            if (isBroken) &#123;  </div><div class="line">                pool.returnBrokenResource(jedis);  </div><div class="line">            &#125; else &#123;  </div><div class="line">                pool.returnResource(jedis);  </div><div class="line">            &#125;  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  是否存在key </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     */  </div><div class="line">    public static boolean existKey(String key) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            return jedis.exists(key);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">        return false;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  删除key </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     */  </div><div class="line">    public static void delKey(String key) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            jedis.del(key);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  取得key的值 </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     */  </div><div class="line">    public static String stringGet(String key) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        String lastVal = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            lastVal = jedis.get(key);  </div><div class="line">            jedis.expire(key, expireTime);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">        return lastVal;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  添加string数据 </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     * @param value </div><div class="line">     */  </div><div class="line">    public static String stringSet(String key, String value) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        String lastVal = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            lastVal = jedis.set(key, value);  </div><div class="line">            jedis.expire(key, expireTime);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">        return lastVal;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  添加hash数据 </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     * @param field </div><div class="line">     * @param value </div><div class="line">     */  </div><div class="line">    public static void hashSet(String key, String field, String value) &#123;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            if (jedis != null) &#123;  </div><div class="line">                jedis.select(0);  </div><div class="line">                jedis.hset(key, field, value);  </div><div class="line">                jedis.expire(key, expireTime);  </div><div class="line">            &#125;  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<h3 id="ClusterUtil-java"><a href="#ClusterUtil-java" class="headerlink" title="ClusterUtil.java"></a>ClusterUtil.java</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div></pre></td><td class="code"><pre><div class="line">package com.alibaba.otter.canal.example;</div><div class="line"></div><div class="line">import java.util.HashSet;</div><div class="line">//import java.util.LinkedHashSet;</div><div class="line">import java.util.Set;</div><div class="line"></div><div class="line">import redis.clients.jedis.HostAndPort;</div><div class="line">//import redis.clients.jedis.Jedis;</div><div class="line">import redis.clients.jedis.JedisCluster;</div><div class="line">//import redis.clients.jedis.JedisPool;</div><div class="line">//import redis.clients.jedis.JedisPoolConfig;</div><div class="line"></div><div class="line">public class ClusterUtil &#123;</div><div class="line"></div><div class="line">    // 访问密码</div><div class="line">//    private static String AUTH = &quot;admin&quot;;</div><div class="line"></div><div class="line">    // 过期时间</div><div class="line">    protected static int expireTime = 660 * 660 * 24;</div><div class="line">    </div><div class="line">//    private static String host=&quot;10.0.76.192&quot;;  </div><div class="line">    private static String host=&quot;127.0.0.1&quot;;  </div><div class="line">    private static JedisCluster cluster;    </div><div class="line">      </div><div class="line">    static &#123;  </div><div class="line">        // 只给集群里一个实例就可以  </div><div class="line">        Set&lt;HostAndPort&gt; jedisClusterNodes = new HashSet&lt;HostAndPort&gt;();  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7000));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7001));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7002));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7003));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7004));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7005));  </div><div class="line">          </div><div class="line">        cluster = new JedisCluster(jedisClusterNodes);  </div><div class="line">    &#125;  </div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取jedis实例</div><div class="line">     */</div><div class="line">    protected static synchronized JedisCluster getJedis() &#123;</div><div class="line"></div><div class="line">        return cluster;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 释放jedis资源</div><div class="line">     * </div><div class="line">     * @param jedis</div><div class="line">     * @param isBroken</div><div class="line">     */</div><div class="line">    protected static void closeResource(JedisCluster cluster, boolean isBroken) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 是否存在key</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     */</div><div class="line">    public static boolean existKey(String key) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">            jedis.select(0);</div><div class="line">            return jedis.exists(key);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 删除key</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     */</div><div class="line">    public static void delKey(String key) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">            jedis.select(0);</div><div class="line">            jedis.del(key);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 取得key的值</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     */</div><div class="line">    public static String stringGet(String key) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        String lastVal = null;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">//            jedis.select(0);</div><div class="line">            lastVal = jedis.get(key);</div><div class="line">            jedis.expire(key, expireTime);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">           // closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">        return lastVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 添加string数据</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     * @param value</div><div class="line">     */</div><div class="line">    public static String stringSet(String key, String value) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        String lastVal = null;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">//            jedis.select(0);</div><div class="line">            lastVal = jedis.set(key, value);</div><div class="line">            jedis.expire(key, expireTime);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">        return lastVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 添加hash数据</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     * @param field</div><div class="line">     * @param value</div><div class="line">     */</div><div class="line">    public static void hashSet(String key, String field, String value) &#123;</div><div class="line">        boolean isBroken = false;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">            if (jedis != null) &#123;</div><div class="line">                //jedis.select(0);</div><div class="line">                jedis.hset(key, field, value);</div><div class="line">                jedis.expire(key, expireTime);</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            //closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注意，redis 单点模式和集群模式的连接方法是不同的。详情参考：</p>
-<p><a href="http://blog.csdn.net/boonya/article/details/49466003" target="_blank" rel="external">Redis 单点模式和集群模式代码测试及问题记录</a></p>
-<p>由于我们现在要连接的是 redis 集群，所以使用集群模式。</p>
-<h2 id="3-测试结果"><a href="#3-测试结果" class="headerlink" title="3.测试结果"></a>3.测试结果</h2><p>启动 MySQl，Canal 服务器和 redis 集群，运行 ClusterSample.java 类。</p>
-<h3 id="3-1-在-MySQL-数据库中添加数据："><a href="#3-1-在-MySQL-数据库中添加数据：" class="headerlink" title="3.1.在 MySQL 数据库中添加数据："></a>3.1.在 MySQL 数据库中添加数据：</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240005.png" alt=""></p>
-<h3 id="3-2-这时我们打开-Eclipse，就可以看到读取-binlog-成功的提示。"><a href="#3-2-这时我们打开-Eclipse，就可以看到读取-binlog-成功的提示。" class="headerlink" title="3.2.这时我们打开 Eclipse，就可以看到读取 binlog 成功的提示。"></a>3.2.这时我们打开 Eclipse，就可以看到读取 binlog 成功的提示。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240006.png" alt=""></p>
-<h3 id="3-3-打开-redis-的客户端，查询响应的数据"><a href="#3-3-打开-redis-的客户端，查询响应的数据" class="headerlink" title="3.3.打开 redis 的客户端，查询响应的数据"></a>3.3.打开 redis 的客户端，查询响应的数据</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240007.png" alt=""></p>
-<p>红色方框内就是最新插入 MySQL 的三条数据。可见，redis 和 MySQL 的数据已经同步成功了。</p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/boonya/article/details/49466003" target="_blank" rel="external">Redis 单点模式和集群模式代码测试及问题记录</a></p>
-<p><a href="https://my.oschina.net/shyloveliyi/blog/502017" target="_blank" rel="external">jedis针对三种redis工作模式的连接方式</a></p>
-<h2 id="5-操作系统：Windows-10"><a href="#5-操作系统：Windows-10" class="headerlink" title="5.操作系统：Windows 10"></a>5.操作系统：Windows 10</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canal/">Canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-利用canal实现MySQL数据同步到redis（一）canal的搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/" class="article-date">
-  <time datetime="2017-05-10T09:20:22.000Z" itemprop="datePublished">2017-05-10</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-什么是canal"><a href="#1-什么是canal" class="headerlink" title="1.什么是canal"></a>1.什么是canal</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100001.jpg" alt=""></p>
-<p>canal 的原理相对比较简单：</p>
-<ol>
-<li>canal 模拟 mysql slave 的交互协议，伪装自己为mysql slave，向 mysql master发送 dump 协议</li>
-<li>mysql master 收到 dump 请求，开始推送 binary log 给 slave (也就是 canal)</li>
-<li>canal 解析 binary log 对象(原始为 byte 流)</li>
-</ol>
-<h2 id="2-服务器端的配置"><a href="#2-服务器端的配置" class="headerlink" title="2.服务器端的配置"></a>2.服务器端的配置</h2><h3 id="2-1-配置MySQL"><a href="#2-1-配置MySQL" class="headerlink" title="2.1.配置MySQL"></a>2.1.配置MySQL</h3><h4 id="2-1-1-修改配置文件"><a href="#2-1-1-修改配置文件" class="headerlink" title="2.1.1.修改配置文件"></a>2.1.1.修改配置文件</h4><p>打开 MySQL 根目录，修改 my-default.ini 文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100002.png" alt=""></p>
-<p>添加如下内容至文件中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">log-bin=mysql-bin #添加这一行就ok</div><div class="line">binlog-format=ROW #选择row模式</div><div class="line">server_id=1 #配置mysql replaction需要定义，不能和canal的slaveId重复</div></pre></td></tr></table></figure>
-<p>添加结果如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100003.png" alt=""></p>
-<h4 id="2-1-2-新建一个名为-canal-的用户，赋予其相应的权限"><a href="#2-1-2-新建一个名为-canal-的用户，赋予其相应的权限" class="headerlink" title="2.1.2.新建一个名为 canal 的用户，赋予其相应的权限"></a>2.1.2.新建一个名为 canal 的用户，赋予其相应的权限</h4><p>SQL 语句如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CREATE USER canal IDENTIFIED BY &apos;canal&apos;;  </div><div class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;canal&apos;@&apos;localhost&apos;;</div><div class="line">-- GRANT ALL PRIVILEGES ON *.* TO &apos;canal&apos;@&apos;localhost&apos; ;</div><div class="line">FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
-<p>语句中的 localhost 在实际应用中需要改成 canal 服务器的 ip 地址。如果你和我一样使用本机进行配置，使用 localhost 即可。</p>
-<h3 id="2-2-下载-canal"><a href="#2-2-下载-canal" class="headerlink" title="2.2.下载 canal"></a>2.2.下载 canal</h3><p>下载地址：<a href="https://github.com/alibaba/canal/releases" target="_blank" rel="external">https://github.com/alibaba/canal/releases</a> </p>
-<p>我们下载下图中标红的两个文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100004.png" alt=""></p>
-<p>在你喜欢的位置（我的是D:\WOrkSapce\）建立一个名为 canal 的文件夹，将这两个压缩包放到里面，然后分别解压到各自的文件夹即可。</p>
-<h3 id="2-3-修改-canal-配置文件"><a href="#2-3-修改-canal-配置文件" class="headerlink" title="2.3.修改 canal 配置文件"></a>2.3.修改 canal 配置文件</h3><p>进入 D:\WorkSpace\canal\canal.deployer-1.0.24\conf\example 目录下</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100005.png" alt=""></p>
-<p>找到 instance.properties 文件，将数据库参数修改成你自己的信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#################################################</div><div class="line">## mysql serverId</div><div class="line">canal.instance.mysql.slaveId = 1234</div><div class="line"></div><div class="line"># position info</div><div class="line">canal.instance.master.address = 127.0.0.1:3306</div><div class="line">canal.instance.master.journal.name = </div><div class="line">canal.instance.master.position = </div><div class="line">canal.instance.master.timestamp = </div><div class="line"></div><div class="line">#canal.instance.standby.address = </div><div class="line">#canal.instance.standby.journal.name =</div><div class="line">#canal.instance.standby.position = </div><div class="line">#canal.instance.standby.timestamp = </div><div class="line"></div><div class="line"># username/password</div><div class="line">canal.instance.dbUsername = canal</div><div class="line">canal.instance.dbPassword = canal</div><div class="line">canal.instance.defaultDatabaseName = test</div><div class="line">canal.instance.connectionCharset = UTF-8</div><div class="line"></div><div class="line"># table regex</div><div class="line">canal.instance.filter.regex = .*\\..*</div><div class="line"># table black regex</div><div class="line">canal.instance.filter.black.regex =  </div><div class="line"></div><div class="line">#################################################</div></pre></td></tr></table></figure>
-<h3 id="2-4-启动-canal-服务端"><a href="#2-4-启动-canal-服务端" class="headerlink" title="2.4.启动 canal 服务端"></a>2.4.启动 canal 服务端</h3><p>进入 D:\WorkSpace\canal\canal.deployer-1.0.24\bin 目录下，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">startup.bat</div></pre></td></tr></table></figure>
-<p>启动 canal 服务端，得到结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100006.png" alt=""></p>
-<h2 id="3-客户端的配置"><a href="#3-客户端的配置" class="headerlink" title="3.客户端的配置"></a>3.客户端的配置</h2><h3 id="3-1-导入-maven-项目"><a href="#3-1-导入-maven-项目" class="headerlink" title="3.1.导入 maven 项目"></a>3.1.导入 maven 项目</h3><p>打开 eclipse，【File】-&gt;【Import】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100007.png" alt=""></p>
-<p>选择 【Maven】 -&gt; 【Existing Maven Projects】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100008.png" alt=""></p>
-<p>找到你刚才下载解压的 canal-canal-1.0.24 ，确定</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100009.png" alt=""></p>
-<p>你会发现这些项目已经导入进来了</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100010.png" alt=""></p>
-<h3 id="3-2-打开并运行-example"><a href="#3-2-打开并运行-example" class="headerlink" title="3.2.打开并运行 example"></a>3.2.打开并运行 example</h3><p>打开 canal.example ，找到 ClusterCanalClientTest ，运行</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100011.png" alt=""></p>
-<h3 id="3-3-更新数据库并测试"><a href="#3-3-更新数据库并测试" class="headerlink" title="3.3.更新数据库并测试"></a>3.3.更新数据库并测试</h3><p>打开 MySQL 终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">use test</div><div class="line">create table table0(id int);</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100012.png" alt=""></p>
-<p>这时查看 ClusterCanalClientTest 的终端，发现 binlog 信息已经被解析出来了</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100013.png" alt=""></p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p>alibaba/canal 项目介绍：<br><a href="https://github.com/alibaba/canal/wiki" target="_blank" rel="external">https://github.com/alibaba/canal/wiki</a></p>
-<h2 id="5-操作系统：Windows10"><a href="#5-操作系统：Windows10" class="headerlink" title="5.操作系统：Windows10"></a>5.操作系统：Windows10</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canal/">Canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-一次惊险的体验（伪）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/04/一次惊险的体验（伪）/">一次惊险的体验（伪）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/05/04/一次惊险的体验（伪）/" class="article-date">
-  <time datetime="2017-05-04T09:49:53.000Z" itemprop="datePublished">2017-05-04</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/心情/">心情</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="本故事纯属虚构，如有雷同，不可能。"><a href="#本故事纯属虚构，如有雷同，不可能。" class="headerlink" title="本故事纯属虚构，如有雷同，不可能。"></a>本故事纯属虚构，如有雷同，不可能。</h1><h3 id="今天我去公园玩，逛着逛着，发现天上有一架直升机。"><a href="#今天我去公园玩，逛着逛着，发现天上有一架直升机。" class="headerlink" title="今天我去公园玩，逛着逛着，发现天上有一架直升机。"></a>今天我去公园玩，逛着逛着，发现天上有一架直升机。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045001.jpg" alt=""></p>
-<hr>
-<h3 id="直升机越飞越近，而我却没有察觉到即将到来的危险。"><a href="#直升机越飞越近，而我却没有察觉到即将到来的危险。" class="headerlink" title="直升机越飞越近，而我却没有察觉到即将到来的危险。"></a>直升机越飞越近，而我却没有察觉到即将到来的危险。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045002.jpg" alt=""></p>
-<hr>
-<h1 id="突然，它投下了一枚炸弹！"><a href="#突然，它投下了一枚炸弹！" class="headerlink" title="突然，它投下了一枚炸弹！"></a>突然，它投下了一枚炸弹！</h1><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045003.jpg" alt=""></p>
-<hr>
-<h3 id="爆炸过后，惊慌失措的游客。"><a href="#爆炸过后，惊慌失措的游客。" class="headerlink" title="爆炸过后，惊慌失措的游客。"></a>爆炸过后，惊慌失措的游客。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045004.jpg" alt=""></p>
-<hr>
-<h3 id="看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！"><a href="#看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！" class="headerlink" title="看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！"></a>看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045005.jpg" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/直升机/">直升机</a></li></ul>
 
       </footer>
     

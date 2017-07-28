@@ -45,6 +45,619 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-蓝牙协议入门（三）中介层协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/06/蓝牙协议入门（三）中介层协议/">蓝牙协议入门（三）中介层协议</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/06/蓝牙协议入门（三）中介层协议/" class="article-date">
+  <time datetime="2017-06-05T17:38:37.000Z" itemprop="datePublished">2017-06-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-主机控制接口协议-HCI"><a href="#1-主机控制接口协议-HCI" class="headerlink" title="1.主机控制接口协议 HCI"></a>1.主机控制接口协议 HCI</h2><p>常用蓝牙控制器接口数据分组分为三类，分别为：</p>
+<ul>
+<li>指令分组（0x01）</li>
+<li>事件分组（0x04）</li>
+<li>数据分组（ACL：0x02，SCO：0x03）</li>
+</ul>
+<p>全部分组类型列举如下：</p>
+<table>
+<thead>
+<tr>
+<th>HCI 分组类型</th>
+<th>RS232分组指示器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HCI指令分组</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>HCI ACL数据分组</td>
+<td>0x02</td>
+</tr>
+<tr>
+<td>HCI SCO数据分组</td>
+<td>0x03</td>
+</tr>
+<tr>
+<td>HCI事件分组</td>
+<td>0x04</td>
+</tr>
+<tr>
+<td>HCI错误消息分组</td>
+<td>0x05</td>
+</tr>
+<tr>
+<td>HCI协商分组</td>
+<td>0x06</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-1-指令分组"><a href="#1-1-指令分组" class="headerlink" title="1.1.指令分组"></a>1.1.指令分组</h3><p><img src="E:/images/201707280001.png" alt=""></p>
+<p>如：<strong>Accpet Connection Request</strong></p>
+<ul>
+<li><strong>Opcode</strong> 为：<strong>0x0409</strong></li>
+<li>参数长度为: <strong>07</strong> <ul>
+<li>参数中蓝牙地址为：<strong>00:0d:fd:5f:16:9f</strong></li>
+</ul>
+</li>
+<li>角色为：从设备  <strong>0x01</strong></li>
+</ul>
+<p>则大端数据模式指令为：<strong>09 04 07 9f 16 5f fd 0d 00 01</strong></p>
+<h3 id="1-2-事件分组"><a href="#1-2-事件分组" class="headerlink" title="1.2.事件分组"></a>1.2.事件分组</h3><p><img src="E:/images/201707280002.png" alt=""></p>
+<p>如：<strong>Accpet Connection Request</strong></p>
+<ul>
+<li><strong>Opcode :0x0409</strong></li>
+<li>状态： <strong>0x00</strong></li>
+<li>总长度： <strong>4</strong> 字节</li>
+<li>命令状态：<strong>0x0f</strong></li>
+</ul>
+<p>则分组为： <strong>04 0f 04 00 01 09 04</strong></p>
+<h3 id="1-3-数据分组"><a href="#1-3-数据分组" class="headerlink" title="1.3.数据分组"></a>1.3.数据分组</h3><p><strong>ACL</strong> 数据分组（注：<strong>PB =  Packet_Boundary</strong> ； <strong>BC =  Broadcast Flag</strong>）</p>
+<p><img src="E:/images/201707280003.png" alt=""></p>
+<p><strong>SCO</strong> 数据分组</p>
+<p><img src="E:/images/201707280004.png" alt=""></p>
+<h2 id="2-逻辑链路控制与适配协议-L2CAP"><a href="#2-逻辑链路控制与适配协议-L2CAP" class="headerlink" title="2.逻辑链路控制与适配协议  L2CAP"></a>2.逻辑链路控制与适配协议  L2CAP</h2><p><strong>L2CAP</strong> 位于基带之上，将基带的数据分组转换为便于高层应用的数据分组格式，并提供协议复用和服务质量交换等功能。<strong>L2CAP</strong> 只支持 <strong>ACL</strong> 数据传输，不支持 <strong>SCO</strong> 数据。<strong>L2CAP</strong> 本身不提供加强信道可靠性和保证数据完整性的机制，其信道的可靠性依靠基带提供。</p>
+<p><strong>L2CAP</strong> 主要实现以下功能：</p>
+<ol>
+<li><strong>协议复用</strong>：底层传输协议没有提供对高层协议的复用机制，因而 L2CAP 支持高层协议复用，L2CAP 层可以区分其上的 SDP、RFCOMM、TCS 等。</li>
+<li><strong>分段重组</strong>：L2CAP层帮助实现基带的短 PDU 和高层的长 PDU 相互传输，L2CAP 本身不完成任何 PDU 的分段重组，具体的分段重组有低层和高层来完成。</li>
+<li><strong>服务质量 Qualityof Serivce 信息的交换</strong>：蓝牙建立连接的过程中，L2CAP允许交互蓝牙所期望的服务质量，建立完成后，通过监视资源的使用情况，来保证服务质量。</li>
+<li><strong>组抽象</strong>：<strong>L2CAP</strong> 忽略地址组概念，他只关心数据。</li>
+</ol>
+<p><strong>L2CAP</strong> 信道有三种类型：</p>
+<ul>
+<li>面向连接信道：<strong>Connection-Oriented CO</strong>，用于两个设备之间的数据通信。</li>
+<li>无连接信道：<strong>Connection-LessCL</strong>，用来向一组设备广播方式传输数据。<strong>CID</strong>为固定值：<strong>0x0002。</strong></li>
+<li>信令信道：<strong>Signaling</strong>，用于创建 <strong>CO</strong> 通道，可以通过协商改变 <strong>CO</strong> 信道的特性。</li>
+</ul>
+<p>协议数据单元：</p>
+<p><img src="E:/images/201707280005.png" alt=""></p>
+<h2 id="3-服务发现协议-SDP"><a href="#3-服务发现协议-SDP" class="headerlink" title="3.服务发现协议   SDP"></a>3.服务发现协议   SDP</h2><p>SDP两种服务发现模式：            </p>
+<ul>
+<li>服务搜索：查询具有特定服务属性的服务；            </li>
+<li>服务浏览：简单的浏览全部可用服务。</li>
+</ul>
+<p>其 <strong>PDU</strong> （协议数据单元）格式为：</p>
+<p><img src="E:/images/201707280006.png" alt=""></p>
+<p>不同的 <strong>PDU ID</strong> 的意义为：</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Parameter Descirption</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>Reserved</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>SDP_ErrorResponse</td>
+<td>错误响应</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>SDP_ServiceSearchRequest</td>
+<td>服务搜索请求</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>SDP_ServiceSearchResponse</td>
+<td>服务搜索响应</td>
+</tr>
+<tr>
+<td>0x04</td>
+<td>SDP_ServiceAttributeRequest</td>
+<td>服务属性请求</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>SDP_ServiceAttributeResponse</td>
+<td>服务属性响应</td>
+</tr>
+<tr>
+<td>0x06</td>
+<td>SDP_ServiceSearchAttributeRequest</td>
+<td>服务搜索属性请求</td>
+</tr>
+<tr>
+<td>0x07</td>
+<td>SDP_ServiceSearchAttributeResponse</td>
+<td>服务搜索属性响应</td>
+</tr>
+<tr>
+<td>0x08-0xff</td>
+<td>Reserved</td>
+<td>保留</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-串口仿真协议-RFCOMM"><a href="#4-串口仿真协议-RFCOMM" class="headerlink" title="4.串口仿真协议   RFCOMM"></a>4.串口仿真协议   RFCOMM</h2><p><strong>RFCOMM</strong> 是为建立在串口之上的传统应用提供环境接口，使他们可以做比较少协议改动就可以在蓝牙无线通信无线链路上工作。多路串口仿真是 <strong>RFCOMM</strong> 的重要功能，通过多路复用器(<strong>multiplexer</strong>)，一条 <strong>L2CAP</strong> 链路可以同时 多个串行应用。</p>
+<p><img src="E:/images/201707280007.png" alt=""></p>
+<p><strong>RFCOMM</strong> 两个蓝牙设备之间可以支持多达60多路仿真串口。<strong>RFCOMM</strong> 帧类型如下：</p>
+<table>
+<thead>
+<tr>
+<th>SABM</th>
+<th>异步平衡模式设置指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UA</td>
+<td>未加编号的确认响应</td>
+</tr>
+<tr>
+<td>DM</td>
+<td>断开连接模式响应</td>
+</tr>
+<tr>
+<td>DISC</td>
+<td>断开连接指令</td>
+</tr>
+<tr>
+<td>UIH</td>
+<td>带头校验的未编号信息命令和响应</td>
+</tr>
+</tbody>
+</table>
+<h2 id="X-参考连接"><a href="#X-参考连接" class="headerlink" title="X.参考连接"></a>X.参考连接</h2><p><a href="http://blog.csdn.net/xubin341719/article/details/38305331" target="_blank" rel="external">蓝牙核心技术概述（四）：蓝牙协议规范（HCI、L2CAP、SDP、RFOCMM）</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-ActiveMQ入门之（一）ActiveMQ的安装及使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/05/ActiveMQ入门之（一）ActiveMQ的安装及使用/">ActiveMQ入门之（一）ActiveMQ的安装及使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/05/ActiveMQ入门之（一）ActiveMQ的安装及使用/" class="article-date">
+  <time datetime="2017-06-05T02:30:12.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是ActiveMQ"><a href="#1-什么是ActiveMQ" class="headerlink" title="1.什么是ActiveMQ"></a>1.什么是ActiveMQ</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050001.png" alt=""></p>
+<p>与 Kafka 类似，ActiveMQ 也是一种消息队列。与 Kafka 相比，其性能不如 Kafka 强大。那么，为什么要用 ActiveMQ 呢？最重要的原因在于它的易用性。Kafka 虽然强大，但是在使用 Kafka 的过程中需要部署 ZooKeeper。<strong>而 ActiveMQ 不需要提前安装依赖，部署简单，与各种语言亲和度高，这给了ActiveMQ 极强的生命力。</strong></p>
+<h2 id="2-ActiveMQ的安装与部署"><a href="#2-ActiveMQ的安装与部署" class="headerlink" title="2.ActiveMQ的安装与部署"></a>2.ActiveMQ的安装与部署</h2><h3 id="2-1-下载ActiveMQ"><a href="#2-1-下载ActiveMQ" class="headerlink" title="2.1.下载ActiveMQ"></a>2.1.下载ActiveMQ</h3><p>下载地址：<a href="http://activemq.apache.org/download.html" target="_blank" rel="external">http://activemq.apache.org/download.html</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050002.png" alt=""></p>
+<p>如上图所示，当前最高的版本是 5.14.5 Release。点击红色方框中的超链接，进入下载页。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050003.png" alt=""></p>
+<p>因为我们使用的是 Windows 操作系统，因此下载 zip 压缩包即可。</p>
+<h3 id="2-2-解压缩"><a href="#2-2-解压缩" class="headerlink" title="2.2.解压缩"></a>2.2.解压缩</h3><p>下载好之后，解压到你想要的位置，我的是 D:\WorkSpace 目录。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050004.png" alt=""></p>
+<h3 id="2-3-启动服务"><a href="#2-3-启动服务" class="headerlink" title="2.3.启动服务"></a>2.3.启动服务</h3><p>双击 D:\WorkSpace\ActiveMQ\apache-activemq-5.14.5\bin\win64 目录下的 activemq.bat 文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050005.png" alt=""></p>
+<p>服务启动，如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050006.png" alt=""></p>
+<h3 id="2-4-浏览器登录"><a href="#2-4-浏览器登录" class="headerlink" title="2.4.浏览器登录"></a>2.4.浏览器登录</h3><p>在浏览器输入：</p>
+<p> <a href="http://127.0.0.1:8161/admin/" target="_blank" rel="external">http://127.0.0.1:8161/admin/</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050007.png" alt=""></p>
+<p>用户名和密码都是：admin。输入之后，显示如下界面。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050008.png" alt=""></p>
+<p>这说明 ActiveMQ 已经部署成功了。</p>
+<h2 id="3-ActiveMQ的使用（Java为例）"><a href="#3-ActiveMQ的使用（Java为例）" class="headerlink" title="3.ActiveMQ的使用（Java为例）"></a>3.ActiveMQ的使用（Java为例）</h2><h3 id="3-1-建立项目"><a href="#3-1-建立项目" class="headerlink" title="3.1.建立项目"></a>3.1.建立项目</h3><p>打开 Eclipse，新建一个项目，名为Active。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050009.png" alt=""></p>
+<p>命名之后，点击 【Finish】即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050010.png" alt=""></p>
+<h3 id="3-2-添加代码"><a href="#3-2-添加代码" class="headerlink" title="3.2.添加代码"></a>3.2.添加代码</h3><p>在 src 目录下添加一个叫做 active 的包，并在该包添加两个类，分别名为：JMSProducer 和 JMSConsumer。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050011.png" alt=""></p>
+<p><strong>JMSPruducer：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line">package active;</div><div class="line"></div><div class="line">import javax.jms.Connection;</div><div class="line">import javax.jms.ConnectionFactory;</div><div class="line">import javax.jms.Destination;</div><div class="line">import javax.jms.JMSException;</div><div class="line">import javax.jms.MessageProducer;</div><div class="line">import javax.jms.Session;</div><div class="line">import javax.jms.TextMessage;</div><div class="line"></div><div class="line">import org.apache.activemq.ActiveMQConnection;</div><div class="line">import org.apache.activemq.ActiveMQConnectionFactory;</div><div class="line">/**</div><div class="line"> * 消息的生产者（发送者） </div><div class="line"> */</div><div class="line">public class JMSProducer &#123;</div><div class="line"></div><div class="line">    //默认连接用户名</div><div class="line">    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;</div><div class="line">    //默认连接密码</div><div class="line">    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;</div><div class="line">    //默认连接地址</div><div class="line">    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;</div><div class="line">    //发送的消息数量</div><div class="line">    private static final int SENDNUM = 10;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        //连接工厂</div><div class="line">        ConnectionFactory connectionFactory;</div><div class="line">        //连接</div><div class="line">        Connection connection = null;</div><div class="line">        //会话 接受或者发送消息的线程</div><div class="line">        Session session;</div><div class="line">        //消息的目的地</div><div class="line">        Destination destination;</div><div class="line">        //消息生产者</div><div class="line">        MessageProducer messageProducer;</div><div class="line">        //实例化连接工厂</div><div class="line">        connectionFactory = new ActiveMQConnectionFactory(JMSProducer.USERNAME, JMSProducer.PASSWORD, JMSProducer.BROKEURL);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //通过连接工厂获取连接</div><div class="line">            connection = connectionFactory.createConnection();</div><div class="line">            //启动连接</div><div class="line">            connection.start();</div><div class="line">            //创建session</div><div class="line">            session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);</div><div class="line">            //创建一个名称为HelloWorld的消息队列</div><div class="line">            destination = session.createQueue(&quot;HelloWorld&quot;);</div><div class="line">            //创建消息生产者</div><div class="line">            messageProducer = session.createProducer(destination);</div><div class="line">            //发送消息</div><div class="line">            sendMessage(session, messageProducer);</div><div class="line"></div><div class="line">            session.commit();</div><div class="line"></div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;finally&#123;</div><div class="line">            if(connection != null)&#123;</div><div class="line">                try &#123;</div><div class="line">                    connection.close();</div><div class="line">                &#125; catch (JMSException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    /**</div><div class="line">     * 发送消息</div><div class="line">     * @param session</div><div class="line">     * @param messageProducer  消息生产者</div><div class="line">     * @throws Exception</div><div class="line">     */</div><div class="line">    public static void sendMessage(Session session,MessageProducer messageProducer) throws Exception&#123;</div><div class="line">        for (int i = 0; i &lt; JMSProducer.SENDNUM; i++) &#123;</div><div class="line">            //创建一条文本消息 </div><div class="line">            TextMessage message = session.createTextMessage(&quot;ActiveMQ 发送消息&quot; +i);</div><div class="line">            System.out.println(&quot;发送消息：Activemq 发送消息&quot; + i);</div><div class="line">            //通过消息生产者发出消息 </div><div class="line">            messageProducer.send(message);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>JMSConsumer:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">package active;</div><div class="line"></div><div class="line">import javax.jms.Connection;</div><div class="line">import javax.jms.ConnectionFactory;</div><div class="line">import javax.jms.Destination;</div><div class="line">import javax.jms.JMSException;</div><div class="line">import javax.jms.MessageConsumer;</div><div class="line">import javax.jms.Session;</div><div class="line">import javax.jms.TextMessage;</div><div class="line"></div><div class="line">import org.apache.activemq.ActiveMQConnection;</div><div class="line">import org.apache.activemq.ActiveMQConnectionFactory;</div><div class="line">/*</div><div class="line"> * 消息的消费者（接受者）</div><div class="line"> */</div><div class="line">public class JMSConsumer &#123;</div><div class="line"></div><div class="line">    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;//默认连接用户名</div><div class="line">    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;//默认连接密码</div><div class="line">    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;//默认连接地址</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        ConnectionFactory connectionFactory;//连接工厂</div><div class="line">        Connection connection = null;//连接</div><div class="line"></div><div class="line">        Session session;//会话 接受或者发送消息的线程</div><div class="line">        Destination destination;//消息的目的地</div><div class="line"></div><div class="line">        MessageConsumer messageConsumer;//消息的消费者</div><div class="line"></div><div class="line">        //实例化连接工厂</div><div class="line">        connectionFactory = new ActiveMQConnectionFactory(JMSConsumer.USERNAME, JMSConsumer.PASSWORD, JMSConsumer.BROKEURL);</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            //通过连接工厂获取连接</div><div class="line">            connection = connectionFactory.createConnection();</div><div class="line">            //启动连接</div><div class="line">            connection.start();</div><div class="line">            //创建session</div><div class="line">            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);</div><div class="line">            //创建一个连接HelloWorld的消息队列</div><div class="line">            destination = session.createQueue(&quot;HelloWorld&quot;);</div><div class="line">            //创建消息消费者</div><div class="line">            messageConsumer = session.createConsumer(destination);</div><div class="line"></div><div class="line">            while (true) &#123;</div><div class="line">                TextMessage textMessage = (TextMessage) messageConsumer.receive(100000);</div><div class="line">                if(textMessage != null)&#123;</div><div class="line">                    System.out.println(&quot;收到的消息:&quot; + textMessage.getText());</div><div class="line">                &#125;else &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125; catch (JMSException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在代码还不能运行，因为没有引用 AvtiveMQ 的依赖包。</p>
+<h3 id="3-3-引入jar包"><a href="#3-3-引入jar包" class="headerlink" title="3.3.引入jar包"></a>3.3.引入jar包</h3><p>在项目上右键，然后选择【properties】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050012.png" alt=""></p>
+<p>然后选择【java Build Path】-&gt; 【Libraries】 -&gt; 【Add Externals JARs】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050013.png" alt=""></p>
+<p>在刚才加压的压缩包里，有一个 activemq-all-5.14.4.jar 文件，引用进来。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050014.png" alt=""></p>
+<p>这时项目里就没有 error 了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050015.png" alt=""></p>
+<h3 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4.测试"></a>3.4.测试</h3><p>右键 JMSProducer.java，选择【Run as】 -&gt; 【Java Application】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050016.png" alt=""></p>
+<p>可以看到控制台输出如下消息：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050017.png" alt=""></p>
+<p>打开浏览器，点击【Queues】，可以看到刚才发送的消息：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050018.png" alt=""></p>
+<p>右键 JMSConsumer.java，选择【Run as】 -&gt; 【Java Application】，可以看到消费了的消息：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050019.png" alt=""></p>
+<p>再打开浏览器，刷新，发现这些消息已经出队了：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706050020.png" alt=""></p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/jiuqiyuliang/article/details/46701559" target="_blank" rel="external">深入浅出JMS(一)–JMS基本概念</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ActiveMQ/">ActiveMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Docker入门之（一）什么是Docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/02/Docker入门之（一）什么是Docker/">Docker入门之（一）什么是Docker</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/02/Docker入门之（一）什么是Docker/" class="article-date">
+  <time datetime="2017-06-02T08:57:55.000Z" itemprop="datePublished">2017-06-02</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是Docker"><a href="#1-什么是Docker" class="headerlink" title="1.什么是Docker"></a>1.什么是Docker</h2><p><em>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</em></p>
+<p>通俗地说，Docker 是一种虚拟机（广义上的，准确的说法应该是<strong>容器</strong>）。Docker 与其他虚拟机（如：VMWare，Vitrual Box）的区别在于，Docker是一种高度特化的虚拟机。<strong>Docker的效率更高，但是它只能运行与其所运行在的操作系统相同的系统。</strong>也就是说，如果你的服务器上安装的是Ubuntu，那么你所有的 Docker 虚拟机都必须是 Ubuntu 系统。</p>
+<h2 id="2-什么时候使用Docker"><a href="#2-什么时候使用Docker" class="headerlink" title="2.什么时候使用Docker"></a>2.什么时候使用Docker</h2><p><em>如果你只是想让尽可能多的服务器应用实例在尽可能少的硬件上运行，可能不大关心运行多个操作系统虚拟机。要是同一应用程序的多个副本正是你需要的，那么你会喜欢上容器。</em></p>
+<p>虚拟机管理程序能做容器做不了的一件事就是，使用不同的操作系统或内核。由于所有的容器都需要使用同样的操作系统和内核，因此如果你想仅依靠 Docker 在一台电脑上同时部署 Windows 和 Linux 是一件不可能的事情。不过，这并不影响 Docker 的广泛使用，毕竟 Docker 的效率远高于普通虚拟机，而这意味着更低的成本。</p>
+<h2 id="3-Docker到底有多快"><a href="#3-Docker到底有多快" class="headerlink" title="3.Docker到底有多快"></a>3.Docker到底有多快</h2><p><em>docker相对于物理机其计算能力几乎没有损耗，而虚拟机对比物理机则有着非常明显的损耗。虚拟机的计算能力损耗在50%左右。</em></p>
+<p>下图是在IBM x3650 M4 服务器运算 Linpack 程序得到的测试结果：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020002.png" alt=""></p>
+<p>我们可以看到，使用 Docker 和不使用任何虚拟技术得到的结果基本没什么差别，而使用 KVM（一种虚拟机）则要慢的多了。</p>
+<p>那么，为什么 Docker 能够达到如此高的效率呢？我们来看两张图：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020001.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020003.png" alt=""></p>
+<p>上边是传统虚拟机的架构图，下边是 Docker 。总的来说，Docker 比传统虚拟机快主要在于以下两点原因：</p>
+<ol>
+<li>docker有着比虚拟机更少的抽象层。</li>
+<li>docker利用的是宿主机的内核，而不需要Guest OS。</li>
+</ol>
+<p>Docker 和传统虚拟机的区别，就好比前者是在集装箱里面打了隔板，而后者则是在集装箱里有塞进去了小的集装箱。因此前者的效率比后者更高也就不足为奇了。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://cloud.51cto.com/art/201410/453718.htm" target="_blank" rel="external">Docker到底是什么？为什么它这么火！</a></p>
+<p><a href="https://www.zhihu.com/question/28300645" target="_blank" rel="external">如何通俗解释Docker是什么？</a></p>
+<p><a href="http://blog.csdn.net/cbl709/article/details/43955687" target="_blank" rel="external"> docker与虚拟机性能比较</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/">Dcoker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器/">容器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/24/利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群/">利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/05/24/利用canal实现MySQL数据同步到redis（二）同步MySQL的数据到redis集群/" class="article-date">
+  <time datetime="2017-05-24T07:11:23.000Z" itemprop="datePublished">2017-05-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-如何同步"><a href="#1-如何同步" class="headerlink" title="1.如何同步"></a>1.如何同步</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240003.png" alt="">我们已经解析了能够从 canal 服务器获取 解析过的 MySQL 的 binlog。接下来我们需要根据解析过的 binlog 将相同的数据写入到 redis 中。</p>
+<h2 id="2-同步程序"><a href="#2-同步程序" class="headerlink" title="2.同步程序"></a>2.同步程序</h2><p>我们在 canal.example 的目录下建立两个新的 java 类，分别名为 ClusterSample.java 和 ClusterUtil.java。文件结构如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240004.png" alt=""></p>
+<p>在我的目录中，还有一些其他的 java 文件，它们都是不必要的，不必理会就好。只要你的目录中最后有 ClusterSample.java 和 ClusterUtil.java 两个文件就可以。</p>
+<h3 id="ClusterSample-java"><a href="#ClusterSample-java" class="headerlink" title="ClusterSample.java"></a>ClusterSample.java</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div></pre></td><td class="code"><pre><div class="line">package com.alibaba.otter.canal.example;</div><div class="line"></div><div class="line">import redis.clients.jedis.Jedis;  </div><div class="line">import redis.clients.jedis.JedisPool;  </div><div class="line">import redis.clients.jedis.JedisPoolConfig;  </div><div class="line">  </div><div class="line">public class RedisUtil &#123;  </div><div class="line">  </div><div class="line">    // Redis服务器IP  </div><div class="line">    private static String ADDR = &quot;127.0.0.1&quot;;  </div><div class="line">  </div><div class="line">    // Redis的端口号  </div><div class="line">    private static int PORT = 7002;  </div><div class="line">  </div><div class="line">    // 访问密码  </div><div class="line">    //private static String AUTH = &quot;admin&quot;;  </div><div class="line">  </div><div class="line">    // 可用连接实例的最大数目，默认值为8；  </div><div class="line">    // 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。  </div><div class="line">    private static int MAX_ACTIVE = 1024;  </div><div class="line">  </div><div class="line">    // 控制一个pool最多有多少个状态为idle(空闲的)的jedis实例，默认值也是8。  </div><div class="line">    private static int MAX_IDLE = 200;  </div><div class="line">  </div><div class="line">    // 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException；  </div><div class="line">    private static int MAX_WAIT = 10000;  </div><div class="line">  </div><div class="line">    // 过期时间  </div><div class="line">    protected static int  expireTime = 660 * 660 *24;  </div><div class="line">      </div><div class="line">    // 连接池  </div><div class="line">    protected static JedisPool pool;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 静态代码，只在初次调用一次 </div><div class="line">     */  </div><div class="line">    static &#123;  </div><div class="line">        JedisPoolConfig config = new JedisPoolConfig();  </div><div class="line">        //最大连接数  </div><div class="line">        config.setMaxTotal(MAX_ACTIVE);  </div><div class="line">        //最多空闲实例  </div><div class="line">        config.setMaxIdle(MAX_IDLE);  </div><div class="line">        //超时时间  </div><div class="line">        config.setMaxWaitMillis(MAX_WAIT);  </div><div class="line">        //  </div><div class="line">        config.setTestOnBorrow(false);  </div><div class="line">        pool = new JedisPool(config, ADDR, PORT, 1000);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 获取jedis实例 </div><div class="line">     */  </div><div class="line">    protected static synchronized Jedis getJedis() &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = pool.getResource();  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">            if (jedis != null) &#123;  </div><div class="line">                pool.returnBrokenResource(jedis);  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        return jedis;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 释放jedis资源 </div><div class="line">     *  </div><div class="line">     * @param jedis </div><div class="line">     * @param isBroken </div><div class="line">     */  </div><div class="line">    protected static void closeResource(Jedis jedis, boolean isBroken) &#123;  </div><div class="line">        try &#123;  </div><div class="line">            if (isBroken) &#123;  </div><div class="line">                pool.returnBrokenResource(jedis);  </div><div class="line">            &#125; else &#123;  </div><div class="line">                pool.returnResource(jedis);  </div><div class="line">            &#125;  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  是否存在key </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     */  </div><div class="line">    public static boolean existKey(String key) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            return jedis.exists(key);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">        return false;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  删除key </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     */  </div><div class="line">    public static void delKey(String key) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            jedis.del(key);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  取得key的值 </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     */  </div><div class="line">    public static String stringGet(String key) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        String lastVal = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            lastVal = jedis.get(key);  </div><div class="line">            jedis.expire(key, expireTime);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">        return lastVal;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  添加string数据 </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     * @param value </div><div class="line">     */  </div><div class="line">    public static String stringSet(String key, String value) &#123;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        String lastVal = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            jedis.select(0);  </div><div class="line">            lastVal = jedis.set(key, value);  </div><div class="line">            jedis.expire(key, expireTime);  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">        return lastVal;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     *  添加hash数据 </div><div class="line">     *  </div><div class="line">     * @param key </div><div class="line">     * @param field </div><div class="line">     * @param value </div><div class="line">     */  </div><div class="line">    public static void hashSet(String key, String field, String value) &#123;  </div><div class="line">        boolean isBroken = false;  </div><div class="line">        Jedis jedis = null;  </div><div class="line">        try &#123;  </div><div class="line">            jedis = getJedis();  </div><div class="line">            if (jedis != null) &#123;  </div><div class="line">                jedis.select(0);  </div><div class="line">                jedis.hset(key, field, value);  </div><div class="line">                jedis.expire(key, expireTime);  </div><div class="line">            &#125;  </div><div class="line">        &#125; catch (Exception e) &#123;  </div><div class="line">            isBroken = true;  </div><div class="line">        &#125; finally &#123;  </div><div class="line">            closeResource(jedis, isBroken);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="ClusterUtil-java"><a href="#ClusterUtil-java" class="headerlink" title="ClusterUtil.java"></a>ClusterUtil.java</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div></pre></td><td class="code"><pre><div class="line">package com.alibaba.otter.canal.example;</div><div class="line"></div><div class="line">import java.util.HashSet;</div><div class="line">//import java.util.LinkedHashSet;</div><div class="line">import java.util.Set;</div><div class="line"></div><div class="line">import redis.clients.jedis.HostAndPort;</div><div class="line">//import redis.clients.jedis.Jedis;</div><div class="line">import redis.clients.jedis.JedisCluster;</div><div class="line">//import redis.clients.jedis.JedisPool;</div><div class="line">//import redis.clients.jedis.JedisPoolConfig;</div><div class="line"></div><div class="line">public class ClusterUtil &#123;</div><div class="line"></div><div class="line">    // 访问密码</div><div class="line">//    private static String AUTH = &quot;admin&quot;;</div><div class="line"></div><div class="line">    // 过期时间</div><div class="line">    protected static int expireTime = 660 * 660 * 24;</div><div class="line">    </div><div class="line">//    private static String host=&quot;10.0.76.192&quot;;  </div><div class="line">    private static String host=&quot;127.0.0.1&quot;;  </div><div class="line">    private static JedisCluster cluster;    </div><div class="line">      </div><div class="line">    static &#123;  </div><div class="line">        // 只给集群里一个实例就可以  </div><div class="line">        Set&lt;HostAndPort&gt; jedisClusterNodes = new HashSet&lt;HostAndPort&gt;();  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7000));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7001));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7002));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7003));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7004));  </div><div class="line">        jedisClusterNodes.add(new HostAndPort(host, 7005));  </div><div class="line">          </div><div class="line">        cluster = new JedisCluster(jedisClusterNodes);  </div><div class="line">    &#125;  </div><div class="line"></div><div class="line">    /**</div><div class="line">     * 获取jedis实例</div><div class="line">     */</div><div class="line">    protected static synchronized JedisCluster getJedis() &#123;</div><div class="line"></div><div class="line">        return cluster;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 释放jedis资源</div><div class="line">     * </div><div class="line">     * @param jedis</div><div class="line">     * @param isBroken</div><div class="line">     */</div><div class="line">    protected static void closeResource(JedisCluster cluster, boolean isBroken) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 是否存在key</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     */</div><div class="line">    public static boolean existKey(String key) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">            jedis.select(0);</div><div class="line">            return jedis.exists(key);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 删除key</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     */</div><div class="line">    public static void delKey(String key) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">            jedis.select(0);</div><div class="line">            jedis.del(key);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 取得key的值</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     */</div><div class="line">    public static String stringGet(String key) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        String lastVal = null;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">//            jedis.select(0);</div><div class="line">            lastVal = jedis.get(key);</div><div class="line">            jedis.expire(key, expireTime);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">           // closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">        return lastVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 添加string数据</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     * @param value</div><div class="line">     */</div><div class="line">    public static String stringSet(String key, String value) &#123;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        boolean isBroken = false;</div><div class="line">        String lastVal = null;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">//            jedis.select(0);</div><div class="line">            lastVal = jedis.set(key, value);</div><div class="line">            jedis.expire(key, expireTime);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">        return lastVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 添加hash数据</div><div class="line">     * </div><div class="line">     * @param key</div><div class="line">     * @param field</div><div class="line">     * @param value</div><div class="line">     */</div><div class="line">    public static void hashSet(String key, String field, String value) &#123;</div><div class="line">        boolean isBroken = false;</div><div class="line">        JedisCluster jedis = null;</div><div class="line">        try &#123;</div><div class="line">            jedis = getJedis();</div><div class="line">            if (jedis != null) &#123;</div><div class="line">                //jedis.select(0);</div><div class="line">                jedis.hset(key, field, value);</div><div class="line">                jedis.expire(key, expireTime);</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            isBroken = true;</div><div class="line">        &#125; finally &#123;</div><div class="line">            //closeResource(jedis, isBroken);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意，redis 单点模式和集群模式的连接方法是不同的。详情参考：</p>
+<p><a href="http://blog.csdn.net/boonya/article/details/49466003" target="_blank" rel="external">Redis 单点模式和集群模式代码测试及问题记录</a></p>
+<p>由于我们现在要连接的是 redis 集群，所以使用集群模式。</p>
+<h2 id="3-测试结果"><a href="#3-测试结果" class="headerlink" title="3.测试结果"></a>3.测试结果</h2><p>启动 MySQl，Canal 服务器和 redis 集群，运行 ClusterSample.java 类。</p>
+<h3 id="3-1-在-MySQL-数据库中添加数据："><a href="#3-1-在-MySQL-数据库中添加数据：" class="headerlink" title="3.1.在 MySQL 数据库中添加数据："></a>3.1.在 MySQL 数据库中添加数据：</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240005.png" alt=""></p>
+<h3 id="3-2-这时我们打开-Eclipse，就可以看到读取-binlog-成功的提示。"><a href="#3-2-这时我们打开-Eclipse，就可以看到读取-binlog-成功的提示。" class="headerlink" title="3.2.这时我们打开 Eclipse，就可以看到读取 binlog 成功的提示。"></a>3.2.这时我们打开 Eclipse，就可以看到读取 binlog 成功的提示。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240006.png" alt=""></p>
+<h3 id="3-3-打开-redis-的客户端，查询响应的数据"><a href="#3-3-打开-redis-的客户端，查询响应的数据" class="headerlink" title="3.3.打开 redis 的客户端，查询响应的数据"></a>3.3.打开 redis 的客户端，查询响应的数据</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240007.png" alt=""></p>
+<p>红色方框内就是最新插入 MySQL 的三条数据。可见，redis 和 MySQL 的数据已经同步成功了。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/boonya/article/details/49466003" target="_blank" rel="external">Redis 单点模式和集群模式代码测试及问题记录</a></p>
+<p><a href="https://my.oschina.net/shyloveliyi/blog/502017" target="_blank" rel="external">jedis针对三种redis工作模式的连接方式</a></p>
+<h2 id="5-操作系统：Windows-10"><a href="#5-操作系统：Windows-10" class="headerlink" title="5.操作系统：Windows 10"></a>5.操作系统：Windows 10</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canal/">Canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-利用canal实现MySQL数据同步到redis（一）canal的搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/">利用canal实现MySQL数据同步到redis（一）canal的搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/05/10/利用canal实现MySQL数据同步到redis（一）canal的搭建/" class="article-date">
+  <time datetime="2017-05-10T09:20:22.000Z" itemprop="datePublished">2017-05-10</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是canal"><a href="#1-什么是canal" class="headerlink" title="1.什么是canal"></a>1.什么是canal</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100001.jpg" alt=""></p>
+<p>canal 的原理相对比较简单：</p>
+<ol>
+<li>canal 模拟 mysql slave 的交互协议，伪装自己为mysql slave，向 mysql master发送 dump 协议</li>
+<li>mysql master 收到 dump 请求，开始推送 binary log 给 slave (也就是 canal)</li>
+<li>canal 解析 binary log 对象(原始为 byte 流)</li>
+</ol>
+<h2 id="2-服务器端的配置"><a href="#2-服务器端的配置" class="headerlink" title="2.服务器端的配置"></a>2.服务器端的配置</h2><h3 id="2-1-配置MySQL"><a href="#2-1-配置MySQL" class="headerlink" title="2.1.配置MySQL"></a>2.1.配置MySQL</h3><h4 id="2-1-1-修改配置文件"><a href="#2-1-1-修改配置文件" class="headerlink" title="2.1.1.修改配置文件"></a>2.1.1.修改配置文件</h4><p>打开 MySQL 根目录，修改 my-default.ini 文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100002.png" alt=""></p>
+<p>添加如下内容至文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">log-bin=mysql-bin #添加这一行就ok</div><div class="line">binlog-format=ROW #选择row模式</div><div class="line">server_id=1 #配置mysql replaction需要定义，不能和canal的slaveId重复</div></pre></td></tr></table></figure>
+<p>添加结果如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100003.png" alt=""></p>
+<h4 id="2-1-2-新建一个名为-canal-的用户，赋予其相应的权限"><a href="#2-1-2-新建一个名为-canal-的用户，赋予其相应的权限" class="headerlink" title="2.1.2.新建一个名为 canal 的用户，赋予其相应的权限"></a>2.1.2.新建一个名为 canal 的用户，赋予其相应的权限</h4><p>SQL 语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CREATE USER canal IDENTIFIED BY &apos;canal&apos;;  </div><div class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;canal&apos;@&apos;localhost&apos;;</div><div class="line">-- GRANT ALL PRIVILEGES ON *.* TO &apos;canal&apos;@&apos;localhost&apos; ;</div><div class="line">FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
+<p>语句中的 localhost 在实际应用中需要改成 canal 服务器的 ip 地址。如果你和我一样使用本机进行配置，使用 localhost 即可。</p>
+<h3 id="2-2-下载-canal"><a href="#2-2-下载-canal" class="headerlink" title="2.2.下载 canal"></a>2.2.下载 canal</h3><p>下载地址：<a href="https://github.com/alibaba/canal/releases" target="_blank" rel="external">https://github.com/alibaba/canal/releases</a> </p>
+<p>我们下载下图中标红的两个文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100004.png" alt=""></p>
+<p>在你喜欢的位置（我的是D:\WOrkSapce\）建立一个名为 canal 的文件夹，将这两个压缩包放到里面，然后分别解压到各自的文件夹即可。</p>
+<h3 id="2-3-修改-canal-配置文件"><a href="#2-3-修改-canal-配置文件" class="headerlink" title="2.3.修改 canal 配置文件"></a>2.3.修改 canal 配置文件</h3><p>进入 D:\WorkSpace\canal\canal.deployer-1.0.24\conf\example 目录下</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100005.png" alt=""></p>
+<p>找到 instance.properties 文件，将数据库参数修改成你自己的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#################################################</div><div class="line">## mysql serverId</div><div class="line">canal.instance.mysql.slaveId = 1234</div><div class="line"></div><div class="line"># position info</div><div class="line">canal.instance.master.address = 127.0.0.1:3306</div><div class="line">canal.instance.master.journal.name = </div><div class="line">canal.instance.master.position = </div><div class="line">canal.instance.master.timestamp = </div><div class="line"></div><div class="line">#canal.instance.standby.address = </div><div class="line">#canal.instance.standby.journal.name =</div><div class="line">#canal.instance.standby.position = </div><div class="line">#canal.instance.standby.timestamp = </div><div class="line"></div><div class="line"># username/password</div><div class="line">canal.instance.dbUsername = canal</div><div class="line">canal.instance.dbPassword = canal</div><div class="line">canal.instance.defaultDatabaseName = test</div><div class="line">canal.instance.connectionCharset = UTF-8</div><div class="line"></div><div class="line"># table regex</div><div class="line">canal.instance.filter.regex = .*\\..*</div><div class="line"># table black regex</div><div class="line">canal.instance.filter.black.regex =  </div><div class="line"></div><div class="line">#################################################</div></pre></td></tr></table></figure>
+<h3 id="2-4-启动-canal-服务端"><a href="#2-4-启动-canal-服务端" class="headerlink" title="2.4.启动 canal 服务端"></a>2.4.启动 canal 服务端</h3><p>进入 D:\WorkSpace\canal\canal.deployer-1.0.24\bin 目录下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">startup.bat</div></pre></td></tr></table></figure>
+<p>启动 canal 服务端，得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100006.png" alt=""></p>
+<h2 id="3-客户端的配置"><a href="#3-客户端的配置" class="headerlink" title="3.客户端的配置"></a>3.客户端的配置</h2><h3 id="3-1-导入-maven-项目"><a href="#3-1-导入-maven-项目" class="headerlink" title="3.1.导入 maven 项目"></a>3.1.导入 maven 项目</h3><p>打开 eclipse，【File】-&gt;【Import】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100007.png" alt=""></p>
+<p>选择 【Maven】 -&gt; 【Existing Maven Projects】</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100008.png" alt=""></p>
+<p>找到你刚才下载解压的 canal-canal-1.0.24 ，确定</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100009.png" alt=""></p>
+<p>你会发现这些项目已经导入进来了</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100010.png" alt=""></p>
+<h3 id="3-2-打开并运行-example"><a href="#3-2-打开并运行-example" class="headerlink" title="3.2.打开并运行 example"></a>3.2.打开并运行 example</h3><p>打开 canal.example ，找到 ClusterCanalClientTest ，运行</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100011.png" alt=""></p>
+<h3 id="3-3-更新数据库并测试"><a href="#3-3-更新数据库并测试" class="headerlink" title="3.3.更新数据库并测试"></a>3.3.更新数据库并测试</h3><p>打开 MySQL 终端，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">use test</div><div class="line">create table table0(id int);</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100012.png" alt=""></p>
+<p>这时查看 ClusterCanalClientTest 的终端，发现 binlog 信息已经被解析出来了</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705100013.png" alt=""></p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p>alibaba/canal 项目介绍：<br><a href="https://github.com/alibaba/canal/wiki" target="_blank" rel="external">https://github.com/alibaba/canal/wiki</a></p>
+<h2 id="5-操作系统：Windows10"><a href="#5-操作系统：Windows10" class="headerlink" title="5.操作系统：Windows10"></a>5.操作系统：Windows10</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canal/">Canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-一次惊险的体验（伪）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/04/一次惊险的体验（伪）/">一次惊险的体验（伪）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/05/04/一次惊险的体验（伪）/" class="article-date">
+  <time datetime="2017-05-04T09:49:53.000Z" itemprop="datePublished">2017-05-04</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/心情/">心情</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="本故事纯属虚构，如有雷同，不可能。"><a href="#本故事纯属虚构，如有雷同，不可能。" class="headerlink" title="本故事纯属虚构，如有雷同，不可能。"></a>本故事纯属虚构，如有雷同，不可能。</h1><h3 id="今天我去公园玩，逛着逛着，发现天上有一架直升机。"><a href="#今天我去公园玩，逛着逛着，发现天上有一架直升机。" class="headerlink" title="今天我去公园玩，逛着逛着，发现天上有一架直升机。"></a>今天我去公园玩，逛着逛着，发现天上有一架直升机。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045001.jpg" alt=""></p>
+<hr>
+<h3 id="直升机越飞越近，而我却没有察觉到即将到来的危险。"><a href="#直升机越飞越近，而我却没有察觉到即将到来的危险。" class="headerlink" title="直升机越飞越近，而我却没有察觉到即将到来的危险。"></a>直升机越飞越近，而我却没有察觉到即将到来的危险。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045002.jpg" alt=""></p>
+<hr>
+<h1 id="突然，它投下了一枚炸弹！"><a href="#突然，它投下了一枚炸弹！" class="headerlink" title="突然，它投下了一枚炸弹！"></a>突然，它投下了一枚炸弹！</h1><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045003.jpg" alt=""></p>
+<hr>
+<h3 id="爆炸过后，惊慌失措的游客。"><a href="#爆炸过后，惊慌失措的游客。" class="headerlink" title="爆炸过后，惊慌失措的游客。"></a>爆炸过后，惊慌失措的游客。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045004.jpg" alt=""></p>
+<hr>
+<h3 id="看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！"><a href="#看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！" class="headerlink" title="看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！"></a>看着直升飞机渐渐远去的身影，我暗自感叹，以后再也不逛公园了！</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705045005.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/直升机/">直升机</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-SCAtoolbox应用指南" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -352,500 +965,6 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RockerMQ/">RockerMQ</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-单台windows搭建zookeeper和kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" class="article-date">
-  <time datetime="2017-04-04T10:11:39.000Z" itemprop="datePublished">2017-04-04</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们的目标是在一台机器上部署三个zookeeper的server，并在此基础上部署三个zookeeper的server。</p>
-<h1 id="1-zookeeper的部署"><a href="#1-zookeeper的部署" class="headerlink" title="1.zookeeper的部署"></a>1.zookeeper的部署</h1><p>zookeeper的部署采用伪集群模式，即在一台电脑上部署多个server。</p>
-<h2 id="1-1-建立文件夹，存放项目"><a href="#1-1-建立文件夹，存放项目" class="headerlink" title="1.1.建立文件夹，存放项目"></a>1.1.建立文件夹，存放项目</h2><p>在你喜欢的位置（我的目录为D:\WorkSpace）建立一个名为zookeeper的文件夹，并在该文件夹下建立三个目录，分别名为server1，server2和server3。完成之后如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040011.png" alt=""></p>
-<h2 id="1-2-下载zookeeper"><a href="#1-2-下载zookeeper" class="headerlink" title="1.2.下载zookeeper"></a>1.2.下载zookeeper</h2><p>下载地址：<a href="http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。" target="_blank" rel="external">http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040012.png" alt=""></p>
-<h2 id="1-3-解压文件并创建一些目录"><a href="#1-3-解压文件并创建一些目录" class="headerlink" title="1.3.解压文件并创建一些目录"></a>1.3.解压文件并创建一些目录</h2><p>将下载好的压缩包解压到server1目录下，并在server1目录下建三个文件夹，分别名为data，dataLog和logs。完成之后应该是这样的。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040013.png" alt=""></p>
-<p>注意：压缩包解压的时候直接选【解压到当前文件夹】即可。所以上图中的zookeeper-3.4.10文件夹打开之后应该是这样的：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040014.png" alt=""></p>
-<h2 id="1-4-在server1-data目录下，创建一个叫做myid的文件。"><a href="#1-4-在server1-data目录下，创建一个叫做myid的文件。" class="headerlink" title="1.4.在server1/data目录下，创建一个叫做myid的文件。"></a>1.4.在server1/data目录下，创建一个叫做myid的文件。</h2><p>注意，这个文件不需要任何扩展名，所以显示的形式如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040015.png" alt=""></p>
-<p>如果你看到的myid文件不是这样的，说明你的扩展名没有去除。在windows系统下，文件扩展名默认是被隐藏的。在【查看】选项卡里勾选【文件扩展名】，你就能看到被隐藏的扩展名了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040016.png" alt=""></p>
-<h2 id="1-5-打开myid文件，在里面添加对应的id"><a href="#1-5-打开myid文件，在里面添加对应的id" class="headerlink" title="1.5.打开myid文件，在里面添加对应的id"></a>1.5.打开myid文件，在里面添加对应的id</h2><p>因为我们目前配置的是server1，所以添加id为1，然后关闭即可。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040017.png" alt=""></p>
-<p>这里打开myid文件使用的编辑器是notepad++，如果没有安装的话，可以下载一个安装一下。下载地址：<a href="https://notepad-plus-plus.org/。" target="_blank" rel="external">https://notepad-plus-plus.org/。</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040018.png" alt=""></p>
-<h2 id="1-6-修改配置文件"><a href="#1-6-修改配置文件" class="headerlink" title="1.6.修改配置文件"></a>1.6.修改配置文件</h2><p>在server1/zookeeper-3.4.10/conf目录下，新建zoo.cfg文件，加入内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<p>注意，dataDir和dataLogDir中的D:/WorkSpace目录需要改成你自己的目录。</p>
-<p>这里对zoo.cfg中的内容进行简要地说明：</p>
-<p><strong>tickTime</strong>为客户端与服务器之间或服务器互相之间的心跳间隔，以ms为单位。</p>
-<p><strong>initLimit</strong>为leader与follower进行初始连接时最多能够容忍的心跳数。</p>
-<p><strong>syncLimit</strong>为follower与leader请求和应答之间最多能容忍的心跳数。</p>
-<p><strong>dataDir</strong>为数据文件目录。</p>
-<p><strong>dataLogDir</strong>为日志文件目录。</p>
-<p><strong>clientPort</strong>为客户端连接服务器的端口，zookeeper监听此接口接收客户端访问请求。</p>
-<p><strong>最后三行</strong>为集群中每个服务器的ip和端口号。前一个端口为leader和follower通信端口，后一个端口为选举新leader时所用的端口。一般来说，在多台电脑的情况下，每台服务器上的端口配置是一样的。不过我们现在使用同一台电脑配置三个server，为了避免冲突，只能把它们改成不一样。</p>
-<h2 id="1-7-复制server1中的内容到server2和server3中，并修改相应配置"><a href="#1-7-复制server1中的内容到server2和server3中，并修改相应配置" class="headerlink" title="1.7.复制server1中的内容到server2和server3中，并修改相应配置"></a>1.7.复制server1中的内容到server2和server3中，并修改相应配置</h2><p>将server1中的内容分别复制到server2和server3中，并修改/data/myid文件和/zookeeper-3.4.10/conf/zoo.cfg文件。</p>
-<p>myid文件只需要将其中的内容改成服务器的序号即可。</p>
-<p>zoo.cfg文件需要修改dataDir，dataLogDir和clientPort。修改后的三个文件如下：</p>
-<p>server1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<p>server2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server2/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server2/dataLog</div><div class="line">clientPort=2182</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<p>server3：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server3/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server3/dataLog</div><div class="line">clientPort=2183</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<h2 id="1-8-启动服务器"><a href="#1-8-启动服务器" class="headerlink" title="1.8.启动服务器"></a>1.8.启动服务器</h2><p>分别进入三个server的/zookeeper-3.4.10/bin目录下，运行：zkServer start 。结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040019.png" alt=""></p>
-<p>第一个server启动的时候会报错，这是由于它想要和其他两个server进行通信，而另外两个server还没有搭建起来。不用理会这个错误，继续打开新的cmd窗口，启动其他server就好。注意，原来的窗口不要关！所有server都启动了之后，显示如下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040020.png" alt=""></p>
-<p>如果报Invalid arguments, exiting abnormally 的异常的话，只需要在 zkServer start 命令中去掉start，即输入zkServer即可。</p>
-<h2 id="1-9-连接客户端"><a href="#1-9-连接客户端" class="headerlink" title="1.9.连接客户端"></a>1.9.连接客户端</h2><p>进入任意一个zookeeper-3.4.10目录下，用以下命令启动客户端：zkCli –server 127.0.0.1:2181<br>，显示如下结果：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040021.png" alt=""></p>
-<p>输入help，显示可以执行的指令。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040022.png" alt=""></p>
-<p>做到这一步，zookeeper集群的搭建就完成了。接下来我们要在此基础上搭建kafka的集群。</p>
-<h1 id="2-kafka的部署"><a href="#2-kafka的部署" class="headerlink" title="2.kafka的部署"></a>2.kafka的部署</h1><p>kafka在设计的时候就依赖于zookeeper，对于kafka而言，zookeeper相当于它的文件系统。每个节点的信息都保存在zookeeper对应的路径下。</p>
-<p><strong>（1）Broker注册</strong>：Broker在zookeeper中保存为一个临时节点，节点的路径是/brokers/ids/[brokerid],每个节点会保存对应broker的IP以及端口等信息。</p>
-<p><strong>（2）Topic注册</strong>：在kafka中,一个topic会被分成多个区并被分到多个broker上，分区的信息以及broker的分布情况都保存在zookeeper中，根节点路径为/brokers/topics,每个topic都会在topics下建立独立的子节点，每个topic节点下都会包含分区以及broker的对应信息。</p>
-<p><strong>（3）消费者与分区的对应关系</strong>：对于每个消费者分组，kafka都会为其分配一个全局唯一的Group ID,分组内的所有消费者会共享该ID,kafka还会为每个消费者分配一个consumer ID,通常采用hostname:uuid的形式。在kafka的设计中规定，对于topic的每个分区，最多只能被一个消费者进行消费，也就是消费者与分区的关系是一对多的关系。消费者与分区的关系被存储在zookeeper中节点的路径为 /consumers/[group_id]/owners/[topic]/[broker_id-partition_id],该节点的内容就是消费者的Consumer ID。</p>
-<p><strong>（4）消费者负载均衡</strong>：消费者服务启动时，会创建一个属于消费者节点的临时节点，节点的路径为 /consumers/[group_id]/ids/[consumer_id],该节点的内容是该消费者订阅的Topic信息。每个消费者会对/consumers/[group_id]/ids节点注册Watcher监听器，一旦消费者的数量增加或减少就会触发消费者的负载均衡。消费者还会对/brokers/ids/[brokerid]节点进行监听，如果发现服务器的Broker服务器列表发生变化，也会进行消费者的负载均衡。</p>
-<p><strong>（5）消费者的offset</strong>：在kafka的消费者API分为两种(1)High Level API：由zookeeper维护消费者的offset (2) Low Level API：自己的代码实现对offset的维护。由于自己维护offset往往比较复杂，所以多数情况下都是使用High Level的API offset在zookeeper中的节点路径为/consumers/[group_id]/offsets/[topic]/[broker_id-part_id],该节点的值就是对应的offset。</p>
-<p>看到这里，你就会明白kafka和zookeeper之间的关系了。我们现在就是要在已经配置好的zookeeper集群上配置kafka集群。</p>
-<h2 id="2-1-建立对应目录"><a href="#2-1-建立对应目录" class="headerlink" title="2.1.建立对应目录"></a>2.1.建立对应目录</h2><p>还是找到你喜欢的那个目录（我的是D:\WorkSpace）,建立一个叫做kafka的文件夹，里面建立三个子目录，分别叫做：kafka1，kafka2和kafka3。完成之后应该是这个样子：<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040023.png" alt=""></p>
-<h2 id="2-2-下载kafka并解压到每个文件夹"><a href="#2-2-下载kafka并解压到每个文件夹" class="headerlink" title="2.2.下载kafka并解压到每个文件夹"></a>2.2.下载kafka并解压到每个文件夹</h2><p>kafka下载地址：<br><a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz" target="_blank" rel="external">https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a><br>下载之后是一个压缩包，还是直接解压到kafka1，kafka2和kafka3这三个文件夹就行。解压完后，在 kafka1，kafka2和kafka3目录下分别添加一个kafkaLog目录。最后的结果应该是这个样子的：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040024.png" alt=""></p>
-<h2 id="2-3-修改配置文件："><a href="#2-3-修改配置文件：" class="headerlink" title="2.3.修改配置文件："></a>2.3.修改配置文件：</h2><p>分别打开kafka1，kafka2和kafka3三个目录中的kafka_2.12-0.10.2.1/config路径下的consumer.properties文件，将里面的内容改成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">group.id=logGroup</div></pre></td></tr></table></figure>
-<p>再打开这三个目录下的server.properties文件，按照下面内容进行修改：</p>
-<p>kafka1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=0</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka1/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9092</div><div class="line">port=9092</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
-<p>kafka2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=1</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka2/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9093</div><div class="line">port=9093</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
-<p>kafka3：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=2</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka3/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9094</div><div class="line">port=9094</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
-<h2 id="2-4-启动kafka服务器"><a href="#2-4-启动kafka服务器" class="headerlink" title="2.4.启动kafka服务器"></a>2.4.启动kafka服务器</h2><p>进入D:/WorkSpace/kafka/kafka1/目录下，输入<br>.\bin\windows\kafka-server-start.bat .\config\server.properties  命令，注意不要漏掉命令中的“.”。得到的结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040025.png" alt=""></p>
-<p>同样地，进入另外两个kafka2 和 kafka3目录下，把另外两个kafka服务器也启动起来。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040026.png" alt=""></p>
-<p>如果你最后得到的结果是这样的，那么恭喜你，zookeeper和kafka集群已经搭建完成了。</p>
-<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>（1）在单机上实现ZooKeeper伪机群/伪集群部署 ：</p>
-<p><a href="http://blog.csdn.net/poechant/article/details/6633923" target="_blank" rel="external">http://blog.csdn.net/poechant/article/details/6633923</a></p>
-<p>（2）一台机器上安装zookeeper和kafka集群：</p>
-<p><a href="http://blog.csdn.net/u013244038/article/details/53938997" target="_blank" rel="external">http://blog.csdn.net/u013244038/article/details/53938997</a></p>
-<h2 id="操作系统版本：windows-10"><a href="#操作系统版本：windows-10" class="headerlink" title="操作系统版本：windows 10"></a>操作系统版本：windows 10</h2><h2 id="zookeeper版本：3-4-10"><a href="#zookeeper版本：3-4-10" class="headerlink" title="zookeeper版本：3.4.10"></a>zookeeper版本：3.4.10</h2><h2 id="kafka版本：2-12-0-10-2-1"><a href="#kafka版本：2-12-0-10-2-1" class="headerlink" title="kafka版本：2.12-0.10.2.1"></a>kafka版本：2.12-0.10.2.1</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Eclipse搭建SpringBoot（一）HelloWorld" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/Eclipse搭建SpringBoot（一）HelloWorld/">Eclipse搭建SpringBoot（一）HelloWorld</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/03/28/Eclipse搭建SpringBoot（一）HelloWorld/" class="article-date">
-  <time datetime="2017-03-28T07:44:49.000Z" itemprop="datePublished">2017-03-28</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-在Eclipse中安装STS插件"><a href="#1-在Eclipse中安装STS插件" class="headerlink" title="1.在Eclipse中安装STS插件"></a>1.在Eclipse中安装STS插件</h2><p>进入Eclipse，选择【help】→【Eclipse Marketplace 】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040001.png" alt="1"></p>
-<p>搜索→【STS】,找到【SpringToolSuite】并下载。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040002.png" alt="2"></p>
-<h2 id="2-新建一个项目"><a href="#2-新建一个项目" class="headerlink" title="2.新建一个项目"></a>2.新建一个项目</h2><p>【file】-&gt;【new】-&gt;【project】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040003.png" alt="3"></p>
-<p>选择Spring Starter Project，然后【next】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040004.png" alt="4"></p>
-<p>给你的项目取个名字，我的叫【bootDemo】，点击【next】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040005.png" alt="5"></p>
-<p>添加你所需要的依赖，由于我们现在只是演示，就只添加【core】中的【AOP】和【web】中的【web】。选好之后，点击【next】-&gt;【Finish】。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040006.png" alt="6"></p>
-<p>建好之后，你会得到这样一个工程：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040007.png" alt="7"></p>
-<h2 id="3-运行程序"><a href="#3-运行程序" class="headerlink" title="3.运行程序"></a>3.运行程序</h2><p>点击运行按钮，运行程序。运行方式选 Spring Boot App。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040008.png" alt="8"><br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040009.png" alt="9"></p>
-<p>得到结果如下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040010.png" alt="10"></p>
-<p>这样，一个Spring Boot 项目就搭建起来了。</p>
-<h2 id="4-可能会遇到的问题："><a href="#4-可能会遇到的问题：" class="headerlink" title="4.可能会遇到的问题："></a>4.可能会遇到的问题：</h2><p>建立新项目后下载依赖的时候，可能会出现卡在那里不动的情况。这是因为国内连国外的镜像连不上造成的。可以修改maven中的镜像源，具体操作如下：</p>
-<p>修改maven根目录下的conf文件夹中的setting.xml文件，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
-<p>改好之后，右击项目→【maven】→【update project】即可</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705041001.png" alt="11"></p>
-<p>如果还是不行的话，就去看看 用户名/.m2/目录下是否也存在一个settings.xml文件，这个配置文件的优先级是高于maven安装目录下的配置文件的。所以要把这个也改成阿里云的镜像。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;mirrors&gt;</div><div class="line">    &lt;mirror&gt;</div><div class="line">      &lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">      &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">      &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">      &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">    &lt;/mirror&gt;</div><div class="line">&lt;/mirrors&gt;</div></pre></td></tr></table></figure>
-<h2 id="5-参考链接："><a href="#5-参考链接：" class="headerlink" title="5.参考链接："></a>5.参考链接：</h2><p><a href="http://blog.csdn.net/clementad/article/details/51334064" target="_blank" rel="external">Eclipse中创建新的Spring Boot项目</a><br><a href="http://blog.csdn.net/u010717403/article/details/52188496" target="_blank" rel="external">maven阿里云中央仓库</a><br><a href="http://www.cnblogs.com/yakov/archive/2011/11/26/maven2_settings.html" target="_blank" rel="external">Maven2的配置文件settings.xml</a></p>
-<h2 id="6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip"><a href="#6-Eclipse版本：eclipse-jee-neon-2-win32-x86-64-zip" class="headerlink" title="6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip"></a>6.Eclipse版本：eclipse-jee-neon-2-win32-x86_64.zip</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-kafka学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/24/kafka学习/">kafka学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/03/24/kafka学习/" class="article-date">
-  <time datetime="2017-03-24T10:45:40.000Z" itemprop="datePublished">2017-03-24</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><h3 id="首先，我们先来看一下-kafka-是用来干什么的"><a href="#首先，我们先来看一下-kafka-是用来干什么的" class="headerlink" title="首先，我们先来看一下 kafka 是用来干什么的"></a>首先，我们先来看一下 <strong>kafka</strong> 是用来干什么的</h3><p>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
-<ul>
-<li>搭建一个实时的流数据管道以支持系统间的实时数据通信。</li>
-<li>搭建一个对流数据进行转换或响应的实时流应用。</li>
-</ul>
-<h3 id="为了实现这个目标，kafka-实现了以下三大关键特性"><a href="#为了实现这个目标，kafka-实现了以下三大关键特性" class="headerlink" title="为了实现这个目标，kafka 实现了以下三大关键特性"></a>为了实现这个目标，<strong>kafka</strong> 实现了以下三大关键特性</h3><ul>
-<li>支持记录流（<strong>stream of records</strong>）的发布和订阅（有点儿像<strong>消息队列</strong>）。</li>
-<li>允许你以一种高容错的手段存储记录流。</li>
-<li>允许你实时地处理产生的记录。</li>
-</ul>
-<h3 id="初次之外，你可能还需要了解一些关于-kafka-其他的知识"><a href="#初次之外，你可能还需要了解一些关于-kafka-其他的知识" class="headerlink" title="初次之外，你可能还需要了解一些关于 kafka 其他的知识"></a>初次之外，你可能还需要了解一些关于 <strong>kafka</strong> 其他的知识</h3><ul>
-<li><p>首先，<strong>kafka</strong> 是运行在由一个或多个服务器组成的集群（<strong>cluster</strong>）上</p>
-</li>
-<li><p><strong>kafka</strong> 集群将流（<strong>stream</strong>）按照不同的分类存储，每个分类叫做一个主题（ <strong>topic</strong>）。</p>
-</li>
-<li><p>每一条记录（<strong>record</strong>）都包含一个键（<strong>key</strong>），一个值（<strong>value</strong>）和一个时间戳（<strong>timestamp</strong>）。</p>
-<hr>
-</li>
-</ul>
-<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h3 id="kafka-的四大-API"><a href="#kafka-的四大-API" class="headerlink" title="kafka 的四大 API"></a><strong>kafka</strong> 的四大 API</h3><ul>
-<li><strong>Producer API</strong> ：允许一个应用发布一个数据流到一个或多个 <strong>topic</strong> 上。</li>
-<li><strong>Consumer API</strong> ：允许一个应用订阅一个或多个 <strong>topic</strong> ，并对发送给它的数据进行处理。 </li>
-<li><strong>Streams API</strong> ： 允许一个应用作为流处理器（<strong>stream processor</strong>）工作，即从某个或某些 <strong>topic</strong> 订阅，处理之后再发布到其他 <strong>topic</strong> 上。</li>
-<li><strong>Connector API</strong> ： 用于构建可重用的 <strong>producer</strong> 或 <strong>constmer</strong> 来把<strong>kafka</strong> 的 <strong>topic</strong> 连接到已有的系统上。比如，一个关系型数据库上的 <strong>connector</strong> 可以捕捉该数据库上某张表的内一个变化。</li>
-</ul>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-单台windows搭建redis集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/18/单台windows搭建redis集群/">单台windows搭建redis集群</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/03/18/单台windows搭建redis集群/" class="article-date">
-  <time datetime="2017-03-18T06:02:38.000Z" itemprop="datePublished">2017-03-18</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-下载和安装必要的工具"><a href="#1-下载和安装必要的工具" class="headerlink" title="1.下载和安装必要的工具"></a>1.下载和安装必要的工具</h2><h3 id="1-1-下载安装redis-for-windows"><a href="#1-1-下载安装redis-for-windows" class="headerlink" title="1.1.下载安装redis for windows"></a>1.1.下载安装redis for windows</h3><p>下载地址：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">https://github.com/MSOpenTech/redis/releases</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050001.png" alt=""></p>
-<p>msi文件和zip文件，选一个下就行。msi文件是一个安装程序，有点类似于exe文件，双击就能运行。安装好之后跟用zip解压的结果是一样的。</p>
-<h3 id="1-2-下载安装ruby"><a href="#1-2-下载安装ruby" class="headerlink" title="1.2.下载安装ruby"></a>1.2.下载安装ruby</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050002.png" alt=""></p>
-<p>下载地址：<a href="https://rubyinstaller.org/downloads/" target="_blank" rel="external">https://rubyinstaller.org/downloads/</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050003.png" alt=""></p>
-<p>我下载安装的版本是Ruby2.3.3（x64）。安装的时候，记得把下面三个选项勾选上（如下图所示），这样就不用我们自己去配置环境变量了。</p>
-<h3 id="1-3-下载安装GEM："><a href="#1-3-下载安装GEM：" class="headerlink" title="1.3.下载安装GEM："></a>1.3.下载安装GEM：</h3><p>下载地址：<a href="https://rubygems.org/pages/download" target="_blank" rel="external">https://rubygems.org/pages/download</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050004.png" alt=""></p>
-<p>下载zip文件就行，解压到你喜欢的位置（我解压到了D:/software目录下）。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050005.png" alt=""></p>
-<p>双击setup.rb，安装GEM。完成之后，把该文件夹的bin目录添加到系统变量中的path里面。<br>首先，复制该bin路径。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050006.png" alt=""></p>
-<p>然后右键【此电脑】-&gt;【属性】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050007.png" alt=""></p>
-<p>【高级系统设置】-&gt;【环境变量】-&gt;【系统变量】-&gt;【Path】-&gt;【编辑】</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050008.png" alt=""></p>
-<p>单击【新建】，把bin路径粘贴到方框中，然后点击【确定】即可。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050009.png" alt=""></p>
-<h3 id="1-4-生成redis-trib-rb文件"><a href="#1-4-生成redis-trib-rb文件" class="headerlink" title="1.4.生成redis-trib.rb文件"></a>1.4.生成redis-trib.rb文件</h3><p>新建一个文本文件，把它的名字改成redis-trib.rb。注意在改名之前先把隐藏的扩展名显示出来，否则会生成redis-trib.rb.txt文件。建好之后，访问：</p>
-<p><a href="https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb" target="_blank" rel="external">https://raw.githubusercontent.com/antirez/redis/unstable/src/redis-trib.rb</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050010.png" alt=""></p>
-<p>复制页面中的内容，粘贴到新建的redis-trib.rb文件中，保存。然后将此文件复制到redis的安装目录下（我的是D:\Software\Redis）。然后将这个目录也添加到系统变量的path中。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png" alt=""></p>
-<p>OK，这样准备工作就完成了。接下来我们要配置redis集群。</p>
-<h2 id="2-配置redis集群"><a href="#2-配置redis集群" class="headerlink" title="2.配置redis集群"></a>2.配置redis集群</h2><h3 id="2-1-创建相应目录："><a href="#2-1-创建相应目录：" class="headerlink" title="2.1.创建相应目录："></a>2.1.创建相应目录：</h3><p>在你喜欢的地方（我的是D:\WorkSpace）建立一个叫做redis的目录（注意，这个不是刚才安装redis的目录，而是一个你新建的目录，后文中如果没有特殊说明，redis目录都指这个新建的目录），里面创建6个子目录，分别叫7000,7001,7002,7003,7004,7005。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050011.png" alt=""></p>
-<p>打开7000文件夹，建立一个redis.conf文件，将下面内容粘贴进去。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">port 7000</div><div class="line">cluster-enabled yes</div><div class="line">cluster-config-file nodes-7000.conf</div><div class="line">cluster-node-timeout 5000</div><div class="line">appendonly yes</div></pre></td></tr></table></figure>
-<p>同理，在其他5个文件夹也各自创建一个redis.conf文件，将上面内容粘贴进去。不过要将prot和cluster-config-file中的7000改成对应的数字。如在7001文件夹中就改成7001。</p>
-<h3 id="2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。"><a href="#2-2-Win-R输入cmd，回车，打开命令行。输入：gem-install-redis。" class="headerlink" title="2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。"></a>2.2.Win+R输入cmd，回车，打开命令行。输入：gem install redis。</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050012.png" alt=""></p>
-<p>你显示的结果可能跟我稍微有些不一样，没关系，这是因为我刚才已经安装过了。</p>
-<p>由于 GFW的问题， GEM 的源有时会不可用，如果你遇到了这个问题，可以使用淘宝的映像：<br>添加：gem sources -a <a href="https://ruby.taobao.org" target="_blank" rel="external">https://ruby.taobao.org</a><br>查看已存在的源：gem sources -l<br>删除被墙的源：gem sources -r <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a></p>
-<h3 id="2-3-在D-WorkSpace-redis目录下创建redis-bat文件"><a href="#2-3-在D-WorkSpace-redis目录下创建redis-bat文件" class="headerlink" title="2.3.在D:\WorkSpace\redis目录下创建redis.bat文件"></a>2.3.在D:\WorkSpace\redis目录下创建redis.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">cd D:\WorkSpace\Redis</div><div class="line">start Redis-Server ./7000/redis.conf</div><div class="line">start Redis-Server ./7001/redis.conf</div><div class="line">start Redis-Server ./7002/redis.conf</div><div class="line">start Redis-Server ./7003/redis.conf</div><div class="line">start Redis-Server ./7004/redis.conf</div><div class="line">start Redis-Server ./7005/redis.conf</div></pre></td></tr></table></figure></p>
-<p>双击redis.bat，弹出6个窗口，同时redis目录下会出现nodes-7000.conf 至 nodes-7005.conf 这几个文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050013.png" alt=""></p>
-<h3 id="2-4-在D-WorkSpace-redis目录下新建cluster-bat文件"><a href="#2-4-在D-WorkSpace-redis目录下新建cluster-bat文件" class="headerlink" title="2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件"></a>2.4.在D:\WorkSpace\redis目录下新建cluster.bat文件</h3><p>文件内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd D:\WorkSpace\redis</div><div class="line">redis-trib.rb create --replicas 1 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005</div></pre></td></tr></table></figure></p>
-<p>双击cluster.bat，在询问是否要接受配置时输入“yes”。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240001.png" alt=""></p>
-<p>得到结果如下所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705240002.png" alt=""></p>
-<h3 id="2-5-测试一下"><a href="#2-5-测试一下" class="headerlink" title="2.5.测试一下"></a>2.5.测试一下</h3><p>打开cmd，输入：redis-cli.exe -c -p 7000<br>再打开一个cmd，输入redis-cli.exe -c -p 7001<br>它们连接了不同的实例，我们现在要测试以下它们的数据是否是同步的。<br>我们在7000的cmd窗口中输入： set test helloworld<br>在7001的cmd窗口中输入：get test<br>可以看到redis输出：”helloworld”<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705050015.png" alt=""></p>
-<p>好，到这儿redis的集群就部署完成了。</p>
-<h2 id="3-参考链接："><a href="#3-参考链接：" class="headerlink" title="3.参考链接："></a>3.参考链接：</h2><p>Windows 部署 Redis 群集:<br><a href="http://www.cnblogs.com/xling/p/5253063.html" target="_blank" rel="external">http://www.cnblogs.com/xling/p/5253063.html</a><br>Redis安装：<br><a href="http://www.runoob.com/redis/redis-install.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-install.html</a></p>
-<h2 id="4-操作系统：Windows-10"><a href="#4-操作系统：Windows-10" class="headerlink" title="4.操作系统：Windows 10"></a>4.操作系统：Windows 10</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（六）大型网站架构" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/18/后台开发知识点总结（六）大型网站架构/">后台开发知识点总结（六）大型网站架构</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/02/18/后台开发知识点总结（六）大型网站架构/" class="article-date">
-  <time datetime="2017-02-18T12:53:57.000Z" itemprop="datePublished">2017-02-18</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="什么叫正向代理？什么叫反向代理？"><a href="#什么叫正向代理？什么叫反向代理？" class="headerlink" title="什么叫正向代理？什么叫反向代理？"></a>什么叫正向代理？什么叫反向代理？</h3><p>正向代理是一种客户端主动使用的代理方式。它需要用户在客户端设置，对服务器透明。反向代理是一种服务器端使用的代理方式，它不需要用户在客户端进行设置，对客户端透明。譬如翻墙软件就是一种正向代理，而nginx是典型的反向代理，可以为服务器提供缓冲。</p>
-<h3 id="反向代理服务器与负载均衡服务器的区别？"><a href="#反向代理服务器与负载均衡服务器的区别？" class="headerlink" title="反向代理服务器与负载均衡服务器的区别？"></a>反向代理服务器与负载均衡服务器的区别？</h3><p>反向代理服务器将静态资源存储到服务器上，以便用户能够更快地获得资源。负载均衡服务器之转发用户请求，不存储资源。</p>
-<h3 id="Redis的可排序集与集合的区别是什么？是怎么实现的？"><a href="#Redis的可排序集与集合的区别是什么？是怎么实现的？" class="headerlink" title="Redis的可排序集与集合的区别是什么？是怎么实现的？"></a>Redis的可排序集与集合的区别是什么？是怎么实现的？</h3><p>可排序集在排序上拥有更高的效率（集合排序的时间复杂度为O），可排序集是借助跳表实现的。</p>
-<h3 id="什么是跳表？"><a href="#什么是跳表？" class="headerlink" title="什么是跳表？"></a>什么是跳表？</h3><p>跳表是一种可以用来替代树的数据结构，它的效率和AVL树不相上下。跳表由很多层构成，每一层都是一个有序链表。最下层包含了链表的所有元素，在上层出现的元素，下层还会出现。跳表使用上层来作为下层的索引，每个节点包含两个指针，一个指向后一个节点，一个指向下面的节点。跳表的空间复杂度期望为2n，其查找、插入和删除的时间复杂度均为O(log(n))。</p>
-<h3 id="跳表如何进行插入和删除？"><a href="#跳表如何进行插入和删除？" class="headerlink" title="跳表如何进行插入和删除？"></a>跳表如何进行插入和删除？</h3><p>跳表的插入比较复杂，首先要确定插入的元素所在的层数（用丢硬币的方法，丢到正面继续丢，丢到反面则停止。抛硬币的次数就是层数），如果层数超过当前层数，则在最上面添加新的层。跳表的删除比较简单，直接按照链表的方式删除即可。</p>
-<h3 id="介绍一下你所知道的缓存算法？"><a href="#介绍一下你所知道的缓存算法？" class="headerlink" title="介绍一下你所知道的缓存算法？"></a>介绍一下你所知道的缓存算法？</h3><p>1.LRU 和 LFU：<br>LRU（按照上次使用时间排序）、LFU（按照使用频率排序）、LRU2（按照倒数第二次使用时间排序）。<br>2.LRU 升级版：<br>2Q（Double Queues，两个LRU队列，比例1:3，当对象被第二次访问，移入第二级队列），ARC（adaptive Replacement cache，LFU 的2Q版，两个队列，一个是最近被访问一次，另一个是最近被访问两次）。<br>3.基于 FIFO：<br>FIFO（先进先出）、Second Chance（带标记位的FIFO）、Clock（环形队列的Second Chance）。<br>4.基于时间：<br>绝对时间周期（相同寿命）、相对时间周期（相同时刻）、从上次访问开始算起的时间周期<br>5.移除最常用：<br>MRU（移除最近最多访问元素，因为找出最近最少被访问的时间复杂度高）。</p>
-<h3 id="Redis的优势在于哪？"><a href="#Redis的优势在于哪？" class="headerlink" title="Redis的优势在于哪？"></a>Redis的优势在于哪？</h3><p>首先，Redis支持多种数据类型（字符串、列表、哈希、集合、有序集合）以及它们的原子性操作。另外，Redis支持数据的持久化和 Master-Slave 模式的数据备份。</p>
-<h3 id="负载均衡服务器的三大特性？"><a href="#负载均衡服务器的三大特性？" class="headerlink" title="负载均衡服务器的三大特性？"></a>负载均衡服务器的三大特性？</h3><p>负载均衡算法（轮询、最小连接数、最快响应时间、比率、优先权、哈希、基于策略（自定义）、基于数据包）、健康检查（Ping、TCP、UDP、HTTP、FTP、DNS等，七层网络中的三到七层）和会话保持（同一用户访问到相同服务器）。</p>
-<h3 id="线程的状态有几种？"><a href="#线程的状态有几种？" class="headerlink" title="线程的状态有几种？"></a>线程的状态有几种？</h3><p>新建、就绪、运行、阻塞、死亡。</p>
-<h3 id="终止线程有几种方式？"><a href="#终止线程有几种方式？" class="headerlink" title="终止线程有几种方式？"></a>终止线程有几种方式？</h3><p>通过标志位控制退出（while(volatileexit)）、通过stop的方法来终止线程（thread.stop()）、通过中断的方法终止进程（thread.interuped()）。</p>
-<h3 id="什么叫缓存穿透？怎么预防？"><a href="#什么叫缓存穿透？怎么预防？" class="headerlink" title="什么叫缓存穿透？怎么预防？"></a>什么叫缓存穿透？怎么预防？</h3><p>缓存穿透指的是访问一个不存在的数据，由于这样缓存不可能命中，缓存就会去数据库中直接读这个数据，给数据库造成压力。预防的方式是使用一个布隆过滤器，即把数据库中所有可能的值 hash 到一个足够大的 bItmap 上去，请求到达时先用过滤器检测是否由该数据，如果有再去缓存中读取。<br>不同缓存系统中的缓存算法分别是怎样的？<br>Redis2.6/ Encache/ Hazelcast：随机找3条/ 8条/ 25条，删去其中空闲时间最长的数据。<br>Redis3.0：随机找五条，插入一个长度为16按空闲排序的队列里，每次删去最老的元素。<br>MemCached/ Guava Cache：纯粹的LRU，维持一个双向链表，插入到链表头，删除时把前后两个元素连接起来。</p>
-<h3 id="不同缓存系统对于过期键是怎么删除的？"><a href="#不同缓存系统对于过期键是怎么删除的？" class="headerlink" title="不同缓存系统对于过期键是怎么删除的？"></a>不同缓存系统对于过期键是怎么删除的？</h3><p>所有缓存系统对于过期键都采用惰性删除的方式，也就是说，并不是数据一过期就删除（因为执行检查的线程耗费cpu），而是只有元素被访问时，才会检查它是否超时了。为了防止不被访问的数据永远不被清理，不同缓存系统提供了不同的策略去清理这样的数据：<br>Redis：每100ms抽取20条进行检查。如果有超过1/4过期，那么立即进行下一轮检查。<br>MemCached：有一个检查线程从双链表队尾往前检查，每隔一段时间（默认100ms）执行一次。<br>Guava Cache：由于在这个系统中，同一个Cache里所有数据同时过期，因此只需要从队尾向前检查直到不过期为止。每次写入数据都会调用此方法。<br>Ehcache：只有惰性检查，没有主动过期。</p>
-<h3 id="设计缓存算法需要考虑的因素有哪些？"><a href="#设计缓存算法需要考虑的因素有哪些？" class="headerlink" title="设计缓存算法需要考虑的因素有哪些？"></a>设计缓存算法需要考虑的因素有哪些？</h3><p>成本：如果对象获取成本不同，难以获取的元素需要尽可能的保存。<br>容量：先清除大对象，这样就可以把更多的小对象换进内存。<br>时间：如果系统缓存着过期时间，那么对过期的数据进行清理。</p>
-<h3 id="Redis-和-Memcached-分别是怎么实现的？"><a href="#Redis-和-Memcached-分别是怎么实现的？" class="headerlink" title="Redis 和 Memcached 分别是怎么实现的？"></a>Redis 和 Memcached 分别是怎么实现的？</h3><p><a href="http://blog.csdn.net/u014743697/article/details/53442512" target="_blank" rel="external">http://blog.csdn.net/u014743697/article/details/53442512</a></p>
-<h3 id="Select、poll-和-epoll-的区别？"><a href="#Select、poll-和-epoll-的区别？" class="headerlink" title="Select、poll 和 epoll 的区别？"></a>Select、poll 和 epoll 的区别？</h3><p><a href="http://www.cnblogs.com/Anker/p/3265058.html" target="_blank" rel="external">http://www.cnblogs.com/Anker/p/3265058.html</a></p>
-<h3 id="数据库分区与分库分表（Sharding）的区别是什么？"><a href="#数据库分区与分库分表（Sharding）的区别是什么？" class="headerlink" title="数据库分区与分库分表（Sharding）的区别是什么？"></a>数据库分区与分库分表（Sharding）的区别是什么？</h3><p><a href="http://blog.csdn.net/heirenheiren/article/details/7896546" target="_blank" rel="external">http://blog.csdn.net/heirenheiren/article/details/7896546</a></p>
-<h3 id="数据库分库分表（Sharding）的步骤是什么？"><a href="#数据库分库分表（Sharding）的步骤是什么？" class="headerlink" title="数据库分库分表（Sharding）的步骤是什么？"></a>数据库分库分表（Sharding）的步骤是什么？</h3><p><a href="http://blog.csdn.net/bluishglc/article/details/6161475" target="_blank" rel="external">http://blog.csdn.net/bluishglc/article/details/6161475</a></p>
-<h3 id="多级缓存是怎么实现的？"><a href="#多级缓存是怎么实现的？" class="headerlink" title="多级缓存是怎么实现的？"></a>多级缓存是怎么实现的？</h3><p><a href="http://blog.csdn.net/huashen1621y/article/details/51594148" target="_blank" rel="external">http://blog.csdn.net/huashen1621y/article/details/51594148</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大型网站架构/">大型网站架构</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（五）设计模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/18/后台开发知识点总结（五）设计模式/">后台开发知识点总结（五）设计模式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/01/18/后台开发知识点总结（五）设计模式/" class="article-date">
-  <time datetime="2017-01-18T04:51:47.000Z" itemprop="datePublished">2017-01-18</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="什么是代理模式？"><a href="#什么是代理模式？" class="headerlink" title="什么是代理模式？"></a>什么是代理模式？</h3><p>代理模式是java中常用的设计模式，它的特点是代理类与委托类实现同样的接口。代理类并不真正地实现服务，而是通过调用委托类对象的方法，提供特定的分服务。</p>
-<h3 id="什么是动态代理？它的优点是什么？"><a href="#什么是动态代理？它的优点是什么？" class="headerlink" title="什么是动态代理？它的优点是什么？"></a>什么是动态代理？它的优点是什么？</h3><p>按照代理的创建时期，代理可分为两种。程序运行前就已经创建好的叫做静态代理，程序运行时利用反射机制动态生成的叫做动态代理。动态代理的优点是只需要一个代理类就能实现全部的代理功能。</p>
-<h3 id="如何实现一个动态代理？"><a href="#如何实现一个动态代理？" class="headerlink" title="如何实现一个动态代理？"></a>如何实现一个动态代理？</h3><p>实现一个动态代理有两种方法，一种是使用 JDK 实现动态代理，另一种是使用 Cglib 实现动态代理。<br>前者的代理类需要实现 InvocationHandler 接口（该接口要实现一个 Invoke() 方法），并用在Bind 方法中调用 Proxy 的 NewProxyInstance 方法创建代理实例。在创建代理实例的过程中，需要绑定委托类实现的（提供相关服务的）接口。如果委托类没有实现接口，那么这种方法不能使用。<br>后者是生成一个代理类的子类，需要实现 MethodInterceptor 接口（该接口要实现一个 intercept() 方法），并在 getNewInstance() 中创建一个实例，然后把其父类设定为委托类，并返回该实例。由于这种方法是基于继承的，因为 final 类不能使用。<br>参考链接：<a href="http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html" target="_blank" rel="external">http://www.cnblogs.com/jqyp/archive/2010/08/20/1805041.html</a></p>
-<h3 id="如何利用动态代理实现-Spring-AOP？"><a href="#如何利用动态代理实现-Spring-AOP？" class="headerlink" title="如何利用动态代理实现 Spring AOP？"></a>如何利用动态代理实现 Spring AOP？</h3><p><a href="http://blog.csdn.net/moreevan/article/details/11977115/" target="_blank" rel="external">http://blog.csdn.net/moreevan/article/details/11977115/</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
 
       </footer>
     

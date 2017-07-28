@@ -45,6 +45,173 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Vim基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    <div class="article-meta">
+      <a href="/2017/07/28/Vim基本操作/" class="article-date">
+  <time datetime="2017-07-28T12:19:14.521Z" itemprop="datePublished">2017-07-28</time>
+</a>
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1.打开文件"></a>1.打开文件</h2><p>安装 vim，进入相应文件夹，输入</p>
+<p>$ vim filename</p>
+<p><img src="E:/images/201707270006.png" alt=""></p>
+<p>即可打开相应的文件，我们这里打开一个名为 <strong>vimtest.txt</strong> 的文件。</p>
+<p><img src="E:/images/201707270007.png" alt=""></p>
+<p><strong>K、J、H、K</strong> 分别对应着上下左右，当然，小键盘左边的方向键也是可以实现光标移动的。</p>
+<h2 id="2-插入字符"><a href="#2-插入字符" class="headerlink" title="2.插入字符"></a>2.插入字符</h2><p>现在我们想要在文件的末尾插入一行字符：<strong>helloworld !</strong> </p>
+<p>把光标移动到文件末尾，然后按下字母键 <strong>i</strong> 。我们可以看到光标从覆盖整个字符变成了一个白色的下划线。</p>
+<p>然后在文件的末尾输入我们想要输入的字符：<strong>helloworld！</strong></p>
+<p><img src="E:/images/201707270008.png" alt=""></p>
+<p>现在我们已经输入进去一行字符，那么，怎么保存退出呢？</p>
+<p>首先按下【ESC】进入命令模式，然后输入一个命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707270009.png" alt=""></p>
+<p>然后我们就成功地保存退出了。</p>
+<p><img src="E:/images/201707270010.png" alt=""></p>
+<p>再次打开这个文件，发现我们刚才保存的内容仍然是存在的。</p>
+<p><img src="E:/images/201707270011.png" alt=""></p>
+<p>学会了插入，删除也是同理，至少现在我们已经能够将 vim 当做记事本用了。但是，如果我们仅仅掌握这点功能的话，还不如使用 notepad++ 来得方便，所以接下来我们介绍一些高级点的技能。</p>
+<h2 id="3-字符搜索"><a href="#3-字符搜索" class="headerlink" title="3.字符搜索"></a>3.字符搜索</h2><p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/hello</div></pre></td></tr></table></figure>
+<p>即可完成在全文中对字符串 hello 的搜索。</p>
+<p><img src="E:/images/201707270012.png" alt=""></p>
+<p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">n</div></pre></td></tr></table></figure>
+<p>即可跳转到下一处。当然你也可以按 <strong>i</strong> 进入插入模式来修改字符，不过如果你想替换全文中所有的 <strong>hello</strong> 的话，那么 :s 也许是一个不错的选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:s/hello/hi/g</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707270013.png" alt=""></p>
+<p>如图所示，我们已经把文中所有的 <strong>hello</strong> 替换成了 <strong>hi</strong> 。这貌似也没什么大不了，毕竟我用 <strong>notepad++</strong> 也可以实现同样的工作。那么下面的问题可就是 <strong>notepad++</strong> 实现不了的了。</p>
+<p>我们现在要把前三行所有的 <strong>i</strong> 替换成 <strong>w</strong>。</p>
+<p>注意，我们只替换前三行。嗯，这个问题对于 notepad++ 来说可能有点变态，不过对于 vim ……</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:1,3s/i/w/g</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707270014.png" alt=""></p>
+<p>只有前三行的 <strong>i</strong> 被替换成了 <strong>w</strong>。命令结尾的 <strong>g</strong> 表示会对所有符合情况的 i 进行操作，否则只替换第一个。</p>
+<h2 id="4-分屏操作"><a href="#4-分屏操作" class="headerlink" title="4.分屏操作"></a>4.分屏操作</h2><p>说到 vim，就一定不能够错过它的分屏功能。输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:sp</div></pre></td></tr></table></figure>
+<p>就能得到上下两个屏幕，这对于只能显示黑框框的 shell 来说确实是很必要的功能。</p>
+<p><img src="E:/images/201707270015.png" alt=""></p>
+<p>当然，如果两个屏幕只能看一个文件，那还不如一个屏幕，选择一个屏幕（如果没有鼠标的话可以用）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + w + j  //(j 的意思是“下”)</div></pre></td></tr></table></figure>
+<p>来实现切换，然后输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:open car.txt</div></pre></td></tr></table></figure>
+<p>来实现文档的切换。</p>
+<p><img src="E:/images/201707270016.png" alt=""></p>
+<p><strong>vim</strong> 还有一个类似的功能叫做 <strong>newtab</strong>，可以像浏览器一样显示标签，具体我就不在赘述了，有兴趣的话可以查阅后面的表格。</p>
+<h2 id="5-常用功能一览"><a href="#5-常用功能一览" class="headerlink" title="5.常用功能一览"></a>5.常用功能一览</h2><h3 id="5-1-跳转"><a href="#5-1-跳转" class="headerlink" title="5.1.跳转"></a>5.1.跳转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">*          当光标停留在一个单词上，* 键会在文件内搜索该单词，并跳转到下一处；</div><div class="line">#          当光标停留在一个单词上，# 在文件内搜索该单词，并跳转到上一处；</div><div class="line">(/)        移动到 前/后 句 的开始；</div><div class="line">&#123;/&#125;        跳转到 当前/下一个 段落 的开始。</div><div class="line">g_         到本行最后一个不是 blank 字符的位置。</div><div class="line">fa         到下一个为 a 的字符处，你也可以fs到下一个为s的字符。</div><div class="line">t,         到逗号前的第一个字符。逗号可以变成其它字符。</div><div class="line">3fa        在当前行查找第三个出现的 a。</div><div class="line">F/T        和 f 和 t 一样，只不过是相反方向;</div><div class="line">gg         将光标定位到文件第一行起始位置；</div><div class="line">G          将光标定位到文件最后一行起始位置；</div><div class="line">NG或Ngg    将光标定位到第 N 行的起始位置。</div></pre></td></tr></table></figure>
+<h3 id="5-2-搜索"><a href="#5-2-搜索" class="headerlink" title="5.2.搜索"></a>5.2.搜索</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/str1                正向搜索字符串 str1；</div><div class="line">n                    继续搜索，找出 str1 字符串下次出现的位置；</div><div class="line">N                    继续搜索，找出 str1 字符串上一次出现的位置；</div><div class="line">?str2                反向搜索字符串 str2 。</div></pre></td></tr></table></figure>
+<h3 id="5-3-删除"><a href="#5-3-删除" class="headerlink" title="5.3.删除"></a>5.3.删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">rc                 用 c 替换光标所指向的当前字符；</div><div class="line">nrc                用 c 替换光标所指向的前 n 个字符；</div><div class="line">5rA                用 A 替换光标所指向的前 5 个字符；</div><div class="line">x                  删除光标所指向的当前字符；</div><div class="line">nx                 删除光标所指向的前 n 个字符；</div><div class="line">3x                 删除光标所指向的前 3 个字符；</div><div class="line">dw                 删除光标右侧的字；</div><div class="line">ndw                删除光标右侧的 n 个字；</div><div class="line">3dw                删除光标右侧的 3 个字；</div><div class="line">db                 删除光标左侧的字；</div><div class="line">ndb                删除光标左侧的 n 个字；</div><div class="line">5db                删除光标左侧的 5 个字；</div><div class="line">dd                 删除光标所在行，并去除空隙；</div><div class="line">ndd                删除（剪切） n 行内容，并去除空隙；</div><div class="line">3dd                删除（剪切） 3 行内容，并去除空隙；</div></pre></td></tr></table></figure>
+<h3 id="5-4-替换"><a href="#5-4-替换" class="headerlink" title="5.4.替换"></a>5.4.替换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">s                用输入的正文替换光标所指向的字符；</div><div class="line">S                删除当前行，并进入编辑模式；</div><div class="line">ns               用输入的正文替换光标右侧 n 个字符；</div><div class="line">nS               删除当前行在内的 n 行，并进入编辑模式；</div><div class="line">cw               用输入的正文替换光标右侧的字；</div><div class="line">cW               用输入的正文替换从光标到行尾的所有字符（同 c$ )；</div><div class="line">ncw              用输入的正文替换光标右侧的 n 个字；</div><div class="line">cb               用输入的正文替换光标左侧的字；</div><div class="line">ncb              用输入的正文替换光标左侧的 n 个字；</div><div class="line">cd               用输入的正文替换光标的所在行；</div><div class="line">ncd              用输入的正文替换光标下面的 n 行；</div><div class="line">c$               用输入的正文替换从光标开始到本行末尾的所有字符；</div><div class="line">c0               用输入的正文替换从本行开头到光标的所有字符。</div></pre></td></tr></table></figure>
+<h3 id="5-5-复制粘贴"><a href="#5-5-复制粘贴" class="headerlink" title="5.5.复制粘贴"></a>5.5.复制粘贴</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">yy              复制当前行到内存缓冲区；</div><div class="line">nyy             复制 n 行内容到内存缓冲区；</div><div class="line">5yy             复制 5 行内容到内存缓冲区；</div><div class="line">“+y             复制 1 行到操作系统的粘贴板；</div><div class="line">“+nyy           复制 n 行到操作系统的粘贴板。</div><div class="line">p               小写字母 p，将缓冲区的内容粘贴到光标的后面；</div><div class="line">P               大写字母 P，将缓冲区的内容粘贴到光标的前面。</div></pre></td></tr></table></figure>
+<h3 id="5-6-正则表达式"><a href="#5-6-正则表达式" class="headerlink" title="5.6.正则表达式"></a>5.6.正则表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">^                放在字符串前面，匹配行首的字；</div><div class="line">$                放在字符串后面，匹配行尾的字；</div><div class="line">\&lt;               匹配一个字的字头；</div><div class="line">\&gt;               匹配一个字的字尾；</div><div class="line">.                匹配任何单个正文字符；</div><div class="line">[str]            匹配 str 中的任何单个字符；</div><div class="line">[^str]           匹配任何不在 str 中的单个字符；</div><div class="line">[a-b]            匹配 a 到 b 之间的任一字符；</div><div class="line">*                匹配前一个字符的 0 次或多次出现；</div><div class="line">\                转义后面的字符。</div></pre></td></tr></table></figure>
+<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p><a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="external">vim 入门基础</a></p>
+<p><a href="http://vimdoc.sourceforge.net/" target="_blank" rel="external">vim 官方文档</a></p>
+
+      
+    </div>
+    
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-java基础之垃圾回收器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/java基础之垃圾回收器/">Java基础之垃圾回收器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/07/25/java基础之垃圾回收器/" class="article-date">
+  <time datetime="2017-07-25T10:38:00.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-Serial-收集器"><a href="#1-Serial-收集器" class="headerlink" title="1. Serial 收集器"></a>1. Serial 收集器</h2><p><strong>Serial</strong> 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 <strong>“Stop the World”</strong>。也就是说，在它工作的同时，其他线程必须暂停运行。</p>
+<p><img src="E:/images/201707260001.png" alt=""></p>
+<h2 id="2-Serial-Old-收集器"><a href="#2-Serial-Old-收集器" class="headerlink" title="2. Serial Old 收集器"></a>2. Serial Old 收集器</h2><p><strong>Serial</strong> 收集器的老年代版本。一种用途是在 <strong>JDK 1.5</strong> 以及之前的版本中与<strong>Parallel Scavenge</strong> 收集器搭配使用，另一种用途就是作为<strong>CMS</strong> 收集器的后备预案，在并发收集发生<strong>Concurrent Mode Failure</strong> 时使用。 </p>
+<h2 id="3-ParNew-收集器"><a href="#3-ParNew-收集器" class="headerlink" title="3. ParNew 收集器"></a>3. ParNew 收集器</h2><p><strong>ParNew</strong> 收集器是 <strong>Serial</strong> 收集器的多线程版本。因为功能强大的老年代收集器 <strong>CMS</strong> 收集器无法与 <strong>Parallel Scavenge</strong> 收集器配合工作，因此 <strong>CMS</strong> 收集器常与 <strong>ParNew</strong> 收集器配合使用。</p>
+<p><img src="E:/images/201707260002.png" alt=""></p>
+<h2 id="4-Parallel-Scavenge-收集器"><a href="#4-Parallel-Scavenge-收集器" class="headerlink" title="4. Parallel Scavenge 收集器"></a>4. Parallel Scavenge 收集器</h2><p><strong>Parallel Scavenge</strong> 收集器的特点是它的关注点与其他收集器不同，<strong>CMS</strong> 等收集器的关注点<br>是尽可能地缩短垃圾收集时用户线程的停顿时间，而<strong>Parallel Scavenge</strong> 收集器的目标则是达到<br>一个可控制的吞吐量。 </p>
+<h2 id="5-Parallel-Old-收集器"><a href="#5-Parallel-Old-收集器" class="headerlink" title="5. Parallel Old 收集器"></a>5. Parallel Old 收集器</h2><p><strong>Parallel Old</strong> 是 <strong>Parallel Scavenge</strong> 收集器的老年代版本，使用多线程和“标记-整理”算法。<br>这个收集器是在 JDK 1.6 中才开始提供的，在此之前，新生代的 <strong>Parallel Scavenge</strong> 收集器一直<br>处于比较尴尬的状态。 原因是，如果新生代选择了<strong>Parallel Scavenge</strong> 收集器，老年代除了<br><strong>Serial Old</strong> 收集器外别无选择。</p>
+<p><img src="E:/images/201707260003.png" alt=""></p>
+<h2 id="6-CMS-收集器"><a href="#6-CMS-收集器" class="headerlink" title="6. CMS 收集器"></a>6. CMS 收集器</h2><p><strong>CMS（Concurrent Mark Sweep）</strong>收集器是一种以获取最短回收停顿时间为目标的收集器。   </p>
+<p>其工作步骤分为以下四步：</p>
+<ul>
+<li>初始标记（CMS initial mark）</li>
+<li>并发标记（CMS concurrent mark）</li>
+<li>重新标记（CMS remark）</li>
+<li>并发清除（CMS concurrent sweep） </li>
+</ul>
+<p>其中，初始标记、 重新标记这两个步骤仍然需要“Stop The World”。 初始标记仅仅只是标记一下<strong>GC Roots</strong> 能直接关联到的对象，速度很快，并发标记阶段就是进行 <strong>GC RootsTracing</strong> 的过程，而重新标记阶段则是为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
+<p>由于整个过程中耗时最长的并发标记和并发清除过程收集器线程都可以与用户线程一起工作，所以，从总体上来说，CMS收集器的内存回收过程是与用户线程一起并发执行的。</p>
+<p><img src="E:/images/201707260004.png" alt=""></p>
+<h2 id="7-G1收集器"><a href="#7-G1收集器" class="headerlink" title="7. G1收集器"></a>7. G1收集器</h2><p><strong>G1</strong> 是一款面向服务端应用的垃圾收集器。 <strong>HotSpot</strong> 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 <strong>JDK 1.5</strong> 中发布的 <strong>CMS</strong> 收集器。 与 <strong>CMS</strong> 收集器相比，<strong>G1</strong>具备如下特点。 </p>
+<ul>
+<li>空间整合：与 <strong>CMS</strong> 的“标记—清理”算法不同，<strong>G1</strong> 从整体来看是基于“标记—整理”算法实现的收集器，从局部（两个<strong>Region</strong>之间）上来看是基于“复制”算法实现的，但无论如何，这两种算法都意味着 <strong>G1</strong> 运作期间不会产生内存空间碎片，收集后能提供规整的可用内存。 这种特性有利于程序长时间运行，分配大对象时不会因为无法找到连续内存空间而提前触发下一次 <strong>GC</strong>。</li>
+<li>可预测的停顿：这是 <strong>G1</strong> 相对于 <strong>CMS</strong> 的另一大优势，降低停顿时间是 <strong>G1</strong> 和 <strong>CMS</strong> 共同的关注点，但 <strong>G1</strong> 除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时 <strong>Java（RTSJ）</strong>的垃圾收集器的特征了。</li>
+</ul>
+<p>值得一提的是，在 <strong>G1</strong> 之前的其他收集器进行收集的范围都是整个新生代或者老年代，而 <strong>G1</strong> 不再是这样。 使用 <strong>G1</strong> 收集器时，<strong>Java</strong> 堆的内存布局就与其他收集器有很大差别，它将整个 <strong>Java</strong> 堆划分为多个大小相等的独立区域（<strong>Region</strong>），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分 <strong>Region</strong>（不需要连续）的集合。 </p>
+<p>如果不计算维护Remembered Set的操作，G1收集器的运作大致可划分为以下几个步骤：</p>
+<ul>
+<li>初始标记（Initial Marking）</li>
+<li>并发标记（Concurrent Marking）</li>
+<li>最终标记（Final Marking）</li>
+<li>筛选回收（Live Data Counting and Evacuation） </li>
+</ul>
+<p>前三个阶段与 <strong>CMS</strong> 收集器相似，最后在筛选回收阶段首先对各个<strong>Region</strong> 的回收价值和成本进行排序，<br>根据用户所期望的 <strong>GC</strong> 停顿时间来制定回收计划。</p>
+<p><img src="E:/images/201707260005.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/垃圾回收/">垃圾回收</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-TCP的三次握手与四次挥手" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -143,6 +310,102 @@
       <footer class="article-footer">
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/可达性分析算法/">可达性分析算法</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Linux常用指令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/28/Linux常用指令/">Linux常用指令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/28/Linux常用指令/" class="article-date">
+  <time datetime="2017-06-28T07:38:37.000Z" itemprop="datePublished">2017-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-目录相关的命令"><a href="#1-目录相关的命令" class="headerlink" title="1.目录相关的命令"></a>1.目录相关的命令</h2><p>首先，我们要建立一个叫做 mydir 的文件夹，然后建立一个叫做 myfile 的文件。之后再把这个文件夹及其中的文件删除掉。</p>
+<p>按住 Ctrl + Alt + T，打开一个端口，然后输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls -l</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280008.png" alt=""></p>
+<p>通过 ls 命令，我们就可以查看当前目录下的文件和目录（要不然怎么知道建立和删除是否成功了呢，是吧）。然后我们开始建立文件夹。输入 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mkdir mydir</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280009.png" alt=""></p>
+<p>看起来并没有发生什么，现在我们来 ls 一下看看我们是否成功建立了自己的文件夹。</p>
+<p><img src="E:/images/201707280010.png" alt=""></p>
+<p>好，既然我们已经有了自己的文件夹了，那就进去建立一个文件吧。进入文件夹的命令是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd mydir</div></pre></td></tr></table></figure>
+<p>进去之后，我们来创建一个文件，命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi myfile.txt</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280011.png" alt=""></p>
+<p>于是我们就进入了 vim 的界面。</p>
+<p><img src="E:/images/201707280012.png" alt=""></p>
+<p>关于 vim 的操作以前已经介绍过了，这里不再赘述。按下 i 进入插入模式，输入 hello 。然后按 Esc 到命令模式，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
+<p>保存退出。然后我们再 ls 一下，就能看见我们刚刚创建的文件了。</p>
+<p><img src="E:/images/201707280013.png" alt=""></p>
+<p>现在我们已经建立了新的文件，然后我们要删掉它。在 linux 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ rm fliename // 删除文件</div><div class="line">$ rmdir filename // 删除文件夹</div></pre></td></tr></table></figure>
+<p>但是我们如果碰到想要删除一个文件夹，而这个文件夹中又有很多文件的情况，处理起来就会很麻烦了。这时我们就需要一个新的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ rm -rf dirname //删除文件夹及其中所有文件</div></pre></td></tr></table></figure>
+<p>尝试一下，不过为了删除当前的目录，我们必须返回上一级目录中。输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd ../</div></pre></td></tr></table></figure>
+<p>返回上级目录之后，删除该文件夹：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ rm -rf mydir</div></pre></td></tr></table></figure>
+<p>这时整个文件夹已经被我们删除了。</p>
+<p><img src="E:/images/201707280014.png" alt=""></p>
+<h2 id="2-字符串匹配-grep"><a href="#2-字符串匹配-grep" class="headerlink" title="2.字符串匹配 grep"></a>2.字符串匹配 grep</h2><p>grep 可以过滤出你想要的东西，举个例子，我想要在当前目录下找到所有名字中带 Mu 的文件或文件夹，那么我们就可以：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls | grep Mu</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280015.png" alt=""></p>
+<h2 id="3-进程相关指令-ps"><a href="#3-进程相关指令-ps" class="headerlink" title="3.进程相关指令 ps"></a>3.进程相关指令 ps</h2><p>ps 是显示进程的指令，可以根据不同的参数调节想要显示的进程种类，显示所有进程的指令是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ps aux</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280016.png" alt=""></p>
+<p>加入我只想看跟自己相关的进程呢？后面加个 grep 就可以了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ps aux | grep jack</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280017.png" alt=""></p>
+<h2 id="4-查看文件"><a href="#4-查看文件" class="headerlink" title="4.查看文件"></a>4.查看文件</h2><p>我们可以通过 cat 命令来查看文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat fliename</div></pre></td></tr></table></figure>
+<p><img src="E:/images/201707280018.png" alt=""></p>
+<p>当然，我们也可以通过 tail 显示文件的最后几行。如果加上参数 -f ，就能不断地读取最新的内容，达到实时监视的效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tail -f filename</div></pre></td></tr></table></figure>
+<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="http://www.cnblogs.com/wangkangluo1/archive/2012/05/26/2518856.html" target="_blank" rel="external">linux tail 命令详解</a></p>
+<p> <a href="http://blog.csdn.net/ljianhui/article/details/11100625" target="_blank" rel="external">初窥Linux 之 我最常用的20条命令</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
 
       </footer>
     
@@ -538,221 +801,6 @@
 
 
     
-      <article id="post-Spring中bean的作用域的实验" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/Spring中bean的作用域的实验/">Spring中bean的作用域的实验</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/25/Spring中bean的作用域的实验/" class="article-date">
-  <time datetime="2017-06-25T08:10:47.000Z" itemprop="datePublished">2017-06-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文是 <a href="https://jacksmiththu.github.io/2017/06/25/Spring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F/" target="_blank" rel="external">Spring中bean的作用域</a> 的相关实验，目的是演示 <strong>bean</strong> 的作用域是如何使用的。</p>
-<h2 id="1-实验内容"><a href="#1-实验内容" class="headerlink" title="1.实验内容"></a>1.实验内容</h2><p>我们要进行一个实验，看看 bean 的作用域是否能整的响起描述的那样运作。为此，我们选了三种作用域：<strong>单例</strong>、<strong>请求</strong>和<strong>会话</strong>。我们为每一中作用域建立一个 <strong>Service</strong>，这样我们就能看到何时会创建新的 <strong>bean</strong> 来注入。</p>
-<p>值得一提的是，因为我们的 <strong>Service</strong> 类并没有实现接口，因此我们就不能使用基于接口的 <strong>JDK</strong> 动态代理。所以我们就只好使用基于 <strong>CgLib</strong> 的动态代理。</p>
-<p>在 Spring 中，两种动态代理的设置方式分别为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 基于 CgLib 的动态代理</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123; ... &#125;</div><div class="line"></div><div class="line"><span class="comment">// 基于 JDK 的动态代理</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.INTERFACES)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
-<p>本实验中我们使用的是前者，</p>
-<h2 id="2-实验代码"><a href="#2-实验代码" class="headerlink" title="2.实验代码"></a>2.实验代码</h2><p>在 <strong>com.yun.service</strong> 包下创建四个 <strong>Service</strong>，分别名为 <strong>ScopeService</strong>，<strong>SingletonService</strong>，<strong>SingletonService</strong> 和 <strong>SessionService</strong>。并修改 <strong>YunApplication</strong> 中的内容，其内容分别如下：</p>
-<h3 id="2-1-ScopeService-java"><a href="#2-1-ScopeService-java" class="headerlink" title="2.1.ScopeService.java"></a>2.1.ScopeService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScopeService</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> SingletonService singletonService;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span> </div><div class="line">	<span class="keyword">private</span> SessionService sessionService;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> RequestService requestService;</div><div class="line">	</div><div class="line"></div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getScopeId</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.info(<span class="string">"========================================="</span>);</div><div class="line">		logger.info(<span class="string">"requestService id is:"</span> + requestService.getId());</div><div class="line">		logger.info(<span class="string">"sessionService id is:"</span> + sessionService.getId());</div><div class="line">		logger.info(<span class="string">"singletonService id is:"</span> + singletonService.getId());</div><div class="line">		<span class="keyword">return</span> <span class="string">"request id is : "</span> + requestService.getId() + <span class="string">" | "</span> + </div><div class="line">			   <span class="string">"session id is : "</span> + sessionService.getId() + <span class="string">" | "</span> +</div><div class="line">			   <span class="string">"singleton id is : "</span> + singletonService.getId();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setScopeId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		requestService.setId(id);</div><div class="line">		sessionService.setId(id);</div><div class="line">		singletonService.setId(id);</div><div class="line">		logger.info(<span class="string">"========================================="</span>);</div><div class="line">		logger.info(<span class="string">"requestService id set:"</span> + id);</div><div class="line">		logger.info(<span class="string">"sessionService id set:"</span> + id);</div><div class="line">		logger.info(<span class="string">"singletonService id set:"</span> + id);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-2-SingletonService-java"><a href="#2-2-SingletonService-java" class="headerlink" title="2.2.SingletonService.java"></a>2.2.SingletonService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.ConfigurableBeanFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_SINGLETON)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-3-RequestService-java"><a href="#2-3-RequestService-java" class="headerlink" title="2.3.RequestService.java"></a>2.3.RequestService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ScopedProxyMode;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.WebApplicationContext;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-4-SessionService-java"><a href="#2-4-SessionService-java" class="headerlink" title="2.4.SessionService.java"></a>2.4.SessionService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ScopedProxyMode;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.WebApplicationContext;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">	value=WebApplicationContext.SCOPE_SESSION,</div><div class="line">	proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SessionService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-5-YunApplication-java"><a href="#2-5-YunApplication-java" class="headerlink" title="2.5.YunApplication.java"></a>2.5.YunApplication.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.ui.Model;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.service.ScopeService;</div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YunApplication</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> ScopeService scopeService;</div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/setscopeid/&#123;id&#125;"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">setScopeId</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Integer id) </span>&#123;</div><div class="line">        scopeService.setScopeId(id);</div><div class="line">        <span class="keyword">return</span> <span class="string">"id is set by "</span> + id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/getscopeid"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getScopeId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> scopeService.getScopeId();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-实验结果"><a href="#3-实验结果" class="headerlink" title="3.实验结果"></a>3.实验结果</h2><h3 id="3-1-本地测试"><a href="#3-1-本地测试" class="headerlink" title="3.1.本地测试"></a>3.1.本地测试</h3><h4 id="3-1-1-设定-bean-的属性值"><a href="#3-1-1-设定-bean-的属性值" class="headerlink" title="3.1.1.设定 bean 的属性值"></a>3.1.1.设定 bean 的属性值</h4><p>在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/setscopeid/25</div></pre></td></tr></table></figure>
-<p>得到结果如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250003.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250004.png" alt=""></p>
-<h4 id="3-1-2-读取-bean-的属性值"><a href="#3-1-2-读取-bean-的属性值" class="headerlink" title="3.1.2.读取 bean 的属性值"></a>3.1.2.读取 bean 的属性值</h4><p>在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/getscopeid</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250005.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250006.png" alt=""></p>
-<p>可见，作用域是 request 的属性值已经读取不到了，但是 session 和 singleton 的仍然能够读取到。</p>
-<h3 id="3-2-远程测试"><a href="#3-2-远程测试" class="headerlink" title="3.2.远程测试"></a>3.2.远程测试</h3><h4 id="3-2-1-获取本机-ip"><a href="#3-2-1-获取本机-ip" class="headerlink" title="3.2.1.获取本机 ip"></a>3.2.1.获取本机 ip</h4><p>为了测试 session 作用域的效果，我们使用另一台设备对我们的应用进行访问。在那之前，我们需要知道本机的 ip 地址。在控制台输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ipconfig</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250007.png" alt=""></p>
-<p>如图所示，我的本机 ip 为 10.29.138.44。</p>
-<h4 id="3-2-2-远程访问"><a href="#3-2-2-远程访问" class="headerlink" title="3.2.2.远程访问"></a>3.2.2.远程访问</h4><p>如果我要在另一台设备上访问我的主机，那么我就需要在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10.29.138.44:8080/getscopeid</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250008.png" alt=""></p>
-<p>可见 <strong>session</strong> 在另一台机器上已经不能用了，然而 <strong>singleton</strong> 依旧保持着原来的值。</p>
-<h4 id="3-2-3-在本机上使用不同的-session"><a href="#3-2-3-在本机上使用不同的-session" class="headerlink" title="3.2.3.在本机上使用不同的 session"></a>3.2.3.在本机上使用不同的 session</h4><p>当然，如果你不想使用另一台计算机的话，在同一计算机上的另一个浏览器也是不同的 <strong>session</strong>。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250009.png" alt=""></p>
-<p>或者你把原来的浏览器重启一下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250010.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Eclipse搭建SpringBoot（四）使用LogBack" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/">Eclipse搭建SpringBoot（四）使用LogBack</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/" class="article-date">
-  <time datetime="2017-06-25T08:10:01.000Z" itemprop="datePublished">2017-06-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-为什么使用-Logback"><a href="#1-为什么使用-Logback" class="headerlink" title="1.为什么使用 Logback"></a>1.为什么使用 Logback</h2><p>我们在使用调试 <strong>java</strong> 代码的时候，一般使用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.out.println(<span class="string">"Hello worold!"</span>);</div></pre></td></tr></table></figure>
-<p>来输出一些信息到控制台。</p>
-<p>但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。<strong>Logback</strong> 一般使用一下四个级别：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">logger.error(<span class="string">"This is an error message"</span>);</div></pre></td></tr></table></figure>
-<h2 id="2-如何使用Logback"><a href="#2-如何使用Logback" class="headerlink" title="2.如何使用Logback"></a>2.如何使用Logback</h2><p><strong>Logback</strong> 的使用仅需要很简单的配置：</p>
-<h3 id="2-1-引入相关包"><a href="#2-1-引入相关包" class="headerlink" title="2.1.引入相关包"></a>2.1.引入相关包</h3><p>下面是一个使用 <strong>Logback</strong> 的简单示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoggerService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass()); </div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">        logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">        logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">        logger.error(<span class="string">"This is an error message"</span>); </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250001.png" alt=""></p>
-<p>为什么没有 debug 的信息呢？这是因为默认的日志级别只到 info。为了输出 debug 的信息，我们需要进行一些额外的配置。</p>
-<h3 id="2-2-控制输出级别"><a href="#2-2-控制输出级别" class="headerlink" title="2.2.控制输出级别"></a>2.2.控制输出级别</h3><p>在 <strong>application.yml</strong> 中添加如下配置：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">logging:</span></div><div class="line"><span class="attr">  file:</span> <span class="string">yun.log</span>  </div><div class="line"><span class="attr">  level:</span></div><div class="line">    <span class="string">ROOT</span> <span class="string">:</span> <span class="string">debug</span></div></pre></td></tr></table></figure>
-<p>再运行一下，就能看到有 debug 信息的输出结果了：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250002.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logger/">Logger</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Spring中bean的作用域" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/Spring中bean的作用域/">Spring中bean的作用域</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/25/Spring中bean的作用域/" class="article-date">
-  <time datetime="2017-06-24T17:41:59.000Z" itemprop="datePublished">2017-06-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-为什么要用到-Spring-的作用域"><a href="#1-为什么要用到-Spring-的作用域" class="headerlink" title="1.为什么要用到 Spring 的作用域"></a>1.为什么要用到 Spring 的作用域</h2><p>默认情况下，<strong>Spring</strong> 中所有的 <strong>bean</strong> 都是以单例（<strong>singleton</strong>）模式创建的。但是在有些情况下，这种方式创建的 <strong>bean</strong> 可能无法满足我们的需要。</p>
-<p>比如，我们要创建一个购物车的 <strong>bean</strong> 。如果购物车是以单例模式创建的话，那么所有顾客的商品都会被添加到同一个购物车里。显然，这不是我们想要的结果。</p>
-<h2 id="2-Spring-的作用域"><a href="#2-Spring-的作用域" class="headerlink" title="2.Spring 的作用域"></a>2.Spring 的作用域</h2><p><strong>Spring</strong> 定义了几种作用域，下面是常用的四种：</p>
-<ol>
-<li>单例（<strong>Singleton</strong>）：整个应用中只创建一个 <strong>bean</strong> 的实例。</li>
-<li>原型（<strong>Prototype</strong>）：每次注入或者通过 <strong>Spring</strong> 上下文获取的时候，创建一个新的 <strong>bean</strong> 实例。</li>
-<li>会话（<strong>Session</strong>）：在 <strong>Web</strong> 应用中，为每个会话创建一个 <strong>bean</strong> 实例。</li>
-<li>请求（<strong>Request</strong>）：在 <strong>Web</strong> 应用中，为每个请求创建一个 <strong>bean</strong> 实例。</li>
-</ol>
-<p>关于 <strong>Spring</strong> 上下文的相关内容，可以参考下面这篇文章: </p>
-<p><a href="http://blog.csdn.net/crazylzxlzx/article/details/53648625" target="_blank" rel="external">spring中的web上下文，spring上下文，springmvc上下文区别(超详细)</a></p>
-<p>关于原型 <strong>Bean</strong> 作用域的相关内容，可以参考这篇文章：</p>
-<p><a href="http://blog.csdn.net/ethanwhite/article/details/51476238" target="_blank" rel="external">Spring核心技术（五）——Spring中Bean的作用域</a></p>
-<h2 id="3-Spring-作用域的使用"><a href="#3-Spring-作用域的使用" class="headerlink" title="3.Spring 作用域的使用"></a>3.Spring 作用域的使用</h2><p>Spring 使用 @Scope 注解来使用作用域，使用示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 使用 @Scope 的一种方式</div><div class="line">@Component</div><div class="line">@Scope(ConfigurableBeanFactory.SCOPR_PROTOTYPE)</div><div class="line">public class Notepad &#123;...&#125;</div><div class="line"></div><div class="line">// 使用 @Scope 的另一种方式</div><div class="line">@Component</div><div class="line">@Scope(&quot;prototype&quot;)</div><div class="line">public class Notepad &#123;...&#125;</div></pre></td></tr></table></figure>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/crazylzxlzx/article/details/53648625" target="_blank" rel="external">spring中的web上下文，spring上下文，springmvc上下文区别(超详细)</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
         <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
       </nav>
@@ -776,6 +824,23 @@
 
 
 <script src="/js/script.js"></script>
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

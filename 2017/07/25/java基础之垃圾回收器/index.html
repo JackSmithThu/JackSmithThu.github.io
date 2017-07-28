@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Java基础之垃圾回收器 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. Serial 收集器Serial 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 “Stop the World”。也就是说，在它工作的同时，其他线程必须暂停运行。  2. Serial Old 收集器Serial 收集器的老年代版本。一种用途是在 JDK 1.5 以及之前的版本中与Parallel Scavenge 收集器搭配使用，另一种用途就是">
+<meta name="keywords" content="Java,JVM,垃圾回收">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础之垃圾回收器">
+<meta property="og:url" content="http://yoursite.com/2017/07/25/java基础之垃圾回收器/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1. Serial 收集器Serial 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 “Stop the World”。也就是说，在它工作的同时，其他线程必须暂停运行。  2. Serial Old 收集器Serial 收集器的老年代版本。一种用途是在 JDK 1.5 以及之前的版本中与Parallel Scavenge 收集器搭配使用，另一种用途就是">
+<meta property="og:image" content="e:/images/201707260001.png">
+<meta property="og:image" content="e:/images/201707260002.png">
+<meta property="og:image" content="e:/images/201707260003.png">
+<meta property="og:image" content="e:/images/201707260004.png">
+<meta property="og:image" content="e:/images/201707260005.png">
+<meta property="og:updated_time" content="2017-07-28T12:20:41.024Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础之垃圾回收器">
+<meta name="twitter:description" content="1. Serial 收集器Serial 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 “Stop the World”。也就是说，在它工作的同时，其他线程必须暂停运行。  2. Serial Old 收集器Serial 收集器的老年代版本。一种用途是在 JDK 1.5 以及之前的版本中与Parallel Scavenge 收集器搭配使用，另一种用途就是">
+<meta name="twitter:image" content="e:/images/201707260001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-java基础之垃圾回收器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java基础之垃圾回收器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/07/25/java基础之垃圾回收器/" class="article-date">
+  <time datetime="2017-07-25T10:38:00.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-Serial-收集器"><a href="#1-Serial-收集器" class="headerlink" title="1. Serial 收集器"></a>1. Serial 收集器</h2><p><strong>Serial</strong> 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 <strong>“Stop the World”</strong>。也就是说，在它工作的同时，其他线程必须暂停运行。</p>
+<p><img src="E:/images/201707260001.png" alt=""></p>
+<h2 id="2-Serial-Old-收集器"><a href="#2-Serial-Old-收集器" class="headerlink" title="2. Serial Old 收集器"></a>2. Serial Old 收集器</h2><p><strong>Serial</strong> 收集器的老年代版本。一种用途是在 <strong>JDK 1.5</strong> 以及之前的版本中与<strong>Parallel Scavenge</strong> 收集器搭配使用，另一种用途就是作为<strong>CMS</strong> 收集器的后备预案，在并发收集发生<strong>Concurrent Mode Failure</strong> 时使用。 </p>
+<h2 id="3-ParNew-收集器"><a href="#3-ParNew-收集器" class="headerlink" title="3. ParNew 收集器"></a>3. ParNew 收集器</h2><p><strong>ParNew</strong> 收集器是 <strong>Serial</strong> 收集器的多线程版本。因为功能强大的老年代收集器 <strong>CMS</strong> 收集器无法与 <strong>Parallel Scavenge</strong> 收集器配合工作，因此 <strong>CMS</strong> 收集器常与 <strong>ParNew</strong> 收集器配合使用。</p>
+<p><img src="E:/images/201707260002.png" alt=""></p>
+<h2 id="4-Parallel-Scavenge-收集器"><a href="#4-Parallel-Scavenge-收集器" class="headerlink" title="4. Parallel Scavenge 收集器"></a>4. Parallel Scavenge 收集器</h2><p><strong>Parallel Scavenge</strong> 收集器的特点是它的关注点与其他收集器不同，<strong>CMS</strong> 等收集器的关注点<br>是尽可能地缩短垃圾收集时用户线程的停顿时间，而<strong>Parallel Scavenge</strong> 收集器的目标则是达到<br>一个可控制的吞吐量。 </p>
+<h2 id="5-Parallel-Old-收集器"><a href="#5-Parallel-Old-收集器" class="headerlink" title="5. Parallel Old 收集器"></a>5. Parallel Old 收集器</h2><p><strong>Parallel Old</strong> 是 <strong>Parallel Scavenge</strong> 收集器的老年代版本，使用多线程和“标记-整理”算法。<br>这个收集器是在 JDK 1.6 中才开始提供的，在此之前，新生代的 <strong>Parallel Scavenge</strong> 收集器一直<br>处于比较尴尬的状态。 原因是，如果新生代选择了<strong>Parallel Scavenge</strong> 收集器，老年代除了<br><strong>Serial Old</strong> 收集器外别无选择。</p>
+<p><img src="E:/images/201707260003.png" alt=""></p>
+<h2 id="6-CMS-收集器"><a href="#6-CMS-收集器" class="headerlink" title="6. CMS 收集器"></a>6. CMS 收集器</h2><p><strong>CMS（Concurrent Mark Sweep）</strong>收集器是一种以获取最短回收停顿时间为目标的收集器。   </p>
+<p>其工作步骤分为以下四步：</p>
+<ul>
+<li>初始标记（CMS initial mark）</li>
+<li>并发标记（CMS concurrent mark）</li>
+<li>重新标记（CMS remark）</li>
+<li>并发清除（CMS concurrent sweep） </li>
+</ul>
+<p>其中，初始标记、 重新标记这两个步骤仍然需要“Stop The World”。 初始标记仅仅只是标记一下<strong>GC Roots</strong> 能直接关联到的对象，速度很快，并发标记阶段就是进行 <strong>GC RootsTracing</strong> 的过程，而重新标记阶段则是为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
+<p>由于整个过程中耗时最长的并发标记和并发清除过程收集器线程都可以与用户线程一起工作，所以，从总体上来说，CMS收集器的内存回收过程是与用户线程一起并发执行的。</p>
+<p><img src="E:/images/201707260004.png" alt=""></p>
+<h2 id="7-G1收集器"><a href="#7-G1收集器" class="headerlink" title="7. G1收集器"></a>7. G1收集器</h2><p><strong>G1</strong> 是一款面向服务端应用的垃圾收集器。 <strong>HotSpot</strong> 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 <strong>JDK 1.5</strong> 中发布的 <strong>CMS</strong> 收集器。 与 <strong>CMS</strong> 收集器相比，<strong>G1</strong>具备如下特点。 </p>
+<ul>
+<li>空间整合：与 <strong>CMS</strong> 的“标记—清理”算法不同，<strong>G1</strong> 从整体来看是基于“标记—整理”算法实现的收集器，从局部（两个<strong>Region</strong>之间）上来看是基于“复制”算法实现的，但无论如何，这两种算法都意味着 <strong>G1</strong> 运作期间不会产生内存空间碎片，收集后能提供规整的可用内存。 这种特性有利于程序长时间运行，分配大对象时不会因为无法找到连续内存空间而提前触发下一次 <strong>GC</strong>。</li>
+<li>可预测的停顿：这是 <strong>G1</strong> 相对于 <strong>CMS</strong> 的另一大优势，降低停顿时间是 <strong>G1</strong> 和 <strong>CMS</strong> 共同的关注点，但 <strong>G1</strong> 除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时 <strong>Java（RTSJ）</strong>的垃圾收集器的特征了。</li>
+</ul>
+<p>值得一提的是，在 <strong>G1</strong> 之前的其他收集器进行收集的范围都是整个新生代或者老年代，而 <strong>G1</strong> 不再是这样。 使用 <strong>G1</strong> 收集器时，<strong>Java</strong> 堆的内存布局就与其他收集器有很大差别，它将整个 <strong>Java</strong> 堆划分为多个大小相等的独立区域（<strong>Region</strong>），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分 <strong>Region</strong>（不需要连续）的集合。 </p>
+<p>如果不计算维护Remembered Set的操作，G1收集器的运作大致可划分为以下几个步骤：</p>
+<ul>
+<li>初始标记（Initial Marking）</li>
+<li>并发标记（Concurrent Marking）</li>
+<li>最终标记（Final Marking）</li>
+<li>筛选回收（Live Data Counting and Evacuation） </li>
+</ul>
+<p>前三个阶段与 <strong>CMS</strong> 收集器相似，最后在筛选回收阶段首先对各个<strong>Region</strong> 的回收价值和成本进行排序，<br>根据用户所期望的 <strong>GC</strong> 停顿时间来制定回收计划。</p>
+<p><img src="E:/images/201707260005.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/垃圾回收/">垃圾回收</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/28/TCP的三次握手与四次挥手/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          TCP的三次握手与四次挥手
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/28/Vim基本操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
