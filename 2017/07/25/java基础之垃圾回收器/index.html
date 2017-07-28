@@ -12,16 +12,16 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/25/java基础之垃圾回收器/index.html">
 <meta property="og:site_name" content="Jackie">
 <meta property="og:description" content="1. Serial 收集器Serial 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 “Stop the World”。也就是说，在它工作的同时，其他线程必须暂停运行。  2. Serial Old 收集器Serial 收集器的老年代版本。一种用途是在 JDK 1.5 以及之前的版本中与Parallel Scavenge 收集器搭配使用，另一种用途就是">
-<meta property="og:image" content="e:/images/201707260001.png">
-<meta property="og:image" content="e:/images/201707260002.png">
-<meta property="og:image" content="e:/images/201707260003.png">
-<meta property="og:image" content="e:/images/201707260004.png">
-<meta property="og:image" content="e:/images/201707260005.png">
-<meta property="og:updated_time" content="2017-07-28T12:20:41.024Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260005.png">
+<meta property="og:updated_time" content="2017-07-28T12:26:58.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java基础之垃圾回收器">
 <meta name="twitter:description" content="1. Serial 收集器Serial 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 “Stop the World”。也就是说，在它工作的同时，其他线程必须暂停运行。  2. Serial Old 收集器Serial 收集器的老年代版本。一种用途是在 JDK 1.5 以及之前的版本中与Parallel Scavenge 收集器搭配使用，另一种用途就是">
-<meta name="twitter:image" content="e:/images/201707260001.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260001.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -83,13 +83,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="1-Serial-收集器"><a href="#1-Serial-收集器" class="headerlink" title="1. Serial 收集器"></a>1. Serial 收集器</h2><p><strong>Serial</strong> 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 <strong>“Stop the World”</strong>。也就是说，在它工作的同时，其他线程必须暂停运行。</p>
-<p><img src="E:/images/201707260001.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260001.png" alt=""></p>
 <h2 id="2-Serial-Old-收集器"><a href="#2-Serial-Old-收集器" class="headerlink" title="2. Serial Old 收集器"></a>2. Serial Old 收集器</h2><p><strong>Serial</strong> 收集器的老年代版本。一种用途是在 <strong>JDK 1.5</strong> 以及之前的版本中与<strong>Parallel Scavenge</strong> 收集器搭配使用，另一种用途就是作为<strong>CMS</strong> 收集器的后备预案，在并发收集发生<strong>Concurrent Mode Failure</strong> 时使用。 </p>
 <h2 id="3-ParNew-收集器"><a href="#3-ParNew-收集器" class="headerlink" title="3. ParNew 收集器"></a>3. ParNew 收集器</h2><p><strong>ParNew</strong> 收集器是 <strong>Serial</strong> 收集器的多线程版本。因为功能强大的老年代收集器 <strong>CMS</strong> 收集器无法与 <strong>Parallel Scavenge</strong> 收集器配合工作，因此 <strong>CMS</strong> 收集器常与 <strong>ParNew</strong> 收集器配合使用。</p>
-<p><img src="E:/images/201707260002.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260002.png" alt=""></p>
 <h2 id="4-Parallel-Scavenge-收集器"><a href="#4-Parallel-Scavenge-收集器" class="headerlink" title="4. Parallel Scavenge 收集器"></a>4. Parallel Scavenge 收集器</h2><p><strong>Parallel Scavenge</strong> 收集器的特点是它的关注点与其他收集器不同，<strong>CMS</strong> 等收集器的关注点<br>是尽可能地缩短垃圾收集时用户线程的停顿时间，而<strong>Parallel Scavenge</strong> 收集器的目标则是达到<br>一个可控制的吞吐量。 </p>
 <h2 id="5-Parallel-Old-收集器"><a href="#5-Parallel-Old-收集器" class="headerlink" title="5. Parallel Old 收集器"></a>5. Parallel Old 收集器</h2><p><strong>Parallel Old</strong> 是 <strong>Parallel Scavenge</strong> 收集器的老年代版本，使用多线程和“标记-整理”算法。<br>这个收集器是在 JDK 1.6 中才开始提供的，在此之前，新生代的 <strong>Parallel Scavenge</strong> 收集器一直<br>处于比较尴尬的状态。 原因是，如果新生代选择了<strong>Parallel Scavenge</strong> 收集器，老年代除了<br><strong>Serial Old</strong> 收集器外别无选择。</p>
-<p><img src="E:/images/201707260003.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260003.png" alt=""></p>
 <h2 id="6-CMS-收集器"><a href="#6-CMS-收集器" class="headerlink" title="6. CMS 收集器"></a>6. CMS 收集器</h2><p><strong>CMS（Concurrent Mark Sweep）</strong>收集器是一种以获取最短回收停顿时间为目标的收集器。   </p>
 <p>其工作步骤分为以下四步：</p>
 <ul>
@@ -100,7 +100,7 @@
 </ul>
 <p>其中，初始标记、 重新标记这两个步骤仍然需要“Stop The World”。 初始标记仅仅只是标记一下<strong>GC Roots</strong> 能直接关联到的对象，速度很快，并发标记阶段就是进行 <strong>GC RootsTracing</strong> 的过程，而重新标记阶段则是为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
 <p>由于整个过程中耗时最长的并发标记和并发清除过程收集器线程都可以与用户线程一起工作，所以，从总体上来说，CMS收集器的内存回收过程是与用户线程一起并发执行的。</p>
-<p><img src="E:/images/201707260004.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260004.png" alt=""></p>
 <h2 id="7-G1收集器"><a href="#7-G1收集器" class="headerlink" title="7. G1收集器"></a>7. G1收集器</h2><p><strong>G1</strong> 是一款面向服务端应用的垃圾收集器。 <strong>HotSpot</strong> 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 <strong>JDK 1.5</strong> 中发布的 <strong>CMS</strong> 收集器。 与 <strong>CMS</strong> 收集器相比，<strong>G1</strong>具备如下特点。 </p>
 <ul>
 <li>空间整合：与 <strong>CMS</strong> 的“标记—清理”算法不同，<strong>G1</strong> 从整体来看是基于“标记—整理”算法实现的收集器，从局部（两个<strong>Region</strong>之间）上来看是基于“复制”算法实现的，但无论如何，这两种算法都意味着 <strong>G1</strong> 运作期间不会产生内存空间碎片，收集后能提供规整的可用内存。 这种特性有利于程序长时间运行，分配大对象时不会因为无法找到连续内存空间而提前触发下一次 <strong>GC</strong>。</li>
@@ -115,7 +115,7 @@
 <li>筛选回收（Live Data Counting and Evacuation） </li>
 </ul>
 <p>前三个阶段与 <strong>CMS</strong> 收集器相似，最后在筛选回收阶段首先对各个<strong>Region</strong> 的回收价值和成本进行排序，<br>根据用户所期望的 <strong>GC</strong> 停顿时间来制定回收计划。</p>
-<p><img src="E:/images/201707260005.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260005.png" alt=""></p>
 
       
     </div>

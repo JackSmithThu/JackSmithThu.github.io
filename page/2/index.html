@@ -221,7 +221,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-传输层协议"><a href="#1-传输层协议" class="headerlink" title="1.传输层协议"></a>1.传输层协议</h2><p><img src="E:/images/201707270002.png" alt=""></p>
+        <h2 id="1-传输层协议"><a href="#1-传输层协议" class="headerlink" title="1.传输层协议"></a>1.传输层协议</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270002.png" alt=""></p>
 <p>传输层位于蓝牙系统的底层，负责蓝牙设备间，互相确认对方的位置，以及建立和管理蓝牙设备间的物理链路。其又分为射频层、基带层和链路管理层三部分。</p>
 <h2 id="2-射频层协议"><a href="#2-射频层协议" class="headerlink" title="2.射频层协议"></a>2.射频层协议</h2><h3 id="2-1-工作频率"><a href="#2-1-工作频率" class="headerlink" title="2.1.工作频率"></a>2.1.工作频率</h3><p>蓝牙工作在 <strong>2.4 GHz ISM</strong> 频段上，蓝牙采用跳频扩谱技术主动的避免工作频段受干扰。我国的蓝牙频率在 <strong>2.402 GHz～2.483 GHz</strong>,蓝牙每个频道的宽度为<strong>1 MHz</strong>，为了减少带外辐射的干扰，保留上、下保护为<strong>3.5 MHz</strong> 和 <strong>2 MHz</strong>，<strong>79</strong> 个跳频点中至少 <strong>75</strong> 个伪随机码跳动，<strong>30 s</strong> 内任何一个频点使用时长不能超过 <strong>0.4 s</strong>。</p>
 <table>
@@ -262,7 +262,7 @@
 </ul>
 <h2 id="3-基带层协议"><a href="#3-基带层协议" class="headerlink" title="3.基带层协议"></a>3.基带层协议</h2><p>蓝牙发送数据时，基带部分将来自高层的数据进行信道编码，向下发给射频进行发送；接收数据时，将解调恢复空中数据并上传给基带，基带进行信道编码传送给上层。</p>
 <h3 id="3-1-蓝牙地址"><a href="#3-1-蓝牙地址" class="headerlink" title="3.1.蓝牙地址"></a>3.1.蓝牙地址</h3><p>蓝牙设备编码采取小端模式，即高位在后面。它的前 24 位是制造商分配的产品编号（<strong>LAP</strong>，低地址部分），中间8 位是 SIG 给制造商分配的编号（<strong>UAP</strong>，高地址部分），最后 16 位保留无效（<strong>NAP</strong>，无效地址部分）。</p>
-<p><img src="E:/images/201707270004.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270004.png" alt=""></p>
 <h3 id="3-2-蓝牙时钟"><a href="#3-2-蓝牙时钟" class="headerlink" title="3.2.蓝牙时钟"></a>3.2.蓝牙时钟</h3><p>每个蓝牙设备都有一个独立运行的内部系统时钟，称为本地时钟（Local Clock），决定定时器的收发跳频。为了与其他设备同步，本地时钟要加一个偏移量（offset），提供给其他设备同步。 具体说来，蓝牙系统中的时钟分为以下几种：</p>
 <ul>
 <li><strong>CLKN：</strong>本地时钟：</li>
@@ -280,7 +280,7 @@
 <li><strong>ACL</strong>（A<strong>synchronous Connectionless</strong>）异步无连接链路；对时间要求不敏感的数据通信，如文件数据、控制信令等。</li>
 <li><strong>SCO</strong>（<strong>Synochronous Connection Oriented</strong>）同步面向连接链路；对时间比较敏感的通信，如：语音；最多只支持3条 <strong>SCO</strong> 链路，不支持重传。</li>
 </ul>
-<h3 id="3-4-蓝牙基带分组"><a href="#3-4-蓝牙基带分组" class="headerlink" title="3.4.蓝牙基带分组"></a>3.4.蓝牙基带分组</h3><p><img src="E:/images/201707270005.png" alt=""></p>
+<h3 id="3-4-蓝牙基带分组"><a href="#3-4-蓝牙基带分组" class="headerlink" title="3.4.蓝牙基带分组"></a>3.4.蓝牙基带分组</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270005.png" alt=""></p>
 <p>基带分组至少包括：接入码、分组头、有效载荷；</p>
 <ul>
 <li><strong>接入码</strong>用于同步、直流、载频泄漏偏置补偿标识；</li>
@@ -782,7 +782,7 @@
 <li><strong>支持点对点及点对多点通信</strong>：蓝牙设备按特定方式可组成两种网络：微微网( <strong>Piconet</strong> )和分布式网络( <strong>Scatternet</strong> )，其中微微网的建立由两台设备的连接开始，最多可由八台设备组成。在一个微微网中，只有一台为主设备（<strong>Master</strong>），其它均为从设备（<strong>Slave</strong>），不同的主从设备对可以采用不同的链接方式，在一次通信中，链接方式也可以任意改变。几个相互独立的微微网以特定方式链接在一起便构成了分布式网络。所有的蓝牙设备都是对等的，所以在蓝牙中没有基站的概念。</li>
 <li><strong>工作距离</strong>：蓝牙设备分为三个功率等级，分别是：<strong>100 mW</strong>（<strong>20 dBm</strong>）、<strong>2.5 mW</strong>（<strong>4 dBm</strong>）和<strong>1 mW</strong>（<strong>0 dBm</strong>），相应的有效工作范围为：<strong>100</strong> 米、<strong>10</strong> 米和 <strong>1</strong> 米。</li>
 </ul>
-<h2 id="3-蓝牙系统组成"><a href="#3-蓝牙系统组成" class="headerlink" title="3.蓝牙系统组成"></a>3.蓝牙系统组成</h2><p><img src="E:/images/201707270001.png" alt=""></p>
+<h2 id="3-蓝牙系统组成"><a href="#3-蓝牙系统组成" class="headerlink" title="3.蓝牙系统组成"></a>3.蓝牙系统组成</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270001.png" alt=""></p>
 <p>蓝牙系统由以下几部分组成：</p>
 <ul>
 <li>传输层（底层硬件模块）</li>
@@ -1237,7 +1237,7 @@
 
     
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
       </nav>
     </section>
     <footer id="footer">

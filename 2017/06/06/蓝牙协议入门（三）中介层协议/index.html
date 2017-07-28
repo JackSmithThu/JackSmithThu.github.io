@@ -12,18 +12,18 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/06/蓝牙协议入门（三）中介层协议/index.html">
 <meta property="og:site_name" content="Jackie">
 <meta property="og:description" content="1.主机控制接口协议 HCI常用蓝牙控制器接口数据分组分为三类，分别为：  指令分组（0x01） 事件分组（0x04） 数据分组（ACL：0x02，SCO：0x03）  全部分组类型列举如下：    HCI 分组类型 RS232分组指示器     HCI指令分组 0x01   HCI ACL数据分组 0x02   HCI SCO数据分组 0x03   HCI事件分组 0x04   HCI错误消息分">
-<meta property="og:image" content="e:/images/201707280001.png">
-<meta property="og:image" content="e:/images/201707280002.png">
-<meta property="og:image" content="e:/images/201707280003.png">
-<meta property="og:image" content="e:/images/201707280004.png">
-<meta property="og:image" content="e:/images/201707280005.png">
-<meta property="og:image" content="e:/images/201707280006.png">
-<meta property="og:image" content="e:/images/201707280007.png">
-<meta property="og:updated_time" content="2017-07-28T12:23:55.689Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280005.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280006.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280007.png">
+<meta property="og:updated_time" content="2017-07-28T12:29:03.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="蓝牙协议入门（三）中介层协议">
 <meta name="twitter:description" content="1.主机控制接口协议 HCI常用蓝牙控制器接口数据分组分为三类，分别为：  指令分组（0x01） 事件分组（0x04） 数据分组（ACL：0x02，SCO：0x03）  全部分组类型列举如下：    HCI 分组类型 RS232分组指示器     HCI指令分组 0x01   HCI ACL数据分组 0x02   HCI SCO数据分组 0x03   HCI事件分组 0x04   HCI错误消息分">
-<meta name="twitter:image" content="e:/images/201707280001.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280001.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -125,7 +125,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="1-1-指令分组"><a href="#1-1-指令分组" class="headerlink" title="1.1.指令分组"></a>1.1.指令分组</h3><p><img src="E:/images/201707280001.png" alt=""></p>
+<h3 id="1-1-指令分组"><a href="#1-1-指令分组" class="headerlink" title="1.1.指令分组"></a>1.1.指令分组</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280001.png" alt=""></p>
 <p>如：<strong>Accpet Connection Request</strong></p>
 <ul>
 <li><strong>Opcode</strong> 为：<strong>0x0409</strong></li>
@@ -136,7 +136,7 @@
 <li>角色为：从设备  <strong>0x01</strong></li>
 </ul>
 <p>则大端数据模式指令为：<strong>09 04 07 9f 16 5f fd 0d 00 01</strong></p>
-<h3 id="1-2-事件分组"><a href="#1-2-事件分组" class="headerlink" title="1.2.事件分组"></a>1.2.事件分组</h3><p><img src="E:/images/201707280002.png" alt=""></p>
+<h3 id="1-2-事件分组"><a href="#1-2-事件分组" class="headerlink" title="1.2.事件分组"></a>1.2.事件分组</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280002.png" alt=""></p>
 <p>如：<strong>Accpet Connection Request</strong></p>
 <ul>
 <li><strong>Opcode :0x0409</strong></li>
@@ -146,9 +146,9 @@
 </ul>
 <p>则分组为： <strong>04 0f 04 00 01 09 04</strong></p>
 <h3 id="1-3-数据分组"><a href="#1-3-数据分组" class="headerlink" title="1.3.数据分组"></a>1.3.数据分组</h3><p><strong>ACL</strong> 数据分组（注：<strong>PB =  Packet_Boundary</strong> ； <strong>BC =  Broadcast Flag</strong>）</p>
-<p><img src="E:/images/201707280003.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280003.png" alt=""></p>
 <p><strong>SCO</strong> 数据分组</p>
-<p><img src="E:/images/201707280004.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280004.png" alt=""></p>
 <h2 id="2-逻辑链路控制与适配协议-L2CAP"><a href="#2-逻辑链路控制与适配协议-L2CAP" class="headerlink" title="2.逻辑链路控制与适配协议  L2CAP"></a>2.逻辑链路控制与适配协议  L2CAP</h2><p><strong>L2CAP</strong> 位于基带之上，将基带的数据分组转换为便于高层应用的数据分组格式，并提供协议复用和服务质量交换等功能。<strong>L2CAP</strong> 只支持 <strong>ACL</strong> 数据传输，不支持 <strong>SCO</strong> 数据。<strong>L2CAP</strong> 本身不提供加强信道可靠性和保证数据完整性的机制，其信道的可靠性依靠基带提供。</p>
 <p><strong>L2CAP</strong> 主要实现以下功能：</p>
 <ol>
@@ -164,14 +164,14 @@
 <li>信令信道：<strong>Signaling</strong>，用于创建 <strong>CO</strong> 通道，可以通过协商改变 <strong>CO</strong> 信道的特性。</li>
 </ul>
 <p>协议数据单元：</p>
-<p><img src="E:/images/201707280005.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280005.png" alt=""></p>
 <h2 id="3-服务发现协议-SDP"><a href="#3-服务发现协议-SDP" class="headerlink" title="3.服务发现协议   SDP"></a>3.服务发现协议   SDP</h2><p>SDP两种服务发现模式：            </p>
 <ul>
 <li>服务搜索：查询具有特定服务属性的服务；            </li>
 <li>服务浏览：简单的浏览全部可用服务。</li>
 </ul>
 <p>其 <strong>PDU</strong> （协议数据单元）格式为：</p>
-<p><img src="E:/images/201707280006.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280006.png" alt=""></p>
 <p>不同的 <strong>PDU ID</strong> 的意义为：</p>
 <table>
 <thead>
@@ -230,7 +230,7 @@
 </tbody>
 </table>
 <h2 id="4-串口仿真协议-RFCOMM"><a href="#4-串口仿真协议-RFCOMM" class="headerlink" title="4.串口仿真协议   RFCOMM"></a>4.串口仿真协议   RFCOMM</h2><p><strong>RFCOMM</strong> 是为建立在串口之上的传统应用提供环境接口，使他们可以做比较少协议改动就可以在蓝牙无线通信无线链路上工作。多路串口仿真是 <strong>RFCOMM</strong> 的重要功能，通过多路复用器(<strong>multiplexer</strong>)，一条 <strong>L2CAP</strong> 链路可以同时 多个串行应用。</p>
-<p><img src="E:/images/201707280007.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280007.png" alt=""></p>
 <p><strong>RFCOMM</strong> 两个蓝牙设备之间可以支持多达60多路仿真串口。<strong>RFCOMM</strong> 帧类型如下：</p>
 <table>
 <thead>
