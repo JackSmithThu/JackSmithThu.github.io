@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Redis常用命令 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.字符串1.1. SET 命令 1.2. GET 命令 1.3. GETSET 命令 1.4. INCR 自增命令 2.有序集合（Sorted Set）2.1. ZADD 命令 2.2. ZCARD 数量统计命令 2.3. ZCOUNT 查找指定区间成员数命令 2.4. ZRANK 返回查找值排名命令 2.5. ZREM 移除元素命令 2.6. ZUNIONSTORE 并集命令 2.7. ZIN">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis常用命令">
+<meta property="og:url" content="http://yoursite.com/2017/08/01/Redis常用命令/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.字符串1.1. SET 命令 1.2. GET 命令 1.3. GETSET 命令 1.4. INCR 自增命令 2.有序集合（Sorted Set）2.1. ZADD 命令 2.2. ZCARD 数量统计命令 2.3. ZCOUNT 查找指定区间成员数命令 2.4. ZRANK 返回查找值排名命令 2.5. ZREM 移除元素命令 2.6. ZUNIONSTORE 并集命令 2.7. ZIN">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080005.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080006.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080007.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080008.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080009.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080010.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080012.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080013.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080014.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080015.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080016.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080017.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080018.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080019.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080020.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080021.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080022.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080023.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080024.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080025.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080026.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080027.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080028.png">
+<meta property="og:updated_time" content="2017-08-08T12:53:07.243Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis常用命令">
+<meta name="twitter:description" content="1.字符串1.1. SET 命令 1.2. GET 命令 1.3. GETSET 命令 1.4. INCR 自增命令 2.有序集合（Sorted Set）2.1. ZADD 命令 2.2. ZCARD 数量统计命令 2.3. ZCOUNT 查找指定区间成员数命令 2.4. ZRANK 返回查找值排名命令 2.5. ZREM 移除元素命令 2.6. ZUNIONSTORE 并集命令 2.7. ZIN">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-Redis常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis常用命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/01/Redis常用命令/" class="article-date">
+  <time datetime="2017-08-01T08:12:47.000Z" itemprop="datePublished">2017-08-01</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-字符串"><a href="#1-字符串" class="headerlink" title="1.字符串"></a>1.字符串</h2><h3 id="1-1-SET-命令"><a href="#1-1-SET-命令" class="headerlink" title="1.1. SET 命令"></a>1.1. SET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080001.png" alt=""></p>
+<h3 id="1-2-GET-命令"><a href="#1-2-GET-命令" class="headerlink" title="1.2. GET 命令"></a>1.2. GET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080002.png" alt=""></p>
+<h3 id="1-3-GETSET-命令"><a href="#1-3-GETSET-命令" class="headerlink" title="1.3. GETSET 命令"></a>1.3. GETSET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080003.png" alt=""></p>
+<h3 id="1-4-INCR-自增命令"><a href="#1-4-INCR-自增命令" class="headerlink" title="1.4. INCR 自增命令"></a>1.4. INCR 自增命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080004.png" alt=""></p>
+<h2 id="2-有序集合（Sorted-Set）"><a href="#2-有序集合（Sorted-Set）" class="headerlink" title="2.有序集合（Sorted Set）"></a>2.有序集合（Sorted Set）</h2><h3 id="2-1-ZADD-命令"><a href="#2-1-ZADD-命令" class="headerlink" title="2.1. ZADD 命令"></a>2.1. ZADD 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080005.png" alt=""></p>
+<h3 id="2-2-ZCARD-数量统计命令"><a href="#2-2-ZCARD-数量统计命令" class="headerlink" title="2.2. ZCARD 数量统计命令"></a>2.2. ZCARD 数量统计命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080006.png" alt=""></p>
+<h3 id="2-3-ZCOUNT-查找指定区间成员数命令"><a href="#2-3-ZCOUNT-查找指定区间成员数命令" class="headerlink" title="2.3. ZCOUNT 查找指定区间成员数命令"></a>2.3. ZCOUNT 查找指定区间成员数命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080007.png" alt=""></p>
+<h3 id="2-4-ZRANK-返回查找值排名命令"><a href="#2-4-ZRANK-返回查找值排名命令" class="headerlink" title="2.4. ZRANK 返回查找值排名命令"></a>2.4. ZRANK 返回查找值排名命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080008.png" alt=""></p>
+<h3 id="2-5-ZREM-移除元素命令"><a href="#2-5-ZREM-移除元素命令" class="headerlink" title="2.5. ZREM 移除元素命令"></a>2.5. ZREM 移除元素命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080009.png" alt=""></p>
+<h3 id="2-6-ZUNIONSTORE-并集命令"><a href="#2-6-ZUNIONSTORE-并集命令" class="headerlink" title="2.6. ZUNIONSTORE 并集命令"></a>2.6. ZUNIONSTORE 并集命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080010.png" alt=""></p>
+<h3 id="2-7-ZINTERSTORE-交集命令"><a href="#2-7-ZINTERSTORE-交集命令" class="headerlink" title="2.7. ZINTERSTORE 交集命令"></a>2.7. ZINTERSTORE 交集命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png" alt=""></p>
+<h3 id="2-8-ZRANGE-范围显示指令"><a href="#2-8-ZRANGE-范围显示指令" class="headerlink" title="2.8. ZRANGE 范围显示指令"></a>2.8. ZRANGE 范围显示指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png" alt=""></p>
+<h2 id="3-哈希（HashSet）"><a href="#3-哈希（HashSet）" class="headerlink" title="3. 哈希（HashSet）"></a>3. 哈希（HashSet）</h2><h3 id="3-1-HSET-插入指令"><a href="#3-1-HSET-插入指令" class="headerlink" title="3.1. HSET 插入指令"></a>3.1. HSET 插入指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080012.png" alt=""></p>
+<h3 id="3-2-HGET-读取指令"><a href="#3-2-HGET-读取指令" class="headerlink" title="3.2. HGET 读取指令"></a>3.2. HGET 读取指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080013.png" alt=""></p>
+<h3 id="3-3-HGETALL-读取全部"><a href="#3-3-HGETALL-读取全部" class="headerlink" title="3.3. HGETALL 读取全部"></a>3.3. HGETALL 读取全部</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080014.png" alt=""></p>
+<h3 id="3-4-HSETNX-如果不存在则赋值"><a href="#3-4-HSETNX-如果不存在则赋值" class="headerlink" title="3.4. HSETNX 如果不存在则赋值"></a>3.4. HSETNX 如果不存在则赋值</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080015.png" alt=""></p>
+<h3 id="3-5-HDEL-删除"><a href="#3-5-HDEL-删除" class="headerlink" title="3.5. HDEL 删除"></a>3.5. HDEL 删除</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080016.png" alt=""></p>
+<h2 id="4-列表（List）"><a href="#4-列表（List）" class="headerlink" title="4.列表（List）"></a>4.列表（List）</h2><h3 id="4-1-PUSH（插入元素，分为左-LPUSH-和右-RPUSH）"><a href="#4-1-PUSH（插入元素，分为左-LPUSH-和右-RPUSH）" class="headerlink" title="4.1. PUSH（插入元素，分为左 LPUSH 和右 RPUSH）"></a>4.1. PUSH（插入元素，分为左 LPUSH 和右 RPUSH）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080017.png" alt=""></p>
+<h3 id="4-2-LRANGE-输出某一段元素"><a href="#4-2-LRANGE-输出某一段元素" class="headerlink" title="4.2. LRANGE 输出某一段元素"></a>4.2. LRANGE 输出某一段元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080018.png" alt=""></p>
+<h3 id="4-3-POP（分为-LPOP-和-RPOP）"><a href="#4-3-POP（分为-LPOP-和-RPOP）" class="headerlink" title="4.3. POP（分为 LPOP 和 RPOP）"></a>4.3. POP（分为 LPOP 和 RPOP）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080019.png" alt=""></p>
+<h3 id="4-4-LLEN-输出列表长度"><a href="#4-4-LLEN-输出列表长度" class="headerlink" title="4.4. LLEN 输出列表长度"></a>4.4. LLEN 输出列表长度</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080020.png" alt=""></p>
+<h3 id="4-5-LINDEX-输出某位置元素"><a href="#4-5-LINDEX-输出某位置元素" class="headerlink" title="4.5. LINDEX 输出某位置元素"></a>4.5. LINDEX 输出某位置元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080021.png" alt=""></p>
+<h2 id="5-集合"><a href="#5-集合" class="headerlink" title="5.集合"></a>5.集合</h2><h3 id="5-1-SADD-插入命令"><a href="#5-1-SADD-插入命令" class="headerlink" title="5.1. SADD 插入命令"></a>5.1. SADD 插入命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080022.png" alt=""></p>
+<h3 id="5-2-SCARD-统计个数命令"><a href="#5-2-SCARD-统计个数命令" class="headerlink" title="5.2. SCARD 统计个数命令"></a>5.2. SCARD 统计个数命令</h3><p>​              <img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080023.png" alt=""></p>
+<h3 id="5-3-SDIFFSTORE-差集并存储"><a href="#5-3-SDIFFSTORE-差集并存储" class="headerlink" title="5.3. SDIFFSTORE 差集并存储"></a>5.3. SDIFFSTORE 差集并存储</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080024.png" alt=""></p>
+<h3 id="5-4-SUNION-并集（SUNIONSTORE-则存储）"><a href="#5-4-SUNION-并集（SUNIONSTORE-则存储）" class="headerlink" title="5.4. SUNION 并集（SUNIONSTORE 则存储）"></a>5.4. SUNION 并集（SUNIONSTORE 则存储）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080025.png" alt=""></p>
+<h3 id="5-5-SINTER-交集"><a href="#5-5-SINTER-交集" class="headerlink" title="5.5. SINTER 交集"></a>5.5. SINTER 交集</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080026.png" alt=""></p>
+<h3 id="5-6-SPOP-随机弹出"><a href="#5-6-SPOP-随机弹出" class="headerlink" title="5.6. SPOP 随机弹出"></a>5.6. SPOP 随机弹出</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080027.png" alt=""></p>
+<h3 id="5-7-SMEMBERS-显示所有元素"><a href="#5-7-SMEMBERS-显示所有元素" class="headerlink" title="5.7. SMEMBERS 显示所有元素"></a>5.7. SMEMBERS 显示所有元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080028.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/25/java基础之垃圾回收器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Java基础之垃圾回收器
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
