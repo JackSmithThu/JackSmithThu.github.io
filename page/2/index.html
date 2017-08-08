@@ -45,6 +45,70 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Spring中的AOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/26/Spring中的AOP/">Spring中的AOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/26/Spring中的AOP/" class="article-date">
+  <time datetime="2017-06-26T10:09:22.000Z" itemprop="datePublished">2017-06-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是AOP"><a href="#1-什么是AOP" class="headerlink" title="1.什么是AOP"></a>1.什么是AOP</h2><p><strong>AOP</strong>（面向切面编程）给我们提供了很好的非入侵式（<strong>在不修改源代码的情况下</strong>）的手段为现有的类增加新的功能。本文通过演示 <strong>Spring AOP</strong> 是如何使用的来介绍什么是 <strong>AOP</strong>。</p>
+<p>我们会首先演示如何使用基于注解的 <strong>Spring AOP</strong>，然后演示如何使用基于 <strong>XML</strong> 的 <strong>Spring AOP</strong>。最后对 <strong>Spring AOP</strong> 进行简要的总结。</p>
+<p>首先我们需要定义一个目标对象（接口），这个对象在调用某些方法时（<strong>之前或之后</strong>）会被拦截，然后执行我们自己的代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Performance</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">perform</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假定上面的对象就是我们的目标类。我们希望在该类调用 <strong>perform()</strong> 方法之前和之后分别输出一些提示，但是处于某些原因，我们又不想修改它的源代码。为了实现这一目标，我们需要使用 <strong>AOP</strong> 来达到我们的目的。</p>
+<h2 id="2-基于注解的-Spring-AOP"><a href="#2-基于注解的-Spring-AOP" class="headerlink" title="2.基于注解的 Spring AOP"></a>2.基于注解的 Spring AOP</h2><p>下面是一个 <strong>Audience</strong> 类，它在本文中作为一个切面来使用。也就是说，在 <strong>Performance</strong> 类调用 <strong>perform()</strong> 前后输出的提示，其实是由 <strong>Audience</strong> 提供的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterThrowing;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="comment">// 把 Performance 的 perform 方法定义为名为 performance 的切点</span></div><div class="line">  <span class="meta">@Pointcut</span>(<span class="string">"execution(** concert.Performance.perform(..))"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performance</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之前输出</span></div><div class="line">  <span class="meta">@Before</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之后输出</span></div><div class="line">  <span class="meta">@AfterReturning</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演失败（抛出异常）输出</span></div><div class="line">  <span class="meta">@AfterThrowing</span>（“Performance()”)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了使 Spring 能够识别 @Aspect 注解，我们需要在 JavaConfig 中启用 AspectJ 注解的自动代理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Bean；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.ComponentScan；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Configuration；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.EnableAspectJAutoProxy；</div><div class="line">  </div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableAspectJAutoProxy</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcertConfig</span> </span>&#123;</div><div class="line">  <span class="meta">@Bean</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Audience <span class="title">audience</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Audience();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-基于-XML-的-Spring-AOP"><a href="#3-基于-XML-的-Spring-AOP" class="headerlink" title="3.基于 XML 的 Spring AOP"></a>3.基于 XML 的 Spring AOP</h2><p>使用注解的 AOP 能够在不侵入目标类的情况下，对目标类的方法进行监控。但是，如果切面 Audience 的代码中有许多注解。试想，如果我们连切面的代码都不想修改，或者无法修改切面的源代码，我们又该如何使用 AOP 呢？XML 为我们提供了一种解决方案：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125; </div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们去掉了 Audience 中所有的注解，当然这样的一个类是无法实现 AOP 的，因此我们需要在XML 中进行配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"audience"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"performance"</span></div><div class="line">        <span class="attr">expression</span>=<span class="string">"execution(** concert.Performance.perform(..))"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:before</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"soliencePhones"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-returning</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"clap"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-throwing</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"refund"</span>/&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样一来，我们就可以在两个类都是完全的 <strong>pojo</strong> 类（纯 <strong>java</strong> 代码实现的普通类）的情况下实现 <strong>aop</strong> 了。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Eclipse搭建SpringBoot（五）使用拦截器验证用户登录" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1102,70 +1166,8 @@
 
 
     
-      <article id="post-如何解决github上传每次都要输入账号密码的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/">如何解决github上传每次都要输入账号密码的问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/" class="article-date">
-  <time datetime="2017-06-23T14:35:01.000Z" itemprop="datePublished">2017-06-23</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-需要输入账号密码的原因"><a href="#1-需要输入账号密码的原因" class="headerlink" title="1.需要输入账号密码的原因"></a>1.需要输入账号密码的原因</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png" alt=""></p>
-<p>之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。</p>
-<h3 id="2-操作步骤"><a href="#2-操作步骤" class="headerlink" title="2.操作步骤"></a>2.操作步骤</h3><ol>
-<li>git remote -v</li>
-<li>git remote rm origin</li>
-<li>git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git</li>
-<li>git push origin</li>
-<li>git push –set-upstream origin master</li>
-</ol>
-<p>上面的 <strong>jackSmithThu</strong> 和 <strong>MarkDownPhotos</strong> 需要改成你 <strong>github</strong> 的<strong>用户名</strong>和<strong>项目名</strong>( 第5步中，set 前面是两个 “-”，出于 hexo 的原因。直接复制可能无法使用，建议粘贴 <strong>git bash</strong> 里面的提示)。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png" alt=""></p>
-<h3 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h3><p><a href="http://blog.csdn.net/yuquan0821/article/details/8210944" target="_blank" rel="external">push到github时，每次都要输入用户名和密码的问题</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
       </nav>
     </section>
     <footer id="footer">

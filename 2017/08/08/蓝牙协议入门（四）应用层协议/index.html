@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>蓝牙协议入门（四）应用层协议 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.irOBEX 红外对象交互协议 irOBEX  红外对象交互协议，简称 OBEX，使高层协议同时运作在蓝牙和红外的无线链路之上。主要操作指令包括：  连接操作 断开操作 Put 操作 Get 操作  1.1.连接操作连接操作的操作码为： 0x80。    字节0 字节1、2 字节3 字节4 字节5、6 字节7～n     0x80 连接请求分组长度 OBEX版本号 标志 客户端可接收最大的OB">
+<meta name="keywords" content="蓝牙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓝牙协议入门（四）应用层协议">
+<meta property="og:url" content="http://yoursite.com/2017/08/08/蓝牙协议入门（四）应用层协议/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.irOBEX 红外对象交互协议 irOBEX  红外对象交互协议，简称 OBEX，使高层协议同时运作在蓝牙和红外的无线链路之上。主要操作指令包括：  连接操作 断开操作 Put 操作 Get 操作  1.1.连接操作连接操作的操作码为： 0x80。    字节0 字节1、2 字节3 字节4 字节5、6 字节7～n     0x80 连接请求分组长度 OBEX版本号 标志 客户端可接收最大的OB">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030003.png">
+<meta property="og:updated_time" content="2017-08-08T12:59:24.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="蓝牙协议入门（四）应用层协议">
+<meta name="twitter:description" content="1.irOBEX 红外对象交互协议 irOBEX  红外对象交互协议，简称 OBEX，使高层协议同时运作在蓝牙和红外的无线链路之上。主要操作指令包括：  连接操作 断开操作 Put 操作 Get 操作  1.1.连接操作连接操作的操作码为： 0x80。    字节0 字节1、2 字节3 字节4 字节5、6 字节7～n     0x80 连接请求分组长度 OBEX版本号 标志 客户端可接收最大的OB">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-蓝牙协议入门（四）应用层协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      蓝牙协议入门（四）应用层协议
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/08/蓝牙协议入门（四）应用层协议/" class="article-date">
+  <time datetime="2017-08-08T02:10:47.000Z" itemprop="datePublished">2017-08-08</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-irOBEX-红外对象交互协议"><a href="#1-irOBEX-红外对象交互协议" class="headerlink" title="1.irOBEX 红外对象交互协议"></a>1.irOBEX 红外对象交互协议</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030001.png" alt=""></p>
+<p><strong>irOBEX</strong>  红外对象交互协议，简称 <strong>OBEX</strong>，使高层协议同时运作在蓝牙和红外的无线链路之上。主要操作指令包括：</p>
+<ul>
+<li>连接操作</li>
+<li>断开操作</li>
+<li>Put 操作</li>
+<li>Get 操作</li>
+</ul>
+<h3 id="1-1-连接操作"><a href="#1-1-连接操作" class="headerlink" title="1.1.连接操作"></a>1.1.连接操作</h3><p>连接操作的操作码为： 0x80。</p>
+<table>
+<thead>
+<tr>
+<th>字节0</th>
+<th>字节1、2</th>
+<th>字节3</th>
+<th>字节4</th>
+<th>字节5、6</th>
+<th>字节7～n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x80</td>
+<td>连接请求分组长度</td>
+<td>OBEX版本号</td>
+<td>标志</td>
+<td>客户端可接收最大的OBEX分组长度</td>
+<td>可选头</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个连接操作的示例：</p>
+<table>
+<thead>
+<tr>
+<th>字节0</th>
+<th>字节1、2</th>
+<th>字节3</th>
+<th>字节4</th>
+<th>字节5、6</th>
+<th>字节7～n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x80 Connect命令</td>
+<td>7</td>
+<td>0x10</td>
+<td>flags</td>
+<td>65534</td>
+<td>可选头</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-2-断开操作"><a href="#1-2-断开操作" class="headerlink" title="1.2.断开操作"></a>1.2.断开操作</h3><p>断开操作的操作码为：0x81。</p>
+<h3 id="1-3-Put-操作"><a href="#1-3-Put-操作" class="headerlink" title="1.3.Put 操作"></a>1.3.Put 操作</h3><p>Put 操作的操作码为：0x02。</p>
+<h3 id="1-4-Get-操作"><a href="#1-4-Get-操作" class="headerlink" title="1.4.Get 操作"></a>1.4.Get 操作</h3><p>Get 操作的操作码为：0x03。</p>
+<h2 id="2-音频与电话控制协议"><a href="#2-音频与电话控制协议" class="headerlink" title="2.音频与电话控制协议"></a>2.音频与电话控制协议</h2><h3 id="2-1-协议架构"><a href="#2-1-协议架构" class="headerlink" title="2.1.协议架构"></a>2.1.协议架构</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030002.png" alt=""></p>
+<p>蓝牙音频如上图协议栈所示：音频通过基带传输同步面向连接分组实现，没有以规范的形式给出，不是协议栈的一部分。<br><strong>TCS_Binary</strong> 是一种基于分组电话控制二进制编码指令集，位于 <strong>L2CAP</strong> 之上。实现蓝牙无绳电话、对讲机功能。<br><strong>RFCOMM</strong> 用于 <strong>AT</strong> 指令，拨号上网、蓝牙耳机、耳麦、传真通过 <strong>AT</strong> 发送指令控制。</p>
+<h3 id="2-2-音频部分"><a href="#2-2-音频部分" class="headerlink" title="2.2.音频部分"></a>2.2.音频部分</h3><p><strong>64kbps</strong> 电信级语言质量音频流<br>​    <strong>CVSD  continuous variable slope delta</strong> 连续可变斜率增量。<br>​    <strong>PCM  pulse code modulation</strong> 。<br>​    <strong>PCM</strong> 存在斜率效应。<strong>CVSD</strong> 使用音节压缩算法，编码步长根据信号斜率变化自动调整，是现在比较好的编码方案，提高语言的抗干扰能力。</p>
+<h3 id="2-3-电话控制部分"><a href="#2-3-电话控制部分" class="headerlink" title="2.3.电话控制部分"></a>2.3.电话控制部分</h3><p><strong>TCS-Binary</strong> 电话控制部分。</p>
+<ul>
+<li><p>电话呼叫</p>
+<p>​呼叫控制、呼叫建立、呼叫拆除；</p>
+</li>
+<li><p>组管理</p>
+<p>​访问权限请求、分布式配置、快速内部成员访问。</p>
+</li>
+</ul>
+<h2 id="3-网络封装协议-BNEP"><a href="#3-网络封装协议-BNEP" class="headerlink" title="3.网络封装协议  BNEP"></a>3.网络封装协议  BNEP</h2><p><strong>BNEP</strong>（<strong>Bluetooth Network Encapsulation Protocol</strong>） 网络封装协议。为了使集成蓝牙技术的电脑、电话、<strong>PDA</strong>、家用电器等网络设备交换信息，需要在网络层统一数据分组。网络封装协议将来自不同网络的数据分组重新封装，通过 <strong>L2CAP</strong> 进行传输。<strong>BNEP</strong> 支持 <strong>Ipv4、Ipv6、IPX</strong> 。</p>
+<h2 id="4-音视频分发协议AVDTP"><a href="#4-音视频分发协议AVDTP" class="headerlink" title="4.音视频分发协议AVDTP"></a>4.音视频分发协议AVDTP</h2><p><strong>AVDTP （Audio/Video Distribution Transport Protocol）</strong>音视频分发传输协议。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030004.png" alt=""></p>
+<p><strong>AVDTP</strong> 信令列表:</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>信令标识符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVDTP_DISCOVER</td>
+<td>0x01</td>
+<td>发现设备中的流端点</td>
+</tr>
+<tr>
+<td>AVDTP_GET_CAPABILITIES</td>
+<td>0x02</td>
+<td>获得流端点的信息能力</td>
+</tr>
+<tr>
+<td>AVDTP_SET_CONFIGURATION</td>
+<td>0x03</td>
+<td>对SEP进行配置</td>
+</tr>
+<tr>
+<td>AVDTP_GET_CONFIGURATION</td>
+<td>0x04</td>
+<td>获取SEP当前配置</td>
+</tr>
+<tr>
+<td>AVDTP_RECONFIGURE</td>
+<td>0x05</td>
+<td>对SEP重新配置</td>
+</tr>
+<tr>
+<td>AVDTP_OPEN</td>
+<td>0x06</td>
+<td>成功的配置SEP后，打开流</td>
+</tr>
+<tr>
+<td>AVDTP_START</td>
+<td>0x07</td>
+<td>流被打开：用于开始形成流；流暂停时：用于重新形成流。</td>
+</tr>
+<tr>
+<td>AVDTP_CLOSE</td>
+<td>0x08</td>
+<td>对SEP关闭</td>
+</tr>
+<tr>
+<td>AVDTP_SUSPEND</td>
+<td>0x09</td>
+<td>请求SEP暂停</td>
+</tr>
+<tr>
+<td>AVDTP_SECURITY_CONTROL</td>
+<td>0x0A</td>
+<td>设置设备内容保护、或者请求设备状况信息</td>
+</tr>
+<tr>
+<td>AVDTP_ABORT</td>
+<td>0x0B</td>
+<td>中断正在建立或者传输的过程</td>
+</tr>
+<tr>
+<td>AVDTP_GET_ALL_CAPABILITIES</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>AVDTP_DELAYREPORT</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-音视频控制传输协议AVCTP"><a href="#5-音视频控制传输协议AVCTP" class="headerlink" title="5.音视频控制传输协议AVCTP"></a>5.<strong>音视频控制传输协议AVCTP</strong></h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030003.png" alt=""></p>
+<p><strong>AVCTP</strong> 可以使音视频设备同时支持多个应用框架，每个应用框架定义了各自相应的消息格式与应用规则。</p>
+<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p> <a href="http://blog.csdn.net/xubin341719/article/details/38335533" target="_blank" rel="external">蓝牙核心技术概述（五）：蓝牙协议规范（irOBEX、BNEP、AVDTP、AVCTP）</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/01/Redis常用命令/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          Redis常用命令
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
