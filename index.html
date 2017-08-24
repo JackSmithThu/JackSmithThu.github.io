@@ -45,6 +45,69 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-TCP报文头结构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/18/TCP报文头结构/">TCP报文头结构</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/18/TCP报文头结构/" class="article-date">
+  <time datetime="2017-08-17T18:16:16.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-TCP-报文头结构"><a href="#1-TCP-报文头结构" class="headerlink" title="1.TCP 报文头结构"></a>1.TCP 报文头结构</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708240001.jpg" alt=""></p>
+<h2 id="2-报文头各个部分说明"><a href="#2-报文头各个部分说明" class="headerlink" title="2.报文头各个部分说明"></a>2.报文头各个部分说明</h2><h3 id="2-1-Source-Port和Destination-Port"><a href="#2-1-Source-Port和Destination-Port" class="headerlink" title="2.1.Source Port和Destination Port:"></a>2.1.Source Port和Destination Port:</h3><p>分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接;</p>
+<h3 id="2-2-Sequence-Number"><a href="#2-2-Sequence-Number" class="headerlink" title="2.2.Sequence Number:"></a>2.2.Sequence Number:</h3><p>用来标识从TCP发端向TCP收端发送的数据字节流，它表示在这个报文段中的的第一个数据 字节在数据流中的序号;主要用来解决网络报乱序的问题;</p>
+<h3 id="2-3-Acknowledgment-Number"><a href="#2-3-Acknowledgment-Number" class="headerlink" title="2.3.Acknowledgment Number:"></a>2.3.Acknowledgment Number:</h3><p>32位确认序列号包含发送确认的一端所期望收到的下一个序号，因此，确认序号应 当是上次已成功收到数据字节序号加1。不过，只有当标志位中的ACK标志(下面介绍)为1时该确认序列号的字 段才有效。主要用来解决不丢包的问题;</p>
+<h3 id="2-4-Offset"><a href="#2-4-Offset" class="headerlink" title="2.4.Offset:"></a>2.4.Offset:</h3><p>给出首部中32 bit字的数目，需要这个值是因为任选字段的长度是可变的。这个字段占4bit(最多能 表示15个32bit的的字，即4*15=60个字节的首部长度)，因此TCP最多有60字节的首部。然而，没有任选字段， 正常的长度是20字节;</p>
+<h3 id="2-5-TCP-Flags"><a href="#2-5-TCP-Flags" class="headerlink" title="2.5.TCP Flags:"></a>2.5.TCP Flags:</h3><p>TCP首部中有6个标志比特，它们中的多个可同时被设置为1，主要是用于操控TCP的状态机的，依次 为URG，ACK，PSH，RST，SYN，FIN。每个标志位的意思如下：</p>
+<h3 id="2-6-URG："><a href="#2-6-URG：" class="headerlink" title="2.6.URG："></a>2.6.URG：</h3><p>此标志表示TCP包的紧急指针域(后面马上就要说到)有效，用来保证TCP连接不被中断，并且督促 中间层设备要尽快处理这些数据;</p>
+<h3 id="2-7-ACK："><a href="#2-7-ACK：" class="headerlink" title="2.7.ACK："></a>2.7.ACK：</h3><p>此标志表示应答域有效，就是说前面所说的TCP应答号将会包含在TCP数据包中;有两个取值：0和1， 为1的时候表示应答域有效，反之为0;</p>
+<h3 id="2-8-PSH："><a href="#2-8-PSH：" class="headerlink" title="2.8.PSH："></a>2.8.PSH：</h3><p>这个标志位表示Push操作。所谓Push操作就是指在数据包到达接收端以后，立即传送给应用程序， 而不是在缓冲区中排队;</p>
+<h3 id="2-9-RST："><a href="#2-9-RST：" class="headerlink" title="2.9.RST："></a>2.9.RST：</h3><p>这个标志表示连接复位请求。用来复位那些产生错误的连接，也被用来拒绝错误和非法的数据包;</p>
+<h3 id="3-0-SYN："><a href="#3-0-SYN：" class="headerlink" title="3.0.SYN："></a>3.0.SYN：</h3><p>表示同步序号，用来建立连接。SYN标志位和ACK标志位搭配使用，当连接请求的时候，SYN=1， ACK=0;连接被响应的时候，SYN=1，ACK=1;这个标志的数据包经常被用来进行端口扫描。扫描者发送 一个只有SYN的数据包，如果对方主机响应了一个数据包回来 ，就表明这台主机存在这个端口;但是由于这 种扫描方式只是进行TCP三次握手的第一次握手，因此这种扫描的成功表示被扫描的机器不很安全，一台安全 的主机将会强制要求一个连接严格的进行TCP的三次握手;</p>
+<h3 id="3-1-FIN："><a href="#3-1-FIN：" class="headerlink" title="3.1.FIN："></a>3.1.FIN：</h3><p>表示发送端已经达到数据末尾，也就是说双方的数据传送完成，没有数据可以传送了，发送FIN标志 位的TCP数据包后，连接将被断开。这个标志的数据包也经常被用于进行端口扫描。</p>
+<h3 id="3-2-Window"><a href="#3-2-Window" class="headerlink" title="3.2.Window:"></a>3.2.Window:</h3><p>窗口大小，也就是有名的滑动窗口。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-蓝牙协议入门（四）应用层协议" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1003,111 +1066,8 @@
 
 
     
-      <article id="post-Vim基本操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/Vim基本操作/">Vim 基本操作</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/27/Vim基本操作/" class="article-date">
-  <time datetime="2017-06-26T18:16:16.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1.打开文件"></a>1.打开文件</h2><p>安装 vim，进入相应文件夹，输入</p>
-<p>$ vim filename</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270006.png" alt=""></p>
-<p>即可打开相应的文件，我们这里打开一个名为 <strong>vimtest.txt</strong> 的文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270007.png" alt=""></p>
-<p><strong>K、J、H、K</strong> 分别对应着上下左右，当然，小键盘左边的方向键也是可以实现光标移动的。</p>
-<h2 id="2-插入字符"><a href="#2-插入字符" class="headerlink" title="2.插入字符"></a>2.插入字符</h2><p>现在我们想要在文件的末尾插入一行字符：<strong>helloworld !</strong> </p>
-<p>把光标移动到文件末尾，然后按下字母键 <strong>i</strong> 。我们可以看到光标从覆盖整个字符变成了一个白色的下划线。</p>
-<p>然后在文件的末尾输入我们想要输入的字符：<strong>helloworld！</strong></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270008.png" alt=""></p>
-<p>现在我们已经输入进去一行字符，那么，怎么保存退出呢？</p>
-<p>首先按下【ESC】进入命令模式，然后输入一个命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270009.png" alt=""></p>
-<p>然后我们就成功地保存退出了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270010.png" alt=""></p>
-<p>再次打开这个文件，发现我们刚才保存的内容仍然是存在的。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270011.png" alt=""></p>
-<p>学会了插入，删除也是同理，至少现在我们已经能够将 vim 当做记事本用了。但是，如果我们仅仅掌握这点功能的话，还不如使用 notepad++ 来得方便，所以接下来我们介绍一些高级点的技能。</p>
-<h2 id="3-字符搜索"><a href="#3-字符搜索" class="headerlink" title="3.字符搜索"></a>3.字符搜索</h2><p>输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/hello</div></pre></td></tr></table></figure>
-<p>即可完成在全文中对字符串 hello 的搜索。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270012.png" alt=""></p>
-<p>输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">n</div></pre></td></tr></table></figure>
-<p>即可跳转到下一处。当然你也可以按 <strong>i</strong> 进入插入模式来修改字符，不过如果你想替换全文中所有的 <strong>hello</strong> 的话，那么 :s 也许是一个不错的选择。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:s/hello/hi/g</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270013.png" alt=""></p>
-<p>如图所示，我们已经把文中所有的 <strong>hello</strong> 替换成了 <strong>hi</strong> 。这貌似也没什么大不了，毕竟我用 <strong>notepad++</strong> 也可以实现同样的工作。那么下面的问题可就是 <strong>notepad++</strong> 实现不了的了。</p>
-<p>我们现在要把前三行所有的 <strong>i</strong> 替换成 <strong>w</strong>。</p>
-<p>注意，我们只替换前三行。嗯，这个问题对于 notepad++ 来说可能有点变态，不过对于 vim ……</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:1,3s/i/w/g</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270014.png" alt=""></p>
-<p>只有前三行的 <strong>i</strong> 被替换成了 <strong>w</strong>。命令结尾的 <strong>g</strong> 表示会对所有符合情况的 i 进行操作，否则只替换第一个。</p>
-<h2 id="4-分屏操作"><a href="#4-分屏操作" class="headerlink" title="4.分屏操作"></a>4.分屏操作</h2><p>说到 vim，就一定不能够错过它的分屏功能。输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:sp</div></pre></td></tr></table></figure>
-<p>就能得到上下两个屏幕，这对于只能显示黑框框的 shell 来说确实是很必要的功能。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270015.png" alt=""></p>
-<p>当然，如果两个屏幕只能看一个文件，那还不如一个屏幕，选择一个屏幕（如果没有鼠标的话可以用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + w + j  //(j 的意思是“下”)</div></pre></td></tr></table></figure>
-<p>来实现切换，然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:open car.txt</div></pre></td></tr></table></figure>
-<p>来实现文档的切换。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270016.png" alt=""></p>
-<p><strong>vim</strong> 还有一个类似的功能叫做 <strong>newtab</strong>，可以像浏览器一样显示标签，具体我就不在赘述了，有兴趣的话可以查阅后面的表格。</p>
-<h2 id="5-常用功能一览"><a href="#5-常用功能一览" class="headerlink" title="5.常用功能一览"></a>5.常用功能一览</h2><h3 id="5-1-跳转"><a href="#5-1-跳转" class="headerlink" title="5.1.跳转"></a>5.1.跳转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">*          当光标停留在一个单词上，* 键会在文件内搜索该单词，并跳转到下一处；</div><div class="line">#          当光标停留在一个单词上，# 在文件内搜索该单词，并跳转到上一处；</div><div class="line">(/)        移动到 前/后 句 的开始；</div><div class="line">&#123;/&#125;        跳转到 当前/下一个 段落 的开始。</div><div class="line">g_         到本行最后一个不是 blank 字符的位置。</div><div class="line">fa         到下一个为 a 的字符处，你也可以fs到下一个为s的字符。</div><div class="line">t,         到逗号前的第一个字符。逗号可以变成其它字符。</div><div class="line">3fa        在当前行查找第三个出现的 a。</div><div class="line">F/T        和 f 和 t 一样，只不过是相反方向;</div><div class="line">gg         将光标定位到文件第一行起始位置；</div><div class="line">G          将光标定位到文件最后一行起始位置；</div><div class="line">NG或Ngg    将光标定位到第 N 行的起始位置。</div></pre></td></tr></table></figure>
-<h3 id="5-2-搜索"><a href="#5-2-搜索" class="headerlink" title="5.2.搜索"></a>5.2.搜索</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/str1                正向搜索字符串 str1；</div><div class="line">n                    继续搜索，找出 str1 字符串下次出现的位置；</div><div class="line">N                    继续搜索，找出 str1 字符串上一次出现的位置；</div><div class="line">?str2                反向搜索字符串 str2 。</div></pre></td></tr></table></figure>
-<h3 id="5-3-删除"><a href="#5-3-删除" class="headerlink" title="5.3.删除"></a>5.3.删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">rc                 用 c 替换光标所指向的当前字符；</div><div class="line">nrc                用 c 替换光标所指向的前 n 个字符；</div><div class="line">5rA                用 A 替换光标所指向的前 5 个字符；</div><div class="line">x                  删除光标所指向的当前字符；</div><div class="line">nx                 删除光标所指向的前 n 个字符；</div><div class="line">3x                 删除光标所指向的前 3 个字符；</div><div class="line">dw                 删除光标右侧的字；</div><div class="line">ndw                删除光标右侧的 n 个字；</div><div class="line">3dw                删除光标右侧的 3 个字；</div><div class="line">db                 删除光标左侧的字；</div><div class="line">ndb                删除光标左侧的 n 个字；</div><div class="line">5db                删除光标左侧的 5 个字；</div><div class="line">dd                 删除光标所在行，并去除空隙；</div><div class="line">ndd                删除（剪切） n 行内容，并去除空隙；</div><div class="line">3dd                删除（剪切） 3 行内容，并去除空隙；</div></pre></td></tr></table></figure>
-<h3 id="5-4-替换"><a href="#5-4-替换" class="headerlink" title="5.4.替换"></a>5.4.替换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">s                用输入的正文替换光标所指向的字符；</div><div class="line">S                删除当前行，并进入编辑模式；</div><div class="line">ns               用输入的正文替换光标右侧 n 个字符；</div><div class="line">nS               删除当前行在内的 n 行，并进入编辑模式；</div><div class="line">cw               用输入的正文替换光标右侧的字；</div><div class="line">cW               用输入的正文替换从光标到行尾的所有字符（同 c$ )；</div><div class="line">ncw              用输入的正文替换光标右侧的 n 个字；</div><div class="line">cb               用输入的正文替换光标左侧的字；</div><div class="line">ncb              用输入的正文替换光标左侧的 n 个字；</div><div class="line">cd               用输入的正文替换光标的所在行；</div><div class="line">ncd              用输入的正文替换光标下面的 n 行；</div><div class="line">c$               用输入的正文替换从光标开始到本行末尾的所有字符；</div><div class="line">c0               用输入的正文替换从本行开头到光标的所有字符。</div></pre></td></tr></table></figure>
-<h3 id="5-5-复制粘贴"><a href="#5-5-复制粘贴" class="headerlink" title="5.5.复制粘贴"></a>5.5.复制粘贴</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">yy              复制当前行到内存缓冲区；</div><div class="line">nyy             复制 n 行内容到内存缓冲区；</div><div class="line">5yy             复制 5 行内容到内存缓冲区；</div><div class="line">“+y             复制 1 行到操作系统的粘贴板；</div><div class="line">“+nyy           复制 n 行到操作系统的粘贴板。</div><div class="line">p               小写字母 p，将缓冲区的内容粘贴到光标的后面；</div><div class="line">P               大写字母 P，将缓冲区的内容粘贴到光标的前面。</div></pre></td></tr></table></figure>
-<h3 id="5-6-正则表达式"><a href="#5-6-正则表达式" class="headerlink" title="5.6.正则表达式"></a>5.6.正则表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">^                放在字符串前面，匹配行首的字；</div><div class="line">$                放在字符串后面，匹配行尾的字；</div><div class="line">\&lt;               匹配一个字的字头；</div><div class="line">\&gt;               匹配一个字的字尾；</div><div class="line">.                匹配任何单个正文字符；</div><div class="line">[str]            匹配 str 中的任何单个字符；</div><div class="line">[^str]           匹配任何不在 str 中的单个字符；</div><div class="line">[a-b]            匹配 a 到 b 之间的任一字符；</div><div class="line">*                匹配前一个字符的 0 次或多次出现；</div><div class="line">\                转义后面的字符。</div></pre></td></tr></table></figure>
-<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p><a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="external">vim 入门基础</a></p>
-<p><a href="http://vimdoc.sourceforge.net/" target="_blank" rel="external">vim 官方文档</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vim/">Vim</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">

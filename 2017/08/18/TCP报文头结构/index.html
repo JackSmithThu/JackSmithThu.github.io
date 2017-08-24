@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>TCP报文头结构 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.TCP 报文头结构 2.报文头各个部分说明2.1.Source Port和Destination Port:分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接; 2.2.Sequence Number:用来标识从TCP发端向TCP收端发送的数据字节流">
+<meta name="keywords" content="TCP,网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP报文头结构">
+<meta property="og:url" content="http://yoursite.com/2017/08/18/TCP报文头结构/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="1.TCP 报文头结构 2.报文头各个部分说明2.1.Source Port和Destination Port:分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接; 2.2.Sequence Number:用来标识从TCP发端向TCP收端发送的数据字节流">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708240001.jpg">
+<meta property="og:updated_time" content="2017-08-24T12:46:28.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP报文头结构">
+<meta name="twitter:description" content="1.TCP 报文头结构 2.报文头各个部分说明2.1.Source Port和Destination Port:分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接; 2.2.Sequence Number:用来标识从TCP发端向TCP收端发送的数据字节流">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708240001.jpg">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-TCP报文头结构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TCP报文头结构
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/18/TCP报文头结构/" class="article-date">
+  <time datetime="2017-08-17T18:16:16.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-TCP-报文头结构"><a href="#1-TCP-报文头结构" class="headerlink" title="1.TCP 报文头结构"></a>1.TCP 报文头结构</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708240001.jpg" alt=""></p>
+<h2 id="2-报文头各个部分说明"><a href="#2-报文头各个部分说明" class="headerlink" title="2.报文头各个部分说明"></a>2.报文头各个部分说明</h2><h3 id="2-1-Source-Port和Destination-Port"><a href="#2-1-Source-Port和Destination-Port" class="headerlink" title="2.1.Source Port和Destination Port:"></a>2.1.Source Port和Destination Port:</h3><p>分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接;</p>
+<h3 id="2-2-Sequence-Number"><a href="#2-2-Sequence-Number" class="headerlink" title="2.2.Sequence Number:"></a>2.2.Sequence Number:</h3><p>用来标识从TCP发端向TCP收端发送的数据字节流，它表示在这个报文段中的的第一个数据 字节在数据流中的序号;主要用来解决网络报乱序的问题;</p>
+<h3 id="2-3-Acknowledgment-Number"><a href="#2-3-Acknowledgment-Number" class="headerlink" title="2.3.Acknowledgment Number:"></a>2.3.Acknowledgment Number:</h3><p>32位确认序列号包含发送确认的一端所期望收到的下一个序号，因此，确认序号应 当是上次已成功收到数据字节序号加1。不过，只有当标志位中的ACK标志(下面介绍)为1时该确认序列号的字 段才有效。主要用来解决不丢包的问题;</p>
+<h3 id="2-4-Offset"><a href="#2-4-Offset" class="headerlink" title="2.4.Offset:"></a>2.4.Offset:</h3><p>给出首部中32 bit字的数目，需要这个值是因为任选字段的长度是可变的。这个字段占4bit(最多能 表示15个32bit的的字，即4*15=60个字节的首部长度)，因此TCP最多有60字节的首部。然而，没有任选字段， 正常的长度是20字节;</p>
+<h3 id="2-5-TCP-Flags"><a href="#2-5-TCP-Flags" class="headerlink" title="2.5.TCP Flags:"></a>2.5.TCP Flags:</h3><p>TCP首部中有6个标志比特，它们中的多个可同时被设置为1，主要是用于操控TCP的状态机的，依次 为URG，ACK，PSH，RST，SYN，FIN。每个标志位的意思如下：</p>
+<h3 id="2-6-URG："><a href="#2-6-URG：" class="headerlink" title="2.6.URG："></a>2.6.URG：</h3><p>此标志表示TCP包的紧急指针域(后面马上就要说到)有效，用来保证TCP连接不被中断，并且督促 中间层设备要尽快处理这些数据;</p>
+<h3 id="2-7-ACK："><a href="#2-7-ACK：" class="headerlink" title="2.7.ACK："></a>2.7.ACK：</h3><p>此标志表示应答域有效，就是说前面所说的TCP应答号将会包含在TCP数据包中;有两个取值：0和1， 为1的时候表示应答域有效，反之为0;</p>
+<h3 id="2-8-PSH："><a href="#2-8-PSH：" class="headerlink" title="2.8.PSH："></a>2.8.PSH：</h3><p>这个标志位表示Push操作。所谓Push操作就是指在数据包到达接收端以后，立即传送给应用程序， 而不是在缓冲区中排队;</p>
+<h3 id="2-9-RST："><a href="#2-9-RST：" class="headerlink" title="2.9.RST："></a>2.9.RST：</h3><p>这个标志表示连接复位请求。用来复位那些产生错误的连接，也被用来拒绝错误和非法的数据包;</p>
+<h3 id="3-0-SYN："><a href="#3-0-SYN：" class="headerlink" title="3.0.SYN："></a>3.0.SYN：</h3><p>表示同步序号，用来建立连接。SYN标志位和ACK标志位搭配使用，当连接请求的时候，SYN=1， ACK=0;连接被响应的时候，SYN=1，ACK=1;这个标志的数据包经常被用来进行端口扫描。扫描者发送 一个只有SYN的数据包，如果对方主机响应了一个数据包回来 ，就表明这台主机存在这个端口;但是由于这 种扫描方式只是进行TCP三次握手的第一次握手，因此这种扫描的成功表示被扫描的机器不很安全，一台安全 的主机将会强制要求一个连接严格的进行TCP的三次握手;</p>
+<h3 id="3-1-FIN："><a href="#3-1-FIN：" class="headerlink" title="3.1.FIN："></a>3.1.FIN：</h3><p>表示发送端已经达到数据末尾，也就是说双方的数据传送完成，没有数据可以传送了，发送FIN标志 位的TCP数据包后，连接将被断开。这个标志的数据包也经常被用于进行端口扫描。</p>
+<h3 id="3-2-Window"><a href="#3-2-Window" class="headerlink" title="3.2.Window:"></a>3.2.Window:</h3><p>窗口大小，也就是有名的滑动窗口。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/08/蓝牙协议入门（四）应用层协议/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          蓝牙协议入门（四）应用层协议
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
