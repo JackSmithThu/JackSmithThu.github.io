@@ -45,6 +45,138 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-贴现现金流应用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/13/贴现现金流应用/">贴现现金流应用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/11/13/贴现现金流应用/" class="article-date">
+  <time datetime="2017-11-13T08:57:55.000Z" itemprop="datePublished">2017-11-13</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CFA/">CFA</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-净现值（NPV）"><a href="#1-净现值（NPV）" class="headerlink" title="1.净现值（NPV）"></a>1.净现值（NPV）</h2><p>净现值（NPV）是考虑资金收支净额，以及按照一定的折现率折现之后的现值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NPV = CF1/[(1 + r)^1] + CF2/[(1 + r)^2] + ... + CFn/[(1 + r)^n]</div></pre></td></tr></table></figure>
+<p>其中 CFi 是第 i 年的现金流，r 是折现率，n 是投资的时间。</p>
+<h2 id="2-内回报率（IRR）"><a href="#2-内回报率（IRR）" class="headerlink" title="2.内回报率（IRR）"></a>2.内回报率（IRR）</h2><p>内部回报率（IRR），指项目投资实际可望达到的收益率。实质上，它是能使项目的净现值等于零时的折现率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0 = CF0 + CF1/[(1 + IRR)^1] + CF2/[(1 + IRR)^2] + ... + + CFn/[(1 + IRR)^n]</div></pre></td></tr></table></figure>
+<p>其中 CFi 是第 i 年的现金流，r 是折现率，n 是投资的时间，IRR 是内回报率。</p>
+<h2 id="3-接受和拒绝项目的标准"><a href="#3-接受和拒绝项目的标准" class="headerlink" title="3.接受和拒绝项目的标准"></a>3.接受和拒绝项目的标准</h2><ul>
+<li><strong>对于独立（independent）项目，接受所有净现值（NPV）为正的项目。</strong>因为净现值为 0 意味着内回报率（IRR）等于投资者预期的回报率。<strong>所以这也意味着接收所有内回报率（IRR）大于预期回报率的项目。</strong></li>
+</ul>
+<ul>
+<li><strong>对于互斥（mutually exclusive）项目，接受净现值（NPV）最高的项目。</strong></li>
+</ul>
+<h2 id="4-持有期汇报（Holding-Period-Return）"><a href="#4-持有期汇报（Holding-Period-Return）" class="headerlink" title="4.持有期汇报（Holding Period Return）"></a>4.持有期汇报（Holding Period Return）</h2><p>持有期汇报（HPR）等于利润（最终价值（ending value）与所有现金流（cash flow received）的总和与初始价值（beginning value）的差值）与初始价值的商。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HPR = (ending value + cash flow received - beginning value) / beginning value</div></pre></td></tr></table></figure>
+<p>如果没有现金流，则持有期回报（HPR）等于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HPR = (ending value - beginning value) / beginning value</div></pre></td></tr></table></figure>
+<h3 id="5-价值加权回报率（money-weighted-return）与时间加权回报率（time-weighted-return）"><a href="#5-价值加权回报率（money-weighted-return）与时间加权回报率（time-weighted-return）" class="headerlink" title="5.价值加权回报率（money-weighted return）与时间加权回报率（time-weighted return）"></a>5.价值加权回报率（money-weighted return）与时间加权回报率（time-weighted return）</h3><ul>
+<li><p>价值加权回报率（money-weighted return）相当于对投资组合（investment portfolio）的内回报率（IRR）。即当：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PV-inflows = PV-outflows</div></pre></td></tr></table></figure>
+<p>时得到的内回报率（IRR）。</p>
+</li>
+</ul>
+<ul>
+<li><p>时间加权回报率（time-weighted return）相当于每个复利周期的回报率的几何平均值。即</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">time-weighted return = [(1 + HPR1) × (1 + HPR2) × ... × (1 + HPR2)] ^ (1/n)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="6-银行折现收益率（bank-discount-yield）、持有期收益率（holding-period-yield）、实际年收益（effective-annual-yield）和货币市场收益率（money-market-yield）"><a href="#6-银行折现收益率（bank-discount-yield）、持有期收益率（holding-period-yield）、实际年收益（effective-annual-yield）和货币市场收益率（money-market-yield）" class="headerlink" title="6.银行折现收益率（bank discount yield）、持有期收益率（holding period yield）、实际年收益（effective annual yield）和货币市场收益率（money market yield）"></a>6.银行折现收益率（bank discount yield）、持有期收益率（holding period yield）、实际年收益（effective annual yield）和货币市场收益率（money market yield）</h2><ul>
+<li><p>银行折现收益率（bank discount yield，r-BD）等于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">r-BD = [(F - P) / F] × (360 / t)</div></pre></td></tr></table></figure>
+<p>其中，F 为纸面价格（即期末支付价格），P 为买入价格，t 为持有时间，一年以 360 天计。</p>
+</li>
+<li><p>持有期收益率（holding period yield，HPY）等于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HPY = [(F - P) / P]</div></pre></td></tr></table></figure>
+<p>其中，F 为纸面价格（即期末支付价格），P 为购买价格，t 为持有时间，一年以 360 天计。与银行折现收益率（BDY）相比，持有期收益率（HPY）的分母是买入价格（P），更接近我们平常对收益率的认知。</p>
+</li>
+<li><p>实际年收益率（effective annual yield，EAY）等于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EAY = (1 + HPY) ^ (365 / t) = [(F - P) / P] ^ (365 / t)</div></pre></td></tr></table></figure>
+<p>实际年收益率使用了复利的形式，而且以 365 天为一年。</p>
+</li>
+<li><p>货币市场收益率（money market yield，CD equivalent yield，r-MM）等于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">r-MM = HPY × (360 / t) = [(F - P) / P] × (360 / t)</div></pre></td></tr></table></figure>
+<p>货币时长收益率使用了单利的形式，以 360 天为一年。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>除以本金 / 纸面</strong></th>
+<th><strong>单利 / 复利</strong></th>
+<th><strong>一年 360 天 / 365 天</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>银行折现收益率</strong></td>
+<td>纸面</td>
+<td>单利</td>
+<td>360</td>
+</tr>
+<tr>
+<td><strong>货币市场收益率</strong></td>
+<td>本金</td>
+<td>单利</td>
+<td>360</td>
+</tr>
+<tr>
+<td><strong>持有期收益</strong></td>
+<td>本金</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td><strong>实际年收益</strong></td>
+<td>本金</td>
+<td>复利</td>
+<td>365</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-债券等值收益率（bond-equivalent-yield，BEY）"><a href="#7-债券等值收益率（bond-equivalent-yield，BEY）" class="headerlink" title="7.债券等值收益率（bond equivalent yield，BEY）"></a><strong>7.债券等值收益率（bond equivalent yield，BEY）</strong></h3><p>债券等值收益率（bond equivalent yield，BEY）等于半年度收益率（半年度收益率按照复利计算）的两倍。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NPV，IRR/">NPV，IRR</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零基础入门学习CFA/">零基础入门学习CFA</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-货币的时间价值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -984,104 +1116,8 @@
 
 
     
-      <article id="post-Linux常用指令" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/28/Linux常用指令/">Linux常用指令</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/28/Linux常用指令/" class="article-date">
-  <time datetime="2017-06-28T07:38:37.000Z" itemprop="datePublished">2017-06-28</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-目录相关的命令"><a href="#1-目录相关的命令" class="headerlink" title="1.目录相关的命令"></a>1.目录相关的命令</h2><p>首先，我们要建立一个叫做 mydir 的文件夹，然后建立一个叫做 myfile 的文件。之后再把这个文件夹及其中的文件删除掉。</p>
-<p>按住 Ctrl + Alt + T，打开一个端口，然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls -l</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280008.png" alt=""></p>
-<p>通过 ls 命令，我们就可以查看当前目录下的文件和目录（要不然怎么知道建立和删除是否成功了呢，是吧）。然后我们开始建立文件夹。输入 ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mkdir mydir</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280009.png" alt=""></p>
-<p>看起来并没有发生什么，现在我们来 ls 一下看看我们是否成功建立了自己的文件夹。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280010.png" alt=""></p>
-<p>好，既然我们已经有了自己的文件夹了，那就进去建立一个文件吧。进入文件夹的命令是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd mydir</div></pre></td></tr></table></figure>
-<p>进去之后，我们来创建一个文件，命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi myfile.txt</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280011.png" alt=""></p>
-<p>于是我们就进入了 vim 的界面。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280012.png" alt=""></p>
-<p>关于 vim 的操作以前已经介绍过了，这里不再赘述。按下 i 进入插入模式，输入 hello 。然后按 Esc 到命令模式，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
-<p>保存退出。然后我们再 ls 一下，就能看见我们刚刚创建的文件了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280013.png" alt=""></p>
-<p>现在我们已经建立了新的文件，然后我们要删掉它。在 linux 中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ rm fliename // 删除文件</div><div class="line">$ rmdir filename // 删除文件夹</div></pre></td></tr></table></figure>
-<p>但是我们如果碰到想要删除一个文件夹，而这个文件夹中又有很多文件的情况，处理起来就会很麻烦了。这时我们就需要一个新的命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ rm -rf dirname //删除文件夹及其中所有文件</div></pre></td></tr></table></figure>
-<p>尝试一下，不过为了删除当前的目录，我们必须返回上一级目录中。输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd ../</div></pre></td></tr></table></figure>
-<p>返回上级目录之后，删除该文件夹：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ rm -rf mydir</div></pre></td></tr></table></figure>
-<p>这时整个文件夹已经被我们删除了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280014.png" alt=""></p>
-<h2 id="2-字符串匹配-grep"><a href="#2-字符串匹配-grep" class="headerlink" title="2.字符串匹配 grep"></a>2.字符串匹配 grep</h2><p>grep 可以过滤出你想要的东西，举个例子，我想要在当前目录下找到所有名字中带 Mu 的文件或文件夹，那么我们就可以：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ls | grep Mu</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280015.png" alt=""></p>
-<h2 id="3-进程相关指令-ps"><a href="#3-进程相关指令-ps" class="headerlink" title="3.进程相关指令 ps"></a>3.进程相关指令 ps</h2><p>ps 是显示进程的指令，可以根据不同的参数调节想要显示的进程种类，显示所有进程的指令是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ps aux</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280016.png" alt=""></p>
-<p>加入我只想看跟自己相关的进程呢？后面加个 grep 就可以了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ps aux | grep jack</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280017.png" alt=""></p>
-<h2 id="4-查看文件"><a href="#4-查看文件" class="headerlink" title="4.查看文件"></a>4.查看文件</h2><p>我们可以通过 cat 命令来查看文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat fliename</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280018.png" alt=""></p>
-<p>当然，我们也可以通过 tail 显示文件的最后几行。如果加上参数 -f ，就能不断地读取最新的内容，达到实时监视的效果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tail -f filename</div></pre></td></tr></table></figure>
-<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="http://www.cnblogs.com/wangkangluo1/archive/2012/05/26/2518856.html" target="_blank" rel="external">linux tail 命令详解</a></p>
-<p> <a href="http://blog.csdn.net/ljianhui/article/details/11100625" target="_blank" rel="external">初窥Linux 之 我最常用的20条命令</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Далее &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
@@ -1103,23 +1139,6 @@
 
 
 <script src="/js/script.js"></script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
