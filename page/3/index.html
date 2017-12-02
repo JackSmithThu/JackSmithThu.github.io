@@ -45,6 +45,71 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Eclipse搭建SpringBoot（四）使用LogBack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/">Eclipse搭建SpringBoot（四）使用LogBack</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Eclipse搭建SpringBoot（四）使用LogBack/" class="article-date">
+  <time datetime="2017-06-25T08:10:01.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-为什么使用-Logback"><a href="#1-为什么使用-Logback" class="headerlink" title="1.为什么使用 Logback"></a>1.为什么使用 Logback</h2><p>我们在使用调试 <strong>java</strong> 代码的时候，一般使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.out.println(<span class="string">"Hello worold!"</span>);</div></pre></td></tr></table></figure>
+<p>来输出一些信息到控制台。</p>
+<p>但是在实际开发中，一般使用日志记录工具来完成这件事。这么做的目的主要是利用日志的不同级别，来过滤掉不想要的信息。<strong>Logback</strong> 一般使用一下四个级别：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">logger.error(<span class="string">"This is an error message"</span>);</div></pre></td></tr></table></figure>
+<h2 id="2-如何使用Logback"><a href="#2-如何使用Logback" class="headerlink" title="2.如何使用Logback"></a>2.如何使用Logback</h2><p><strong>Logback</strong> 的使用仅需要很简单的配置：</p>
+<h3 id="2-1-引入相关包"><a href="#2-1-引入相关包" class="headerlink" title="2.1.引入相关包"></a>2.1.引入相关包</h3><p>下面是一个使用 <strong>Logback</strong> 的简单示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoggerService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass()); </div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.debug(<span class="string">"This is a debug message"</span>);  </div><div class="line">        logger.info(<span class="string">"This is an info message"</span>);  </div><div class="line">        logger.warn(<span class="string">"This is a warn message"</span>);  </div><div class="line">        logger.error(<span class="string">"This is an error message"</span>); </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250001.png" alt=""></p>
+<p>为什么没有 debug 的信息呢？这是因为默认的日志级别只到 info。为了输出 debug 的信息，我们需要进行一些额外的配置。</p>
+<h3 id="2-2-控制输出级别"><a href="#2-2-控制输出级别" class="headerlink" title="2.2.控制输出级别"></a>2.2.控制输出级别</h3><p>在 <strong>application.yml</strong> 中添加如下配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">logging:</span></div><div class="line"><span class="attr">  file:</span> <span class="string">yun.log</span>  </div><div class="line"><span class="attr">  level:</span></div><div class="line">    <span class="string">ROOT</span> <span class="string">:</span> <span class="string">debug</span></div></pre></td></tr></table></figure>
+<p>再运行一下，就能看到有 debug 信息的输出结果了：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250002.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logger/">Logger</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-蓝牙协议入门（二）传输层协议" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1186,78 +1251,8 @@
 
 
     
-      <article id="post-Docker入门之（一）什么是Docker" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/02/Docker入门之（一）什么是Docker/">Docker入门之（一）什么是Docker</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/02/Docker入门之（一）什么是Docker/" class="article-date">
-  <time datetime="2017-06-02T08:57:55.000Z" itemprop="datePublished">2017-06-02</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-什么是Docker"><a href="#1-什么是Docker" class="headerlink" title="1.什么是Docker"></a>1.什么是Docker</h2><p><em>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</em></p>
-<p>通俗地说，Docker 是一种虚拟机（广义上的，准确的说法应该是<strong>容器</strong>）。Docker 与其他虚拟机（如：VMWare，Vitrual Box）的区别在于，Docker是一种高度特化的虚拟机。<strong>Docker的效率更高，但是它只能运行与其所运行在的操作系统相同的系统。</strong>也就是说，如果你的服务器上安装的是Ubuntu，那么你所有的 Docker 虚拟机都必须是 Ubuntu 系统。</p>
-<h2 id="2-什么时候使用Docker"><a href="#2-什么时候使用Docker" class="headerlink" title="2.什么时候使用Docker"></a>2.什么时候使用Docker</h2><p><em>如果你只是想让尽可能多的服务器应用实例在尽可能少的硬件上运行，可能不大关心运行多个操作系统虚拟机。要是同一应用程序的多个副本正是你需要的，那么你会喜欢上容器。</em></p>
-<p>虚拟机管理程序能做容器做不了的一件事就是，使用不同的操作系统或内核。由于所有的容器都需要使用同样的操作系统和内核，因此如果你想仅依靠 Docker 在一台电脑上同时部署 Windows 和 Linux 是一件不可能的事情。不过，这并不影响 Docker 的广泛使用，毕竟 Docker 的效率远高于普通虚拟机，而这意味着更低的成本。</p>
-<h2 id="3-Docker到底有多快"><a href="#3-Docker到底有多快" class="headerlink" title="3.Docker到底有多快"></a>3.Docker到底有多快</h2><p><em>docker相对于物理机其计算能力几乎没有损耗，而虚拟机对比物理机则有着非常明显的损耗。虚拟机的计算能力损耗在50%左右。</em></p>
-<p>下图是在IBM x3650 M4 服务器运算 Linpack 程序得到的测试结果：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020002.png" alt=""></p>
-<p>我们可以看到，使用 Docker 和不使用任何虚拟技术得到的结果基本没什么差别，而使用 KVM（一种虚拟机）则要慢的多了。</p>
-<p>那么，为什么 Docker 能够达到如此高的效率呢？我们来看两张图：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020001.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706020003.png" alt=""></p>
-<p>上边是传统虚拟机的架构图，下边是 Docker 。总的来说，Docker 比传统虚拟机快主要在于以下两点原因：</p>
-<ol>
-<li>docker有着比虚拟机更少的抽象层。</li>
-<li>docker利用的是宿主机的内核，而不需要Guest OS。</li>
-</ol>
-<p>Docker 和传统虚拟机的区别，就好比前者是在集装箱里面打了隔板，而后者则是在集装箱里有塞进去了小的集装箱。因此前者的效率比后者更高也就不足为奇了。</p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://cloud.51cto.com/art/201410/453718.htm" target="_blank" rel="external">Docker到底是什么？为什么它这么火！</a></p>
-<p><a href="https://www.zhihu.com/question/28300645" target="_blank" rel="external">如何通俗解释Docker是什么？</a></p>
-<p><a href="http://blog.csdn.net/cbl709/article/details/43955687" target="_blank" rel="external"> docker与虚拟机性能比较</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dcoker/">Dcoker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器/">容器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/2/">&laquo; Назад</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Далее &raquo;</a>
       </nav>
     </section>
     <footer id="footer">

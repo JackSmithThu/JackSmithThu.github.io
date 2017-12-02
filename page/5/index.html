@@ -45,6 +45,81 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-kafka学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/24/kafka学习/">kafka学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/03/24/kafka学习/" class="article-date">
+  <time datetime="2017-03-24T10:45:40.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="kafka简介"><a href="#kafka简介" class="headerlink" title="kafka简介"></a>kafka简介</h2><h3 id="首先，我们先来看一下-kafka-是用来干什么的"><a href="#首先，我们先来看一下-kafka-是用来干什么的" class="headerlink" title="首先，我们先来看一下 kafka 是用来干什么的"></a>首先，我们先来看一下 <strong>kafka</strong> 是用来干什么的</h3><p>根据<a href="http://kafka.apache.org" target="_blank" rel="external"><strong>kafka</strong>官网</a>的介绍，<strong>kafka</strong>主要用来做这么两件事儿：</p>
+<ul>
+<li>搭建一个实时的流数据管道以支持系统间的实时数据通信。</li>
+<li>搭建一个对流数据进行转换或响应的实时流应用。</li>
+</ul>
+<h3 id="为了实现这个目标，kafka-实现了以下三大关键特性"><a href="#为了实现这个目标，kafka-实现了以下三大关键特性" class="headerlink" title="为了实现这个目标，kafka 实现了以下三大关键特性"></a>为了实现这个目标，<strong>kafka</strong> 实现了以下三大关键特性</h3><ul>
+<li>支持记录流（<strong>stream of records</strong>）的发布和订阅（有点儿像<strong>消息队列</strong>）。</li>
+<li>允许你以一种高容错的手段存储记录流。</li>
+<li>允许你实时地处理产生的记录。</li>
+</ul>
+<h3 id="初次之外，你可能还需要了解一些关于-kafka-其他的知识"><a href="#初次之外，你可能还需要了解一些关于-kafka-其他的知识" class="headerlink" title="初次之外，你可能还需要了解一些关于 kafka 其他的知识"></a>初次之外，你可能还需要了解一些关于 <strong>kafka</strong> 其他的知识</h3><ul>
+<li><p>首先，<strong>kafka</strong> 是运行在由一个或多个服务器组成的集群（<strong>cluster</strong>）上</p>
+</li>
+<li><p><strong>kafka</strong> 集群将流（<strong>stream</strong>）按照不同的分类存储，每个分类叫做一个主题（ <strong>topic</strong>）。</p>
+</li>
+<li><p>每一条记录（<strong>record</strong>）都包含一个键（<strong>key</strong>），一个值（<strong>value</strong>）和一个时间戳（<strong>timestamp</strong>）。</p>
+<hr>
+</li>
+</ul>
+<h2 id="kafka原理"><a href="#kafka原理" class="headerlink" title="kafka原理"></a>kafka原理</h2><h3 id="kafka-的四大-API"><a href="#kafka-的四大-API" class="headerlink" title="kafka 的四大 API"></a><strong>kafka</strong> 的四大 API</h3><ul>
+<li><strong>Producer API</strong> ：允许一个应用发布一个数据流到一个或多个 <strong>topic</strong> 上。</li>
+<li><strong>Consumer API</strong> ：允许一个应用订阅一个或多个 <strong>topic</strong> ，并对发送给它的数据进行处理。 </li>
+<li><strong>Streams API</strong> ： 允许一个应用作为流处理器（<strong>stream processor</strong>）工作，即从某个或某些 <strong>topic</strong> 订阅，处理之后再发布到其他 <strong>topic</strong> 上。</li>
+<li><strong>Connector API</strong> ： 用于构建可重用的 <strong>producer</strong> 或 <strong>constmer</strong> 来把<strong>kafka</strong> 的 <strong>topic</strong> 连接到已有的系统上。比如，一个关系型数据库上的 <strong>connector</strong> 可以捕捉该数据库上某张表的内一个变化。</li>
+</ul>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-单台windows搭建redis集群" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -504,7 +579,7 @@
 
     
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Назад</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
       </nav>
     </section>
     <footer id="footer">
