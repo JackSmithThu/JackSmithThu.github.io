@@ -45,6 +45,231 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-蓝牙协议入门（三）中介层协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/06/蓝牙协议入门（三）中介层协议/">蓝牙协议入门（三）中介层协议</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/07/06/蓝牙协议入门（三）中介层协议/" class="article-date">
+  <time datetime="2017-07-05T17:38:37.000Z" itemprop="datePublished">2017-07-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-主机控制接口协议-HCI"><a href="#1-主机控制接口协议-HCI" class="headerlink" title="1.主机控制接口协议 HCI"></a>1.主机控制接口协议 HCI</h2><p>常用蓝牙控制器接口数据分组分为三类，分别为：</p>
+<ul>
+<li>指令分组（0x01）</li>
+<li>事件分组（0x04）</li>
+<li>数据分组（ACL：0x02，SCO：0x03）</li>
+</ul>
+<p>全部分组类型列举如下：</p>
+<table>
+<thead>
+<tr>
+<th>HCI 分组类型</th>
+<th>RS232分组指示器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HCI指令分组</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>HCI ACL数据分组</td>
+<td>0x02</td>
+</tr>
+<tr>
+<td>HCI SCO数据分组</td>
+<td>0x03</td>
+</tr>
+<tr>
+<td>HCI事件分组</td>
+<td>0x04</td>
+</tr>
+<tr>
+<td>HCI错误消息分组</td>
+<td>0x05</td>
+</tr>
+<tr>
+<td>HCI协商分组</td>
+<td>0x06</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-1-指令分组"><a href="#1-1-指令分组" class="headerlink" title="1.1.指令分组"></a>1.1.指令分组</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280001.png" alt=""></p>
+<p>如：<strong>Accpet Connection Request</strong></p>
+<ul>
+<li><strong>Opcode</strong> 为：<strong>0x0409</strong></li>
+<li>参数长度为: <strong>07</strong> <ul>
+<li>参数中蓝牙地址为：<strong>00:0d:fd:5f:16:9f</strong></li>
+</ul>
+</li>
+<li>角色为：从设备  <strong>0x01</strong></li>
+</ul>
+<p>则大端数据模式指令为：<strong>09 04 07 9f 16 5f fd 0d 00 01</strong></p>
+<h3 id="1-2-事件分组"><a href="#1-2-事件分组" class="headerlink" title="1.2.事件分组"></a>1.2.事件分组</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280002.png" alt=""></p>
+<p>如：<strong>Accpet Connection Request</strong></p>
+<ul>
+<li><strong>Opcode :0x0409</strong></li>
+<li>状态： <strong>0x00</strong></li>
+<li>总长度： <strong>4</strong> 字节</li>
+<li>命令状态：<strong>0x0f</strong></li>
+</ul>
+<p>则分组为： <strong>04 0f 04 00 01 09 04</strong></p>
+<h3 id="1-3-数据分组"><a href="#1-3-数据分组" class="headerlink" title="1.3.数据分组"></a>1.3.数据分组</h3><p><strong>ACL</strong> 数据分组（注：<strong>PB =  Packet_Boundary</strong> ； <strong>BC =  Broadcast Flag</strong>）</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280003.png" alt=""></p>
+<p><strong>SCO</strong> 数据分组</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280004.png" alt=""></p>
+<h2 id="2-逻辑链路控制与适配协议-L2CAP"><a href="#2-逻辑链路控制与适配协议-L2CAP" class="headerlink" title="2.逻辑链路控制与适配协议  L2CAP"></a>2.逻辑链路控制与适配协议  L2CAP</h2><p><strong>L2CAP</strong> 位于基带之上，将基带的数据分组转换为便于高层应用的数据分组格式，并提供协议复用和服务质量交换等功能。<strong>L2CAP</strong> 只支持 <strong>ACL</strong> 数据传输，不支持 <strong>SCO</strong> 数据。<strong>L2CAP</strong> 本身不提供加强信道可靠性和保证数据完整性的机制，其信道的可靠性依靠基带提供。</p>
+<p><strong>L2CAP</strong> 主要实现以下功能：</p>
+<ol>
+<li><strong>协议复用</strong>：底层传输协议没有提供对高层协议的复用机制，因而 L2CAP 支持高层协议复用，L2CAP 层可以区分其上的 SDP、RFCOMM、TCS 等。</li>
+<li><strong>分段重组</strong>：L2CAP层帮助实现基带的短 PDU 和高层的长 PDU 相互传输，L2CAP 本身不完成任何 PDU 的分段重组，具体的分段重组有低层和高层来完成。</li>
+<li><strong>服务质量 Qualityof Serivce 信息的交换</strong>：蓝牙建立连接的过程中，L2CAP允许交互蓝牙所期望的服务质量，建立完成后，通过监视资源的使用情况，来保证服务质量。</li>
+<li><strong>组抽象</strong>：<strong>L2CAP</strong> 忽略地址组概念，他只关心数据。</li>
+</ol>
+<p><strong>L2CAP</strong> 信道有三种类型：</p>
+<ul>
+<li>面向连接信道：<strong>Connection-Oriented CO</strong>，用于两个设备之间的数据通信。</li>
+<li>无连接信道：<strong>Connection-LessCL</strong>，用来向一组设备广播方式传输数据。<strong>CID</strong>为固定值：<strong>0x0002。</strong></li>
+<li>信令信道：<strong>Signaling</strong>，用于创建 <strong>CO</strong> 通道，可以通过协商改变 <strong>CO</strong> 信道的特性。</li>
+</ul>
+<p>协议数据单元：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280005.png" alt=""></p>
+<h2 id="3-服务发现协议-SDP"><a href="#3-服务发现协议-SDP" class="headerlink" title="3.服务发现协议   SDP"></a>3.服务发现协议   SDP</h2><p>SDP两种服务发现模式：            </p>
+<ul>
+<li>服务搜索：查询具有特定服务属性的服务；            </li>
+<li>服务浏览：简单的浏览全部可用服务。</li>
+</ul>
+<p>其 <strong>PDU</strong> （协议数据单元）格式为：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280006.png" alt=""></p>
+<p>不同的 <strong>PDU ID</strong> 的意义为：</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Parameter Descirption</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>Reserved</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>SDP_ErrorResponse</td>
+<td>错误响应</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>SDP_ServiceSearchRequest</td>
+<td>服务搜索请求</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>SDP_ServiceSearchResponse</td>
+<td>服务搜索响应</td>
+</tr>
+<tr>
+<td>0x04</td>
+<td>SDP_ServiceAttributeRequest</td>
+<td>服务属性请求</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>SDP_ServiceAttributeResponse</td>
+<td>服务属性响应</td>
+</tr>
+<tr>
+<td>0x06</td>
+<td>SDP_ServiceSearchAttributeRequest</td>
+<td>服务搜索属性请求</td>
+</tr>
+<tr>
+<td>0x07</td>
+<td>SDP_ServiceSearchAttributeResponse</td>
+<td>服务搜索属性响应</td>
+</tr>
+<tr>
+<td>0x08-0xff</td>
+<td>Reserved</td>
+<td>保留</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-串口仿真协议-RFCOMM"><a href="#4-串口仿真协议-RFCOMM" class="headerlink" title="4.串口仿真协议   RFCOMM"></a>4.串口仿真协议   RFCOMM</h2><p><strong>RFCOMM</strong> 是为建立在串口之上的传统应用提供环境接口，使他们可以做比较少协议改动就可以在蓝牙无线通信无线链路上工作。多路串口仿真是 <strong>RFCOMM</strong> 的重要功能，通过多路复用器(<strong>multiplexer</strong>)，一条 <strong>L2CAP</strong> 链路可以同时 多个串行应用。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707280007.png" alt=""></p>
+<p><strong>RFCOMM</strong> 两个蓝牙设备之间可以支持多达60多路仿真串口。<strong>RFCOMM</strong> 帧类型如下：</p>
+<table>
+<thead>
+<tr>
+<th>SABM</th>
+<th>异步平衡模式设置指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UA</td>
+<td>未加编号的确认响应</td>
+</tr>
+<tr>
+<td>DM</td>
+<td>断开连接模式响应</td>
+</tr>
+<tr>
+<td>DISC</td>
+<td>断开连接指令</td>
+</tr>
+<tr>
+<td>UIH</td>
+<td>带头校验的未编号信息命令和响应</td>
+</tr>
+</tbody>
+</table>
+<h2 id="X-参考连接"><a href="#X-参考连接" class="headerlink" title="X.参考连接"></a>X.参考连接</h2><p><a href="http://blog.csdn.net/xubin341719/article/details/38305331" target="_blank" rel="external">蓝牙核心技术概述（四）：蓝牙协议规范（HCI、L2CAP、SDP、RFOCMM）</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-TCP的三次握手与四次挥手" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -737,92 +962,8 @@
 
 
     
-      <article id="post-Spring中bean的作用域的实验" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/Spring中bean的作用域的实验/">Spring中bean的作用域的实验</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/25/Spring中bean的作用域的实验/" class="article-date">
-  <time datetime="2017-06-25T08:10:47.000Z" itemprop="datePublished">2017-06-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文是 <a href="https://jacksmiththu.github.io/2017/06/25/Spring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F/" target="_blank" rel="external">Spring中bean的作用域</a> 的相关实验，目的是演示 <strong>bean</strong> 的作用域是如何使用的。</p>
-<h2 id="1-实验内容"><a href="#1-实验内容" class="headerlink" title="1.实验内容"></a>1.实验内容</h2><p>我们要进行一个实验，看看 bean 的作用域是否能整的响起描述的那样运作。为此，我们选了三种作用域：<strong>单例</strong>、<strong>请求</strong>和<strong>会话</strong>。我们为每一中作用域建立一个 <strong>Service</strong>，这样我们就能看到何时会创建新的 <strong>bean</strong> 来注入。</p>
-<p>值得一提的是，因为我们的 <strong>Service</strong> 类并没有实现接口，因此我们就不能使用基于接口的 <strong>JDK</strong> 动态代理。所以我们就只好使用基于 <strong>CgLib</strong> 的动态代理。</p>
-<p>在 Spring 中，两种动态代理的设置方式分别为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 基于 CgLib 的动态代理</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123; ... &#125;</div><div class="line"></div><div class="line"><span class="comment">// 基于 JDK 的动态代理</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.INTERFACES)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
-<p>本实验中我们使用的是前者，</p>
-<h2 id="2-实验代码"><a href="#2-实验代码" class="headerlink" title="2.实验代码"></a>2.实验代码</h2><p>在 <strong>com.yun.service</strong> 包下创建四个 <strong>Service</strong>，分别名为 <strong>ScopeService</strong>，<strong>SingletonService</strong>，<strong>SingletonService</strong> 和 <strong>SessionService</strong>。并修改 <strong>YunApplication</strong> 中的内容，其内容分别如下：</p>
-<h3 id="2-1-ScopeService-java"><a href="#2-1-ScopeService-java" class="headerlink" title="2.1.ScopeService.java"></a>2.1.ScopeService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScopeService</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> SingletonService singletonService;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span> </div><div class="line">	<span class="keyword">private</span> SessionService sessionService;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> RequestService requestService;</div><div class="line">	</div><div class="line"></div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getScopeId</span><span class="params">()</span> </span>&#123;</div><div class="line">		logger.info(<span class="string">"========================================="</span>);</div><div class="line">		logger.info(<span class="string">"requestService id is:"</span> + requestService.getId());</div><div class="line">		logger.info(<span class="string">"sessionService id is:"</span> + sessionService.getId());</div><div class="line">		logger.info(<span class="string">"singletonService id is:"</span> + singletonService.getId());</div><div class="line">		<span class="keyword">return</span> <span class="string">"request id is : "</span> + requestService.getId() + <span class="string">" | "</span> + </div><div class="line">			   <span class="string">"session id is : "</span> + sessionService.getId() + <span class="string">" | "</span> +</div><div class="line">			   <span class="string">"singleton id is : "</span> + singletonService.getId();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setScopeId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		requestService.setId(id);</div><div class="line">		sessionService.setId(id);</div><div class="line">		singletonService.setId(id);</div><div class="line">		logger.info(<span class="string">"========================================="</span>);</div><div class="line">		logger.info(<span class="string">"requestService id set:"</span> + id);</div><div class="line">		logger.info(<span class="string">"sessionService id set:"</span> + id);</div><div class="line">		logger.info(<span class="string">"singletonService id set:"</span> + id);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-2-SingletonService-java"><a href="#2-2-SingletonService-java" class="headerlink" title="2.2.SingletonService.java"></a>2.2.SingletonService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.ConfigurableBeanFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_SINGLETON)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-3-RequestService-java"><a href="#2-3-RequestService-java" class="headerlink" title="2.3.RequestService.java"></a>2.3.RequestService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ScopedProxyMode;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.WebApplicationContext;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">		value=WebApplicationContext.SCOPE_REQUEST,</div><div class="line">		proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-4-SessionService-java"><a href="#2-4-SessionService-java" class="headerlink" title="2.4.SessionService.java"></a>2.4.SessionService.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Scope;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ScopedProxyMode;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.WebApplicationContext;</div><div class="line"></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="meta">@Scope</span>(</div><div class="line">	value=WebApplicationContext.SCOPE_SESSION,</div><div class="line">	proxyMode=ScopedProxyMode.TARGET_CLASS)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SessionService</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-5-YunApplication-java"><a href="#2-5-YunApplication-java" class="headerlink" title="2.5.YunApplication.java"></a>2.5.YunApplication.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.ui.Model;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.service.ScopeService;</div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YunApplication</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> ScopeService scopeService;</div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/setscopeid/&#123;id&#125;"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">setScopeId</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Integer id) </span>&#123;</div><div class="line">        scopeService.setScopeId(id);</div><div class="line">        <span class="keyword">return</span> <span class="string">"id is set by "</span> + id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/getscopeid"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getScopeId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> scopeService.getScopeId();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-实验结果"><a href="#3-实验结果" class="headerlink" title="3.实验结果"></a>3.实验结果</h2><h3 id="3-1-本地测试"><a href="#3-1-本地测试" class="headerlink" title="3.1.本地测试"></a>3.1.本地测试</h3><h4 id="3-1-1-设定-bean-的属性值"><a href="#3-1-1-设定-bean-的属性值" class="headerlink" title="3.1.1.设定 bean 的属性值"></a>3.1.1.设定 bean 的属性值</h4><p>在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/setscopeid/25</div></pre></td></tr></table></figure>
-<p>得到结果如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250003.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250004.png" alt=""></p>
-<h4 id="3-1-2-读取-bean-的属性值"><a href="#3-1-2-读取-bean-的属性值" class="headerlink" title="3.1.2.读取 bean 的属性值"></a>3.1.2.读取 bean 的属性值</h4><p>在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/getscopeid</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250005.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250006.png" alt=""></p>
-<p>可见，作用域是 request 的属性值已经读取不到了，但是 session 和 singleton 的仍然能够读取到。</p>
-<h3 id="3-2-远程测试"><a href="#3-2-远程测试" class="headerlink" title="3.2.远程测试"></a>3.2.远程测试</h3><h4 id="3-2-1-获取本机-ip"><a href="#3-2-1-获取本机-ip" class="headerlink" title="3.2.1.获取本机 ip"></a>3.2.1.获取本机 ip</h4><p>为了测试 session 作用域的效果，我们使用另一台设备对我们的应用进行访问。在那之前，我们需要知道本机的 ip 地址。在控制台输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ipconfig</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250007.png" alt=""></p>
-<p>如图所示，我的本机 ip 为 10.29.138.44。</p>
-<h4 id="3-2-2-远程访问"><a href="#3-2-2-远程访问" class="headerlink" title="3.2.2.远程访问"></a>3.2.2.远程访问</h4><p>如果我要在另一台设备上访问我的主机，那么我就需要在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10.29.138.44:8080/getscopeid</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250008.png" alt=""></p>
-<p>可见 <strong>session</strong> 在另一台机器上已经不能用了，然而 <strong>singleton</strong> 依旧保持着原来的值。</p>
-<h4 id="3-2-3-在本机上使用不同的-session"><a href="#3-2-3-在本机上使用不同的-session" class="headerlink" title="3.2.3.在本机上使用不同的 session"></a>3.2.3.在本机上使用不同的 session</h4><p>当然，如果你不想使用另一台计算机的话，在同一计算机上的另一个浏览器也是不同的 <strong>session</strong>。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250009.png" alt=""></p>
-<p>或者你把原来的浏览器重启一下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706250010.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Назад</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Далее &raquo;</a>
+        <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
