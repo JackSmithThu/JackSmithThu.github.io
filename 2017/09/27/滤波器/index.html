@@ -5,23 +5,23 @@
   
   <title>滤波器 - Jackie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="滤波器1.滤波器的概念为了阐述滤波器的概念，我们首先来看两个场景。   在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。 2.高通、低通和带通假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？  我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。  3.使用 Matlab 生成滤波器12">
+  <meta name="description" content="1.滤波器的概念为了阐述滤波器的概念，我们首先来看两个场景。   在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。 2.高通、低通和带通假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？  我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。  3.使用 Matlab 生成滤波器12hd">
 <meta name="keywords" content="DSP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="滤波器">
 <meta property="og:url" content="http://yoursite.com/2017/09/27/滤波器/index.html">
 <meta property="og:site_name" content="Jackie">
-<meta property="og:description" content="滤波器1.滤波器的概念为了阐述滤波器的概念，我们首先来看两个场景。   在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。 2.高通、低通和带通假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？  我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。  3.使用 Matlab 生成滤波器12">
+<meta property="og:description" content="1.滤波器的概念为了阐述滤波器的概念，我们首先来看两个场景。   在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。 2.高通、低通和带通假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？  我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。  3.使用 Matlab 生成滤波器12hd">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310001.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310002.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310003.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310004.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310005.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310006.png">
-<meta property="og:updated_time" content="2018-01-11T01:51:58.862Z">
+<meta property="og:updated_time" content="2018-01-11T01:54:58.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="滤波器">
-<meta name="twitter:description" content="滤波器1.滤波器的概念为了阐述滤波器的概念，我们首先来看两个场景。   在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。 2.高通、低通和带通假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？  我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。  3.使用 Matlab 生成滤波器12">
+<meta name="twitter:description" content="1.滤波器的概念为了阐述滤波器的概念，我们首先来看两个场景。   在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。 2.高通、低通和带通假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？  我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。  3.使用 Matlab 生成滤波器12hd">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310001.png">
   
   
@@ -83,7 +83,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="滤波器"><a href="#滤波器" class="headerlink" title="滤波器"></a>滤波器</h1><h2 id="1-滤波器的概念"><a href="#1-滤波器的概念" class="headerlink" title="1.滤波器的概念"></a>1.滤波器的概念</h2><p>为了阐述滤波器的概念，我们首先来看两个场景。</p>
+        <h2 id="1-滤波器的概念"><a href="#1-滤波器的概念" class="headerlink" title="1.滤波器的概念"></a>1.滤波器的概念</h2><p>为了阐述滤波器的概念，我们首先来看两个场景。</p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310001.png" alt=""></p>
 <p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310002.png" alt=""></p>
 <p>在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。</p>

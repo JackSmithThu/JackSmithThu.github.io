@@ -5,13 +5,13 @@
   
   <title>傅里叶变换 - Jackie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="傅里叶变换本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句">
+  <meta name="description" content="本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句话，谢谢。">
 <meta name="keywords" content="Android,DSP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="傅里叶变换">
 <meta property="og:url" content="http://yoursite.com/2017/12/26/傅里叶变换/index.html">
 <meta property="og:site_name" content="Jackie">
-<meta property="og:description" content="傅里叶变换本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句">
+<meta property="og:description" content="本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句话，谢谢。">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300002.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300003.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300004.png">
@@ -19,10 +19,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300007.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300006.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300008.png">
-<meta property="og:updated_time" content="2018-01-11T01:51:21.762Z">
+<meta property="og:updated_time" content="2018-01-11T01:55:05.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="傅里叶变换">
-<meta name="twitter:description" content="傅里叶变换本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句">
+<meta name="twitter:description" content="本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句话，谢谢。">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300002.png">
   
   
@@ -84,7 +84,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>本文是 <a href="http://blog.csdn.net/u012361418/article/details/46277779" target="_blank" rel="external">如果看了此文你还不懂傅里叶变换，那就过来掐死我吧</a> 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。</p>
+        <p>本文是 <a href="http://blog.csdn.net/u012361418/article/details/46277779" target="_blank" rel="external">如果看了此文你还不懂傅里叶变换，那就过来掐死我吧</a> 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。</p>
 <p>首先 <strong>cite</strong> 一下原作者：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">作 者：韩 昊</div><div class="line">知 乎：Heinrich</div><div class="line">微 博：@花生油工人</div><div class="line">知乎专栏：与时间无关的故事</div><div class="line">谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。</div><div class="line">转载的同学请保留上面这句话，谢谢。如果还能保留文章来源就更感激不尽了。</div></pre></td></tr></table></figure>
 <p>任何一种波形，都可以看作若干幅度、相位、频率不同的正弦波的叠加。我们首先用方波举个例子：</p>
