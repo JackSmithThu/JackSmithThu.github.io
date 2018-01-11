@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>傅里叶变换 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="傅里叶变换本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句">
+<meta name="keywords" content="Android,DSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="傅里叶变换">
+<meta property="og:url" content="http://yoursite.com/2017/12/26/傅里叶变换/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="傅里叶变换本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300004.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300005.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300007.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300006.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300008.png">
+<meta property="og:updated_time" content="2018-01-11T01:51:21.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="傅里叶变换">
+<meta name="twitter:description" content="傅里叶变换本文是 如果看了此文你还不懂傅里叶变换，那就过来掐死我吧 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。 首先 cite 一下原作者： 123456作 者：韩 昊知 乎：Heinrich微 博：@花生油工人知乎专栏：与时间无关的故事谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。转载的同学请保留上面这句">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300002.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-傅里叶变换" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      傅里叶变换
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/12/26/傅里叶变换/" class="article-date">
+  <time datetime="2017-12-26T10:38:00.000Z" itemprop="datePublished">2017-12-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>本文是 <a href="http://blog.csdn.net/u012361418/article/details/46277779" target="_blank" rel="external">如果看了此文你还不懂傅里叶变换，那就过来掐死我吧</a> 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。</p>
+<p>首先 <strong>cite</strong> 一下原作者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">作 者：韩 昊</div><div class="line">知 乎：Heinrich</div><div class="line">微 博：@花生油工人</div><div class="line">知乎专栏：与时间无关的故事</div><div class="line">谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。</div><div class="line">转载的同学请保留上面这句话，谢谢。如果还能保留文章来源就更感激不尽了。</div></pre></td></tr></table></figure>
+<p>任何一种波形，都可以看作若干幅度、相位、频率不同的正弦波的叠加。我们首先用方波举个例子：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300002.png" alt=""></p>
+<p>如果我们把叠加方波所需的若干个正弦波展开，会得到如下所示的图像。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300003.png" alt=""></p>
+<p>我们从时间方向去观察这个波形，就会得到信号的时域图像（也就是方波）。如果我们从频率方向去观察这个信号，就会得到信号的频域图像。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300004.png" alt=""></p>
+<p>不过，上图的表示其实并不全面。每个频率的信号对应的信息不仅有强度，而且还有相位。从下图来看，如果箭头所指向的信号的相位发生了变化（即向左或向右移动），那么叠加合成的波形也将发生变化。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300005.png" alt=""></p>
+<p>所以，傅里叶变换的结果是一个复数的数组，其中每一个复数代表某一频率上信号的强度和相位的信息。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300007.png" alt=""></p>
+<p>复数的模长表示强度，复数的角度表示相位。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300006.png" alt=""></p>
+<p>信号的时域表示和频域表示是等价的，得到其中一个就可以得到另一个。如果有时域信号，可以使用傅里叶变换得到频域信号。如果有频域信号，则可以使用逆傅里叶变换得到时域信号。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300008.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DSP/">DSP</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/25/TarsosDSP简介/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          TarsosDSP 简介
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

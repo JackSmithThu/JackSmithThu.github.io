@@ -45,6 +45,395 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-大神们的博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/24/大神们的博客/">大神们的博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/24/大神们的博客/" class="article-date">
+  <time datetime="2017-04-24T09:57:22.000Z" itemprop="datePublished">2017-04-24</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="【学习用】huangjunhui-大神的博客"><a href="#【学习用】huangjunhui-大神的博客" class="headerlink" title="【学习用】huangjunhui 大神的博客"></a>【学习用】<a href="http://opiece.me/2015/04/09/hexo-guide/" target="_blank" rel="external">huangjunhui 大神的博客</a></h3><h3 id="【膜拜用】liuning-大神的博客"><a href="#【膜拜用】liuning-大神的博客" class="headerlink" title="【膜拜用】liuning 大神的博客"></a>【膜拜用】<a href="https://darylliu.github.io" target="_blank" rel="external">liuning 大神的博客</a></h3>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-单台windows搭建mysql主从机备份" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/08/单台windows搭建mysql主从机备份/" class="article-date">
+  <time datetime="2017-04-08T06:04:11.000Z" itemprop="datePublished">2017-04-08</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-在一台window上搭建两个MySQL实例"><a href="#1-在一台window上搭建两个MySQL实例" class="headerlink" title="1.在一台window上搭建两个MySQL实例"></a>1.在一台window上搭建两个MySQL实例</h2><h3 id="1-1-下载-MySQL-5-6"><a href="#1-1-下载-MySQL-5-6" class="headerlink" title="1.1.下载 MySQL 5.6"></a>1.1.下载 MySQL 5.6</h3><p>下载地址：<a href="http://download.csdn.net/download/zzu_wang/8708049" target="_blank" rel="external">http://download.csdn.net/download/zzu_wang/8708049</a></p>
+<p>注意，一定要下载 5.6 版本，5.7版本会出现各种各样奇怪的问题。</p>
+<h3 id="1-2-建立对应目录"><a href="#1-2-建立对应目录" class="headerlink" title="1.2.建立对应目录"></a>1.2.建立对应目录</h3><p>在你喜欢的位置（我的是D:\WorkSpace\mysql\）建立两个文件夹，分别叫 mysql5601 和 mysql5602。将刚才下载到的 zip 文件分别复制到这两个文件夹中解压。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080001.png" alt=""></p>
+<p>解压完成之后应该是这个样子的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080002.png" alt=""></p>
+<h3 id="1-3-修改响应配置文件"><a href="#1-3-修改响应配置文件" class="headerlink" title="1.3.修改响应配置文件"></a>1.3.修改响应配置文件</h3><p>分别打开 mysql5601 和 mysql5602 ，修改 my-default.ini 文件</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080003.png" alt=""></p>
+<p>打开  my-default.ini 文件，修改下图中标记的位置</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080004.png" alt=""></p>
+<p>basedir 为 mysql 的解压目录，datadir 为 basedir\data，两个实例的 port 分别设置为 3306 和 3307，server_id 分别设置为 1 和 2。</p>
+<p>mysql5601：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">basedir = D:\WorkSpace\mysql\msql5601</div><div class="line">datadir = D:\WorkSpace\mysql\msql5601\data</div><div class="line">port = 3306</div><div class="line">server_id = 1</div></pre></td></tr></table></figure>
+<p>mysql5602：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">basedir = D:\WorkSpace\mysql\msql5602</div><div class="line">datadir = D:\WorkSpace\mysql\msql5602\data</div><div class="line">port = 3307</div><div class="line">server_id = 2</div></pre></td></tr></table></figure>
+<p>注意，只修改刚才提到的地方就好，其他地方暂时先不用管，后面会有提到。</p>
+<h3 id="1-4-启动-MySQL-服务"><a href="#1-4-启动-MySQL-服务" class="headerlink" title="1.4.启动 MySQL 服务"></a>1.4.启动 MySQL 服务</h3><p>在 windows 搜索框中搜索 cmd，得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080005.png" alt=""></p>
+<p>按下 Ctrl + Shift + Enter，以管理员身份进入 cmd，进入之后，如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080006.png" alt=""></p>
+<p>进入到 D:\WorkSpace\mysql\msql5601\bin 目录下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL1  --defaults-file=&quot;D:\WorkSpace\mysql\msql5601\my-default.ini&quot; ：</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080007.png" alt=""></p>
+<p>因为我已经安装过了，所以会显示 The service already exists! ，第一次安装应该显示 Service successfully installed.</p>
+<p>【MySQL1】是服务的名称，安装成功后，在 windows 搜索里输入【服务】，可以在服务中找到它。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080008.png" alt=""></p>
+<p>安装成功后，输入 net start MySQL1，启动这个服务：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080009.png" alt=""></p>
+<p>然后用同样的方法启动另一个服务，这回叫MySQL2：</p>
+<p>进入到 D:\WorkSpace\mysql\msql5602\bin 目录下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL2  --defaults-fil e= &quot;D:\WorkSpace\mysql\msql5602\my-default.ini&quot;</div></pre></td></tr></table></figure>
+<p>安装成功后，输入 net start MySQL2，启动这个服务，得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080010.png" alt=""></p>
+<p>两个服务都跑起来之后，我们就可以进入下一步：实现主从备份了。</p>
+<h2 id="2-搭建主从备份"><a href="#2-搭建主从备份" class="headerlink" title="2.搭建主从备份"></a>2.搭建主从备份</h2><h3 id="2-1-在两个-MySQL-实例创建数据库"><a href="#2-1-在两个-MySQL-实例创建数据库" class="headerlink" title="2.1.在两个 MySQL 实例创建数据库"></a>2.1.在两个 MySQL 实例创建数据库</h3><p>我们以 mysql5601 中的实例作为主库，以 mysql5602 中的实例作为从库。</p>
+<p>在这两个数据库中各自创建一个叫做 test 的库作为用来同步的库。具体操作如下：</p>
+<p>进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080011.png" alt=""></p>
+<p>在这个命令中，前一个小写的 p 是密码（password）的 p，后一个大写的 P 是端口（Port）的 P。</p>
+<p>然后输入：create database test;</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080012.png" alt=""></p>
+<p>我的因为已经建立过了，所以会报出 database exists。</p>
+<p>输入：show databases; </p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080013.png" alt=""></p>
+<p>显示现有的 database，我们可以看到，test已经在里面了。</p>
+<p>接下来我们建立从机的数据库，打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080014.png" alt=""></p>
+<p>然后输入：create database test;</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080015.png" alt=""></p>
+<p>这样两个数据库就建立好了。</p>
+<h3 id="2-2-修改主库配置文件"><a href="#2-2-修改主库配置文件" class="headerlink" title="2.2.修改主库配置文件"></a>2.2.修改主库配置文件</h3><p>打开 mysql5601，修改 my-default.ini 文件，在其中添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">server-id=1    #服务器 id </div><div class="line">log-bin=C:\Program Files\MySQL\MySQL Server 5.5\mysql-bin    #二进制文件存放路径</div><div class="line">binlog-do-db=test1    #待同步的数据库</div></pre></td></tr></table></figure>
+<p>添加完后，我们的 my-default.ini 文件就会像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir = D:\WorkSpace\mysql\msql5601</div><div class="line">datadir = D:\WorkSpace\mysql\msql5601\data</div><div class="line">port = 3306</div><div class="line">server_id = 1</div><div class="line"></div><div class="line">log-bin=D:\WorkSpace\mysql\msql5601\mysql-bin    #二进制文件存放路径</div><div class="line">binlog-do-db=test    #待同步的数据库</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure>
+<p>Windows 搜索【服务】，重启 MySQL1 服务。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080016.png" alt=""></p>
+<p>重启之后，你会看到 D:\WorkSpace\mysql\msql5601 目录下多出了两个文件（因为我重启过三遍所以多出来四个）：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080017.png" alt=""></p>
+<h3 id="2-3-给要连接的从服务器设置权限"><a href="#2-3-给要连接的从服务器设置权限" class="headerlink" title="2.3.给要连接的从服务器设置权限"></a>2.3.给要连接的从服务器设置权限</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
+<p>进入 mysql 命令行模式，输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grant replication slave,reload,super on *.* to slave@10.0.76.192 identified by &apos;root&apos;;</div></pre></td></tr></table></figure>
+<p>给主机10.0.76.192添加权限，用户名：slave，密码：root；</p>
+<p>注意，10.0.76.192是我的 ip 地址，这个地址需要改成你自己的 ip 地址（如果不是一台机器则要改成从机的 ip 地址）。查询 ip 地址的方法很简单，打开 cmd，输入 ipconfig 即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080018.png" alt=""></p>
+<h3 id="2-4-输入命令-show-master-status"><a href="#2-4-输入命令-show-master-status" class="headerlink" title="2.4.输入命令 show master status;"></a>2.4.输入命令 show master status;</h3><p>找到 File 和 Position 的值记录下来，这些值后面会用到。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080019.png" alt=""></p>
+<h3 id="2-5-修改从库配置文件"><a href="#2-5-修改从库配置文件" class="headerlink" title="2.5.修改从库配置文件"></a>2.5.修改从库配置文件</h3><p>打开mysql5602，修改my-default.ini文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">server-id=2    #服务器 id ，不能和主服务器一致</div><div class="line">replicate-do-db=test1    #待同步的数据库</div></pre></td></tr></table></figure>
+<p>修改后的 my-default.ini 文件如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir = D:\WorkSpace\mysql\msql5602</div><div class="line">datadir = D:\WorkSpace\mysql\msql5602\data</div><div class="line">port = 3307</div><div class="line">server_id = 2</div><div class="line">replicate-do-db=test    #待同步的数据库</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure>
+<p>重启 MySQL2 服务。</p>
+<h3 id="2-6-修改从库对主库的连接参数"><a href="#2-6-修改从库对主库的连接参数" class="headerlink" title="2.6.修改从库对主库的连接参数"></a>2.6.修改从库对主库的连接参数</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
+<p>进入 mysql 命令行模式，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">change master to master_host=&apos;10.0.76.192&apos;,master_user=&apos;slave&apos;,master_password=&apos;root&apos;, master_log_file=&apos;mysql-bin.000003&apos;,master_log_pos=120;</div></pre></td></tr></table></figure>
+<p>注意：这里输入的 mysql-bin.000003 和 120 请替换为步骤2.4中查询出来的值，master_host 替换为你自己的 ip。 </p>
+<h3 id="2-7-启动-salve-线程"><a href="#2-7-启动-salve-线程" class="headerlink" title="2.7.启动 salve 线程"></a>2.7.启动 salve 线程</h3><p>输入：start slave;</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080020.png" alt=""></p>
+<p>然后输入：show slave status\G   （没有分号）</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080021.png" alt=""></p>
+<p>看是否有以下两行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Slave_IO_Running: Yes</div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure>
+<p>这两个指标非常重要，任意一行为No都不能正常运行。我就曾经遇到了下面的这种问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ERROR] Slave I/O: error connecting to master &apos;slave@10.0.76.192:3306:3306&apos; - retry-time: 60  retries: 6, Error_code: 2005</div></pre></td></tr></table></figure>
+<p>解决方法很简单，重启以下 slave 的服务就可以了。</p>
+<h3 id="2-8-测试同步"><a href="#2-8-测试同步" class="headerlink" title="2.8.测试同步"></a>2.8.测试同步</h3><p>打开两个 cmd ，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，分别输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -proot -P3306（主机）</div><div class="line">mysql -uroot -proot -P3307（从机）</div></pre></td></tr></table></figure>
+<p>在主机上输入：use test;</p>
+<p>转到 test 数据库，然后输入：create table table1;</p>
+<p>新建一个名为 table1 的表。然后输入：show tables;</p>
+<p>得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080022.png" alt=""></p>
+<p>上面的操作只是在主机上的 test 数据库中建立了一张名为 table1 的表。</p>
+<p>接下来我们进入从机的 cmd，输入：use test;</p>
+<p>然后输入：show tables;</p>
+<p>得到结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080023.png" alt=""></p>
+<p>可以看到，两个数据库的数据已经开始自动同步了。</p>
+<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p>windows下mysql主从同步</p>
+<p><a href="http://www.cnblogs.com/xiaochangwei/p/4824355.html" target="_blank" rel="external">http://www.cnblogs.com/xiaochangwei/p/4824355.html</a></p>
+<p>mysql （master/slave）复制原理及配置</p>
+<p><a href="http://blog.csdn.net/mer1234567/article/details/7405775" target="_blank" rel="external">http://blog.csdn.net/mer1234567/article/details/7405775</a></p>
+<p>window下一台PC机器上安装多个mysql的方法</p>
+<p><a href="http://blog.csdn.net/zfqzpp/article/details/13630905" target="_blank" rel="external">http://blog.csdn.net/zfqzpp/article/details/13630905</a></p>
+<p>mysql 数据同步 出现Slave_IO_Running:No问题的解决方法小结</p>
+<p><a href="http://www.jb51.net/article/27220.htm" target="_blank" rel="external">http://www.jb51.net/article/27220.htm</a></p>
+<p>slave have equal MySQL Server UUIDs原因及解决</p>
+<p><a href="http://www.linuxidc.com/Linux/2015-02/113564.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-02/113564.htm</a></p>
+<h2 id="4-操作系统：windows10"><a href="#4-操作系统：windows10" class="headerlink" title="4.操作系统：windows10"></a>4.操作系统：windows10</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-几种消息队列的比较" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/06/几种消息队列的比较/">几种消息队列的比较</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/06/几种消息队列的比较/" class="article-date">
+  <time datetime="2017-04-06T02:13:27.000Z" itemprop="datePublished">2017-04-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-RabbitMQ"><a href="#1-RabbitMQ" class="headerlink" title="1.RabbitMQ"></a>1.RabbitMQ</h3><p>  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。</p>
+<h3 id="2-ActiveMQ"><a href="#2-ActiveMQ" class="headerlink" title="2.ActiveMQ"></a>2.ActiveMQ</h3><p>  Java开发，支持持久化，性能相对较差。</p>
+<h3 id="3-ZeroMQ"><a href="#3-ZeroMQ" class="headerlink" title="3.ZeroMQ"></a>3.ZeroMQ</h3><p>  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。</p>
+<h3 id="4-Redis"><a href="#4-Redis" class="headerlink" title="4.Redis"></a>4.Redis</h3><p>  C语言开发，速度快，支持持久化，但不可靠。</p>
+<h3 id="5-RocketMQ"><a href="#5-RocketMQ" class="headerlink" title="5.RocketMQ"></a>5.RocketMQ</h3><p>  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更多队列等。</p>
+<h3 id="6-Kafka"><a href="#6-Kafka" class="headerlink" title="6.Kafka"></a>6.Kafka</h3><p>  Scala开发，一次生产多次消费，可以当作消息队列使用，可持久化，速度快。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RockerMQ/">RockerMQ</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-单台windows搭建zookeeper和kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" class="article-date">
+  <time datetime="2017-04-04T10:11:39.000Z" itemprop="datePublished">2017-04-04</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们的目标是在一台机器上部署三个zookeeper的server，并在此基础上部署三个zookeeper的server。</p>
+<h1 id="1-zookeeper的部署"><a href="#1-zookeeper的部署" class="headerlink" title="1.zookeeper的部署"></a>1.zookeeper的部署</h1><p>zookeeper的部署采用伪集群模式，即在一台电脑上部署多个server。</p>
+<h2 id="1-1-建立文件夹，存放项目"><a href="#1-1-建立文件夹，存放项目" class="headerlink" title="1.1.建立文件夹，存放项目"></a>1.1.建立文件夹，存放项目</h2><p>在你喜欢的位置（我的目录为D:\WorkSpace）建立一个名为zookeeper的文件夹，并在该文件夹下建立三个目录，分别名为server1，server2和server3。完成之后如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040011.png" alt=""></p>
+<h2 id="1-2-下载zookeeper"><a href="#1-2-下载zookeeper" class="headerlink" title="1.2.下载zookeeper"></a>1.2.下载zookeeper</h2><p>下载地址：<a href="http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。" target="_blank" rel="external">http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040012.png" alt=""></p>
+<h2 id="1-3-解压文件并创建一些目录"><a href="#1-3-解压文件并创建一些目录" class="headerlink" title="1.3.解压文件并创建一些目录"></a>1.3.解压文件并创建一些目录</h2><p>将下载好的压缩包解压到server1目录下，并在server1目录下建三个文件夹，分别名为data，dataLog和logs。完成之后应该是这样的。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040013.png" alt=""></p>
+<p>注意：压缩包解压的时候直接选【解压到当前文件夹】即可。所以上图中的zookeeper-3.4.10文件夹打开之后应该是这样的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040014.png" alt=""></p>
+<h2 id="1-4-在server1-data目录下，创建一个叫做myid的文件。"><a href="#1-4-在server1-data目录下，创建一个叫做myid的文件。" class="headerlink" title="1.4.在server1/data目录下，创建一个叫做myid的文件。"></a>1.4.在server1/data目录下，创建一个叫做myid的文件。</h2><p>注意，这个文件不需要任何扩展名，所以显示的形式如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040015.png" alt=""></p>
+<p>如果你看到的myid文件不是这样的，说明你的扩展名没有去除。在windows系统下，文件扩展名默认是被隐藏的。在【查看】选项卡里勾选【文件扩展名】，你就能看到被隐藏的扩展名了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040016.png" alt=""></p>
+<h2 id="1-5-打开myid文件，在里面添加对应的id"><a href="#1-5-打开myid文件，在里面添加对应的id" class="headerlink" title="1.5.打开myid文件，在里面添加对应的id"></a>1.5.打开myid文件，在里面添加对应的id</h2><p>因为我们目前配置的是server1，所以添加id为1，然后关闭即可。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040017.png" alt=""></p>
+<p>这里打开myid文件使用的编辑器是notepad++，如果没有安装的话，可以下载一个安装一下。下载地址：<a href="https://notepad-plus-plus.org/。" target="_blank" rel="external">https://notepad-plus-plus.org/。</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040018.png" alt=""></p>
+<h2 id="1-6-修改配置文件"><a href="#1-6-修改配置文件" class="headerlink" title="1.6.修改配置文件"></a>1.6.修改配置文件</h2><p>在server1/zookeeper-3.4.10/conf目录下，新建zoo.cfg文件，加入内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>注意，dataDir和dataLogDir中的D:/WorkSpace目录需要改成你自己的目录。</p>
+<p>这里对zoo.cfg中的内容进行简要地说明：</p>
+<p><strong>tickTime</strong>为客户端与服务器之间或服务器互相之间的心跳间隔，以ms为单位。</p>
+<p><strong>initLimit</strong>为leader与follower进行初始连接时最多能够容忍的心跳数。</p>
+<p><strong>syncLimit</strong>为follower与leader请求和应答之间最多能容忍的心跳数。</p>
+<p><strong>dataDir</strong>为数据文件目录。</p>
+<p><strong>dataLogDir</strong>为日志文件目录。</p>
+<p><strong>clientPort</strong>为客户端连接服务器的端口，zookeeper监听此接口接收客户端访问请求。</p>
+<p><strong>最后三行</strong>为集群中每个服务器的ip和端口号。前一个端口为leader和follower通信端口，后一个端口为选举新leader时所用的端口。一般来说，在多台电脑的情况下，每台服务器上的端口配置是一样的。不过我们现在使用同一台电脑配置三个server，为了避免冲突，只能把它们改成不一样。</p>
+<h2 id="1-7-复制server1中的内容到server2和server3中，并修改相应配置"><a href="#1-7-复制server1中的内容到server2和server3中，并修改相应配置" class="headerlink" title="1.7.复制server1中的内容到server2和server3中，并修改相应配置"></a>1.7.复制server1中的内容到server2和server3中，并修改相应配置</h2><p>将server1中的内容分别复制到server2和server3中，并修改/data/myid文件和/zookeeper-3.4.10/conf/zoo.cfg文件。</p>
+<p>myid文件只需要将其中的内容改成服务器的序号即可。</p>
+<p>zoo.cfg文件需要修改dataDir，dataLogDir和clientPort。修改后的三个文件如下：</p>
+<p>server1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>server2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server2/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server2/dataLog</div><div class="line">clientPort=2182</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<p>server3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server3/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server3/dataLog</div><div class="line">clientPort=2183</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
+<h2 id="1-8-启动服务器"><a href="#1-8-启动服务器" class="headerlink" title="1.8.启动服务器"></a>1.8.启动服务器</h2><p>分别进入三个server的/zookeeper-3.4.10/bin目录下，运行：zkServer start 。结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040019.png" alt=""></p>
+<p>第一个server启动的时候会报错，这是由于它想要和其他两个server进行通信，而另外两个server还没有搭建起来。不用理会这个错误，继续打开新的cmd窗口，启动其他server就好。注意，原来的窗口不要关！所有server都启动了之后，显示如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040020.png" alt=""></p>
+<p>如果报Invalid arguments, exiting abnormally 的异常的话，只需要在 zkServer start 命令中去掉start，即输入zkServer即可。</p>
+<h2 id="1-9-连接客户端"><a href="#1-9-连接客户端" class="headerlink" title="1.9.连接客户端"></a>1.9.连接客户端</h2><p>进入任意一个zookeeper-3.4.10目录下，用以下命令启动客户端：zkCli –server 127.0.0.1:2181<br>，显示如下结果：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040021.png" alt=""></p>
+<p>输入help，显示可以执行的指令。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040022.png" alt=""></p>
+<p>做到这一步，zookeeper集群的搭建就完成了。接下来我们要在此基础上搭建kafka的集群。</p>
+<h1 id="2-kafka的部署"><a href="#2-kafka的部署" class="headerlink" title="2.kafka的部署"></a>2.kafka的部署</h1><p>kafka在设计的时候就依赖于zookeeper，对于kafka而言，zookeeper相当于它的文件系统。每个节点的信息都保存在zookeeper对应的路径下。</p>
+<p><strong>（1）Broker注册</strong>：Broker在zookeeper中保存为一个临时节点，节点的路径是/brokers/ids/[brokerid],每个节点会保存对应broker的IP以及端口等信息。</p>
+<p><strong>（2）Topic注册</strong>：在kafka中,一个topic会被分成多个区并被分到多个broker上，分区的信息以及broker的分布情况都保存在zookeeper中，根节点路径为/brokers/topics,每个topic都会在topics下建立独立的子节点，每个topic节点下都会包含分区以及broker的对应信息。</p>
+<p><strong>（3）消费者与分区的对应关系</strong>：对于每个消费者分组，kafka都会为其分配一个全局唯一的Group ID,分组内的所有消费者会共享该ID,kafka还会为每个消费者分配一个consumer ID,通常采用hostname:uuid的形式。在kafka的设计中规定，对于topic的每个分区，最多只能被一个消费者进行消费，也就是消费者与分区的关系是一对多的关系。消费者与分区的关系被存储在zookeeper中节点的路径为 /consumers/[group_id]/owners/[topic]/[broker_id-partition_id],该节点的内容就是消费者的Consumer ID。</p>
+<p><strong>（4）消费者负载均衡</strong>：消费者服务启动时，会创建一个属于消费者节点的临时节点，节点的路径为 /consumers/[group_id]/ids/[consumer_id],该节点的内容是该消费者订阅的Topic信息。每个消费者会对/consumers/[group_id]/ids节点注册Watcher监听器，一旦消费者的数量增加或减少就会触发消费者的负载均衡。消费者还会对/brokers/ids/[brokerid]节点进行监听，如果发现服务器的Broker服务器列表发生变化，也会进行消费者的负载均衡。</p>
+<p><strong>（5）消费者的offset</strong>：在kafka的消费者API分为两种(1)High Level API：由zookeeper维护消费者的offset (2) Low Level API：自己的代码实现对offset的维护。由于自己维护offset往往比较复杂，所以多数情况下都是使用High Level的API offset在zookeeper中的节点路径为/consumers/[group_id]/offsets/[topic]/[broker_id-part_id],该节点的值就是对应的offset。</p>
+<p>看到这里，你就会明白kafka和zookeeper之间的关系了。我们现在就是要在已经配置好的zookeeper集群上配置kafka集群。</p>
+<h2 id="2-1-建立对应目录"><a href="#2-1-建立对应目录" class="headerlink" title="2.1.建立对应目录"></a>2.1.建立对应目录</h2><p>还是找到你喜欢的那个目录（我的是D:\WorkSpace）,建立一个叫做kafka的文件夹，里面建立三个子目录，分别叫做：kafka1，kafka2和kafka3。完成之后应该是这个样子：<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040023.png" alt=""></p>
+<h2 id="2-2-下载kafka并解压到每个文件夹"><a href="#2-2-下载kafka并解压到每个文件夹" class="headerlink" title="2.2.下载kafka并解压到每个文件夹"></a>2.2.下载kafka并解压到每个文件夹</h2><p>kafka下载地址：<br><a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz" target="_blank" rel="external">https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a><br>下载之后是一个压缩包，还是直接解压到kafka1，kafka2和kafka3这三个文件夹就行。解压完后，在 kafka1，kafka2和kafka3目录下分别添加一个kafkaLog目录。最后的结果应该是这个样子的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040024.png" alt=""></p>
+<h2 id="2-3-修改配置文件："><a href="#2-3-修改配置文件：" class="headerlink" title="2.3.修改配置文件："></a>2.3.修改配置文件：</h2><p>分别打开kafka1，kafka2和kafka3三个目录中的kafka_2.12-0.10.2.1/config路径下的consumer.properties文件，将里面的内容改成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">group.id=logGroup</div></pre></td></tr></table></figure>
+<p>再打开这三个目录下的server.properties文件，按照下面内容进行修改：</p>
+<p>kafka1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=0</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka1/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9092</div><div class="line">port=9092</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<p>kafka2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=1</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka2/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9093</div><div class="line">port=9093</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<p>kafka3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=2</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka3/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9094</div><div class="line">port=9094</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
+<h2 id="2-4-启动kafka服务器"><a href="#2-4-启动kafka服务器" class="headerlink" title="2.4.启动kafka服务器"></a>2.4.启动kafka服务器</h2><p>进入D:/WorkSpace/kafka/kafka1/目录下，输入<br>.\bin\windows\kafka-server-start.bat .\config\server.properties  命令，注意不要漏掉命令中的“.”。得到的结果如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040025.png" alt=""></p>
+<p>同样地，进入另外两个kafka2 和 kafka3目录下，把另外两个kafka服务器也启动起来。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040026.png" alt=""></p>
+<p>如果你最后得到的结果是这样的，那么恭喜你，zookeeper和kafka集群已经搭建完成了。</p>
+<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>（1）在单机上实现ZooKeeper伪机群/伪集群部署 ：</p>
+<p><a href="http://blog.csdn.net/poechant/article/details/6633923" target="_blank" rel="external">http://blog.csdn.net/poechant/article/details/6633923</a></p>
+<p>（2）一台机器上安装zookeeper和kafka集群：</p>
+<p><a href="http://blog.csdn.net/u013244038/article/details/53938997" target="_blank" rel="external">http://blog.csdn.net/u013244038/article/details/53938997</a></p>
+<h2 id="操作系统版本：windows-10"><a href="#操作系统版本：windows-10" class="headerlink" title="操作系统版本：windows 10"></a>操作系统版本：windows 10</h2><h2 id="zookeeper版本：3-4-10"><a href="#zookeeper版本：3-4-10" class="headerlink" title="zookeeper版本：3.4.10"></a>zookeeper版本：3.4.10</h2><h2 id="kafka版本：2-12-0-10-2-1"><a href="#kafka版本：2-12-0-10-2-1" class="headerlink" title="kafka版本：2.12-0.10.2.1"></a>kafka版本：2.12-0.10.2.1</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Eclipse搭建SpringBoot（一）HelloWorld" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -476,194 +865,15 @@
 
 
     
-      <article id="post-后台开发知识点总结（三）Java并发" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/06/后台开发知识点总结（三）Java并发/">后台开发知识点总结（三）Java并发</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2016/11/06/后台开发知识点总结（三）Java并发/" class="article-date">
-  <time datetime="2016-11-06T11:43:50.000Z" itemprop="datePublished">2016-11-06</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="进程与线程的区别是什么？"><a href="#进程与线程的区别是什么？" class="headerlink" title="进程与线程的区别是什么？"></a>进程与线程的区别是什么？</h3><p>进程就是一段程序的执行过程（狭义）。是一个具有特定功能的程序关于某个数据集合运行的一次运行活动，是操作系统分配资源的最基本单位（广义）。线程也称轻量级进程，是程序执行流的基本单元。在引入线程的操作系统中，一般都是把进程作为分配资源的基本单位，把线程作为独立运行和独立调度的基本单位。</p>
-<h3 id="主线程退出会导致整个进程退出么？"><a href="#主线程退出会导致整个进程退出么？" class="headerlink" title="主线程退出会导致整个进程退出么？"></a>主线程退出会导致整个进程退出么？</h3><p>不一定。Java 中的 Thread 分为User Thread 和 Demon Thread（守护线程）。守护线程与用户线程的区别就在于，如果虚拟机中的线程都是守护线程的话，虚拟机（也就是进程。在java中，每个进程对应一个java虚拟机）将会退出。因此，在主线程退出的时候，如果虚拟机中还有其他的用户线程，虚拟机不会退出。否则，虚拟机中其他的线程都是守护线程，虚拟机将会退出。</p>
-<h3 id="守护线程和守护进程的区别是什么？"><a href="#守护线程和守护进程的区别是什么？" class="headerlink" title="守护线程和守护进程的区别是什么？"></a>守护线程和守护进程的区别是什么？</h3><p>在一般情况下，当进程的控制终端被关闭的时候，进程会被强行关闭。守护进程是一种能够脱离于终端在后台运行的一种进程。它从被执行的时候开始运转，直到整个系统结束才退出。<br>守护线程跟一般意义上的线程（用户线程）的唯一区别在于，如果虚拟机中的线程都是守护线程的话，虚拟机（也就是进程）将会退出。<br>所以说，守护进程的“守护”跟守护线程的“守护”并不是相同的概念。</p>
-<h3 id="如何创建守护进程？"><a href="#如何创建守护进程？" class="headerlink" title="如何创建守护进程？"></a>如何创建守护进程？</h3><p>1.创建子进程fork()，父进程退出exit();<br>创建子进程后父进程退出，会导致子进程成为孤儿进程。孤儿进程将会被系统中的1号进程（init）所收养。这样。原来的子进程就变为了init进程的子进程。<br>2.在子进程中调用setsid();<br>setsid() 的作用是创建一个新的会话组，并担任新会话的组长。这样做可以使子进程脱离原来的终端、进程组和会话（一个进程组包含一个或多个进程，一个会话包含一个或多个进程组，通常把一个用户从登录到退出过程中，他运行的所有进程归于一个会话）。<br>3.改变根目录为当前目录chdir();<br>4.重设文件权限掩码umask();<br>使用umask()函数将当前进程的umask（当前进程所创建文件的初始权限掩码）置为0。<br>5.关闭文件描述符;<br>关闭不需要的文件描述符。</p>
-<h3 id="孤儿进程和僵尸进程的区别？"><a href="#孤儿进程和僵尸进程的区别？" class="headerlink" title="孤儿进程和僵尸进程的区别？"></a>孤儿进程和僵尸进程的区别？</h3><p>孤儿进程指的是父进程结束而子进程没有结束，而僵尸进程指的是子进程结束而父进程没有wait（或waitpid）它。</p>
-<h3 id="僵尸进程的危害与清除？"><a href="#僵尸进程的危害与清除？" class="headerlink" title="僵尸进程的危害与清除？"></a>僵尸进程的危害与清除？</h3><p>僵尸进程既不占用内存，也不占用cpu。但是它占用了一个进程号，系统所能够使用的进程号是有限的，因此僵尸进程大量地占用进程号将会导致无法生成新的进程。<br>清除僵尸进程的方法是：kill产生僵尸进程的父进程。这样僵尸进程就会变成孤儿进程，然后被内核回收。</p>
-<h3 id="怎么防止僵尸进程的出现？"><a href="#怎么防止僵尸进程的出现？" class="headerlink" title="怎么防止僵尸进程的出现？"></a>怎么防止僵尸进程的出现？</h3><p>1.通过父进程使用 wait() 或 waitpid() 等待子进程，这会导致父进程被挂起。（不过waitpid() 提供了一个无阻塞的wait()，只要把参数设置成 WNOHANG 就行了）。<br>2.用 signal() 函数为SIGCHLD 安装handler，子进程结束后，父进程会收到信号，可在 handler 中回收。<br>3.用 signal(SIGCHLD,SIG_IGN) 通知内核，由内核代为回收。<br>4.先创建子进程，再创建孙进程，创建结束之后杀死子进程，孙进程就会被 init 收养，由 init 回收。</p>
-<h3 id="僵尸进程会造成内存泄漏吗？"><a href="#僵尸进程会造成内存泄漏吗？" class="headerlink" title="僵尸进程会造成内存泄漏吗？"></a>僵尸进程会造成内存泄漏吗？</h3><p>不会。内存泄漏指的是动态分配的内存空间，使用完之后未被释放。僵尸进程是不占用内存的（准确地说，是不占用java虚拟机的内存），就更谈不上内存泄漏了。</p>
-<h3 id="什么叫线程安全？"><a href="#什么叫线程安全？" class="headerlink" title="什么叫线程安全？"></a>什么叫线程安全？</h3><p>线程安全指的是在多线程环境下，程序执行的结果与各个线程的调度顺序无关。</p>
-<h3 id="使用线程池的好处？"><a href="#使用线程池的好处？" class="headerlink" title="使用线程池的好处？"></a>使用线程池的好处？</h3><p>一方面，使用线程池可以减小在创建和销毁线程时产生的时间开销和资源开销（因为在新任务到来时，不必再销毁和新建线程了）。另一方面，使用线程池可以管理线程，保证系统不会因为大量并发产生的资源不足而崩溃。</p>
-<h3 id="列举一下你所知道的线程池？"><a href="#列举一下你所知道的线程池？" class="headerlink" title="列举一下你所知道的线程池？"></a>列举一下你所知道的线程池？</h3><p>单线程线程池（NewSingleThreadExecutor）、固定数量的线程池（NewFixedThreadExecutor，达到最大数量后线程进入等待队列）、可缓存线程池（NewCachedThreadExecutor，自动回收60s未执行的线程）、大小无限制线程池（NewScheduleThreadExecutor）。</p>
-<h3 id="使用线程池的坏处是什么？"><a href="#使用线程池的坏处是什么？" class="headerlink" title="使用线程池的坏处是什么？"></a>使用线程池的坏处是什么？</h3><p>使用线程池可能带来额外的风险，比如：<br>线程池特有的死锁：所有线程都在阻塞等待某一任务的执行结果，而这一任务却因为没有线程而得不到执行。<br>资源不足：如果线程池太大可能引起不必要的资源浪费。<br>线程泄漏：有些线程被使用之后可能并不会返回线程池（比如等待某些资源或者用户输入），发生这种情况后线程池中可用线程数会减少。最后变得没有线程可以使用。
- </p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（二）JVM虚拟机" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/">后台开发知识点总结（二）JVM虚拟机</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2016/10/13/后台开发知识点总结（二）JVM虚拟机/" class="article-date">
-  <time datetime="2016-10-13T01:41:23.000Z" itemprop="datePublished">2016-10-13</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Java类加载过程？"><a href="#Java类加载过程？" class="headerlink" title="Java类加载过程？"></a>Java类加载过程？</h3><p>加载：类中的方法被放到方法区、堆中生成一个对象表示该类、<br>链接：验证（保证符合jvm规范，防止安全问题）、准备（为类变量（静态变量）分配内存，分配的内存在方法区中）、解析（将虚拟机常量池中的符号饮用转变为直接引用）<br>初始化：执行类构造器方法、如果父类未初始化，先初始化父类。</p>
-<h3 id="有几种类加载器？"><a href="#有几种类加载器？" class="headerlink" title="有几种类加载器？"></a>有几种类加载器？</h3><p>引导类加载器（Bootstrap Class Loader，加载Java核心库）、扩展类加载器（Extensions Class Loader，加载Java扩展库）、应用程序类加载器（Application Class Loader，加载 Class Path 下的应用程序类）、自定义类加载器（主要是为了加密解密某些类的字节码）。</p>
-<h3 id="什么时候触发GC？"><a href="#什么时候触发GC？" class="headerlink" title="什么时候触发GC？"></a>什么时候触发GC？</h3><p>JavaGC分为两种，一种是ScavengeGC，另一种是FullGC。前者只对年轻代进行回收，后者对整个堆进行回收（包括年轻代、老年代和持久代）。<br>当Eden申请内存失败时，触发ScavengeGC。<br>当老年代（Tenured）被写满、持久代（Perm）被写满、System.gc() 被显示调用以及上一次GC之后Heap各域分配策略出现变化时，触发FullGC。</p>
-<h3 id="GC有几种算法？"><a href="#GC有几种算法？" class="headerlink" title="GC有几种算法？"></a>GC有几种算法？</h3><p>引用计数法（已弃用）、标记清除法、标记复制法（survivor区）、标记压缩法（老年代）、分代回收法。</p>
-<h3 id="Java的垃圾收集器都有哪些？"><a href="#Java的垃圾收集器都有哪些？" class="headerlink" title="Java的垃圾收集器都有哪些？"></a>Java的垃圾收集器都有哪些？</h3><p>Serial收集器（串行收集器）、Parallel 收集器（并行收集器）、CMS收集器（并发收集器）、G1收集器。</p>
-<h3 id="G1回收器的特点？"><a href="#G1回收器的特点？" class="headerlink" title="G1回收器的特点？"></a>G1回收器的特点？</h3><p>空间整合（G1采用标记压缩算法，不会出现分配大对象没有连续空间的情况）和可预测停顿（长度为 M ms的时间内，垃圾收集的时间不得超过 N ms）。</p>
-<h3 id="CMS收集器的特点？"><a href="#CMS收集器的特点？" class="headerlink" title="CMS收集器的特点？"></a>CMS收集器的特点？</h3><p>并发收集、低停顿。但是会产生内存碎片（标记清除法），每进行几次 GC 就要进行一次碎片整理。</p>
-<p> </p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-后台开发知识点总结（一）java基础" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/24/后台开发知识点总结（一）java基础/">后台开发知识点总结（一）java基础</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2016/09/24/后台开发知识点总结（一）java基础/" class="article-date">
-  <time datetime="2016-09-24T01:37:09.000Z" itemprop="datePublished">2016-09-24</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Java八种基本数据类型："><a href="#Java八种基本数据类型：" class="headerlink" title="Java八种基本数据类型："></a>Java八种基本数据类型：</h3><p>byte、short、int、long、float、double、boolean、char。</p>
-<h3 id="Map在Java中的四种实现？"><a href="#Map在Java中的四种实现？" class="headerlink" title="Map在Java中的四种实现？"></a>Map在Java中的四种实现？</h3><p>HashMap（最简单实现）、HashTable（线程安全）、LinkedHashMap（可顺序访问）、TreeMap（基于红黑树实现的map）。</p>
-<h3 id="List在Java中的三种实现？"><a href="#List在Java中的三种实现？" class="headerlink" title="List在Java中的三种实现？"></a>List在Java中的三种实现？</h3><p>ArrayList（数组）、LinkedList（链表）、Vector（线程安全的ArrayList）。</p>
-<h3 id="Set在Java中的四种实现？"><a href="#Set在Java中的四种实现？" class="headerlink" title="Set在Java中的四种实现？"></a>Set在Java中的四种实现？</h3><p>HashSet（由HashMap支持，相当于没有 value 的 HashMap） 和 LinkedHashSet（顺序访问）。</p>
-<h3 id="Java8的新特性"><a href="#Java8的新特性" class="headerlink" title="Java8的新特性"></a>Java8的新特性</h3><p>Lambda表达式：允许把函数作为参数传进方法中。<br>Stream：random.ints().limit(10).forEach(System.out::println);<br>Optional类：使用Optional类可以避免显式进行空值检测<br>Nashorn：Java中调用Js，JavaScript引擎。<br>方法引用：通过方法的名字指向一个方法（使用::）。<br>函数式接口：增加了java.util.function函数接口，用来支持函数式编程（支持闭包）<br>默认方法：接口可以通过defult实现默认方法。<br>新的日期时间API。<br>Base64：一种编解码器。</p>
-<h3 id="什么是Java-NIO？"><a href="#什么是Java-NIO？" class="headerlink" title="什么是Java NIO？"></a>什么是Java NIO？</h3><p>NIO就是非阻塞IO。</p>
-<h3 id="NIO的实现原理是什么？"><a href="#NIO的实现原理是什么？" class="headerlink" title="NIO的实现原理是什么？"></a>NIO的实现原理是什么？</h3><p>NIO使用双向的通道（channel）而非单向的流（stream）进行通信。在通道上我们可以注册总共四种事件：客户端连接、服务端接收客户端连接、读、写。客户端和服务端各自维护一个管理通道的对象（selector），接收一个或多个通道的事件。</p>
-<h3 id="为什么要用NIO？"><a href="#为什么要用NIO？" class="headerlink" title="为什么要用NIO？"></a>为什么要用NIO？</h3><p>对阻塞式IO而言，每一个客户端都要有一个对应的线程来进行处理。每个线程都要占用一些空间和CPU时间。另外，多个线程带来频繁的上下文切换，而这些切换很可能是无意义的。</p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/4/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Jack Smith&nbsp;
+      &copy; 2018 Jack Smith&nbsp;
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>

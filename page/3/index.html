@@ -45,6 +45,329 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Vim基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/27/Vim基本操作/">Vim 基本操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/27/Vim基本操作/" class="article-date">
+  <time datetime="2017-06-26T18:16:16.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1.打开文件"></a>1.打开文件</h2><p>安装 vim，进入相应文件夹，输入</p>
+<p>$ vim filename</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270006.png" alt=""></p>
+<p>即可打开相应的文件，我们这里打开一个名为 <strong>vimtest.txt</strong> 的文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270007.png" alt=""></p>
+<p><strong>K、J、H、K</strong> 分别对应着上下左右，当然，小键盘左边的方向键也是可以实现光标移动的。</p>
+<h2 id="2-插入字符"><a href="#2-插入字符" class="headerlink" title="2.插入字符"></a>2.插入字符</h2><p>现在我们想要在文件的末尾插入一行字符：<strong>helloworld !</strong> </p>
+<p>把光标移动到文件末尾，然后按下字母键 <strong>i</strong> 。我们可以看到光标从覆盖整个字符变成了一个白色的下划线。</p>
+<p>然后在文件的末尾输入我们想要输入的字符：<strong>helloworld！</strong></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270008.png" alt=""></p>
+<p>现在我们已经输入进去一行字符，那么，怎么保存退出呢？</p>
+<p>首先按下【ESC】进入命令模式，然后输入一个命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270009.png" alt=""></p>
+<p>然后我们就成功地保存退出了。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270010.png" alt=""></p>
+<p>再次打开这个文件，发现我们刚才保存的内容仍然是存在的。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270011.png" alt=""></p>
+<p>学会了插入，删除也是同理，至少现在我们已经能够将 vim 当做记事本用了。但是，如果我们仅仅掌握这点功能的话，还不如使用 notepad++ 来得方便，所以接下来我们介绍一些高级点的技能。</p>
+<h2 id="3-字符搜索"><a href="#3-字符搜索" class="headerlink" title="3.字符搜索"></a>3.字符搜索</h2><p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/hello</div></pre></td></tr></table></figure>
+<p>即可完成在全文中对字符串 hello 的搜索。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270012.png" alt=""></p>
+<p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">n</div></pre></td></tr></table></figure>
+<p>即可跳转到下一处。当然你也可以按 <strong>i</strong> 进入插入模式来修改字符，不过如果你想替换全文中所有的 <strong>hello</strong> 的话，那么 :s 也许是一个不错的选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:s/hello/hi/g</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270013.png" alt=""></p>
+<p>如图所示，我们已经把文中所有的 <strong>hello</strong> 替换成了 <strong>hi</strong> 。这貌似也没什么大不了，毕竟我用 <strong>notepad++</strong> 也可以实现同样的工作。那么下面的问题可就是 <strong>notepad++</strong> 实现不了的了。</p>
+<p>我们现在要把前三行所有的 <strong>i</strong> 替换成 <strong>w</strong>。</p>
+<p>注意，我们只替换前三行。嗯，这个问题对于 notepad++ 来说可能有点变态，不过对于 vim ……</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:1,3s/i/w/g</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270014.png" alt=""></p>
+<p>只有前三行的 <strong>i</strong> 被替换成了 <strong>w</strong>。命令结尾的 <strong>g</strong> 表示会对所有符合情况的 i 进行操作，否则只替换第一个。</p>
+<h2 id="4-分屏操作"><a href="#4-分屏操作" class="headerlink" title="4.分屏操作"></a>4.分屏操作</h2><p>说到 vim，就一定不能够错过它的分屏功能。输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:sp</div></pre></td></tr></table></figure>
+<p>就能得到上下两个屏幕，这对于只能显示黑框框的 shell 来说确实是很必要的功能。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270015.png" alt=""></p>
+<p>当然，如果两个屏幕只能看一个文件，那还不如一个屏幕，选择一个屏幕（如果没有鼠标的话可以用）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + w + j  //(j 的意思是“下”)</div></pre></td></tr></table></figure>
+<p>来实现切换，然后输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:open car.txt</div></pre></td></tr></table></figure>
+<p>来实现文档的切换。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270016.png" alt=""></p>
+<p><strong>vim</strong> 还有一个类似的功能叫做 <strong>newtab</strong>，可以像浏览器一样显示标签，具体我就不在赘述了，有兴趣的话可以查阅后面的表格。</p>
+<h2 id="5-常用功能一览"><a href="#5-常用功能一览" class="headerlink" title="5.常用功能一览"></a>5.常用功能一览</h2><h3 id="5-1-跳转"><a href="#5-1-跳转" class="headerlink" title="5.1.跳转"></a>5.1.跳转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">*          当光标停留在一个单词上，* 键会在文件内搜索该单词，并跳转到下一处；</div><div class="line">#          当光标停留在一个单词上，# 在文件内搜索该单词，并跳转到上一处；</div><div class="line">(/)        移动到 前/后 句 的开始；</div><div class="line">&#123;/&#125;        跳转到 当前/下一个 段落 的开始。</div><div class="line">g_         到本行最后一个不是 blank 字符的位置。</div><div class="line">fa         到下一个为 a 的字符处，你也可以fs到下一个为s的字符。</div><div class="line">t,         到逗号前的第一个字符。逗号可以变成其它字符。</div><div class="line">3fa        在当前行查找第三个出现的 a。</div><div class="line">F/T        和 f 和 t 一样，只不过是相反方向;</div><div class="line">gg         将光标定位到文件第一行起始位置；</div><div class="line">G          将光标定位到文件最后一行起始位置；</div><div class="line">NG或Ngg    将光标定位到第 N 行的起始位置。</div></pre></td></tr></table></figure>
+<h3 id="5-2-搜索"><a href="#5-2-搜索" class="headerlink" title="5.2.搜索"></a>5.2.搜索</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/str1                正向搜索字符串 str1；</div><div class="line">n                    继续搜索，找出 str1 字符串下次出现的位置；</div><div class="line">N                    继续搜索，找出 str1 字符串上一次出现的位置；</div><div class="line">?str2                反向搜索字符串 str2 。</div></pre></td></tr></table></figure>
+<h3 id="5-3-删除"><a href="#5-3-删除" class="headerlink" title="5.3.删除"></a>5.3.删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">rc                 用 c 替换光标所指向的当前字符；</div><div class="line">nrc                用 c 替换光标所指向的前 n 个字符；</div><div class="line">5rA                用 A 替换光标所指向的前 5 个字符；</div><div class="line">x                  删除光标所指向的当前字符；</div><div class="line">nx                 删除光标所指向的前 n 个字符；</div><div class="line">3x                 删除光标所指向的前 3 个字符；</div><div class="line">dw                 删除光标右侧的字；</div><div class="line">ndw                删除光标右侧的 n 个字；</div><div class="line">3dw                删除光标右侧的 3 个字；</div><div class="line">db                 删除光标左侧的字；</div><div class="line">ndb                删除光标左侧的 n 个字；</div><div class="line">5db                删除光标左侧的 5 个字；</div><div class="line">dd                 删除光标所在行，并去除空隙；</div><div class="line">ndd                删除（剪切） n 行内容，并去除空隙；</div><div class="line">3dd                删除（剪切） 3 行内容，并去除空隙；</div></pre></td></tr></table></figure>
+<h3 id="5-4-替换"><a href="#5-4-替换" class="headerlink" title="5.4.替换"></a>5.4.替换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">s                用输入的正文替换光标所指向的字符；</div><div class="line">S                删除当前行，并进入编辑模式；</div><div class="line">ns               用输入的正文替换光标右侧 n 个字符；</div><div class="line">nS               删除当前行在内的 n 行，并进入编辑模式；</div><div class="line">cw               用输入的正文替换光标右侧的字；</div><div class="line">cW               用输入的正文替换从光标到行尾的所有字符（同 c$ )；</div><div class="line">ncw              用输入的正文替换光标右侧的 n 个字；</div><div class="line">cb               用输入的正文替换光标左侧的字；</div><div class="line">ncb              用输入的正文替换光标左侧的 n 个字；</div><div class="line">cd               用输入的正文替换光标的所在行；</div><div class="line">ncd              用输入的正文替换光标下面的 n 行；</div><div class="line">c$               用输入的正文替换从光标开始到本行末尾的所有字符；</div><div class="line">c0               用输入的正文替换从本行开头到光标的所有字符。</div></pre></td></tr></table></figure>
+<h3 id="5-5-复制粘贴"><a href="#5-5-复制粘贴" class="headerlink" title="5.5.复制粘贴"></a>5.5.复制粘贴</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">yy              复制当前行到内存缓冲区；</div><div class="line">nyy             复制 n 行内容到内存缓冲区；</div><div class="line">5yy             复制 5 行内容到内存缓冲区；</div><div class="line">“+y             复制 1 行到操作系统的粘贴板；</div><div class="line">“+nyy           复制 n 行到操作系统的粘贴板。</div><div class="line">p               小写字母 p，将缓冲区的内容粘贴到光标的后面；</div><div class="line">P               大写字母 P，将缓冲区的内容粘贴到光标的前面。</div></pre></td></tr></table></figure>
+<h3 id="5-6-正则表达式"><a href="#5-6-正则表达式" class="headerlink" title="5.6.正则表达式"></a>5.6.正则表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">^                放在字符串前面，匹配行首的字；</div><div class="line">$                放在字符串后面，匹配行尾的字；</div><div class="line">\&lt;               匹配一个字的字头；</div><div class="line">\&gt;               匹配一个字的字尾；</div><div class="line">.                匹配任何单个正文字符；</div><div class="line">[str]            匹配 str 中的任何单个字符；</div><div class="line">[^str]           匹配任何不在 str 中的单个字符；</div><div class="line">[a-b]            匹配 a 到 b 之间的任一字符；</div><div class="line">*                匹配前一个字符的 0 次或多次出现；</div><div class="line">\                转义后面的字符。</div></pre></td></tr></table></figure>
+<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p><a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="external">vim 入门基础</a></p>
+<p><a href="http://vimdoc.sourceforge.net/" target="_blank" rel="external">vim 官方文档</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vim/">Vim</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Spring中的AOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/26/Spring中的AOP/">Spring中的AOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/26/Spring中的AOP/" class="article-date">
+  <time datetime="2017-06-26T10:09:22.000Z" itemprop="datePublished">2017-06-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-什么是AOP"><a href="#1-什么是AOP" class="headerlink" title="1.什么是AOP"></a>1.什么是AOP</h2><p><strong>AOP</strong>（面向切面编程）给我们提供了很好的非入侵式（<strong>在不修改源代码的情况下</strong>）的手段为现有的类增加新的功能。本文通过演示 <strong>Spring AOP</strong> 是如何使用的来介绍什么是 <strong>AOP</strong>。</p>
+<p>我们会首先演示如何使用基于注解的 <strong>Spring AOP</strong>，然后演示如何使用基于 <strong>XML</strong> 的 <strong>Spring AOP</strong>。最后对 <strong>Spring AOP</strong> 进行简要的总结。</p>
+<p>首先我们需要定义一个目标对象（接口），这个对象在调用某些方法时（<strong>之前或之后</strong>）会被拦截，然后执行我们自己的代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Performance</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">perform</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>假定上面的对象就是我们的目标类。我们希望在该类调用 <strong>perform()</strong> 方法之前和之后分别输出一些提示，但是处于某些原因，我们又不想修改它的源代码。为了实现这一目标，我们需要使用 <strong>AOP</strong> 来达到我们的目的。</p>
+<h2 id="2-基于注解的-Spring-AOP"><a href="#2-基于注解的-Spring-AOP" class="headerlink" title="2.基于注解的 Spring AOP"></a>2.基于注解的 Spring AOP</h2><p>下面是一个 <strong>Audience</strong> 类，它在本文中作为一个切面来使用。也就是说，在 <strong>Performance</strong> 类调用 <strong>perform()</strong> 前后输出的提示，其实是由 <strong>Audience</strong> 提供的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterThrowing;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="comment">// 把 Performance 的 perform 方法定义为名为 performance 的切点</span></div><div class="line">  <span class="meta">@Pointcut</span>(<span class="string">"execution(** concert.Performance.perform(..))"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performance</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之前输出</span></div><div class="line">  <span class="meta">@Before</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之后输出</span></div><div class="line">  <span class="meta">@AfterReturning</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演失败（抛出异常）输出</span></div><div class="line">  <span class="meta">@AfterThrowing</span>（“Performance()”)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了使 Spring 能够识别 @Aspect 注解，我们需要在 JavaConfig 中启用 AspectJ 注解的自动代理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Bean；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.ComponentScan；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Configuration；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.EnableAspectJAutoProxy；</div><div class="line">  </div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableAspectJAutoProxy</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcertConfig</span> </span>&#123;</div><div class="line">  <span class="meta">@Bean</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Audience <span class="title">audience</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Audience();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-基于-XML-的-Spring-AOP"><a href="#3-基于-XML-的-Spring-AOP" class="headerlink" title="3.基于 XML 的 Spring AOP"></a>3.基于 XML 的 Spring AOP</h2><p>使用注解的 AOP 能够在不侵入目标类的情况下，对目标类的方法进行监控。但是，如果切面 Audience 的代码中有许多注解。试想，如果我们连切面的代码都不想修改，或者无法修改切面的源代码，我们又该如何使用 AOP 呢？XML 为我们提供了一种解决方案：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125; </div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们去掉了 Audience 中所有的注解，当然这样的一个类是无法实现 AOP 的，因此我们需要在XML 中进行配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"audience"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"performance"</span></div><div class="line">        <span class="attr">expression</span>=<span class="string">"execution(** concert.Performance.perform(..))"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:before</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"soliencePhones"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-returning</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"clap"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-throwing</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"refund"</span>/&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样一来，我们就可以在两个类都是完全的 <strong>pojo</strong> 类（纯 <strong>java</strong> 代码实现的普通类）的情况下实现 <strong>aop</strong> 了。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Eclipse搭建SpringBoot（五）使用拦截器验证用户登录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/26/Eclipse搭建SpringBoot（五）使用拦截器验证用户登录/">Eclipse搭建SpringBoot（五）使用拦截器验证用户登录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/26/Eclipse搭建SpringBoot（五）使用拦截器验证用户登录/" class="article-date">
+  <time datetime="2017-06-26T08:16:16.000Z" itemprop="datePublished">2017-06-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-使用拦截器验证用户登录的手段"><a href="#1-使用拦截器验证用户登录的手段" class="headerlink" title="1.使用拦截器验证用户登录的手段"></a>1.使用拦截器验证用户登录的手段</h2><p>目前网上提供的拦截器验证用户登录主要分为两种手段：</p>
+<h4 id="把拦截器声明成一个注解加到-Controller-上"><a href="#把拦截器声明成一个注解加到-Controller-上" class="headerlink" title="把拦截器声明成一个注解加到 Controller 上"></a>把拦截器声明成一个注解加到 Controller 上</h4><p>如：<a href="http://blog.csdn.net/u011493599/article/details/53942757" target="_blank" rel="external">springboot(八)拦截器之验证登录</a></p>
+<h4 id="在-WebConfig-java-中添加拦截器相关规则，"><a href="#在-WebConfig-java-中添加拦截器相关规则，" class="headerlink" title="在 WebConfig.java 中添加拦截器相关规则，"></a>在 WebConfig.java 中添加拦截器相关规则，</h4><p>如：<a href="http://blog.csdn.net/jalon2015/article/details/71423974" target="_blank" rel="external">SpringBoot学习笔记（六）：配置拦截器，控制登录跳转</a></p>
+<p>本文中采用第二种方案，因为它实现起来比较简单。</p>
+<h2 id="2-实现步骤"><a href="#2-实现步骤" class="headerlink" title="2.实现步骤"></a>2.实现步骤</h2><h3 id="2-1-创建拦截器"><a href="#2-1-创建拦截器" class="headerlink" title="2.1.创建拦截器"></a>2.1.创建拦截器</h3><p>在项目中添加 <strong>com.yun.interceptor</strong> 包，并在其中添加 <strong>MyInterceptor</strong> 类，其内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.interceptor;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</div><div class="line">    Logger logger = LoggerFactory.getLogger(MyInterceptor.class);</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="comment">//获取session</span></div><div class="line">        HttpSession session = request.getSession(<span class="keyword">true</span>);</div><div class="line">        <span class="comment">//判断用户ID是否存在，不存在就跳转到登录界面</span></div><div class="line">        <span class="keyword">if</span>(session.getAttribute(<span class="string">"userId"</span>) == <span class="keyword">null</span>)&#123;</div><div class="line">            logger.info(<span class="string">"------:跳转到login页面！"</span>);</div><div class="line">  response.sendRedirect(request.getContextPath()+<span class="string">"/login"</span>);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            session.setAttribute(<span class="string">"userId"</span>, session.getAttribute(<span class="string">"userId"</span>));</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler,</span></span></div><div class="line">            ModelAndView modelAndView) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-2-添加-WebConfig-java-文件"><a href="#2-2-添加-WebConfig-java-文件" class="headerlink" title="2.2.添加 WebConfig.java 文件"></a>2.2.添加 WebConfig.java 文件</h3><p>在项目中创建 com.yun.config 包，创建 WebConfig.java 文件，其内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</div><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContextAware;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.util.ResourceUtils;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.EnableWebMvc;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.interceptor.MyInterceptor;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableWebMvc</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ApplicationContext applicationContext;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WebConfig</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</div><div class="line">        registry.addResourceHandler(<span class="string">"/static/**"</span>).addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+<span class="string">"/static/"</span>);</div><div class="line">        registry.addResourceHandler(<span class="string">"/templates/**"</span>).addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+<span class="string">"/templates/"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">super</span>.addResourceHandlers(registry);  </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">        <span class="keyword">this</span>.applicationContext = applicationContext;</div><div class="line">    &#125; </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</div><div class="line">        <span class="comment">//拦截规则：除了login，其他都拦截判断</span></div><div class="line">        registry.addInterceptor(<span class="keyword">new</span> MyInterceptor()).addPathPatterns(<span class="string">"/**"</span>).excludePathPatterns(<span class="string">"/login"</span>);</div><div class="line">        <span class="keyword">super</span>.addInterceptors(registry);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-3-修改-YunApplication-java-文件"><a href="#2-3-修改-YunApplication-java-文件" class="headerlink" title="2.3.修改 YunApplication.java 文件"></a>2.3.修改 YunApplication.java 文件</h3><p>在 YunApplication.java 文件中添加如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.ui.Model;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.service.LoggerService;</div><div class="line"><span class="keyword">import</span> com.yun.service.ScopeService;</div><div class="line"><span class="keyword">import</span> com.yun.service.UserService;</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YunApplication</span> </span>&#123;</div><div class="line">  </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">greeting</span><span class="params">()</span> </span>&#123;	</div><div class="line">		<span class="keyword">return</span> <span class="string">"Hello World!"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="comment">// 下面是需要添加到 YunApplication.java 中的代码</span></div><div class="line"><span class="comment">// 本文件中的其他内容只是为了说明这段代码应该添加到什么位置</span></div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/login"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(HttpSession session)</span> </span>&#123;</div><div class="line">    	session.setAttribute(<span class="string">"userId"</span>, <span class="string">"jackie"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line"> <span class="comment">// 需要添加的代码到此为止</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-登录测试"><a href="#3-登录测试" class="headerlink" title="3.登录测试"></a>3.登录测试</h2><p>本文中主要强调利用拦截器验证登录与否，因此 <strong>login</strong> 页面就直接帮助用户以 <strong>jackie</strong> 的身份登录了。</p>
+<p>首先，在浏览器中输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706260001.png" alt=""></p>
+<p>然后敲击回车访问，发现网站自动跳转到 login 页面：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706260002.png" alt=""></p>
+<p>再次输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080</div></pre></td></tr></table></figure>
+<p>然后回车访问，发现已经可以正常地访问了：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706260003.png" alt=""></p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/u011493599/article/details/53942757" target="_blank" rel="external">springboot(八)拦截器之验证登录</a></p>
+<p><a href="http://blog.csdn.net/jalon2015/article/details/71423974" target="_blank" rel="external">SpringBoot学习笔记（六）：配置拦截器，控制登录跳转</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/拦截器/">拦截器</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Spring中bean的生命周期" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/25/Spring中bean的生命周期/">Spring中bean的生命周期</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/25/Spring中bean的生命周期/" class="article-date">
+  <time datetime="2017-06-25T13:44:28.000Z" itemprop="datePublished">2017-06-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-传统-Java-应用-bean-的生命周期"><a href="#1-传统-Java-应用-bean-的生命周期" class="headerlink" title="1.传统 Java 应用 bean 的生命周期"></a>1.传统 Java 应用 bean 的生命周期</h2><ol>
+<li>使用 <strong>Java</strong> 关键字 <strong>new</strong> 进行 <strong>bean</strong> 实例化。</li>
+<li>使用这个 <strong>bean</strong>。</li>
+<li><strong>Java</strong> 自动进行垃圾回收。</li>
+</ol>
+<h2 id="2-Spring-中-bean-的生命周期"><a href="#2-Spring-中-bean-的生命周期" class="headerlink" title="2.Spring 中 bean 的生命周期"></a>2.Spring 中 bean 的生命周期</h2><ol>
+<li>实例化。</li>
+<li>填充属性。</li>
+<li>调用 <strong>BeanNameAware</strong> 的 <strong>setBeanName()</strong> 方法。</li>
+<li>调用 <strong>BeanFactoryAware</strong> 的 <strong>setBeanFactory()</strong> 方法。</li>
+<li>调用 <strong>ApplicationContextAware</strong> 的 <strong>setApplicationContext()</strong> 方法。</li>
+<li>调用 <strong>BeanPostProcessor</strong> 的预初始化方法。</li>
+<li>调用 <strong>InitalizingBean</strong> 的 <strong>afterPropertiesSet()</strong> 方法。</li>
+<li>调用自定义的初始化方法。</li>
+<li>调用 <strong>BeanPostProcessor</strong> 的初始化后方法。</li>
+<li><strong>使用 bean。</strong></li>
+<li>调用 <strong>DisposableBean</strong> 的 <strong>destory()</strong> 方法。</li>
+<li>调用自定义的销毁方法。</li>
+</ol>
+<h2 id="3-Spring-中-bean-生命周期的解释"><a href="#3-Spring-中-bean-生命周期的解释" class="headerlink" title="3.Spring 中 bean 生命周期的解释"></a>3.Spring 中 bean 生命周期的解释</h2><h3 id="3-1-bean-生命周期的本质"><a href="#3-1-bean-生命周期的本质" class="headerlink" title="3.1.bean 生命周期的本质"></a>3.1.bean 生命周期的本质</h3><p>就一个对象而言，其声明周期可以概括为：</p>
+<ol>
+<li>创建（实例化 + 初始化）</li>
+<li>使用</li>
+<li>销毁</li>
+</ol>
+<p>就 <strong>Spring</strong> 中的 <strong>bean</strong> 而言，<strong>Spring</strong> 只是提供了一些接口，允许开发者在：<strong>实例化</strong>、<strong>初始化</strong>和<strong>销毁</strong></p>
+<p>的前后进行一些操作。</p>
+<h3 id="3-2-bean-相关方法分类"><a href="#3-2-bean-相关方法分类" class="headerlink" title="3.2.bean 相关方法分类"></a>3.2.bean 相关方法分类</h3><ol>
+<li><strong>Bean自身方法</strong>：<strong>init-method/destroy-method</strong>，通过为配置文件<strong>bean</strong>定义中添加相应属性指定相应执行方法。</li>
+<li><strong>Bean级生命周期接口</strong>：<strong>BeanNameAware</strong>、<strong>BeanFactoryAware</strong>、和<strong>InitializingBean</strong> 。这些接口的方法，每个 <strong>bean</strong> 选择实现，可选择各自的个性化操作。</li>
+<li><strong>容器级生命周期接口方法</strong>：<strong>BeanPostProcessor</strong> 等 ，一般称它们的实现类为“后处理器”，这些接口是每个 <strong>bean</strong> 实例化或初始化时候都会调用。</li>
+</ol>
+<h3 id="3-3-简单描述"><a href="#3-3-简单描述" class="headerlink" title="3.3.简单描述"></a>3.3.简单描述</h3><p><strong>bean</strong> 的生命周期，主要就是在<strong>实例化</strong>和<strong>填充属性</strong>之后，让 bean 知道自己的<strong>名称</strong>， <strong>工厂</strong>和<strong>上下文</strong> ，并在自定义的初始化方法前后调用<strong>预初始化（前）、填充属性后（前）</strong>和<strong>初始化后（后）</strong>方法。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/a327369238/article/details/52193822" target="_blank" rel="external">Spring Bean生命周期详解</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-Spring中bean的作用域的实验" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -843,408 +1166,15 @@
 
 
     
-      <article id="post-Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/23/Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库/">Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/23/Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库/" class="article-date">
-  <time datetime="2017-06-23T14:55:05.000Z" itemprop="datePublished">2017-06-23</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-搭建-MySQL-数据库"><a href="#1-搭建-MySQL-数据库" class="headerlink" title="1.搭建 MySQL 数据库"></a>1.搭建 MySQL 数据库</h2><p>安装 MySQL 的步骤就不在此赘述了，如果没接触过 MySQL 安装的话，可以参考：</p>
-<p><a href="https://jacksmiththu.github.io/2017/04/08/%E5%8D%95%E5%8F%B0windows%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E6%9C%BA%E5%A4%87%E4%BB%BD/" target="_blank" rel="external">单台windows搭建mysql主从机备份</a></p>
-<p>现在我们已经有了一个可用的数据库，以及 root 的密码（我使用的密码是：root）。</p>
-<h3 id="1-1-登录账户"><a href="#1-1-登录账户" class="headerlink" title="1.1.登录账户"></a>1.1.登录账户</h3><p><strong>Win</strong> + <strong>R</strong> 输入 <strong>cmd</strong> 敲回车，打开一个终端，在里面输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; mysql -uroot -proot</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230003.png" alt=""></p>
-<h3 id="1-2-建立数据库"><a href="#1-2-建立数据库" class="headerlink" title="1.2.建立数据库"></a>1.2.建立数据库</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; create database yun;</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230004.png" alt=""></p>
-<p>因为我之前已经建立过了，所以会显示 <strong>ERROR</strong>。正常情况下应该显示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Query OK, 1 row affected (0.01 sec)</div></pre></td></tr></table></figure>
-<p>查询一下，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; show databases;</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230005.png" alt=""></p>
-<p>可以看到我们刚才建立的数据库 <strong>yun</strong>。</p>
-<h3 id="1-3-建立对应表"><a href="#1-3-建立对应表" class="headerlink" title="1.3.建立对应表"></a>1.3.建立对应表</h3><p>有了数据库，我们还需要建立响应的表并插入数据，这样才能够查询。为此我们先简历一张表：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; use yun;</div><div class="line">&gt; CREATE TABLE IF NOT EXISTS user (id INT(11),name VARCHAR(255));</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230006.png" alt=""></p>
-<h3 id="1-4-向表中插入数据"><a href="#1-4-向表中插入数据" class="headerlink" title="1.4.向表中插入数据"></a>1.4.向表中插入数据</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; INSERT INTO user (id,name) values(1,&quot;Jackie&quot;);</div><div class="line">&gt; INSERT INTO user (id,name) values(2,&quot;Nacu&quot;);</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230007.png" alt=""></p>
-<p>查询一下表中是否有插入的数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; SELECT * FROM user;</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230008.png" alt=""></p>
-<p>到了这一步，数据库就搭建完成了。接下来我们来搭建网站。</p>
-<h2 id="2-向-SpringBoot-集成-Mybatis"><a href="#2-向-SpringBoot-集成-Mybatis" class="headerlink" title="2.向 SpringBoot 集成 Mybatis"></a>2.向 SpringBoot 集成 Mybatis</h2><h3 id="2-1-修改-src-main-java-目录和添加文件"><a href="#2-1-修改-src-main-java-目录和添加文件" class="headerlink" title="2.1.修改 src/main/java 目录和添加文件"></a>2.1.修改 src/main/java 目录和添加文件</h3><p>按照下图的修改项目的包名，并添加新的包和类。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230009.png" alt=""></p>
-<h4 id="2-1-1-YunAppalication-java"><a href="#2-1-1-YunAppalication-java" class="headerlink" title="2.1.1.YunAppalication.java"></a>2.1.1.YunAppalication.java</h4><p>将 <strong>YunAppalication.java</strong> 所在的包名修改成 <strong>com.yun</strong> ，并修改其内容如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">package com.yun;</div><div class="line"></div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.ui.Model;</div><div class="line">import org.springframework.web.bind.annotation.PathVariable;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RequestParam;</div><div class="line">import org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line">import com.yun.service.UserService;</div><div class="line"></div><div class="line">/*</div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@Controller</div><div class="line">public class YunApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(YunApplication.class, args);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 返回字符串</div><div class="line">	 * 调用示例 : localhost:8080</div><div class="line">	 */</div><div class="line">	@ResponseBody</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;	</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 不带参数的模版渲染</div><div class="line">	 * 调用示例 : localhost:8080/index</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/index&quot;)</div><div class="line">	public String index() &#123;	</div><div class="line">		return &quot;index&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（/风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello/1/jackie</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/hello/&#123;id&#125;/&#123;name&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) String id, @PathVariable(&quot;name&quot;) String name,Model model) &#123;</div><div class="line">        model.addAttribute(&quot;id&quot;, id);</div><div class="line">        model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（?风格）</div><div class="line">	 * 调用示例 : http://localhost:8080/hello?id=1&amp;name=jackie</div><div class="line">	 */</div><div class="line">    @RequestMapping(value = &quot;/hello&quot;)</div><div class="line">    public String hello2(@RequestParam String id, @RequestParam String name, Model model) &#123;</div><div class="line">    	model.addAttribute(&quot;id&quot;, id);</div><div class="line">    	model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Autowired</div><div class="line">    private UserService userService;</div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(&quot;/database/&#123;id&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) Integer id) &#123;</div><div class="line"></div><div class="line">        return userService.getById(id).getName();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-1-2-User-java"><a href="#2-1-2-User-java" class="headerlink" title="2.1.2.User.java"></a>2.1.2.User.java</h4><p><strong>User.java</strong> 是一个实体类，一般来说，实体类会被放在 <strong>mode</strong>l 包下。如我们的 <strong>User.java</strong> 就被放到了 <strong>com.yun.model</strong> 包下，其内容如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package com.yun.model;</div><div class="line"></div><div class="line">public class User &#123;</div><div class="line">    private Integer id;</div><div class="line">    private String name;</div><div class="line">    public Integer getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line">    public void setId(Integer id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-1-3-UserMapper-java"><a href="#2-1-3-UserMapper-java" class="headerlink" title="2.1.3.UserMapper.java"></a>2.1.3.UserMapper.java</h4><p><strong>UserMapper.java</strong> 是一个 <strong>Mapper</strong>（用于映射 <strong>model</strong> 中的实体类与数据库的查询结果）。其一半位于 <strong>mapper</strong> 包或者 <strong>dao</strong> 包下，我们就把它放在 <strong>com.yun.mapper</strong> 包下。其内容如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.yun.mapper;</div><div class="line"></div><div class="line">import org.apache.ibatis.annotations.Mapper;</div><div class="line">import org.apache.ibatis.annotations.Param;</div><div class="line">import org.apache.ibatis.annotations.Result;</div><div class="line">import org.apache.ibatis.annotations.Results;</div><div class="line">import org.apache.ibatis.annotations.Select;</div><div class="line"></div><div class="line">import com.yun.model.User;</div><div class="line"></div><div class="line">@Mapper </div><div class="line">public interface UserMapper &#123;</div><div class="line">    @Select(&quot;SELECT * FROM user WHERE user.id = #&#123;id&#125;&quot;)</div><div class="line">    @Results(&#123;</div><div class="line">        @Result(column = &quot;id&quot;, property = &quot;id&quot;),</div><div class="line">        @Result(column = &quot;name&quot;, property = &quot;name&quot;)</div><div class="line">    &#125;)</div><div class="line">    User getById(@Param(&quot;id&quot;) Integer id);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="2-1-4-UserService-java"><a href="#2-1-4-UserService-java" class="headerlink" title="2.1.4.UserService.java"></a>2.1.4.UserService.java</h4><p><strong>UserService.java</strong> 是一个 <strong>Service</strong>（主要用于实现业务的逻辑）。一般位于 <strong>service</strong> 包下，我们将其放在 <strong>com.yun.service</strong> 包下。其内容如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">package com.yun.service;</div><div class="line"></div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.yun.mapper.UserMapper;</div><div class="line">import com.yun.model.User;</div><div class="line"></div><div class="line">@Service</div><div class="line">public class UserService &#123;</div><div class="line">    @Autowired</div><div class="line">    private UserMapper userMapper;</div><div class="line">    </div><div class="line">	public User getById(Integer id) &#123;</div><div class="line">        return userMapper.getById(id);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-2-修改-application-properties-文件"><a href="#2-2-修改-application-properties-文件" class="headerlink" title="2.2.修改 application.properties 文件"></a>2.2.修改 application.properties 文件</h3><p>修改 <strong>application.properties</strong> 文件的扩展名为 <strong>yml</strong> （<strong>注意：这很重要！！！！！！</strong> ），并添加如下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">  datasource:</div><div class="line">    url: jdbc:mysql://localhost:3306/yun?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</div><div class="line">    username: root</div><div class="line">    password: root</div><div class="line">    driver-class-name: com.mysql.jdbc.Driver</div></pre></td></tr></table></figure>
-<h3 id="2-3-修改-pom-xml-文件"><a href="#2-3-修改-pom-xml-文件" class="headerlink" title="2.3.修改 pom.xml 文件"></a>2.3.修改 pom.xml 文件</h3><p>向 <strong>pom.xml</strong> 文件添加依赖：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 使用数据源 --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.0.14&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- mysql --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">	&lt;scope&gt;runtime&lt;/scope&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- mybatis --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p>完整的 <strong>pom.xml</strong> 文件的内容如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;com.example&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;yun&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;yun&lt;/name&gt;</div><div class="line">	&lt;description&gt;yun demo web&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.5.4.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath /&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!-- 使用数据源 --&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.0.14&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!-- mysql --&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;runtime&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!-- mybatis --&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line"></div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
-<p>添加完成之后，<strong>Ctrl</strong> + <strong>S</strong> 保存。保存之后 maven 会自动下载相关的依赖，这可能需要一定的时间。</p>
-<h2 id="3-运行和测试"><a href="#3-运行和测试" class="headerlink" title="3.运行和测试"></a>3.运行和测试</h2><p>右击 <strong>YunApplication.java</strong>，选择 <strong>Run as</strong>，然后选择 <strong>Java Application</strong>。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230010.png" alt=""></p>
-<p>在浏览器输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/database/1</div></pre></td></tr></table></figure>
-<p>即可查询数据库中 1 号用户的名字。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230011.png" alt=""></p>
-<p>当然，你也可以查询 2 号用户。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230012.png" alt=""></p>
-<p>到了这一步，向 SpringBoot 集成 Mybatis 基本就完成了。</p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="https://darylliu.github.io/2016/11/03/SpringBoot%E5%AD%A6%E4%B9%A03%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E6%88%90mybatis/" target="_blank" rel="external">SpringBoot学习3之数据库集成mybatis</a></p>
-<p><a href="http://www.mybatis.org/mybatis-3/" target="_blank" rel="external">mybatis 官网</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mybatis/">Mybatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-如何解决github上传每次都要输入账号密码的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/">如何解决github上传每次都要输入账号密码的问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/" class="article-date">
-  <time datetime="2017-06-23T14:35:01.000Z" itemprop="datePublished">2017-06-23</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-需要输入账号密码的原因"><a href="#1-需要输入账号密码的原因" class="headerlink" title="1.需要输入账号密码的原因"></a>1.需要输入账号密码的原因</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png" alt=""></p>
-<p>之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。</p>
-<h3 id="2-操作步骤"><a href="#2-操作步骤" class="headerlink" title="2.操作步骤"></a>2.操作步骤</h3><ol>
-<li>git remote -v</li>
-<li>git remote rm origin</li>
-<li>git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git</li>
-<li>git push origin</li>
-<li>git push –set-upstream origin master</li>
-</ol>
-<p>上面的 <strong>jackSmithThu</strong> 和 <strong>MarkDownPhotos</strong> 需要改成你 <strong>github</strong> 的<strong>用户名</strong>和<strong>项目名</strong>( 第5步中，set 前面是两个 “-”，出于 hexo 的原因。直接复制可能无法使用，建议粘贴 <strong>git bash</strong> 里面的提示)。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png" alt=""></p>
-<h3 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h3><p><a href="http://blog.csdn.net/yuquan0821/article/details/8210944" target="_blank" rel="external">push到github时，每次都要输入用户名和密码的问题</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Eclipse搭建SpringBoot（二）控制器Controller" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/">Eclipse搭建SpringBoot（二）控制器Controller</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/" class="article-date">
-  <time datetime="2017-06-21T16:07:54.000Z" itemprop="datePublished">2017-06-22</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-新建项目"><a href="#1-新建项目" class="headerlink" title="1.新建项目"></a>1.新建项目</h2><p>首先，我们重新创建一个名为 yun 的 SpringBoot 项目，创建完成后项目结构如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220001.png" alt=""></p>
-<h2 id="2-修改-YunApplication-java"><a href="#2-修改-YunApplication-java" class="headerlink" title="2.修改 YunApplication.java"></a>2.修改 YunApplication.java</h2><p>我们将 <strong>YunApplication.java</strong> 中的内容按照如下代码修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line">package com.example.demo;</div><div class="line"></div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.ui.Model;</div><div class="line">import org.springframework.web.bind.annotation.PathVariable;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RequestParam;</div><div class="line">import org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line">/*</div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@Controller</div><div class="line">public class YunApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(YunApplication.class, args);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 返回字符串</div><div class="line">	 * 调用示例 : localhost:8080</div><div class="line">	 */</div><div class="line">	@ResponseBody </div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;	</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 不带参数的模版渲染</div><div class="line">	 * 调用示例 : localhost:8080/index</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/index&quot;)</div><div class="line">	public String index() &#123;	</div><div class="line">		return &quot;index&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（/风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello/1/jackie</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/hello/&#123;id&#125;/&#123;name&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) String id, @PathVariable(&quot;name&quot;) String name,Model model) &#123;</div><div class="line">        model.addAttribute(&quot;id&quot;, id);</div><div class="line">        model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（?风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello?id=1$name=jackie</div><div class="line">	 */</div><div class="line">    @RequestMapping(value = &quot;/hello&quot;)</div><div class="line">    public String hello2(@RequestParam String id, @RequestParam String name, Model model) &#123;</div><div class="line">    	model.addAttribute(&quot;ihttp://localhost:8080/hello?id=1&amp;name=jackied&quot;, id);</div><div class="line">    	model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="下面进行一些解释："><a href="#下面进行一些解释：" class="headerlink" title="下面进行一些解释："></a>下面进行一些解释：</h4><h5 id="我们在响应请求时，主要分为两种情况："><a href="#我们在响应请求时，主要分为两种情况：" class="headerlink" title="我们在响应请求时，主要分为两种情况："></a>我们在响应请求时，主要分为两种情况：</h5><ol>
-<li>我们想要返回一个字符串（可能是一个 <strong>json</strong> 串）。</li>
-<li>我们想要返回一个页面。</li>
-</ol>
-<p>对于前一种情况，我们可以使用 <strong>@ResponseBody</strong> 注解使返回的内容为我们想要返回的字符串。对于后一种情况，我们其实返回的是两样东西：</p>
-<ol>
-<li>一个前端页面（我们称之为 <strong>templates</strong>）。</li>
-<li>该页面所需要的数据（我们称之为 <strong>model</strong>）。</li>
-</ol>
-<p>一个被返回的页面同时包括这两种东西，其中 <strong>model</strong> 可以直接用如下语句赋值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.addAttribute(&quot;id&quot;, id);</div></pre></td></tr></table></figure>
-<p><strong>model</strong> 的每一个属性既可以是一个基本类型，也可以是字符串，列表（<strong>List</strong>）等。</p>
-<p><strong>templates</strong> 位于 <strong>src/main/resources/templates</strong> 下，后面我们会详细介绍。</p>
-<h5 id="下面介绍前面使用过的几种注解。"><a href="#下面介绍前面使用过的几种注解。" class="headerlink" title="下面介绍前面使用过的几种注解。"></a>下面介绍前面使用过的几种注解。</h5><p><strong>@Controller</strong> 注解的类会被当作一个控制器 Controller，专门用来处理不同请求不同的URL，从而有针对性的返回内容。</p>
-<p><strong>@RequestMapping</strong> 注解是用来处理请求地址映射的注解，可以用在类或方法上，如果用在类上，则表示所有该类中的响应方法都是以该地址作为父路径。如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@RequestMapping(&quot;/root&quot;)</div><div class="line">public class YunApplication &#123;</div><div class="line">	</div><div class="line">	// 调用示例 : http://localhost:8080/root</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String hello() &#123;</div><div class="line">		return &quot; Hello World1!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	// 调用示例 : http://localhost:8080/root/hello2</div><div class="line">	@RequestMapping(&quot;/hello2&quot;)</div><div class="line">	public String hello2() &#123;</div><div class="line">		return &quot;Hello World2!&quot;;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>@ResponseBody</strong> 注解的类或方法在响应请求时只返回字符串，因此不能返回被渲染的模板。如我们上面提到的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@ResponseBody </div><div class="line">@RequestMapping(&quot;/&quot;)</div><div class="line">public String greeting() &#123;	</div><div class="line">	return &quot;Hello World!&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>@RestController</strong> 注解整合了 <strong>@Controller</strong> 和 <strong>@ResponseBody</strong>。在该类中所有的请求都只会返回字符串。如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RestController;</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@RestController</div><div class="line">public class YunApplication &#123;</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(App.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-修改-pom-xml-文件"><a href="#3-修改-pom-xml-文件" class="headerlink" title="3.修改 pom.xml 文件"></a>3.修改 pom.xml 文件</h2><p>为了使我们的应用能够自动地去对应的位置去寻找 <strong>templates</strong>，我们需要使用<strong>thymeleaf</strong>模板引擎进行渲染。我们唯一需要做的事就是在 <strong>dependencies</strong> 标签中添加如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p>添加完成的结果应该是这个样子的：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220002.png" alt=""></p>
-<h2 id="4-创建模板文件"><a href="#4-创建模板文件" class="headerlink" title="4.创建模板文件"></a>4.创建模板文件</h2><p>在 <strong>src/main/resources/templates</strong> 文件夹下创建模板文件 <strong>index.html</strong>，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;Hello SomeOne&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p&gt; hello index! &lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>再在该文件夹下创建 <strong>hello.html</strong>，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;Hello SomeOne&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p th:text=&quot;&apos;Hello &apos; + $&#123;name&#125; + &apos;, your id is &apos; + $&#123;id&#125; + &apos;!&apos;&quot; /&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p>从上面的代码中，我们是可以看到模板文件是如何调用 <strong>model</strong> 中的属性的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$&#123;属性名&#125;</div></pre></td></tr></table></figure>
-<h2 id="5-测试结果"><a href="#5-测试结果" class="headerlink" title="5.测试结果"></a>5.测试结果</h2><h3 id="5-1-启动项目"><a href="#5-1-启动项目" class="headerlink" title="5.1.启动项目"></a>5.1.启动项目</h3><p>完整的项目结构如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220003.png" alt=""></p>
-<p>右键 <strong>Yunapplication.java</strong> ，点击<strong>Run as</strong>，然后选择 <strong>Java Application</strong> ：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220004.png" alt=""></p>
-<p>控制台输出如下所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220005.png" alt=""></p>
-<h3 id="5-2-进行测试"><a href="#5-2-进行测试" class="headerlink" title="5.2.进行测试"></a>5.2.进行测试</h3><h5 id="5-2-1-打开浏览器，输入："><a href="#5-2-1-打开浏览器，输入：" class="headerlink" title="5.2.1.打开浏览器，输入："></a>5.2.1.打开浏览器，输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080</div></pre></td></tr></table></figure>
-<p>输出结果如下所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220006.png" alt=""></p>
-<h5 id="5-2-2-输入："><a href="#5-2-2-输入：" class="headerlink" title="5.2.2.输入："></a>5.2.2.输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/index</div></pre></td></tr></table></figure>
-<p> <img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220007.png" alt=""></p>
-<h5 id="5-2-3-输入："><a href="#5-2-3-输入：" class="headerlink" title="5.2.3.输入："></a>5.2.3.输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/hello/1/jackie</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220008.png" alt=""></p>
-<h5 id="5-2-4-输入："><a href="#5-2-4-输入：" class="headerlink" title="5.2.4.输入："></a>5.2.4.输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/hello?id=1&amp;name=jackie</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220009.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Docker入门之（二）Docker的安装与基本操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/">Docker入门之（二）Docker的安装与基本操作</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/" class="article-date">
-  <time datetime="2017-06-07T06:33:21.000Z" itemprop="datePublished">2017-06-07</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-Docker的安装"><a href="#1-Docker的安装" class="headerlink" title="1.Docker的安装"></a>1.Docker的安装</h2><h3 id="1-1-安装-curl-包"><a href="#1-1-安装-curl-包" class="headerlink" title="1.1.安装 curl 包"></a>1.1.安装 curl 包</h3><p>按 Ctrl + Alt +T 打开终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
-<p>然后输入密码。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070001.png" alt=""></p>
-<p>获取超级用户权限之后，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ apt-get update </div><div class="line">$ apt-get install curl</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070002.png" alt=""></p>
-<h3 id="1-2-用-curl-获取最新的-docker-安装包"><a href="#1-2-用-curl-获取最新的-docker-安装包" class="headerlink" title="1.2.用 curl 获取最新的 docker 安装包"></a>1.2.用 curl 获取最新的 docker 安装包</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -sSL https://get.docker.com/ | sh</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070003.png" alt=""></p>
-<h3 id="1-3-检查-docker-是否安装成功"><a href="#1-3-检查-docker-是否安装成功" class="headerlink" title="1.3.检查 docker 是否安装成功"></a>1.3.检查 docker 是否安装成功</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run hello-world</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070004.png" alt=""></p>
-<p>由于本地没有 hello-world 镜像，docker 会自动从网上下载这个镜像，然后运行。</p>
-<h2 id="2-Docker的使用"><a href="#2-Docker的使用" class="headerlink" title="2.Docker的使用"></a>2.Docker的使用</h2><p>为了演示 Docker 的使用方法，我们新建一个镜像并在里面安装一个 vim，然后上传到云端。</p>
-<h3 id="2-1-账号注册"><a href="#2-1-账号注册" class="headerlink" title="2.1.账号注册"></a>2.1.账号注册</h3><p>首先你需要一个 Docker 的账号，登录：<a href="https://www.docker.com/" target="_blank" rel="external">https://www.docker.com/</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070005.png" alt=""></p>
-<p>点击上图标红部分，进入账号申请页面：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070006.png" alt=""></p>
-<p>填写好信息之后点击 【Sign Up】。注意，到这一步注册还没有完全成功，因为它会给你的邮箱发一封验证邮件，在你去邮箱验证该邮件之前账号都是不能使用的。</p>
-<h4 id="所以千万不要忘了验证邮件！！！"><a href="#所以千万不要忘了验证邮件！！！" class="headerlink" title="所以千万不要忘了验证邮件！！！"></a>所以千万不要忘了验证邮件！！！</h4><h3 id="2-2-登录账号"><a href="#2-2-登录账号" class="headerlink" title="2.2.登录账号"></a>2.2.登录账号</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker login</div></pre></td></tr></table></figure>
-<p>此时会提示输入账号密码，输入完成后会提示登录成功。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070007.png" alt=""></p>
-<h3 id="2-3-启动一个容器"><a href="#2-3-启动一个容器" class="headerlink" title="2.3.启动一个容器"></a>2.3.启动一个容器</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -t -i ubuntu:16.04</div></pre></td></tr></table></figure>
-<p>此时会下载 ubuntu 16.04 的镜像并启动。 -i 的意思是以交互模式运行，-t 的意思是打开一个该容器的伪终端。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070008.png" alt=""></p>
-<p>根据提示我们可以看出，我们已经进入了一个 docker 容器的伪终端。</p>
-<h3 id="2-4-安装-vim"><a href="#2-4-安装-vim" class="headerlink" title="2.4.安装 vim"></a>2.4.安装 vim</h3><p>在新打开的伪终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get update</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070009.png" alt=""></p>
-<p>然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get install vim</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070010.png" alt=""></p>
-<p>询问是否继续（<strong>Y/n</strong>）时，输入 y。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070011.png" alt=""></p>
-<h3 id="2-5-测试vim"><a href="#2-5-测试vim" class="headerlink" title="2.5.测试vim"></a>2.5.测试vim</h3><p>在伪终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
-<p>建立一个叫做 a.txt 的文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070012.png" alt=""></p>
-<p>打开 vim 程序如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070013.png" alt=""></p>
-<p>按下键盘上的 <strong>i</strong> ，进入插入模式（<strong>i</strong>nsert），随便输入一点字符。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070014.png" alt=""></p>
-<p>然后按下 Esc 进入命令模式，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
-<p>保存文件并退出。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070015.png" alt=""></p>
-<p>我们已经建立了一个 a.txt 的文档，接下来输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat a.txt</div></pre></td></tr></table></figure>
-<p>查看文档是否存在，以及其内容是否为我们输入的内容。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070016.png" alt=""></p>
-<h2 id="3-Docker镜像的保存"><a href="#3-Docker镜像的保存" class="headerlink" title="3.Docker镜像的保存"></a>3.Docker镜像的保存</h2><h3 id="3-1-提交镜像"><a href="#3-1-提交镜像" class="headerlink" title="3.1.提交镜像"></a>3.1.提交镜像</h3><p>在伪终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ exit</div></pre></td></tr></table></figure>
-<p>从伪终端退出。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070017.png" alt=""></p>
-<p>然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker commit f0a jacksmith/demo</div></pre></td></tr></table></figure>
-<p>其中 f0a 是虚拟机容器序号的前三位，jacksmith 需要改成你自己的用户名，demo 是你给你自己镜像取的名字。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070018.png" alt=""></p>
-<h3 id="3-2-上传镜像"><a href="#3-2-上传镜像" class="headerlink" title="3.2.上传镜像"></a>3.2.上传镜像</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker push jacksmith demo</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070019.png" alt=""></p>
-<h3 id="3-3-查看镜像是否上传成功"><a href="#3-3-查看镜像是否上传成功" class="headerlink" title="3.3.查看镜像是否上传成功"></a>3.3.查看镜像是否上传成功</h3><p>在终端输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker search jacksmith</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070020.png" alt=""></p>
-<p>可见已经上传已经成功了。</p>
-<h2 id="4-重用Docker镜像"><a href="#4-重用Docker镜像" class="headerlink" title="4.重用Docker镜像"></a>4.重用Docker镜像</h2><p>Ctrl + Alt +T，打开一个新终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
-<p>输入密码之后，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -i -t jacksmith/demo</div></pre></td></tr></table></figure>
-<p>打开伪终端，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070021.png" alt=""></p>
-<p>可以看到这就是我们刚才发布的镜像：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070022.png" alt=""></p>
-<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="http://www.runoob.com/docker/docker-command-manual.html" target="_blank" rel="external">Docker 命令大全</a></p>
-<p><a href="http://www.docker.org.cn/book/" target="_blank" rel="external">Docker手册</a></p>
-<h2 id="6-操作系统-Ubuntu-16-04"><a href="#6-操作系统-Ubuntu-16-04" class="headerlink" title="6.操作系统 Ubuntu 16.04"></a>6.操作系统 Ubuntu 16.04</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Jack Smith&nbsp;
+      &copy; 2018 Jack Smith&nbsp;
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>TarsosDSP 简介 - Jackie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="TarsosDSP 简介1.什么是 TarsosDSP？ TarsosDSP 是一个用于音频处理的Java库。   它的目标是提供一个易于使用的界面，以便在纯Java中尽可能简单地实现实用的音频处理算法，而无需任何其他外部依赖。  这个库试图在能够完成任务，但足够简洁。  TarsosDSP 的特点是实现了一个冲击起始检测器和一些间距检测算法：YIN，Mcleod Pitch方法和一个“动态小波算">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TarsosDSP 简介">
+<meta property="og:url" content="http://yoursite.com/2017/12/25/TarsosDSP简介/index.html">
+<meta property="og:site_name" content="Jackie">
+<meta property="og:description" content="TarsosDSP 简介1.什么是 TarsosDSP？ TarsosDSP 是一个用于音频处理的Java库。   它的目标是提供一个易于使用的界面，以便在纯Java中尽可能简单地实现实用的音频处理算法，而无需任何其他外部依赖。  这个库试图在能够完成任务，但足够简洁。  TarsosDSP 的特点是实现了一个冲击起始检测器和一些间距检测算法：YIN，Mcleod Pitch方法和一个“动态小波算">
+<meta property="og:image" content="http://yoursite.com/2017/12/25/TarsosDSP简介/images/201712300001.png">
+<meta property="og:updated_time" content="2017-12-31T13:26:39.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TarsosDSP 简介">
+<meta name="twitter:description" content="TarsosDSP 简介1.什么是 TarsosDSP？ TarsosDSP 是一个用于音频处理的Java库。   它的目标是提供一个易于使用的界面，以便在纯Java中尽可能简单地实现实用的音频处理算法，而无需任何其他外部依赖。  这个库试图在能够完成任务，但足够简洁。  TarsosDSP 的特点是实现了一个冲击起始检测器和一些间距检测算法：YIN，Mcleod Pitch方法和一个“动态小波算">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/25/TarsosDSP简介/images/201712300001.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+  <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+      <a id="logo" class="logo" href="/"></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+    <section id="main" class="outer"><article id="post-TarsosDSP简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TarsosDSP 简介
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/12/25/TarsosDSP简介/" class="article-date">
+  <time datetime="2017-12-25T10:38:00.000Z" itemprop="datePublished">2017-12-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TarsosDSP-简介"><a href="#TarsosDSP-简介" class="headerlink" title="TarsosDSP 简介"></a>TarsosDSP 简介</h1><h2 id="1-什么是-TarsosDSP？"><a href="#1-什么是-TarsosDSP？" class="headerlink" title="1.什么是 TarsosDSP？"></a>1.什么是 TarsosDSP？</h2><ul>
+<li><strong>TarsosDSP</strong> 是一个用于音频处理的Java库。</li>
+</ul>
+<ul>
+<li><p>它的目标是提供一个易于使用的界面，以便在纯Java中尽可能简单地实现实用的音频处理算法，而无需任何其他外部依赖。</p>
+</li>
+<li><p>这个库试图在能够完成任务，但足够简洁。</p>
+</li>
+<li><strong>TarsosDSP</strong> 的特点是实现了一个冲击起始检测器和一些间距检测算法：YIN，Mcleod Pitch方法和一个“动态小波算法间距跟踪”算法。</li>
+</ul>
+<ul>
+<li>它还实现了Goertzel DTMF解码算法，时间拉伸算法（WSOLA），重采样，滤波器，简单合成，一些音频效果和变调算法。</li>
+</ul>
+<h2 id="2-TarsosDSP-都能实现哪些功能？"><a href="#2-TarsosDSP-都能实现哪些功能？" class="headerlink" title="2.TarsosDSP 都能实现哪些功能？"></a>2.TarsosDSP 都能实现哪些功能？</h2><ul>
+<li><p>声音检测器：显示如何响度计算可以完成。当输入声音超过限定的事件被触发。</p>
+</li>
+<li><p>音高检测器：这个演示应用程序显示实时音高检测。当检测到音调时，赫兹值以概率一起打印。</p>
+</li>
+<li><p>敲击检测器：显示敲击的检测。拍手会导致一个敲击事件。这个演示应用程序还显示了这两个参数对算法的影响。</p>
+</li>
+<li><p>UtterAsterisk：是一个唱与目标尽可能接近旋律的游戏。从技术上讲，它使用YIN或MPM实时检测音高。</p>
+</li>
+<li><p>Goertzel DTMF（双音多频）：解码Goertzel算法的实现。</p>
+</li>
+<li>音频时间拉伸 ： 在纯 Java 中实现使用WSOLA实现一个时间拉伸算法。 WSOLA可以在不改变音高的情况下改变音频的播放速度。播放速度可以随时改变，即使有音频正在播放。</li>
+<li>音频特征提取：一个命令行应用程序来做简单的特征提取。</li>
+<li>音频合成：一个命令行应用程序来做简单的音频合成。</li>
+<li>音高移动：一个示例应用程序，无论是实时麦克风输入还是录制的音频，都可以进行音高移位。还包括一个命令行应用程序来做音高转换。</li>
+</ul>
+<h1 id="3-TarsosDSP-是如何工作的？"><a href="#3-TarsosDSP-是如何工作的？" class="headerlink" title="3.TarsosDSP 是如何工作的？"></a>3.TarsosDSP 是如何工作的？</h1><p><img src="./images/201712300001.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(<span class="number">22050</span>,<span class="number">1024</span>,<span class="number">0</span>);</div><div class="line"></div><div class="line">PitchDetectionHandler pdh = <span class="keyword">new</span> PitchDetectionHandler() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handlePitch</span><span class="params">(PitchDetectionResult result,AudioEvent e)</span> </span>&#123;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> pitchInHz = result.getPitch();</div><div class="line">                runOnUiThread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                        TextView text = (TextView) findViewById(R.id.textView1);</div><div class="line">                        text.setText(<span class="string">""</span> + pitchInHz);</div><div class="line">                    &#125;</div><div class="line">                &#125;);                        </div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line">AudioProcessor p = <span class="keyword">new</span> PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, <span class="number">22050</span>, <span class="number">1024</span>, pdh);</div><div class="line">dispatcher.addAudioProcessor(p);</div><div class="line"><span class="keyword">new</span> Thread(dispatcher,<span class="string">"Audio Dispatcher"</span>).start();</div></pre></td></tr></table></figure>
+<h2 id="4-如何获取和使用-TarsosDSP"><a href="#4-如何获取和使用-TarsosDSP" class="headerlink" title="4.如何获取和使用 TarsosDSP"></a>4.如何获取和使用 TarsosDSP</h2><p><a href="https://0110.be/posts/TarsosDSP_on_Android_-_Audio_Processing_in_Java_on_Android" target="_blank" rel="external">点击此链接跳转至官方网站</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/01/声音信号的播放与录制/" id="article-nav-newer" class="article-nav-link-wrap">
+      <div class="article-nav-title"><span>&lt;</span>&nbsp;
+        
+          声音信号的播放与录制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/26/傅里叶变换/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">傅里叶变换&nbsp;<span>&gt;</span></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="share_addthis">
+  <div class="sharing addthis_toolbox share">
+    <a class="addthis_button_facebook_like"></a>
+    <a class="addthis_button_tweet"></a>
+    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-560c64c35486b3d4" async="async"></script>
+</div>
+
+
+
+
+
+</section>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Jack Smith&nbsp;
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

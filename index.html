@@ -45,6 +45,210 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-傅里叶变换" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/26/傅里叶变换/">傅里叶变换</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/12/26/傅里叶变换/" class="article-date">
+  <time datetime="2017-12-26T10:38:00.000Z" itemprop="datePublished">2017-12-26</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>本文是 <a href="http://blog.csdn.net/u012361418/article/details/46277779" target="_blank" rel="external">如果看了此文你还不懂傅里叶变换，那就过来掐死我吧</a> 的精华版。目的就是要让你在不看任何数学公式的情况下理解傅里叶分析。如果有兴趣且有耐心的话可以点击阅览原文。</p>
+<p>首先 <strong>cite</strong> 一下原作者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">作 者：韩 昊</div><div class="line">知 乎：Heinrich</div><div class="line">微 博：@花生油工人</div><div class="line">知乎专栏：与时间无关的故事</div><div class="line">谨以此文献给大连海事大学的吴楠老师，柳晓鸣老师，王新年老师以及张晶泊老师。</div><div class="line">转载的同学请保留上面这句话，谢谢。如果还能保留文章来源就更感激不尽了。</div></pre></td></tr></table></figure>
+<p>任何一种波形，都可以看作若干幅度、相位、频率不同的正弦波的叠加。我们首先用方波举个例子：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300002.png" alt=""></p>
+<p>如果我们把叠加方波所需的若干个正弦波展开，会得到如下所示的图像。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300003.png" alt=""></p>
+<p>我们从时间方向去观察这个波形，就会得到信号的时域图像（也就是方波）。如果我们从频率方向去观察这个信号，就会得到信号的频域图像。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300004.png" alt=""></p>
+<p>不过，上图的表示其实并不全面。每个频率的信号对应的信息不仅有强度，而且还有相位。从下图来看，如果箭头所指向的信号的相位发生了变化（即向左或向右移动），那么叠加合成的波形也将发生变化。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300005.png" alt=""></p>
+<p>所以，傅里叶变换的结果是一个复数的数组，其中每一个复数代表某一频率上信号的强度和相位的信息。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300007.png" alt=""></p>
+<p>复数的模长表示强度，复数的角度表示相位。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300006.png" alt=""></p>
+<p>信号的时域表示和频域表示是等价的，得到其中一个就可以得到另一个。如果有时域信号，可以使用傅里叶变换得到频域信号。如果有频域信号，则可以使用逆傅里叶变换得到时域信号。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712300008.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DSP/">DSP</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-TarsosDSP简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/25/TarsosDSP简介/">TarsosDSP 简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/12/25/TarsosDSP简介/" class="article-date">
+  <time datetime="2017-12-25T10:38:00.000Z" itemprop="datePublished">2017-12-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TarsosDSP-简介"><a href="#TarsosDSP-简介" class="headerlink" title="TarsosDSP 简介"></a>TarsosDSP 简介</h1><h2 id="1-什么是-TarsosDSP？"><a href="#1-什么是-TarsosDSP？" class="headerlink" title="1.什么是 TarsosDSP？"></a>1.什么是 TarsosDSP？</h2><ul>
+<li><strong>TarsosDSP</strong> 是一个用于音频处理的Java库。</li>
+</ul>
+<ul>
+<li><p>它的目标是提供一个易于使用的界面，以便在纯Java中尽可能简单地实现实用的音频处理算法，而无需任何其他外部依赖。</p>
+</li>
+<li><p>这个库试图在能够完成任务，但足够简洁。</p>
+</li>
+<li><strong>TarsosDSP</strong> 的特点是实现了一个冲击起始检测器和一些间距检测算法：YIN，Mcleod Pitch方法和一个“动态小波算法间距跟踪”算法。</li>
+</ul>
+<ul>
+<li>它还实现了Goertzel DTMF解码算法，时间拉伸算法（WSOLA），重采样，滤波器，简单合成，一些音频效果和变调算法。</li>
+</ul>
+<h2 id="2-TarsosDSP-都能实现哪些功能？"><a href="#2-TarsosDSP-都能实现哪些功能？" class="headerlink" title="2.TarsosDSP 都能实现哪些功能？"></a>2.TarsosDSP 都能实现哪些功能？</h2><ul>
+<li><p>声音检测器：显示如何响度计算可以完成。当输入声音超过限定的事件被触发。</p>
+</li>
+<li><p>音高检测器：这个演示应用程序显示实时音高检测。当检测到音调时，赫兹值以概率一起打印。</p>
+</li>
+<li><p>敲击检测器：显示敲击的检测。拍手会导致一个敲击事件。这个演示应用程序还显示了这两个参数对算法的影响。</p>
+</li>
+<li><p>UtterAsterisk：是一个唱与目标尽可能接近旋律的游戏。从技术上讲，它使用YIN或MPM实时检测音高。</p>
+</li>
+<li><p>Goertzel DTMF（双音多频）：解码Goertzel算法的实现。</p>
+</li>
+<li>音频时间拉伸 ： 在纯 Java 中实现使用WSOLA实现一个时间拉伸算法。 WSOLA可以在不改变音高的情况下改变音频的播放速度。播放速度可以随时改变，即使有音频正在播放。</li>
+<li>音频特征提取：一个命令行应用程序来做简单的特征提取。</li>
+<li>音频合成：一个命令行应用程序来做简单的音频合成。</li>
+<li>音高移动：一个示例应用程序，无论是实时麦克风输入还是录制的音频，都可以进行音高移位。还包括一个命令行应用程序来做音高转换。</li>
+</ul>
+<h1 id="3-TarsosDSP-是如何工作的？"><a href="#3-TarsosDSP-是如何工作的？" class="headerlink" title="3.TarsosDSP 是如何工作的？"></a>3.TarsosDSP 是如何工作的？</h1><p><img src="./images/201712300001.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(<span class="number">22050</span>,<span class="number">1024</span>,<span class="number">0</span>);</div><div class="line"></div><div class="line">PitchDetectionHandler pdh = <span class="keyword">new</span> PitchDetectionHandler() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handlePitch</span><span class="params">(PitchDetectionResult result,AudioEvent e)</span> </span>&#123;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">float</span> pitchInHz = result.getPitch();</div><div class="line">                runOnUiThread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                        TextView text = (TextView) findViewById(R.id.textView1);</div><div class="line">                        text.setText(<span class="string">""</span> + pitchInHz);</div><div class="line">                    &#125;</div><div class="line">                &#125;);                        </div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line">AudioProcessor p = <span class="keyword">new</span> PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, <span class="number">22050</span>, <span class="number">1024</span>, pdh);</div><div class="line">dispatcher.addAudioProcessor(p);</div><div class="line"><span class="keyword">new</span> Thread(dispatcher,<span class="string">"Audio Dispatcher"</span>).start();</div></pre></td></tr></table></figure>
+<h2 id="4-如何获取和使用-TarsosDSP"><a href="#4-如何获取和使用-TarsosDSP" class="headerlink" title="4.如何获取和使用 TarsosDSP"></a>4.如何获取和使用 TarsosDSP</h2><p><a href="https://0110.be/posts/TarsosDSP_on_Android_-_Audio_Processing_in_Java_on_Android" target="_blank" rel="external">点击此链接跳转至官方网站</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-声音信号的播放与录制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/01/声音信号的播放与录制/">声音信号的播放与录制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/12/01/声音信号的播放与录制/" class="article-date">
+  <time datetime="2017-12-01T10:38:00.000Z" itemprop="datePublished">2017-12-01</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="声音信号的播放与录制"><a href="#声音信号的播放与录制" class="headerlink" title="声音信号的播放与录制"></a>声音信号的播放与录制</h1><p>在 Andriod 系统下，一般使用 AudioTrack 和 AudioRecord 来实现声音的播放与录制。</p>
+<h2 id="1-声音信号的播放"><a href="#1-声音信号的播放" class="headerlink" title="1.声音信号的播放"></a>1.声音信号的播放</h2><p>播放声音一般用 AudioTrack 实现，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.media.AudioFormat;</div><div class="line"><span class="keyword">import</span> android.media.AudioManager;</div><div class="line"><span class="keyword">import</span> android.media.AudioRecord;</div><div class="line"><span class="keyword">import</span> android.media.AudioTrack;</div><div class="line"><span class="keyword">import</span> android.media.MediaRecorder;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.os.Environment;</div><div class="line"><span class="keyword">import</span> android.support.v4.app.ActivityCompat;</div><div class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.widget.Button;</div><div class="line"><span class="keyword">import</span> android.widget.ScrollView;</div><div class="line"><span class="keyword">import</span> android.widget.TextView;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.pm.PackageManager;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.BufferedInputStream;</div><div class="line"><span class="keyword">import</span> java.io.BufferedOutputStream;</div><div class="line"><span class="keyword">import</span> java.io.DataInputStream;</div><div class="line"><span class="keyword">import</span> java.io.DataOutputStream;</div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.FileInputStream;</div><div class="line"><span class="keyword">import</span> java.io.FileOutputStream;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.OutputStream;</div><div class="line"><span class="keyword">import</span> java.util.jar.Manifest;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> , <span class="title">ActivityCompat</span>.<span class="title">OnRequestPermissionsResultCallback</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">//private static final int AUDIO_REQUEST = 0;</span></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"PCMSample"</span>;</div><div class="line"></div><div class="line">    <span class="comment">//是否在录制</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isRecording = <span class="keyword">false</span>;</div><div class="line">    <span class="comment">//开始录音</span></div><div class="line">    <span class="keyword">private</span> Button startAudio;</div><div class="line">    <span class="comment">//结束录音</span></div><div class="line">    <span class="keyword">private</span> Button stopAudio;</div><div class="line">    <span class="comment">//播放录音</span></div><div class="line">    <span class="keyword">private</span> Button playAudio;</div><div class="line">    <span class="comment">//删除文件</span></div><div class="line">    <span class="keyword">private</span> Button deleteAudio;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ScrollView mScrollView;</div><div class="line">    <span class="keyword">private</span> TextView tv_audio_succeess;</div><div class="line"></div><div class="line">    <span class="comment">//pcm文件</span></div><div class="line">    <span class="keyword">private</span> File file;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        initView();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//初始化View</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initView</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        mScrollView = (ScrollView) findViewById(R.id.mScrollView);</div><div class="line">        tv_audio_succeess = (TextView) findViewById(R.id.tv_audio_succeess);</div><div class="line">        printLog(<span class="string">"初始化成功"</span>);</div><div class="line">        startAudio = (Button) findViewById(R.id.startAudio);</div><div class="line">        startAudio.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">        stopAudio = (Button) findViewById(R.id.stopAudio);</div><div class="line">        stopAudio.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">        playAudio = (Button) findViewById(R.id.playAudio);</div><div class="line">        playAudio.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">        deleteAudio = (Button) findViewById(R.id.deleteAudio);</div><div class="line">        deleteAudio.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//点击事件</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (v.getId()) &#123;</div><div class="line">            <span class="keyword">case</span> R.id.startAudio:</div><div class="line">                <span class="comment">/*在此处插入运行时权限获取的代码*/</span></div><div class="line">                <span class="keyword">if</span> (ActivityCompat.checkSelfPermission(<span class="keyword">this</span>,</div><div class="line">                    android.Manifest.permission.RECORD_AUDIO) !=</div><div class="line">                    PackageManager.PERMISSION_GRANTED ||</div><div class="line">                    ActivityCompat.checkSelfPermission(<span class="keyword">this</span>,</div><div class="line">                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE) !=</div><div class="line">                    PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">                    ActivityCompat.requestPermissions(</div><div class="line">                            <span class="keyword">this</span>,</div><div class="line">                            <span class="keyword">new</span> String[]&#123;android.Manifest.permission.RECORD_AUDIO,</div><div class="line">                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE&#125;, <span class="number">0</span>);</div><div class="line">                &#125;</div><div class="line">                Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                        StartRecord();</div><div class="line">                        Log.e(TAG,<span class="string">"start"</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">                thread.start();</div><div class="line">                printLog(<span class="string">"开始录音"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> R.id.stopAudio:</div><div class="line">                isRecording = <span class="keyword">false</span>;</div><div class="line">                printLog(<span class="string">"停止录音"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> R.id.playAudio:</div><div class="line"></div><div class="line">                PlayRecord();</div><div class="line">                ButtonEnabled(<span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);</div><div class="line">                printLog(<span class="string">"播放录音"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> R.id.deleteAudio:</div><div class="line">                deleFile();</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印log</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(<span class="keyword">final</span> String resultString)</span> </span>&#123;</div><div class="line">        tv_audio_succeess.post(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                tv_audio_succeess.append(resultString + <span class="string">"\n"</span>);</div><div class="line">                mScrollView.fullScroll(ScrollView.FOCUS_DOWN);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//获取/失去焦点</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ButtonEnabled</span><span class="params">(<span class="keyword">boolean</span> start, <span class="keyword">boolean</span> stop, <span class="keyword">boolean</span> play)</span> </span>&#123;</div><div class="line">        startAudio.setEnabled(start);</div><div class="line">        stopAudio.setEnabled(stop);</div><div class="line">        playAudio.setEnabled(play);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//开始录音</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartRecord</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.i(TAG,<span class="string">"开始录音"</span>);</div><div class="line">        <span class="comment">//设置采样频率</span></div><div class="line">        <span class="keyword">int</span> frequency = <span class="number">48000</span>;</div><div class="line">        <span class="comment">//设置音频采样声道，CHANNEL_IN_STEREO代表双声道，CHANNEL_IN_MONO代表单声道</span></div><div class="line">        <span class="keyword">int</span> channelConfiguration = AudioFormat.CHANNEL_IN_STEREO;</div><div class="line">        <span class="comment">//设置音频数据格式，每个采样数据占16bit</span></div><div class="line">        <span class="keyword">int</span> audioEncoding = AudioFormat.ENCODING_PCM_16BIT;</div><div class="line">        <span class="comment">//生成PCM文件</span></div><div class="line">        file = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory().getAbsolutePath()</div><div class="line">                + <span class="string">"/myaudio.pcm"</span>);</div><div class="line">        Log.i(TAG,<span class="string">"生成文件"</span>);</div><div class="line">        <span class="comment">//如果存在，就先删除再创建</span></div><div class="line">        <span class="keyword">if</span> (file.exists())</div><div class="line">            file.delete();</div><div class="line">            Log.i(TAG,<span class="string">"删除文件"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            file.createNewFile();</div><div class="line">            Log.i(TAG,<span class="string">"创建文件"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            Log.i(TAG,<span class="string">"未能创建"</span>);</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"未能创建"</span> + file.toString());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//输出流</span></div><div class="line">            OutputStream os = <span class="keyword">new</span> FileOutputStream(file);</div><div class="line">            <span class="keyword">int</span> bufferSize = AudioRecord.getMinBufferSize(frequency,</div><div class="line">                    channelConfiguration, audioEncoding);</div><div class="line">            AudioRecord audioRecord = <span class="keyword">new</span> AudioRecord(MediaRecorder.AudioSource.MIC,</div><div class="line">                    frequency, channelConfiguration, audioEncoding, bufferSize);</div><div class="line">            <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[bufferSize];</div><div class="line">            audioRecord.startRecording();</div><div class="line">            Log.i(TAG, <span class="string">"开始录音"</span>);</div><div class="line">            isRecording = <span class="keyword">true</span>;</div><div class="line">            <span class="keyword">while</span> (isRecording) &#123;</div><div class="line">                <span class="keyword">int</span> bufferReadResult = audioRecord.read(buffer, <span class="number">0</span>, bufferSize);</div><div class="line">                os.write(buffer);</div><div class="line">            &#125;</div><div class="line">            audioRecord.stop();</div><div class="line">            os.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">            Log.e(TAG, <span class="string">"录音失败"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//播放文件</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlayRecord</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(file == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> musicLength = (<span class="keyword">int</span>) (file.length() / <span class="number">2</span>);</div><div class="line">        <span class="keyword">byte</span>[] music = <span class="keyword">new</span> <span class="keyword">byte</span>[musicLength];</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            InputStream is = <span class="keyword">new</span> FileInputStream(file);</div><div class="line">            <span class="comment">//设置播放参数</span></div><div class="line">            AudioTrack audioTrack = <span class="keyword">new</span> AudioTrack(AudioManager.STREAM_MUSIC,</div><div class="line">                    <span class="number">48000</span>, AudioFormat.CHANNEL_OUT_STEREO,</div><div class="line">                    AudioFormat.ENCODING_PCM_16BIT,</div><div class="line">                    musicLength * <span class="number">2</span>,</div><div class="line">                    AudioTrack.MODE_STREAM);</div><div class="line">            audioTrack.play();</div><div class="line">            <span class="comment">//从文件中读取并写入audioTrack</span></div><div class="line">            <span class="keyword">while</span>(is.read(music)!= -<span class="number">1</span>)</div><div class="line">            &#123;</div><div class="line">                audioTrack.write(music, <span class="number">0</span>, musicLength);</div><div class="line">            &#125;</div><div class="line">            is.close();</div><div class="line">            audioTrack.stop();</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">            Log.e(TAG, <span class="string">"播放失败"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//删除文件</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deleFile</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(file == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        file.delete();</div><div class="line">        printLog(<span class="string">"文件删除成功"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*private short[] test_Noise(short[] buf, int nb_sample)</span></div><div class="line">    &#123;</div><div class="line">        int i = 0;</div><div class="line">        for (i = 0; i &lt; nb_sample; i++)</div><div class="line">        &#123;</div><div class="line">            buf[i] &gt;&gt;= 2;</div><div class="line">        &#125;</div><div class="line">        return buf;</div><div class="line">    &#125;*/</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2-声音信号的录制"><a href="#2-声音信号的录制" class="headerlink" title="2.声音信号的录制"></a>2.声音信号的录制</h2><p>播放声音一般用 AudioRecord 来实现，实例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.Javen;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.FileInputStream;</div><div class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</div><div class="line"><span class="keyword">import</span> java.io.FileOutputStream;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.app.Activity;</div><div class="line"><span class="keyword">import</span> android.media.AudioFormat;</div><div class="line"><span class="keyword">import</span> android.media.AudioRecord;</div><div class="line"><span class="keyword">import</span> android.media.MediaPlayer;</div><div class="line"><span class="keyword">import</span> android.media.MediaPlayer.OnPreparedListener;</div><div class="line"><span class="keyword">import</span> android.media.MediaRecorder;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.text.format.Time;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.view.View.OnClickListener;</div><div class="line"><span class="keyword">import</span> android.widget.Button;</div><div class="line"><span class="keyword">import</span> com.Javen44100.R;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AudioRecordActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"AudioRecordActivity"</span>;</div><div class="line">	<span class="keyword">private</span> Button startButton, stopButton, playButton;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> bufferSizeInBytes = <span class="number">0</span>;<span class="comment">//缓冲区大小</span></div><div class="line">	<span class="comment">//音频获取来源</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> audioSource = MediaRecorder.AudioSource.MIC;</div><div class="line">	<span class="comment">//设置音频的采样率，44100是目前的标准，但是某些设备仍然支持22050,16000,11025</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> sampleRateInHz = <span class="number">44100</span>;</div><div class="line">	<span class="comment">//设置音频的录制声道，CHANNEL_IN_STEREO为双声道，CHANNEL_CONFIGURATION_MONO为单声道 </span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> channelConfig = AudioFormat.CHANNEL_IN_STEREO;</div><div class="line">	<span class="comment">//设置音频数据格式:PCM 16位每个样本，保证设备支持。PCM 8位每个样本，不一定能得到设备的支持。</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> audioFormat = AudioFormat.ENCODING_PCM_16BIT;</div><div class="line">	<span class="comment">//AudioName裸音频数据文件  </span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AudioName = <span class="string">"/sdcard/love.raw"</span>; </div><div class="line">    <span class="comment">//NewAudioName可播放的音频文件  </span></div><div class="line">    <span class="keyword">private</span> String NewAudioName = <span class="string">"/sdcard/new.wav"</span>; </div><div class="line">	</div><div class="line">	<span class="keyword">private</span> AudioRecord audioRecord;</div><div class="line">	</div><div class="line">	<span class="comment">//播放音频</span></div><div class="line">	<span class="keyword">private</span> MediaPlayer mediaPlayer;</div><div class="line">	</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> isRecord = <span class="keyword">false</span>;<span class="comment">//设置录制状态</span></div><div class="line">	</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.main);</div><div class="line">      <span class="comment">//获取当前时间  </span></div><div class="line">        Time time=<span class="keyword">new</span> Time();  </div><div class="line">        time.setToNow();  </div><div class="line">        String times= time.year+<span class="string">"."</span>+(time.month+<span class="number">1</span>)+<span class="string">"."</span>+time.monthDay+<span class="string">"_"</span>+time.hour+<span class="string">":"</span>+time.minute+<span class="string">":"</span>+time.second;</div><div class="line">        NewAudioName = <span class="string">"/sdcard/"</span>+times+<span class="string">".wav"</span>;</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">    	startButton = (Button)findViewById(R.id.startButton);</div><div class="line">    	stopButton = (Button)findViewById(R.id.stopButton);</div><div class="line">    	playButton = (Button)findViewById(R.id.playButton);</div><div class="line">    	</div><div class="line">    	creatAudioRecord();</div><div class="line">    	startButton.setOnClickListener(<span class="keyword">new</span> AudioRecordLinstener());</div><div class="line">    	stopButton.setOnClickListener(<span class="keyword">new</span> AudioRecordLinstener());</div><div class="line">    	playButton.setOnClickListener(<span class="keyword">new</span> AudioRecordLinstener());</div><div class="line">    	</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">creatAudioRecord</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">    	<span class="comment">//根据AudioRecord的音频采样率、音频录制声道、音频数据格式获取缓冲区大小</span></div><div class="line">    	bufferSizeInBytes = AudioRecord.getMinBufferSize(sampleRateInHz, channelConfig, audioFormat);</div><div class="line">    	Log.d(TAG, <span class="string">"creatAudioRecord--&gt;bufferSizeInBytes="</span>+bufferSizeInBytes);</div><div class="line">    	</div><div class="line">    	<span class="comment">//根据音频获取来源、音频采用率、音频录制声道、音频数据格式和缓冲区大小来创建AudioRecord对象</span></div><div class="line">    	audioRecord = <span class="keyword">new</span> AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat, bufferSizeInBytes);</div><div class="line">    	</div><div class="line">    	<span class="comment">//创建播放实例</span></div><div class="line">    	mediaPlayer = <span class="keyword">new</span> MediaPlayer();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">AudioRecordLinstener</span> <span class="keyword">implements</span> <span class="title">OnClickListener</span></span></div><div class="line">    &#123;</div><div class="line">		<span class="meta">@Override</span></div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span></span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span>(v == startButton)</div><div class="line">			&#123;</div><div class="line">				startAudioRecord();</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(v == stopButton)</div><div class="line">			&#123;</div><div class="line">				stopAudioRecord();</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span>(v == playButton)</div><div class="line">			&#123;</div><div class="line">				playMusic();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">PrepareListener</span> <span class="keyword">implements</span> <span class="title">OnPreparedListener</span></span></div><div class="line">    &#123;</div><div class="line"></div><div class="line">		<span class="meta">@Override</span></div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(MediaPlayer mp)</span></span></div><div class="line">		&#123;</div><div class="line">			<span class="comment">// TODO Auto-generated method stub</span></div><div class="line">			mediaPlayer.start();<span class="comment">//开始播放 </span></div><div class="line">		&#125;</div><div class="line">    	</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 播放录制的音频</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">playMusic</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">    	</div><div class="line">    	File file = <span class="keyword">new</span> File(NewAudioName);</div><div class="line">    	<span class="keyword">if</span>(file.exists())</div><div class="line">    	&#123;</div><div class="line">    	 	<span class="keyword">try</span></div><div class="line">    		&#123;</div><div class="line">        		mediaPlayer.reset();</div><div class="line">    			mediaPlayer.setDataSource(NewAudioName);</div><div class="line">    			mediaPlayer.prepare();<span class="comment">//进行数据缓冲</span></div><div class="line">    			</div><div class="line">    			mediaPlayer.setOnPreparedListener(<span class="keyword">new</span> PrepareListener()); </div><div class="line">    		&#125; <span class="keyword">catch</span> (IllegalArgumentException e)</div><div class="line">    		&#123;</div><div class="line">    			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">    			e.printStackTrace();</div><div class="line">    		&#125; <span class="keyword">catch</span> (SecurityException e)</div><div class="line">    		&#123;</div><div class="line">    			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">    			e.printStackTrace();</div><div class="line">    		&#125; <span class="keyword">catch</span> (IllegalStateException e)</div><div class="line">    		&#123;</div><div class="line">    			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">    			e.printStackTrace();</div><div class="line">    		&#125; <span class="keyword">catch</span> (IOException e)</div><div class="line">    		&#123;</div><div class="line">    			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">    			e.printStackTrace();</div><div class="line">    		&#125;</div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 开始录制音频</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startAudioRecord</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">    	audioRecord.startRecording();<span class="comment">//开始录制</span></div><div class="line">    	isRecord = <span class="keyword">true</span>;</div><div class="line">    	<span class="keyword">new</span> AudioRecordThread().start();<span class="comment">//开启线程来把录制的音频数据保留下来</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 停止录制音频</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span>  <span class="title">stopAudioRecord</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">    	close();  </div><div class="line">	&#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span></div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">if</span> (audioRecord != <span class="keyword">null</span>) </div><div class="line">        &#123;  </div><div class="line">            System.out.println(<span class="string">"stopRecord"</span>);  </div><div class="line">            isRecord = <span class="keyword">false</span>;<span class="comment">//停止文件写入  </span></div><div class="line">            audioRecord.stop();  </div><div class="line">            audioRecord.release();<span class="comment">//释放资源  </span></div><div class="line">            audioRecord = <span class="keyword">null</span>;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 音频数据写入线程</div><div class="line">     * <span class="doctag">@author</span> Administrator</div><div class="line">     *</div><div class="line">     */</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">AudioRecordThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span></div><div class="line">    &#123;</div><div class="line">    	<span class="meta">@Override</span></div><div class="line">    	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span></div><div class="line">    	&#123;</div><div class="line">    		<span class="keyword">super</span>.run();</div><div class="line">    		writeDataToFile();<span class="comment">//把录制的音频裸数据写入到文件中去</span></div><div class="line">    		copyWaveFile(AudioName, NewAudioName);<span class="comment">//给裸数据加上头文件</span></div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 把录制的音频裸数据写入到文件中去</div><div class="line">     * 这里将数据写入文件，但是并不能播放，因为AudioRecord获得的音频是原始的裸音频， </div><div class="line">     * 如果需要播放就必须加入一些格式或者编码的头信息。但是这样的好处就是你可以对音频的 裸数据进行处理，比如你要做一个爱说话的TOM </div><div class="line">     * 猫在这里就进行音频的处理，然后重新封装 所以说这样得到的音频比较容易做一些音频的处理。 </div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeDataToFile</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">    	<span class="comment">// new一个byte数组用来存一些字节数据，大小为缓冲区大小 </span></div><div class="line">    	<span class="keyword">byte</span>[] audioData = <span class="keyword">new</span> <span class="keyword">byte</span>[bufferSizeInBytes];</div><div class="line">    	<span class="keyword">int</span> readSize = <span class="number">0</span>;</div><div class="line">    	FileOutputStream fos = <span class="keyword">null</span>;</div><div class="line">    	File file = <span class="keyword">new</span> File(AudioName);</div><div class="line">    	<span class="keyword">if</span>(file.exists())</div><div class="line">    		file.delete();</div><div class="line">    	<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">			fos = <span class="keyword">new</span> FileOutputStream(file);<span class="comment">//获取一个文件的输出流</span></div><div class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">    	</div><div class="line">    	<span class="keyword">while</span>(isRecord == <span class="keyword">true</span>)</div><div class="line">    	&#123;</div><div class="line">    		readSize = audioRecord.read(audioData, <span class="number">0</span>, bufferSizeInBytes);</div><div class="line">    		Log.d(TAG, <span class="string">"readSize ="</span>+readSize);</div><div class="line">    		<span class="keyword">if</span>(AudioRecord.ERROR_INVALID_OPERATION != readSize)</div><div class="line">    		&#123;</div><div class="line">    			<span class="keyword">try</span></div><div class="line">				&#123;</div><div class="line">					fos.write(audioData);</div><div class="line">				&#125; <span class="keyword">catch</span> (IOException e)</div><div class="line">				&#123;</div><div class="line">					<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">    		&#125;</div><div class="line">    	&#125;</div><div class="line">    	</div><div class="line">    	<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">			fos.close();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">copyWaveFile</span><span class="params">(String inFileName, String outFileName)</span></span></div><div class="line">    &#123;</div><div class="line">    	FileInputStream in = <span class="keyword">null</span>;</div><div class="line">    	FileOutputStream out = <span class="keyword">null</span>;</div><div class="line">    	<span class="keyword">long</span> totalAudioLen = <span class="number">0</span>;  </div><div class="line">        <span class="keyword">long</span> totalDataLen = totalAudioLen + <span class="number">36</span>;  </div><div class="line">        <span class="keyword">long</span> longSampleRate = sampleRateInHz;  </div><div class="line">        <span class="keyword">int</span> channels = <span class="number">2</span>;  </div><div class="line">        <span class="keyword">long</span> byteRate = <span class="number">16</span> * sampleRateInHz * channels / <span class="number">8</span>;</div><div class="line">        </div><div class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[bufferSizeInBytes];</div><div class="line">    	<span class="keyword">try</span></div><div class="line">		&#123;</div><div class="line">    		in = <span class="keyword">new</span> FileInputStream(inFileName);</div><div class="line">    		out = <span class="keyword">new</span> FileOutputStream(outFileName);</div><div class="line">			</div><div class="line">			totalAudioLen = in.getChannel().size();</div><div class="line">			totalDataLen = totalAudioLen + <span class="number">36</span>;  </div><div class="line">			WriteWaveFileHeader(out, totalAudioLen, totalDataLen, longSampleRate, channels, byteRate);  </div><div class="line">			<span class="keyword">while</span>(in.read(data) != -<span class="number">1</span>)</div><div class="line">			&#123;</div><div class="line">				out.write(data);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			in.close();</div><div class="line">			out.close();</div><div class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e)</div><div class="line">		&#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 这里提供一个头信息。插入这些信息就可以得到可以播放的文件。 </div><div class="line">     * 音频的文件，可以发现前面的头文件可以说基本一样哦。每种格式的文件都有 </div><div class="line">     * 自己特有的头文件。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">WriteWaveFileHeader</span><span class="params">(FileOutputStream out, <span class="keyword">long</span> totalAudioLen,  </span></span></div><div class="line">            <span class="keyword">long</span> totalDataLen, <span class="keyword">long</span> longSampleRate, <span class="keyword">int</span> channels, <span class="keyword">long</span> byteRate)  </div><div class="line">            <span class="keyword">throws</span> IOException &#123;  </div><div class="line">        <span class="keyword">byte</span>[] header = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">44</span>];  </div><div class="line">        header[<span class="number">0</span>] = <span class="string">'R'</span>; <span class="comment">// RIFF/WAVE header  </span></div><div class="line">        header[<span class="number">1</span>] = <span class="string">'I'</span>;  </div><div class="line">        header[<span class="number">2</span>] = <span class="string">'F'</span>;  </div><div class="line">        header[<span class="number">3</span>] = <span class="string">'F'</span>;  </div><div class="line">        header[<span class="number">4</span>] = (<span class="keyword">byte</span>) (totalDataLen &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">5</span>] = (<span class="keyword">byte</span>) ((totalDataLen &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">6</span>] = (<span class="keyword">byte</span>) ((totalDataLen &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">7</span>] = (<span class="keyword">byte</span>) ((totalDataLen &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">8</span>] = <span class="string">'W'</span>;  </div><div class="line">        header[<span class="number">9</span>] = <span class="string">'A'</span>;  </div><div class="line">        header[<span class="number">10</span>] = <span class="string">'V'</span>;  </div><div class="line">        header[<span class="number">11</span>] = <span class="string">'E'</span>;  </div><div class="line">        header[<span class="number">12</span>] = <span class="string">'f'</span>; <span class="comment">// 'fmt ' chunk  </span></div><div class="line">        header[<span class="number">13</span>] = <span class="string">'m'</span>;  </div><div class="line">        header[<span class="number">14</span>] = <span class="string">'t'</span>;  </div><div class="line">        header[<span class="number">15</span>] = <span class="string">' '</span>;  </div><div class="line">        header[<span class="number">16</span>] = <span class="number">16</span>; <span class="comment">// 4 bytes: size of 'fmt ' chunk  </span></div><div class="line">        header[<span class="number">17</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">18</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">19</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">20</span>] = <span class="number">1</span>; <span class="comment">// format = 1  </span></div><div class="line">        header[<span class="number">21</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">22</span>] = (<span class="keyword">byte</span>) channels;  </div><div class="line">        header[<span class="number">23</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">24</span>] = (<span class="keyword">byte</span>) (longSampleRate &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">25</span>] = (<span class="keyword">byte</span>) ((longSampleRate &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">26</span>] = (<span class="keyword">byte</span>) ((longSampleRate &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">27</span>] = (<span class="keyword">byte</span>) ((longSampleRate &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">28</span>] = (<span class="keyword">byte</span>) (byteRate &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">29</span>] = (<span class="keyword">byte</span>) ((byteRate &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">30</span>] = (<span class="keyword">byte</span>) ((byteRate &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">31</span>] = (<span class="keyword">byte</span>) ((byteRate &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">32</span>] = (<span class="keyword">byte</span>) (<span class="number">2</span> * <span class="number">16</span> / <span class="number">8</span>); <span class="comment">// block align  </span></div><div class="line">        header[<span class="number">33</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">34</span>] = <span class="number">16</span>; <span class="comment">// bits per sample  </span></div><div class="line">        header[<span class="number">35</span>] = <span class="number">0</span>;  </div><div class="line">        header[<span class="number">36</span>] = <span class="string">'d'</span>;  </div><div class="line">        header[<span class="number">37</span>] = <span class="string">'a'</span>;  </div><div class="line">        header[<span class="number">38</span>] = <span class="string">'t'</span>;  </div><div class="line">        header[<span class="number">39</span>] = <span class="string">'a'</span>;  </div><div class="line">        header[<span class="number">40</span>] = (<span class="keyword">byte</span>) (totalAudioLen &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">41</span>] = (<span class="keyword">byte</span>) ((totalAudioLen &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">42</span>] = (<span class="keyword">byte</span>) ((totalAudioLen &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        header[<span class="number">43</span>] = (<span class="keyword">byte</span>) ((totalAudioLen &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xff</span>);  </div><div class="line">        out.write(header, <span class="number">0</span>, <span class="number">44</span>);  </div><div class="line">    &#125;  </div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">    	close();</div><div class="line">    	<span class="keyword">if</span>(mediaPlayer != <span class="keyword">null</span>)</div><div class="line">    	&#123;</div><div class="line">    		mediaPlayer.release();  </div><div class="line">       	    mediaPlayer = <span class="keyword">null</span>;</div><div class="line">    	&#125;</div><div class="line">    	<span class="keyword">super</span>.onDestroy();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android，Audio/">Android，Audio</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-概率概念" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -562,6 +766,71 @@
 
 
     
+      <article id="post-滤波器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/27/滤波器/">滤波器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/09/27/滤波器/" class="article-date">
+  <time datetime="2017-09-27T10:38:00.000Z" itemprop="datePublished">2017-09-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="滤波器"><a href="#滤波器" class="headerlink" title="滤波器"></a>滤波器</h1><h2 id="1-滤波器的概念"><a href="#1-滤波器的概念" class="headerlink" title="1.滤波器的概念"></a>1.滤波器的概念</h2><p>为了阐述滤波器的概念，我们首先来看两个场景。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310001.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310002.png" alt=""></p>
+<p>在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。</p>
+<h2 id="2-高通、低通和带通"><a href="#2-高通、低通和带通" class="headerlink" title="2.高通、低通和带通"></a>2.高通、低通和带通</h2><p>假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310003.png" alt=""></p>
+<p>我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310004.png" alt=""></p>
+<h2 id="3-使用-Matlab-生成滤波器"><a href="#3-使用-Matlab-生成滤波器" class="headerlink" title="3.使用 Matlab 生成滤波器"></a>3.使用 Matlab 生成滤波器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hd = design(fdesign.bandpass(&apos;N,F3dB1,F3dB2&apos;,6,7500,8500,fs),&apos;butter&apos;);</div><div class="line">res = filter(hd,data);</div></pre></td></tr></table></figure>
+<p>其中，data 是输入被滤波的信号，res 是输出的结果。如果对 matlab 中滤波器感兴趣，可以输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; help fdesign.bandpass</div></pre></td></tr></table></figure>
+<p>下面我们用 matlab 生成的滤波器进行滤波。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310005.png" alt=""></p>
+<p>滤波的结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310006.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DSP/">DSP</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-AndroidStudio安装教程" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -641,442 +910,15 @@
 
 
     
-      <article id="post-TCP报文头结构" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/18/TCP报文头结构/">TCP报文头结构</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/08/18/TCP报文头结构/" class="article-date">
-  <time datetime="2017-08-17T18:16:16.000Z" itemprop="datePublished">2017-08-18</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-TCP-报文头结构"><a href="#1-TCP-报文头结构" class="headerlink" title="1.TCP 报文头结构"></a>1.TCP 报文头结构</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708240001.jpg" alt=""></p>
-<h2 id="2-报文头各个部分说明"><a href="#2-报文头各个部分说明" class="headerlink" title="2.报文头各个部分说明"></a>2.报文头各个部分说明</h2><h3 id="2-1-Source-Port和Destination-Port"><a href="#2-1-Source-Port和Destination-Port" class="headerlink" title="2.1.Source Port和Destination Port:"></a>2.1.Source Port和Destination Port:</h3><p>分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接;</p>
-<h3 id="2-2-Sequence-Number"><a href="#2-2-Sequence-Number" class="headerlink" title="2.2.Sequence Number:"></a>2.2.Sequence Number:</h3><p>用来标识从TCP发端向TCP收端发送的数据字节流，它表示在这个报文段中的的第一个数据 字节在数据流中的序号;主要用来解决网络报乱序的问题;</p>
-<h3 id="2-3-Acknowledgment-Number"><a href="#2-3-Acknowledgment-Number" class="headerlink" title="2.3.Acknowledgment Number:"></a>2.3.Acknowledgment Number:</h3><p>32位确认序列号包含发送确认的一端所期望收到的下一个序号，因此，确认序号应 当是上次已成功收到数据字节序号加1。不过，只有当标志位中的ACK标志(下面介绍)为1时该确认序列号的字 段才有效。主要用来解决不丢包的问题;</p>
-<h3 id="2-4-Offset"><a href="#2-4-Offset" class="headerlink" title="2.4.Offset:"></a>2.4.Offset:</h3><p>给出首部中32 bit字的数目，需要这个值是因为任选字段的长度是可变的。这个字段占4bit(最多能 表示15个32bit的的字，即4*15=60个字节的首部长度)，因此TCP最多有60字节的首部。然而，没有任选字段， 正常的长度是20字节;</p>
-<h3 id="2-5-TCP-Flags"><a href="#2-5-TCP-Flags" class="headerlink" title="2.5.TCP Flags:"></a>2.5.TCP Flags:</h3><p>TCP首部中有6个标志比特，它们中的多个可同时被设置为1，主要是用于操控TCP的状态机的，依次 为URG，ACK，PSH，RST，SYN，FIN。每个标志位的意思如下：</p>
-<h3 id="2-6-URG："><a href="#2-6-URG：" class="headerlink" title="2.6.URG："></a>2.6.URG：</h3><p>此标志表示TCP包的紧急指针域(后面马上就要说到)有效，用来保证TCP连接不被中断，并且督促 中间层设备要尽快处理这些数据;</p>
-<h3 id="2-7-ACK："><a href="#2-7-ACK：" class="headerlink" title="2.7.ACK："></a>2.7.ACK：</h3><p>此标志表示应答域有效，就是说前面所说的TCP应答号将会包含在TCP数据包中;有两个取值：0和1， 为1的时候表示应答域有效，反之为0;</p>
-<h3 id="2-8-PSH："><a href="#2-8-PSH：" class="headerlink" title="2.8.PSH："></a>2.8.PSH：</h3><p>这个标志位表示Push操作。所谓Push操作就是指在数据包到达接收端以后，立即传送给应用程序， 而不是在缓冲区中排队;</p>
-<h3 id="2-9-RST："><a href="#2-9-RST：" class="headerlink" title="2.9.RST："></a>2.9.RST：</h3><p>这个标志表示连接复位请求。用来复位那些产生错误的连接，也被用来拒绝错误和非法的数据包;</p>
-<h3 id="3-0-SYN："><a href="#3-0-SYN：" class="headerlink" title="3.0.SYN："></a>3.0.SYN：</h3><p>表示同步序号，用来建立连接。SYN标志位和ACK标志位搭配使用，当连接请求的时候，SYN=1， ACK=0;连接被响应的时候，SYN=1，ACK=1;这个标志的数据包经常被用来进行端口扫描。扫描者发送 一个只有SYN的数据包，如果对方主机响应了一个数据包回来 ，就表明这台主机存在这个端口;但是由于这 种扫描方式只是进行TCP三次握手的第一次握手，因此这种扫描的成功表示被扫描的机器不很安全，一台安全 的主机将会强制要求一个连接严格的进行TCP的三次握手;</p>
-<h3 id="3-1-FIN："><a href="#3-1-FIN：" class="headerlink" title="3.1.FIN："></a>3.1.FIN：</h3><p>表示发送端已经达到数据末尾，也就是说双方的数据传送完成，没有数据可以传送了，发送FIN标志 位的TCP数据包后，连接将被断开。这个标志的数据包也经常被用于进行端口扫描。</p>
-<h3 id="3-2-Window"><a href="#3-2-Window" class="headerlink" title="3.2.Window:"></a>3.2.Window:</h3><p>窗口大小，也就是有名的滑动窗口。</p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-蓝牙协议入门（四）应用层协议" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/08/蓝牙协议入门（四）应用层协议/">蓝牙协议入门（四）应用层协议</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/08/08/蓝牙协议入门（四）应用层协议/" class="article-date">
-  <time datetime="2017-08-08T02:10:47.000Z" itemprop="datePublished">2017-08-08</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-irOBEX-红外对象交互协议"><a href="#1-irOBEX-红外对象交互协议" class="headerlink" title="1.irOBEX 红外对象交互协议"></a>1.irOBEX 红外对象交互协议</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030001.png" alt=""></p>
-<p><strong>irOBEX</strong>  红外对象交互协议，简称 <strong>OBEX</strong>，使高层协议同时运作在蓝牙和红外的无线链路之上。主要操作指令包括：</p>
-<ul>
-<li>连接操作</li>
-<li>断开操作</li>
-<li>Put 操作</li>
-<li>Get 操作</li>
-</ul>
-<h3 id="1-1-连接操作"><a href="#1-1-连接操作" class="headerlink" title="1.1.连接操作"></a>1.1.连接操作</h3><p>连接操作的操作码为： 0x80。</p>
-<table>
-<thead>
-<tr>
-<th>字节0</th>
-<th>字节1、2</th>
-<th>字节3</th>
-<th>字节4</th>
-<th>字节5、6</th>
-<th>字节7～n</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0x80</td>
-<td>连接请求分组长度</td>
-<td>OBEX版本号</td>
-<td>标志</td>
-<td>客户端可接收最大的OBEX分组长度</td>
-<td>可选头</td>
-</tr>
-</tbody>
-</table>
-<p>下面是一个连接操作的示例：</p>
-<table>
-<thead>
-<tr>
-<th>字节0</th>
-<th>字节1、2</th>
-<th>字节3</th>
-<th>字节4</th>
-<th>字节5、6</th>
-<th>字节7～n</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0x80 Connect命令</td>
-<td>7</td>
-<td>0x10</td>
-<td>flags</td>
-<td>65534</td>
-<td>可选头</td>
-</tr>
-</tbody>
-</table>
-<h3 id="1-2-断开操作"><a href="#1-2-断开操作" class="headerlink" title="1.2.断开操作"></a>1.2.断开操作</h3><p>断开操作的操作码为：0x81。</p>
-<h3 id="1-3-Put-操作"><a href="#1-3-Put-操作" class="headerlink" title="1.3.Put 操作"></a>1.3.Put 操作</h3><p>Put 操作的操作码为：0x02。</p>
-<h3 id="1-4-Get-操作"><a href="#1-4-Get-操作" class="headerlink" title="1.4.Get 操作"></a>1.4.Get 操作</h3><p>Get 操作的操作码为：0x03。</p>
-<h2 id="2-音频与电话控制协议"><a href="#2-音频与电话控制协议" class="headerlink" title="2.音频与电话控制协议"></a>2.音频与电话控制协议</h2><h3 id="2-1-协议架构"><a href="#2-1-协议架构" class="headerlink" title="2.1.协议架构"></a>2.1.协议架构</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030002.png" alt=""></p>
-<p>蓝牙音频如上图协议栈所示：音频通过基带传输同步面向连接分组实现，没有以规范的形式给出，不是协议栈的一部分。<br><strong>TCS_Binary</strong> 是一种基于分组电话控制二进制编码指令集，位于 <strong>L2CAP</strong> 之上。实现蓝牙无绳电话、对讲机功能。<br><strong>RFCOMM</strong> 用于 <strong>AT</strong> 指令，拨号上网、蓝牙耳机、耳麦、传真通过 <strong>AT</strong> 发送指令控制。</p>
-<h3 id="2-2-音频部分"><a href="#2-2-音频部分" class="headerlink" title="2.2.音频部分"></a>2.2.音频部分</h3><p><strong>64kbps</strong> 电信级语言质量音频流<br>​    <strong>CVSD  continuous variable slope delta</strong> 连续可变斜率增量。<br>​    <strong>PCM  pulse code modulation</strong> 。<br>​    <strong>PCM</strong> 存在斜率效应。<strong>CVSD</strong> 使用音节压缩算法，编码步长根据信号斜率变化自动调整，是现在比较好的编码方案，提高语言的抗干扰能力。</p>
-<h3 id="2-3-电话控制部分"><a href="#2-3-电话控制部分" class="headerlink" title="2.3.电话控制部分"></a>2.3.电话控制部分</h3><p><strong>TCS-Binary</strong> 电话控制部分。</p>
-<ul>
-<li><p>电话呼叫</p>
-<p>​呼叫控制、呼叫建立、呼叫拆除；</p>
-</li>
-<li><p>组管理</p>
-<p>​访问权限请求、分布式配置、快速内部成员访问。</p>
-</li>
-</ul>
-<h2 id="3-网络封装协议-BNEP"><a href="#3-网络封装协议-BNEP" class="headerlink" title="3.网络封装协议  BNEP"></a>3.网络封装协议  BNEP</h2><p><strong>BNEP</strong>（<strong>Bluetooth Network Encapsulation Protocol</strong>） 网络封装协议。为了使集成蓝牙技术的电脑、电话、<strong>PDA</strong>、家用电器等网络设备交换信息，需要在网络层统一数据分组。网络封装协议将来自不同网络的数据分组重新封装，通过 <strong>L2CAP</strong> 进行传输。<strong>BNEP</strong> 支持 <strong>Ipv4、Ipv6、IPX</strong> 。</p>
-<h2 id="4-音视频分发协议AVDTP"><a href="#4-音视频分发协议AVDTP" class="headerlink" title="4.音视频分发协议AVDTP"></a>4.音视频分发协议AVDTP</h2><p><strong>AVDTP （Audio/Video Distribution Transport Protocol）</strong>音视频分发传输协议。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030004.png" alt=""></p>
-<p><strong>AVDTP</strong> 信令列表:</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>信令标识符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AVDTP_DISCOVER</td>
-<td>0x01</td>
-<td>发现设备中的流端点</td>
-</tr>
-<tr>
-<td>AVDTP_GET_CAPABILITIES</td>
-<td>0x02</td>
-<td>获得流端点的信息能力</td>
-</tr>
-<tr>
-<td>AVDTP_SET_CONFIGURATION</td>
-<td>0x03</td>
-<td>对SEP进行配置</td>
-</tr>
-<tr>
-<td>AVDTP_GET_CONFIGURATION</td>
-<td>0x04</td>
-<td>获取SEP当前配置</td>
-</tr>
-<tr>
-<td>AVDTP_RECONFIGURE</td>
-<td>0x05</td>
-<td>对SEP重新配置</td>
-</tr>
-<tr>
-<td>AVDTP_OPEN</td>
-<td>0x06</td>
-<td>成功的配置SEP后，打开流</td>
-</tr>
-<tr>
-<td>AVDTP_START</td>
-<td>0x07</td>
-<td>流被打开：用于开始形成流；流暂停时：用于重新形成流。</td>
-</tr>
-<tr>
-<td>AVDTP_CLOSE</td>
-<td>0x08</td>
-<td>对SEP关闭</td>
-</tr>
-<tr>
-<td>AVDTP_SUSPEND</td>
-<td>0x09</td>
-<td>请求SEP暂停</td>
-</tr>
-<tr>
-<td>AVDTP_SECURITY_CONTROL</td>
-<td>0x0A</td>
-<td>设置设备内容保护、或者请求设备状况信息</td>
-</tr>
-<tr>
-<td>AVDTP_ABORT</td>
-<td>0x0B</td>
-<td>中断正在建立或者传输的过程</td>
-</tr>
-<tr>
-<td>AVDTP_GET_ALL_CAPABILITIES</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>AVDTP_DELAYREPORT</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="5-音视频控制传输协议AVCTP"><a href="#5-音视频控制传输协议AVCTP" class="headerlink" title="5.音视频控制传输协议AVCTP"></a>5.<strong>音视频控制传输协议AVCTP</strong></h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030003.png" alt=""></p>
-<p><strong>AVCTP</strong> 可以使音视频设备同时支持多个应用框架，每个应用框架定义了各自相应的消息格式与应用规则。</p>
-<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p> <a href="http://blog.csdn.net/xubin341719/article/details/38335533" target="_blank" rel="external">蓝牙核心技术概述（五）：蓝牙协议规范（irOBEX、BNEP、AVDTP、AVCTP）</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Redis常用命令" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/01/Redis常用命令/">Redis常用命令</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/08/01/Redis常用命令/" class="article-date">
-  <time datetime="2017-08-01T08:12:47.000Z" itemprop="datePublished">2017-08-01</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-字符串"><a href="#1-字符串" class="headerlink" title="1.字符串"></a>1.字符串</h2><h3 id="1-1-SET-命令"><a href="#1-1-SET-命令" class="headerlink" title="1.1. SET 命令"></a>1.1. SET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080001.png" alt=""></p>
-<h3 id="1-2-GET-命令"><a href="#1-2-GET-命令" class="headerlink" title="1.2. GET 命令"></a>1.2. GET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080002.png" alt=""></p>
-<h3 id="1-3-GETSET-命令"><a href="#1-3-GETSET-命令" class="headerlink" title="1.3. GETSET 命令"></a>1.3. GETSET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080003.png" alt=""></p>
-<h3 id="1-4-INCR-自增命令"><a href="#1-4-INCR-自增命令" class="headerlink" title="1.4. INCR 自增命令"></a>1.4. INCR 自增命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080004.png" alt=""></p>
-<h2 id="2-有序集合（Sorted-Set）"><a href="#2-有序集合（Sorted-Set）" class="headerlink" title="2.有序集合（Sorted Set）"></a>2.有序集合（Sorted Set）</h2><h3 id="2-1-ZADD-命令"><a href="#2-1-ZADD-命令" class="headerlink" title="2.1. ZADD 命令"></a>2.1. ZADD 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080005.png" alt=""></p>
-<h3 id="2-2-ZCARD-数量统计命令"><a href="#2-2-ZCARD-数量统计命令" class="headerlink" title="2.2. ZCARD 数量统计命令"></a>2.2. ZCARD 数量统计命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080006.png" alt=""></p>
-<h3 id="2-3-ZCOUNT-查找指定区间成员数命令"><a href="#2-3-ZCOUNT-查找指定区间成员数命令" class="headerlink" title="2.3. ZCOUNT 查找指定区间成员数命令"></a>2.3. ZCOUNT 查找指定区间成员数命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080007.png" alt=""></p>
-<h3 id="2-4-ZRANK-返回查找值排名命令"><a href="#2-4-ZRANK-返回查找值排名命令" class="headerlink" title="2.4. ZRANK 返回查找值排名命令"></a>2.4. ZRANK 返回查找值排名命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080008.png" alt=""></p>
-<h3 id="2-5-ZREM-移除元素命令"><a href="#2-5-ZREM-移除元素命令" class="headerlink" title="2.5. ZREM 移除元素命令"></a>2.5. ZREM 移除元素命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080009.png" alt=""></p>
-<h3 id="2-6-ZUNIONSTORE-并集命令"><a href="#2-6-ZUNIONSTORE-并集命令" class="headerlink" title="2.6. ZUNIONSTORE 并集命令"></a>2.6. ZUNIONSTORE 并集命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080010.png" alt=""></p>
-<h3 id="2-7-ZINTERSTORE-交集命令"><a href="#2-7-ZINTERSTORE-交集命令" class="headerlink" title="2.7. ZINTERSTORE 交集命令"></a>2.7. ZINTERSTORE 交集命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png" alt=""></p>
-<h3 id="2-8-ZRANGE-范围显示指令"><a href="#2-8-ZRANGE-范围显示指令" class="headerlink" title="2.8. ZRANGE 范围显示指令"></a>2.8. ZRANGE 范围显示指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png" alt=""></p>
-<h2 id="3-哈希（HashSet）"><a href="#3-哈希（HashSet）" class="headerlink" title="3. 哈希（HashSet）"></a>3. 哈希（HashSet）</h2><h3 id="3-1-HSET-插入指令"><a href="#3-1-HSET-插入指令" class="headerlink" title="3.1. HSET 插入指令"></a>3.1. HSET 插入指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080012.png" alt=""></p>
-<h3 id="3-2-HGET-读取指令"><a href="#3-2-HGET-读取指令" class="headerlink" title="3.2. HGET 读取指令"></a>3.2. HGET 读取指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080013.png" alt=""></p>
-<h3 id="3-3-HGETALL-读取全部"><a href="#3-3-HGETALL-读取全部" class="headerlink" title="3.3. HGETALL 读取全部"></a>3.3. HGETALL 读取全部</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080014.png" alt=""></p>
-<h3 id="3-4-HSETNX-如果不存在则赋值"><a href="#3-4-HSETNX-如果不存在则赋值" class="headerlink" title="3.4. HSETNX 如果不存在则赋值"></a>3.4. HSETNX 如果不存在则赋值</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080015.png" alt=""></p>
-<h3 id="3-5-HDEL-删除"><a href="#3-5-HDEL-删除" class="headerlink" title="3.5. HDEL 删除"></a>3.5. HDEL 删除</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080016.png" alt=""></p>
-<h2 id="4-列表（List）"><a href="#4-列表（List）" class="headerlink" title="4.列表（List）"></a>4.列表（List）</h2><h3 id="4-1-PUSH（插入元素，分为左-LPUSH-和右-RPUSH）"><a href="#4-1-PUSH（插入元素，分为左-LPUSH-和右-RPUSH）" class="headerlink" title="4.1. PUSH（插入元素，分为左 LPUSH 和右 RPUSH）"></a>4.1. PUSH（插入元素，分为左 LPUSH 和右 RPUSH）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080017.png" alt=""></p>
-<h3 id="4-2-LRANGE-输出某一段元素"><a href="#4-2-LRANGE-输出某一段元素" class="headerlink" title="4.2. LRANGE 输出某一段元素"></a>4.2. LRANGE 输出某一段元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080018.png" alt=""></p>
-<h3 id="4-3-POP（分为-LPOP-和-RPOP）"><a href="#4-3-POP（分为-LPOP-和-RPOP）" class="headerlink" title="4.3. POP（分为 LPOP 和 RPOP）"></a>4.3. POP（分为 LPOP 和 RPOP）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080019.png" alt=""></p>
-<h3 id="4-4-LLEN-输出列表长度"><a href="#4-4-LLEN-输出列表长度" class="headerlink" title="4.4. LLEN 输出列表长度"></a>4.4. LLEN 输出列表长度</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080020.png" alt=""></p>
-<h3 id="4-5-LINDEX-输出某位置元素"><a href="#4-5-LINDEX-输出某位置元素" class="headerlink" title="4.5. LINDEX 输出某位置元素"></a>4.5. LINDEX 输出某位置元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080021.png" alt=""></p>
-<h2 id="5-集合"><a href="#5-集合" class="headerlink" title="5.集合"></a>5.集合</h2><h3 id="5-1-SADD-插入命令"><a href="#5-1-SADD-插入命令" class="headerlink" title="5.1. SADD 插入命令"></a>5.1. SADD 插入命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080022.png" alt=""></p>
-<h3 id="5-2-SCARD-统计个数命令"><a href="#5-2-SCARD-统计个数命令" class="headerlink" title="5.2. SCARD 统计个数命令"></a>5.2. SCARD 统计个数命令</h3><p>​              <img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080023.png" alt=""></p>
-<h3 id="5-3-SDIFFSTORE-差集并存储"><a href="#5-3-SDIFFSTORE-差集并存储" class="headerlink" title="5.3. SDIFFSTORE 差集并存储"></a>5.3. SDIFFSTORE 差集并存储</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080024.png" alt=""></p>
-<h3 id="5-4-SUNION-并集（SUNIONSTORE-则存储）"><a href="#5-4-SUNION-并集（SUNIONSTORE-则存储）" class="headerlink" title="5.4. SUNION 并集（SUNIONSTORE 则存储）"></a>5.4. SUNION 并集（SUNIONSTORE 则存储）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080025.png" alt=""></p>
-<h3 id="5-5-SINTER-交集"><a href="#5-5-SINTER-交集" class="headerlink" title="5.5. SINTER 交集"></a>5.5. SINTER 交集</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080026.png" alt=""></p>
-<h3 id="5-6-SPOP-随机弹出"><a href="#5-6-SPOP-随机弹出" class="headerlink" title="5.6. SPOP 随机弹出"></a>5.6. SPOP 随机弹出</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080027.png" alt=""></p>
-<h3 id="5-7-SMEMBERS-显示所有元素"><a href="#5-7-SMEMBERS-显示所有元素" class="headerlink" title="5.7. SMEMBERS 显示所有元素"></a>5.7. SMEMBERS 显示所有元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080028.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-java基础之垃圾回收器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/java基础之垃圾回收器/">Java基础之垃圾回收器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/07/25/java基础之垃圾回收器/" class="article-date">
-  <time datetime="2017-07-25T10:38:00.000Z" itemprop="datePublished">2017-07-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-Serial-收集器"><a href="#1-Serial-收集器" class="headerlink" title="1. Serial 收集器"></a>1. Serial 收集器</h2><p><strong>Serial</strong> 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 <strong>“Stop the World”</strong>。也就是说，在它工作的同时，其他线程必须暂停运行。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260001.png" alt=""></p>
-<h2 id="2-Serial-Old-收集器"><a href="#2-Serial-Old-收集器" class="headerlink" title="2. Serial Old 收集器"></a>2. Serial Old 收集器</h2><p><strong>Serial</strong> 收集器的老年代版本。一种用途是在 <strong>JDK 1.5</strong> 以及之前的版本中与<strong>Parallel Scavenge</strong> 收集器搭配使用，另一种用途就是作为<strong>CMS</strong> 收集器的后备预案，在并发收集发生<strong>Concurrent Mode Failure</strong> 时使用。 </p>
-<h2 id="3-ParNew-收集器"><a href="#3-ParNew-收集器" class="headerlink" title="3. ParNew 收集器"></a>3. ParNew 收集器</h2><p><strong>ParNew</strong> 收集器是 <strong>Serial</strong> 收集器的多线程版本。因为功能强大的老年代收集器 <strong>CMS</strong> 收集器无法与 <strong>Parallel Scavenge</strong> 收集器配合工作，因此 <strong>CMS</strong> 收集器常与 <strong>ParNew</strong> 收集器配合使用。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260002.png" alt=""></p>
-<h2 id="4-Parallel-Scavenge-收集器"><a href="#4-Parallel-Scavenge-收集器" class="headerlink" title="4. Parallel Scavenge 收集器"></a>4. Parallel Scavenge 收集器</h2><p><strong>Parallel Scavenge</strong> 收集器的特点是它的关注点与其他收集器不同，<strong>CMS</strong> 等收集器的关注点<br>是尽可能地缩短垃圾收集时用户线程的停顿时间，而<strong>Parallel Scavenge</strong> 收集器的目标则是达到<br>一个可控制的吞吐量。 </p>
-<h2 id="5-Parallel-Old-收集器"><a href="#5-Parallel-Old-收集器" class="headerlink" title="5. Parallel Old 收集器"></a>5. Parallel Old 收集器</h2><p><strong>Parallel Old</strong> 是 <strong>Parallel Scavenge</strong> 收集器的老年代版本，使用多线程和“标记-整理”算法。<br>这个收集器是在 JDK 1.6 中才开始提供的，在此之前，新生代的 <strong>Parallel Scavenge</strong> 收集器一直<br>处于比较尴尬的状态。 原因是，如果新生代选择了<strong>Parallel Scavenge</strong> 收集器，老年代除了<br><strong>Serial Old</strong> 收集器外别无选择。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260003.png" alt=""></p>
-<h2 id="6-CMS-收集器"><a href="#6-CMS-收集器" class="headerlink" title="6. CMS 收集器"></a>6. CMS 收集器</h2><p><strong>CMS（Concurrent Mark Sweep）</strong>收集器是一种以获取最短回收停顿时间为目标的收集器。   </p>
-<p>其工作步骤分为以下四步：</p>
-<ul>
-<li>初始标记（CMS initial mark）</li>
-<li>并发标记（CMS concurrent mark）</li>
-<li>重新标记（CMS remark）</li>
-<li>并发清除（CMS concurrent sweep） </li>
-</ul>
-<p>其中，初始标记、 重新标记这两个步骤仍然需要“Stop The World”。 初始标记仅仅只是标记一下<strong>GC Roots</strong> 能直接关联到的对象，速度很快，并发标记阶段就是进行 <strong>GC RootsTracing</strong> 的过程，而重新标记阶段则是为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
-<p>由于整个过程中耗时最长的并发标记和并发清除过程收集器线程都可以与用户线程一起工作，所以，从总体上来说，CMS收集器的内存回收过程是与用户线程一起并发执行的。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260004.png" alt=""></p>
-<h2 id="7-G1收集器"><a href="#7-G1收集器" class="headerlink" title="7. G1收集器"></a>7. G1收集器</h2><p><strong>G1</strong> 是一款面向服务端应用的垃圾收集器。 <strong>HotSpot</strong> 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 <strong>JDK 1.5</strong> 中发布的 <strong>CMS</strong> 收集器。 与 <strong>CMS</strong> 收集器相比，<strong>G1</strong>具备如下特点。 </p>
-<ul>
-<li>空间整合：与 <strong>CMS</strong> 的“标记—清理”算法不同，<strong>G1</strong> 从整体来看是基于“标记—整理”算法实现的收集器，从局部（两个<strong>Region</strong>之间）上来看是基于“复制”算法实现的，但无论如何，这两种算法都意味着 <strong>G1</strong> 运作期间不会产生内存空间碎片，收集后能提供规整的可用内存。 这种特性有利于程序长时间运行，分配大对象时不会因为无法找到连续内存空间而提前触发下一次 <strong>GC</strong>。</li>
-<li>可预测的停顿：这是 <strong>G1</strong> 相对于 <strong>CMS</strong> 的另一大优势，降低停顿时间是 <strong>G1</strong> 和 <strong>CMS</strong> 共同的关注点，但 <strong>G1</strong> 除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时 <strong>Java（RTSJ）</strong>的垃圾收集器的特征了。</li>
-</ul>
-<p>值得一提的是，在 <strong>G1</strong> 之前的其他收集器进行收集的范围都是整个新生代或者老年代，而 <strong>G1</strong> 不再是这样。 使用 <strong>G1</strong> 收集器时，<strong>Java</strong> 堆的内存布局就与其他收集器有很大差别，它将整个 <strong>Java</strong> 堆划分为多个大小相等的独立区域（<strong>Region</strong>），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分 <strong>Region</strong>（不需要连续）的集合。 </p>
-<p>如果不计算维护Remembered Set的操作，G1收集器的运作大致可划分为以下几个步骤：</p>
-<ul>
-<li>初始标记（Initial Marking）</li>
-<li>并发标记（Concurrent Marking）</li>
-<li>最终标记（Final Marking）</li>
-<li>筛选回收（Live Data Counting and Evacuation） </li>
-</ul>
-<p>前三个阶段与 <strong>CMS</strong> 收集器相似，最后在筛选回收阶段首先对各个<strong>Region</strong> 的回收价值和成本进行排序，<br>根据用户所期望的 <strong>GC</strong> 停顿时间来制定回收计划。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260005.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/垃圾回收/">垃圾回收</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Jack Smith&nbsp;
+      &copy; 2018 Jack Smith&nbsp;
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>

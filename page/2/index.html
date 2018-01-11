@@ -45,6 +45,433 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-TCP报文头结构" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/18/TCP报文头结构/">TCP报文头结构</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/18/TCP报文头结构/" class="article-date">
+  <time datetime="2017-08-17T18:16:16.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-TCP-报文头结构"><a href="#1-TCP-报文头结构" class="headerlink" title="1.TCP 报文头结构"></a>1.TCP 报文头结构</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708240001.jpg" alt=""></p>
+<h2 id="2-报文头各个部分说明"><a href="#2-报文头各个部分说明" class="headerlink" title="2.报文头各个部分说明"></a>2.报文头各个部分说明</h2><h3 id="2-1-Source-Port和Destination-Port"><a href="#2-1-Source-Port和Destination-Port" class="headerlink" title="2.1.Source Port和Destination Port:"></a>2.1.Source Port和Destination Port:</h3><p>分别占用16位，表示源端口号和目的端口号;用于区别主机中的不同进程， 而IP地址是用来区分不同的主机的，源端口号和目的端口号配合上IP首部中的源IP地址和目的IP地址就能唯一 的确定一个TCP连接;</p>
+<h3 id="2-2-Sequence-Number"><a href="#2-2-Sequence-Number" class="headerlink" title="2.2.Sequence Number:"></a>2.2.Sequence Number:</h3><p>用来标识从TCP发端向TCP收端发送的数据字节流，它表示在这个报文段中的的第一个数据 字节在数据流中的序号;主要用来解决网络报乱序的问题;</p>
+<h3 id="2-3-Acknowledgment-Number"><a href="#2-3-Acknowledgment-Number" class="headerlink" title="2.3.Acknowledgment Number:"></a>2.3.Acknowledgment Number:</h3><p>32位确认序列号包含发送确认的一端所期望收到的下一个序号，因此，确认序号应 当是上次已成功收到数据字节序号加1。不过，只有当标志位中的ACK标志(下面介绍)为1时该确认序列号的字 段才有效。主要用来解决不丢包的问题;</p>
+<h3 id="2-4-Offset"><a href="#2-4-Offset" class="headerlink" title="2.4.Offset:"></a>2.4.Offset:</h3><p>给出首部中32 bit字的数目，需要这个值是因为任选字段的长度是可变的。这个字段占4bit(最多能 表示15个32bit的的字，即4*15=60个字节的首部长度)，因此TCP最多有60字节的首部。然而，没有任选字段， 正常的长度是20字节;</p>
+<h3 id="2-5-TCP-Flags"><a href="#2-5-TCP-Flags" class="headerlink" title="2.5.TCP Flags:"></a>2.5.TCP Flags:</h3><p>TCP首部中有6个标志比特，它们中的多个可同时被设置为1，主要是用于操控TCP的状态机的，依次 为URG，ACK，PSH，RST，SYN，FIN。每个标志位的意思如下：</p>
+<h3 id="2-6-URG："><a href="#2-6-URG：" class="headerlink" title="2.6.URG："></a>2.6.URG：</h3><p>此标志表示TCP包的紧急指针域(后面马上就要说到)有效，用来保证TCP连接不被中断，并且督促 中间层设备要尽快处理这些数据;</p>
+<h3 id="2-7-ACK："><a href="#2-7-ACK：" class="headerlink" title="2.7.ACK："></a>2.7.ACK：</h3><p>此标志表示应答域有效，就是说前面所说的TCP应答号将会包含在TCP数据包中;有两个取值：0和1， 为1的时候表示应答域有效，反之为0;</p>
+<h3 id="2-8-PSH："><a href="#2-8-PSH：" class="headerlink" title="2.8.PSH："></a>2.8.PSH：</h3><p>这个标志位表示Push操作。所谓Push操作就是指在数据包到达接收端以后，立即传送给应用程序， 而不是在缓冲区中排队;</p>
+<h3 id="2-9-RST："><a href="#2-9-RST：" class="headerlink" title="2.9.RST："></a>2.9.RST：</h3><p>这个标志表示连接复位请求。用来复位那些产生错误的连接，也被用来拒绝错误和非法的数据包;</p>
+<h3 id="3-0-SYN："><a href="#3-0-SYN：" class="headerlink" title="3.0.SYN："></a>3.0.SYN：</h3><p>表示同步序号，用来建立连接。SYN标志位和ACK标志位搭配使用，当连接请求的时候，SYN=1， ACK=0;连接被响应的时候，SYN=1，ACK=1;这个标志的数据包经常被用来进行端口扫描。扫描者发送 一个只有SYN的数据包，如果对方主机响应了一个数据包回来 ，就表明这台主机存在这个端口;但是由于这 种扫描方式只是进行TCP三次握手的第一次握手，因此这种扫描的成功表示被扫描的机器不很安全，一台安全 的主机将会强制要求一个连接严格的进行TCP的三次握手;</p>
+<h3 id="3-1-FIN："><a href="#3-1-FIN：" class="headerlink" title="3.1.FIN："></a>3.1.FIN：</h3><p>表示发送端已经达到数据末尾，也就是说双方的数据传送完成，没有数据可以传送了，发送FIN标志 位的TCP数据包后，连接将被断开。这个标志的数据包也经常被用于进行端口扫描。</p>
+<h3 id="3-2-Window"><a href="#3-2-Window" class="headerlink" title="3.2.Window:"></a>3.2.Window:</h3><p>窗口大小，也就是有名的滑动窗口。</p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-蓝牙协议入门（四）应用层协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/08/蓝牙协议入门（四）应用层协议/">蓝牙协议入门（四）应用层协议</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/08/蓝牙协议入门（四）应用层协议/" class="article-date">
+  <time datetime="2017-08-08T02:10:47.000Z" itemprop="datePublished">2017-08-08</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-irOBEX-红外对象交互协议"><a href="#1-irOBEX-红外对象交互协议" class="headerlink" title="1.irOBEX 红外对象交互协议"></a>1.irOBEX 红外对象交互协议</h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030001.png" alt=""></p>
+<p><strong>irOBEX</strong>  红外对象交互协议，简称 <strong>OBEX</strong>，使高层协议同时运作在蓝牙和红外的无线链路之上。主要操作指令包括：</p>
+<ul>
+<li>连接操作</li>
+<li>断开操作</li>
+<li>Put 操作</li>
+<li>Get 操作</li>
+</ul>
+<h3 id="1-1-连接操作"><a href="#1-1-连接操作" class="headerlink" title="1.1.连接操作"></a>1.1.连接操作</h3><p>连接操作的操作码为： 0x80。</p>
+<table>
+<thead>
+<tr>
+<th>字节0</th>
+<th>字节1、2</th>
+<th>字节3</th>
+<th>字节4</th>
+<th>字节5、6</th>
+<th>字节7～n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x80</td>
+<td>连接请求分组长度</td>
+<td>OBEX版本号</td>
+<td>标志</td>
+<td>客户端可接收最大的OBEX分组长度</td>
+<td>可选头</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个连接操作的示例：</p>
+<table>
+<thead>
+<tr>
+<th>字节0</th>
+<th>字节1、2</th>
+<th>字节3</th>
+<th>字节4</th>
+<th>字节5、6</th>
+<th>字节7～n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x80 Connect命令</td>
+<td>7</td>
+<td>0x10</td>
+<td>flags</td>
+<td>65534</td>
+<td>可选头</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-2-断开操作"><a href="#1-2-断开操作" class="headerlink" title="1.2.断开操作"></a>1.2.断开操作</h3><p>断开操作的操作码为：0x81。</p>
+<h3 id="1-3-Put-操作"><a href="#1-3-Put-操作" class="headerlink" title="1.3.Put 操作"></a>1.3.Put 操作</h3><p>Put 操作的操作码为：0x02。</p>
+<h3 id="1-4-Get-操作"><a href="#1-4-Get-操作" class="headerlink" title="1.4.Get 操作"></a>1.4.Get 操作</h3><p>Get 操作的操作码为：0x03。</p>
+<h2 id="2-音频与电话控制协议"><a href="#2-音频与电话控制协议" class="headerlink" title="2.音频与电话控制协议"></a>2.音频与电话控制协议</h2><h3 id="2-1-协议架构"><a href="#2-1-协议架构" class="headerlink" title="2.1.协议架构"></a>2.1.协议架构</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030002.png" alt=""></p>
+<p>蓝牙音频如上图协议栈所示：音频通过基带传输同步面向连接分组实现，没有以规范的形式给出，不是协议栈的一部分。<br><strong>TCS_Binary</strong> 是一种基于分组电话控制二进制编码指令集，位于 <strong>L2CAP</strong> 之上。实现蓝牙无绳电话、对讲机功能。<br><strong>RFCOMM</strong> 用于 <strong>AT</strong> 指令，拨号上网、蓝牙耳机、耳麦、传真通过 <strong>AT</strong> 发送指令控制。</p>
+<h3 id="2-2-音频部分"><a href="#2-2-音频部分" class="headerlink" title="2.2.音频部分"></a>2.2.音频部分</h3><p><strong>64kbps</strong> 电信级语言质量音频流<br>​    <strong>CVSD  continuous variable slope delta</strong> 连续可变斜率增量。<br>​    <strong>PCM  pulse code modulation</strong> 。<br>​    <strong>PCM</strong> 存在斜率效应。<strong>CVSD</strong> 使用音节压缩算法，编码步长根据信号斜率变化自动调整，是现在比较好的编码方案，提高语言的抗干扰能力。</p>
+<h3 id="2-3-电话控制部分"><a href="#2-3-电话控制部分" class="headerlink" title="2.3.电话控制部分"></a>2.3.电话控制部分</h3><p><strong>TCS-Binary</strong> 电话控制部分。</p>
+<ul>
+<li><p>电话呼叫</p>
+<p>​呼叫控制、呼叫建立、呼叫拆除；</p>
+</li>
+<li><p>组管理</p>
+<p>​访问权限请求、分布式配置、快速内部成员访问。</p>
+</li>
+</ul>
+<h2 id="3-网络封装协议-BNEP"><a href="#3-网络封装协议-BNEP" class="headerlink" title="3.网络封装协议  BNEP"></a>3.网络封装协议  BNEP</h2><p><strong>BNEP</strong>（<strong>Bluetooth Network Encapsulation Protocol</strong>） 网络封装协议。为了使集成蓝牙技术的电脑、电话、<strong>PDA</strong>、家用电器等网络设备交换信息，需要在网络层统一数据分组。网络封装协议将来自不同网络的数据分组重新封装，通过 <strong>L2CAP</strong> 进行传输。<strong>BNEP</strong> 支持 <strong>Ipv4、Ipv6、IPX</strong> 。</p>
+<h2 id="4-音视频分发协议AVDTP"><a href="#4-音视频分发协议AVDTP" class="headerlink" title="4.音视频分发协议AVDTP"></a>4.音视频分发协议AVDTP</h2><p><strong>AVDTP （Audio/Video Distribution Transport Protocol）</strong>音视频分发传输协议。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030004.png" alt=""></p>
+<p><strong>AVDTP</strong> 信令列表:</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>信令标识符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVDTP_DISCOVER</td>
+<td>0x01</td>
+<td>发现设备中的流端点</td>
+</tr>
+<tr>
+<td>AVDTP_GET_CAPABILITIES</td>
+<td>0x02</td>
+<td>获得流端点的信息能力</td>
+</tr>
+<tr>
+<td>AVDTP_SET_CONFIGURATION</td>
+<td>0x03</td>
+<td>对SEP进行配置</td>
+</tr>
+<tr>
+<td>AVDTP_GET_CONFIGURATION</td>
+<td>0x04</td>
+<td>获取SEP当前配置</td>
+</tr>
+<tr>
+<td>AVDTP_RECONFIGURE</td>
+<td>0x05</td>
+<td>对SEP重新配置</td>
+</tr>
+<tr>
+<td>AVDTP_OPEN</td>
+<td>0x06</td>
+<td>成功的配置SEP后，打开流</td>
+</tr>
+<tr>
+<td>AVDTP_START</td>
+<td>0x07</td>
+<td>流被打开：用于开始形成流；流暂停时：用于重新形成流。</td>
+</tr>
+<tr>
+<td>AVDTP_CLOSE</td>
+<td>0x08</td>
+<td>对SEP关闭</td>
+</tr>
+<tr>
+<td>AVDTP_SUSPEND</td>
+<td>0x09</td>
+<td>请求SEP暂停</td>
+</tr>
+<tr>
+<td>AVDTP_SECURITY_CONTROL</td>
+<td>0x0A</td>
+<td>设置设备内容保护、或者请求设备状况信息</td>
+</tr>
+<tr>
+<td>AVDTP_ABORT</td>
+<td>0x0B</td>
+<td>中断正在建立或者传输的过程</td>
+</tr>
+<tr>
+<td>AVDTP_GET_ALL_CAPABILITIES</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>AVDTP_DELAYREPORT</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-音视频控制传输协议AVCTP"><a href="#5-音视频控制传输协议AVCTP" class="headerlink" title="5.音视频控制传输协议AVCTP"></a>5.<strong>音视频控制传输协议AVCTP</strong></h2><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708030003.png" alt=""></p>
+<p><strong>AVCTP</strong> 可以使音视频设备同时支持多个应用框架，每个应用框架定义了各自相应的消息格式与应用规则。</p>
+<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p> <a href="http://blog.csdn.net/xubin341719/article/details/38335533" target="_blank" rel="external">蓝牙核心技术概述（五）：蓝牙协议规范（irOBEX、BNEP、AVDTP、AVCTP）</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蓝牙/">蓝牙</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Redis常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/01/Redis常用命令/">Redis常用命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/08/01/Redis常用命令/" class="article-date">
+  <time datetime="2017-08-01T08:12:47.000Z" itemprop="datePublished">2017-08-01</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-字符串"><a href="#1-字符串" class="headerlink" title="1.字符串"></a>1.字符串</h2><h3 id="1-1-SET-命令"><a href="#1-1-SET-命令" class="headerlink" title="1.1. SET 命令"></a>1.1. SET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080001.png" alt=""></p>
+<h3 id="1-2-GET-命令"><a href="#1-2-GET-命令" class="headerlink" title="1.2. GET 命令"></a>1.2. GET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080002.png" alt=""></p>
+<h3 id="1-3-GETSET-命令"><a href="#1-3-GETSET-命令" class="headerlink" title="1.3. GETSET 命令"></a>1.3. GETSET 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080003.png" alt=""></p>
+<h3 id="1-4-INCR-自增命令"><a href="#1-4-INCR-自增命令" class="headerlink" title="1.4. INCR 自增命令"></a>1.4. INCR 自增命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080004.png" alt=""></p>
+<h2 id="2-有序集合（Sorted-Set）"><a href="#2-有序集合（Sorted-Set）" class="headerlink" title="2.有序集合（Sorted Set）"></a>2.有序集合（Sorted Set）</h2><h3 id="2-1-ZADD-命令"><a href="#2-1-ZADD-命令" class="headerlink" title="2.1. ZADD 命令"></a>2.1. ZADD 命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080005.png" alt=""></p>
+<h3 id="2-2-ZCARD-数量统计命令"><a href="#2-2-ZCARD-数量统计命令" class="headerlink" title="2.2. ZCARD 数量统计命令"></a>2.2. ZCARD 数量统计命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080006.png" alt=""></p>
+<h3 id="2-3-ZCOUNT-查找指定区间成员数命令"><a href="#2-3-ZCOUNT-查找指定区间成员数命令" class="headerlink" title="2.3. ZCOUNT 查找指定区间成员数命令"></a>2.3. ZCOUNT 查找指定区间成员数命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080007.png" alt=""></p>
+<h3 id="2-4-ZRANK-返回查找值排名命令"><a href="#2-4-ZRANK-返回查找值排名命令" class="headerlink" title="2.4. ZRANK 返回查找值排名命令"></a>2.4. ZRANK 返回查找值排名命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080008.png" alt=""></p>
+<h3 id="2-5-ZREM-移除元素命令"><a href="#2-5-ZREM-移除元素命令" class="headerlink" title="2.5. ZREM 移除元素命令"></a>2.5. ZREM 移除元素命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080009.png" alt=""></p>
+<h3 id="2-6-ZUNIONSTORE-并集命令"><a href="#2-6-ZUNIONSTORE-并集命令" class="headerlink" title="2.6. ZUNIONSTORE 并集命令"></a>2.6. ZUNIONSTORE 并集命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080010.png" alt=""></p>
+<h3 id="2-7-ZINTERSTORE-交集命令"><a href="#2-7-ZINTERSTORE-交集命令" class="headerlink" title="2.7. ZINTERSTORE 交集命令"></a>2.7. ZINTERSTORE 交集命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png" alt=""></p>
+<h3 id="2-8-ZRANGE-范围显示指令"><a href="#2-8-ZRANGE-范围显示指令" class="headerlink" title="2.8. ZRANGE 范围显示指令"></a>2.8. ZRANGE 范围显示指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080011.png" alt=""></p>
+<h2 id="3-哈希（HashSet）"><a href="#3-哈希（HashSet）" class="headerlink" title="3. 哈希（HashSet）"></a>3. 哈希（HashSet）</h2><h3 id="3-1-HSET-插入指令"><a href="#3-1-HSET-插入指令" class="headerlink" title="3.1. HSET 插入指令"></a>3.1. HSET 插入指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080012.png" alt=""></p>
+<h3 id="3-2-HGET-读取指令"><a href="#3-2-HGET-读取指令" class="headerlink" title="3.2. HGET 读取指令"></a>3.2. HGET 读取指令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080013.png" alt=""></p>
+<h3 id="3-3-HGETALL-读取全部"><a href="#3-3-HGETALL-读取全部" class="headerlink" title="3.3. HGETALL 读取全部"></a>3.3. HGETALL 读取全部</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080014.png" alt=""></p>
+<h3 id="3-4-HSETNX-如果不存在则赋值"><a href="#3-4-HSETNX-如果不存在则赋值" class="headerlink" title="3.4. HSETNX 如果不存在则赋值"></a>3.4. HSETNX 如果不存在则赋值</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080015.png" alt=""></p>
+<h3 id="3-5-HDEL-删除"><a href="#3-5-HDEL-删除" class="headerlink" title="3.5. HDEL 删除"></a>3.5. HDEL 删除</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080016.png" alt=""></p>
+<h2 id="4-列表（List）"><a href="#4-列表（List）" class="headerlink" title="4.列表（List）"></a>4.列表（List）</h2><h3 id="4-1-PUSH（插入元素，分为左-LPUSH-和右-RPUSH）"><a href="#4-1-PUSH（插入元素，分为左-LPUSH-和右-RPUSH）" class="headerlink" title="4.1. PUSH（插入元素，分为左 LPUSH 和右 RPUSH）"></a>4.1. PUSH（插入元素，分为左 LPUSH 和右 RPUSH）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080017.png" alt=""></p>
+<h3 id="4-2-LRANGE-输出某一段元素"><a href="#4-2-LRANGE-输出某一段元素" class="headerlink" title="4.2. LRANGE 输出某一段元素"></a>4.2. LRANGE 输出某一段元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080018.png" alt=""></p>
+<h3 id="4-3-POP（分为-LPOP-和-RPOP）"><a href="#4-3-POP（分为-LPOP-和-RPOP）" class="headerlink" title="4.3. POP（分为 LPOP 和 RPOP）"></a>4.3. POP（分为 LPOP 和 RPOP）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080019.png" alt=""></p>
+<h3 id="4-4-LLEN-输出列表长度"><a href="#4-4-LLEN-输出列表长度" class="headerlink" title="4.4. LLEN 输出列表长度"></a>4.4. LLEN 输出列表长度</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080020.png" alt=""></p>
+<h3 id="4-5-LINDEX-输出某位置元素"><a href="#4-5-LINDEX-输出某位置元素" class="headerlink" title="4.5. LINDEX 输出某位置元素"></a>4.5. LINDEX 输出某位置元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080021.png" alt=""></p>
+<h2 id="5-集合"><a href="#5-集合" class="headerlink" title="5.集合"></a>5.集合</h2><h3 id="5-1-SADD-插入命令"><a href="#5-1-SADD-插入命令" class="headerlink" title="5.1. SADD 插入命令"></a>5.1. SADD 插入命令</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080022.png" alt=""></p>
+<h3 id="5-2-SCARD-统计个数命令"><a href="#5-2-SCARD-统计个数命令" class="headerlink" title="5.2. SCARD 统计个数命令"></a>5.2. SCARD 统计个数命令</h3><p>​              <img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080023.png" alt=""></p>
+<h3 id="5-3-SDIFFSTORE-差集并存储"><a href="#5-3-SDIFFSTORE-差集并存储" class="headerlink" title="5.3. SDIFFSTORE 差集并存储"></a>5.3. SDIFFSTORE 差集并存储</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080024.png" alt=""></p>
+<h3 id="5-4-SUNION-并集（SUNIONSTORE-则存储）"><a href="#5-4-SUNION-并集（SUNIONSTORE-则存储）" class="headerlink" title="5.4. SUNION 并集（SUNIONSTORE 则存储）"></a>5.4. SUNION 并集（SUNIONSTORE 则存储）</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080025.png" alt=""></p>
+<h3 id="5-5-SINTER-交集"><a href="#5-5-SINTER-交集" class="headerlink" title="5.5. SINTER 交集"></a>5.5. SINTER 交集</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080026.png" alt=""></p>
+<h3 id="5-6-SPOP-随机弹出"><a href="#5-6-SPOP-随机弹出" class="headerlink" title="5.6. SPOP 随机弹出"></a>5.6. SPOP 随机弹出</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080027.png" alt=""></p>
+<h3 id="5-7-SMEMBERS-显示所有元素"><a href="#5-7-SMEMBERS-显示所有元素" class="headerlink" title="5.7. SMEMBERS 显示所有元素"></a>5.7. SMEMBERS 显示所有元素</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201708080028.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-java基础之垃圾回收器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/java基础之垃圾回收器/">Java基础之垃圾回收器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/07/25/java基础之垃圾回收器/" class="article-date">
+  <time datetime="2017-07-25T10:38:00.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-Serial-收集器"><a href="#1-Serial-收集器" class="headerlink" title="1. Serial 收集器"></a>1. Serial 收集器</h2><p><strong>Serial</strong> 收集器是单线程垃圾回收器，它仅能使用单个线程去进行垃圾回收的工作，而且在进行垃圾回收时需要 <strong>“Stop the World”</strong>。也就是说，在它工作的同时，其他线程必须暂停运行。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260001.png" alt=""></p>
+<h2 id="2-Serial-Old-收集器"><a href="#2-Serial-Old-收集器" class="headerlink" title="2. Serial Old 收集器"></a>2. Serial Old 收集器</h2><p><strong>Serial</strong> 收集器的老年代版本。一种用途是在 <strong>JDK 1.5</strong> 以及之前的版本中与<strong>Parallel Scavenge</strong> 收集器搭配使用，另一种用途就是作为<strong>CMS</strong> 收集器的后备预案，在并发收集发生<strong>Concurrent Mode Failure</strong> 时使用。 </p>
+<h2 id="3-ParNew-收集器"><a href="#3-ParNew-收集器" class="headerlink" title="3. ParNew 收集器"></a>3. ParNew 收集器</h2><p><strong>ParNew</strong> 收集器是 <strong>Serial</strong> 收集器的多线程版本。因为功能强大的老年代收集器 <strong>CMS</strong> 收集器无法与 <strong>Parallel Scavenge</strong> 收集器配合工作，因此 <strong>CMS</strong> 收集器常与 <strong>ParNew</strong> 收集器配合使用。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260002.png" alt=""></p>
+<h2 id="4-Parallel-Scavenge-收集器"><a href="#4-Parallel-Scavenge-收集器" class="headerlink" title="4. Parallel Scavenge 收集器"></a>4. Parallel Scavenge 收集器</h2><p><strong>Parallel Scavenge</strong> 收集器的特点是它的关注点与其他收集器不同，<strong>CMS</strong> 等收集器的关注点<br>是尽可能地缩短垃圾收集时用户线程的停顿时间，而<strong>Parallel Scavenge</strong> 收集器的目标则是达到<br>一个可控制的吞吐量。 </p>
+<h2 id="5-Parallel-Old-收集器"><a href="#5-Parallel-Old-收集器" class="headerlink" title="5. Parallel Old 收集器"></a>5. Parallel Old 收集器</h2><p><strong>Parallel Old</strong> 是 <strong>Parallel Scavenge</strong> 收集器的老年代版本，使用多线程和“标记-整理”算法。<br>这个收集器是在 JDK 1.6 中才开始提供的，在此之前，新生代的 <strong>Parallel Scavenge</strong> 收集器一直<br>处于比较尴尬的状态。 原因是，如果新生代选择了<strong>Parallel Scavenge</strong> 收集器，老年代除了<br><strong>Serial Old</strong> 收集器外别无选择。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260003.png" alt=""></p>
+<h2 id="6-CMS-收集器"><a href="#6-CMS-收集器" class="headerlink" title="6. CMS 收集器"></a>6. CMS 收集器</h2><p><strong>CMS（Concurrent Mark Sweep）</strong>收集器是一种以获取最短回收停顿时间为目标的收集器。   </p>
+<p>其工作步骤分为以下四步：</p>
+<ul>
+<li>初始标记（CMS initial mark）</li>
+<li>并发标记（CMS concurrent mark）</li>
+<li>重新标记（CMS remark）</li>
+<li>并发清除（CMS concurrent sweep） </li>
+</ul>
+<p>其中，初始标记、 重新标记这两个步骤仍然需要“Stop The World”。 初始标记仅仅只是标记一下<strong>GC Roots</strong> 能直接关联到的对象，速度很快，并发标记阶段就是进行 <strong>GC RootsTracing</strong> 的过程，而重新标记阶段则是为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
+<p>由于整个过程中耗时最长的并发标记和并发清除过程收集器线程都可以与用户线程一起工作，所以，从总体上来说，CMS收集器的内存回收过程是与用户线程一起并发执行的。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260004.png" alt=""></p>
+<h2 id="7-G1收集器"><a href="#7-G1收集器" class="headerlink" title="7. G1收集器"></a>7. G1收集器</h2><p><strong>G1</strong> 是一款面向服务端应用的垃圾收集器。 <strong>HotSpot</strong> 开发团队赋予它的使命是（在比较长期的）未来可以替换掉 <strong>JDK 1.5</strong> 中发布的 <strong>CMS</strong> 收集器。 与 <strong>CMS</strong> 收集器相比，<strong>G1</strong>具备如下特点。 </p>
+<ul>
+<li>空间整合：与 <strong>CMS</strong> 的“标记—清理”算法不同，<strong>G1</strong> 从整体来看是基于“标记—整理”算法实现的收集器，从局部（两个<strong>Region</strong>之间）上来看是基于“复制”算法实现的，但无论如何，这两种算法都意味着 <strong>G1</strong> 运作期间不会产生内存空间碎片，收集后能提供规整的可用内存。 这种特性有利于程序长时间运行，分配大对象时不会因为无法找到连续内存空间而提前触发下一次 <strong>GC</strong>。</li>
+<li>可预测的停顿：这是 <strong>G1</strong> 相对于 <strong>CMS</strong> 的另一大优势，降低停顿时间是 <strong>G1</strong> 和 <strong>CMS</strong> 共同的关注点，但 <strong>G1</strong> 除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时 <strong>Java（RTSJ）</strong>的垃圾收集器的特征了。</li>
+</ul>
+<p>值得一提的是，在 <strong>G1</strong> 之前的其他收集器进行收集的范围都是整个新生代或者老年代，而 <strong>G1</strong> 不再是这样。 使用 <strong>G1</strong> 收集器时，<strong>Java</strong> 堆的内存布局就与其他收集器有很大差别，它将整个 <strong>Java</strong> 堆划分为多个大小相等的独立区域（<strong>Region</strong>），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔离的了，它们都是一部分 <strong>Region</strong>（不需要连续）的集合。 </p>
+<p>如果不计算维护Remembered Set的操作，G1收集器的运作大致可划分为以下几个步骤：</p>
+<ul>
+<li>初始标记（Initial Marking）</li>
+<li>并发标记（Concurrent Marking）</li>
+<li>最终标记（Final Marking）</li>
+<li>筛选回收（Live Data Counting and Evacuation） </li>
+</ul>
+<p>前三个阶段与 <strong>CMS</strong> 收集器相似，最后在筛选回收阶段首先对各个<strong>Region</strong> 的回收价值和成本进行排序，<br>根据用户所期望的 <strong>GC</strong> 停顿时间来制定回收计划。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707260005.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/垃圾回收/">垃圾回收</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-蓝牙协议入门（三）中介层协议" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -639,338 +1066,15 @@
 
 
     
-      <article id="post-Vim基本操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/Vim基本操作/">Vim 基本操作</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/27/Vim基本操作/" class="article-date">
-  <time datetime="2017-06-26T18:16:16.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1.打开文件"></a>1.打开文件</h2><p>安装 vim，进入相应文件夹，输入</p>
-<p>$ vim filename</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270006.png" alt=""></p>
-<p>即可打开相应的文件，我们这里打开一个名为 <strong>vimtest.txt</strong> 的文件。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270007.png" alt=""></p>
-<p><strong>K、J、H、K</strong> 分别对应着上下左右，当然，小键盘左边的方向键也是可以实现光标移动的。</p>
-<h2 id="2-插入字符"><a href="#2-插入字符" class="headerlink" title="2.插入字符"></a>2.插入字符</h2><p>现在我们想要在文件的末尾插入一行字符：<strong>helloworld !</strong> </p>
-<p>把光标移动到文件末尾，然后按下字母键 <strong>i</strong> 。我们可以看到光标从覆盖整个字符变成了一个白色的下划线。</p>
-<p>然后在文件的末尾输入我们想要输入的字符：<strong>helloworld！</strong></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270008.png" alt=""></p>
-<p>现在我们已经输入进去一行字符，那么，怎么保存退出呢？</p>
-<p>首先按下【ESC】进入命令模式，然后输入一个命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270009.png" alt=""></p>
-<p>然后我们就成功地保存退出了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270010.png" alt=""></p>
-<p>再次打开这个文件，发现我们刚才保存的内容仍然是存在的。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270011.png" alt=""></p>
-<p>学会了插入，删除也是同理，至少现在我们已经能够将 vim 当做记事本用了。但是，如果我们仅仅掌握这点功能的话，还不如使用 notepad++ 来得方便，所以接下来我们介绍一些高级点的技能。</p>
-<h2 id="3-字符搜索"><a href="#3-字符搜索" class="headerlink" title="3.字符搜索"></a>3.字符搜索</h2><p>输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/hello</div></pre></td></tr></table></figure>
-<p>即可完成在全文中对字符串 hello 的搜索。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270012.png" alt=""></p>
-<p>输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">n</div></pre></td></tr></table></figure>
-<p>即可跳转到下一处。当然你也可以按 <strong>i</strong> 进入插入模式来修改字符，不过如果你想替换全文中所有的 <strong>hello</strong> 的话，那么 :s 也许是一个不错的选择。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:s/hello/hi/g</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270013.png" alt=""></p>
-<p>如图所示，我们已经把文中所有的 <strong>hello</strong> 替换成了 <strong>hi</strong> 。这貌似也没什么大不了，毕竟我用 <strong>notepad++</strong> 也可以实现同样的工作。那么下面的问题可就是 <strong>notepad++</strong> 实现不了的了。</p>
-<p>我们现在要把前三行所有的 <strong>i</strong> 替换成 <strong>w</strong>。</p>
-<p>注意，我们只替换前三行。嗯，这个问题对于 notepad++ 来说可能有点变态，不过对于 vim ……</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:1,3s/i/w/g</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270014.png" alt=""></p>
-<p>只有前三行的 <strong>i</strong> 被替换成了 <strong>w</strong>。命令结尾的 <strong>g</strong> 表示会对所有符合情况的 i 进行操作，否则只替换第一个。</p>
-<h2 id="4-分屏操作"><a href="#4-分屏操作" class="headerlink" title="4.分屏操作"></a>4.分屏操作</h2><p>说到 vim，就一定不能够错过它的分屏功能。输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:sp</div></pre></td></tr></table></figure>
-<p>就能得到上下两个屏幕，这对于只能显示黑框框的 shell 来说确实是很必要的功能。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270015.png" alt=""></p>
-<p>当然，如果两个屏幕只能看一个文件，那还不如一个屏幕，选择一个屏幕（如果没有鼠标的话可以用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl + w + j  //(j 的意思是“下”)</div></pre></td></tr></table></figure>
-<p>来实现切换，然后输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:open car.txt</div></pre></td></tr></table></figure>
-<p>来实现文档的切换。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201707270016.png" alt=""></p>
-<p><strong>vim</strong> 还有一个类似的功能叫做 <strong>newtab</strong>，可以像浏览器一样显示标签，具体我就不在赘述了，有兴趣的话可以查阅后面的表格。</p>
-<h2 id="5-常用功能一览"><a href="#5-常用功能一览" class="headerlink" title="5.常用功能一览"></a>5.常用功能一览</h2><h3 id="5-1-跳转"><a href="#5-1-跳转" class="headerlink" title="5.1.跳转"></a>5.1.跳转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">*          当光标停留在一个单词上，* 键会在文件内搜索该单词，并跳转到下一处；</div><div class="line">#          当光标停留在一个单词上，# 在文件内搜索该单词，并跳转到上一处；</div><div class="line">(/)        移动到 前/后 句 的开始；</div><div class="line">&#123;/&#125;        跳转到 当前/下一个 段落 的开始。</div><div class="line">g_         到本行最后一个不是 blank 字符的位置。</div><div class="line">fa         到下一个为 a 的字符处，你也可以fs到下一个为s的字符。</div><div class="line">t,         到逗号前的第一个字符。逗号可以变成其它字符。</div><div class="line">3fa        在当前行查找第三个出现的 a。</div><div class="line">F/T        和 f 和 t 一样，只不过是相反方向;</div><div class="line">gg         将光标定位到文件第一行起始位置；</div><div class="line">G          将光标定位到文件最后一行起始位置；</div><div class="line">NG或Ngg    将光标定位到第 N 行的起始位置。</div></pre></td></tr></table></figure>
-<h3 id="5-2-搜索"><a href="#5-2-搜索" class="headerlink" title="5.2.搜索"></a>5.2.搜索</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/str1                正向搜索字符串 str1；</div><div class="line">n                    继续搜索，找出 str1 字符串下次出现的位置；</div><div class="line">N                    继续搜索，找出 str1 字符串上一次出现的位置；</div><div class="line">?str2                反向搜索字符串 str2 。</div></pre></td></tr></table></figure>
-<h3 id="5-3-删除"><a href="#5-3-删除" class="headerlink" title="5.3.删除"></a>5.3.删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">rc                 用 c 替换光标所指向的当前字符；</div><div class="line">nrc                用 c 替换光标所指向的前 n 个字符；</div><div class="line">5rA                用 A 替换光标所指向的前 5 个字符；</div><div class="line">x                  删除光标所指向的当前字符；</div><div class="line">nx                 删除光标所指向的前 n 个字符；</div><div class="line">3x                 删除光标所指向的前 3 个字符；</div><div class="line">dw                 删除光标右侧的字；</div><div class="line">ndw                删除光标右侧的 n 个字；</div><div class="line">3dw                删除光标右侧的 3 个字；</div><div class="line">db                 删除光标左侧的字；</div><div class="line">ndb                删除光标左侧的 n 个字；</div><div class="line">5db                删除光标左侧的 5 个字；</div><div class="line">dd                 删除光标所在行，并去除空隙；</div><div class="line">ndd                删除（剪切） n 行内容，并去除空隙；</div><div class="line">3dd                删除（剪切） 3 行内容，并去除空隙；</div></pre></td></tr></table></figure>
-<h3 id="5-4-替换"><a href="#5-4-替换" class="headerlink" title="5.4.替换"></a>5.4.替换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">s                用输入的正文替换光标所指向的字符；</div><div class="line">S                删除当前行，并进入编辑模式；</div><div class="line">ns               用输入的正文替换光标右侧 n 个字符；</div><div class="line">nS               删除当前行在内的 n 行，并进入编辑模式；</div><div class="line">cw               用输入的正文替换光标右侧的字；</div><div class="line">cW               用输入的正文替换从光标到行尾的所有字符（同 c$ )；</div><div class="line">ncw              用输入的正文替换光标右侧的 n 个字；</div><div class="line">cb               用输入的正文替换光标左侧的字；</div><div class="line">ncb              用输入的正文替换光标左侧的 n 个字；</div><div class="line">cd               用输入的正文替换光标的所在行；</div><div class="line">ncd              用输入的正文替换光标下面的 n 行；</div><div class="line">c$               用输入的正文替换从光标开始到本行末尾的所有字符；</div><div class="line">c0               用输入的正文替换从本行开头到光标的所有字符。</div></pre></td></tr></table></figure>
-<h3 id="5-5-复制粘贴"><a href="#5-5-复制粘贴" class="headerlink" title="5.5.复制粘贴"></a>5.5.复制粘贴</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">yy              复制当前行到内存缓冲区；</div><div class="line">nyy             复制 n 行内容到内存缓冲区；</div><div class="line">5yy             复制 5 行内容到内存缓冲区；</div><div class="line">“+y             复制 1 行到操作系统的粘贴板；</div><div class="line">“+nyy           复制 n 行到操作系统的粘贴板。</div><div class="line">p               小写字母 p，将缓冲区的内容粘贴到光标的后面；</div><div class="line">P               大写字母 P，将缓冲区的内容粘贴到光标的前面。</div></pre></td></tr></table></figure>
-<h3 id="5-6-正则表达式"><a href="#5-6-正则表达式" class="headerlink" title="5.6.正则表达式"></a>5.6.正则表达式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">^                放在字符串前面，匹配行首的字；</div><div class="line">$                放在字符串后面，匹配行尾的字；</div><div class="line">\&lt;               匹配一个字的字头；</div><div class="line">\&gt;               匹配一个字的字尾；</div><div class="line">.                匹配任何单个正文字符；</div><div class="line">[str]            匹配 str 中的任何单个字符；</div><div class="line">[^str]           匹配任何不在 str 中的单个字符；</div><div class="line">[a-b]            匹配 a 到 b 之间的任一字符；</div><div class="line">*                匹配前一个字符的 0 次或多次出现；</div><div class="line">\                转义后面的字符。</div></pre></td></tr></table></figure>
-<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><p><a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="external">vim 入门基础</a></p>
-<p><a href="http://vimdoc.sourceforge.net/" target="_blank" rel="external">vim 官方文档</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vim/">Vim</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Spring中的AOP" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/26/Spring中的AOP/">Spring中的AOP</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/26/Spring中的AOP/" class="article-date">
-  <time datetime="2017-06-26T10:09:22.000Z" itemprop="datePublished">2017-06-26</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-什么是AOP"><a href="#1-什么是AOP" class="headerlink" title="1.什么是AOP"></a>1.什么是AOP</h2><p><strong>AOP</strong>（面向切面编程）给我们提供了很好的非入侵式（<strong>在不修改源代码的情况下</strong>）的手段为现有的类增加新的功能。本文通过演示 <strong>Spring AOP</strong> 是如何使用的来介绍什么是 <strong>AOP</strong>。</p>
-<p>我们会首先演示如何使用基于注解的 <strong>Spring AOP</strong>，然后演示如何使用基于 <strong>XML</strong> 的 <strong>Spring AOP</strong>。最后对 <strong>Spring AOP</strong> 进行简要的总结。</p>
-<p>首先我们需要定义一个目标对象（接口），这个对象在调用某些方法时（<strong>之前或之后</strong>）会被拦截，然后执行我们自己的代码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Performance</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">perform</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>假定上面的对象就是我们的目标类。我们希望在该类调用 <strong>perform()</strong> 方法之前和之后分别输出一些提示，但是处于某些原因，我们又不想修改它的源代码。为了实现这一目标，我们需要使用 <strong>AOP</strong> 来达到我们的目的。</p>
-<h2 id="2-基于注解的-Spring-AOP"><a href="#2-基于注解的-Spring-AOP" class="headerlink" title="2.基于注解的 Spring AOP"></a>2.基于注解的 Spring AOP</h2><p>下面是一个 <strong>Audience</strong> 类，它在本文中作为一个切面来使用。也就是说，在 <strong>Performance</strong> 类调用 <strong>perform()</strong> 前后输出的提示，其实是由 <strong>Audience</strong> 提供的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterThrowing;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="comment">// 把 Performance 的 perform 方法定义为名为 performance 的切点</span></div><div class="line">  <span class="meta">@Pointcut</span>(<span class="string">"execution(** concert.Performance.perform(..))"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performance</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之前输出</span></div><div class="line">  <span class="meta">@Before</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演之后输出</span></div><div class="line">  <span class="meta">@AfterReturning</span>(<span class="string">"performance()"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 表演失败（抛出异常）输出</span></div><div class="line">  <span class="meta">@AfterThrowing</span>（“Performance()”)</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>为了使 Spring 能够识别 @Aspect 注解，我们需要在 JavaConfig 中启用 AspectJ 注解的自动代理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Bean；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.ComponentScan；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Configuration；</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.EnableAspectJAutoProxy；</div><div class="line">  </div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableAspectJAutoProxy</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcertConfig</span> </span>&#123;</div><div class="line">  <span class="meta">@Bean</span></div><div class="line">  <span class="function"><span class="keyword">public</span> Audience <span class="title">audience</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Audience();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-基于-XML-的-Spring-AOP"><a href="#3-基于-XML-的-Spring-AOP" class="headerlink" title="3.基于 XML 的 Spring AOP"></a>3.基于 XML 的 Spring AOP</h2><p>使用注解的 AOP 能够在不侵入目标类的情况下，对目标类的方法进行监控。但是，如果切面 Audience 的代码中有许多注解。试想，如果我们连切面的代码都不想修改，或者无法修改切面的源代码，我们又该如何使用 AOP 呢？XML 为我们提供了一种解决方案：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> concert;</div><div class="line"></div><div class="line"><span class="keyword">public</span> calss Audience &#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silencePhones</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Siliencing phones."</span>);</div><div class="line">  &#125; </div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clap</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Claping."</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refund</span><span class="params">()</span> </span>&#123;</div><div class="line">  	System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们去掉了 Audience 中所有的注解，当然这样的一个类是无法实现 AOP 的，因此我们需要在XML 中进行配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"audience"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"performance"</span></div><div class="line">        <span class="attr">expression</span>=<span class="string">"execution(** concert.Performance.perform(..))"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:before</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"soliencePhones"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-returning</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"clap"</span>/&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">aop:after-throwing</span></span></div><div class="line">       <span class="attr">pointcut-ref</span>=<span class="string">"performance"</span></div><div class="line">       <span class="attr">method</span>=<span class="string">"refund"</span>/&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>这样一来，我们就可以在两个类都是完全的 <strong>pojo</strong> 类（纯 <strong>java</strong> 代码实现的普通类）的情况下实现 <strong>aop</strong> 了。</p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Eclipse搭建SpringBoot（五）使用拦截器验证用户登录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/26/Eclipse搭建SpringBoot（五）使用拦截器验证用户登录/">Eclipse搭建SpringBoot（五）使用拦截器验证用户登录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/26/Eclipse搭建SpringBoot（五）使用拦截器验证用户登录/" class="article-date">
-  <time datetime="2017-06-26T08:16:16.000Z" itemprop="datePublished">2017-06-26</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-使用拦截器验证用户登录的手段"><a href="#1-使用拦截器验证用户登录的手段" class="headerlink" title="1.使用拦截器验证用户登录的手段"></a>1.使用拦截器验证用户登录的手段</h2><p>目前网上提供的拦截器验证用户登录主要分为两种手段：</p>
-<h4 id="把拦截器声明成一个注解加到-Controller-上"><a href="#把拦截器声明成一个注解加到-Controller-上" class="headerlink" title="把拦截器声明成一个注解加到 Controller 上"></a>把拦截器声明成一个注解加到 Controller 上</h4><p>如：<a href="http://blog.csdn.net/u011493599/article/details/53942757" target="_blank" rel="external">springboot(八)拦截器之验证登录</a></p>
-<h4 id="在-WebConfig-java-中添加拦截器相关规则，"><a href="#在-WebConfig-java-中添加拦截器相关规则，" class="headerlink" title="在 WebConfig.java 中添加拦截器相关规则，"></a>在 WebConfig.java 中添加拦截器相关规则，</h4><p>如：<a href="http://blog.csdn.net/jalon2015/article/details/71423974" target="_blank" rel="external">SpringBoot学习笔记（六）：配置拦截器，控制登录跳转</a></p>
-<p>本文中采用第二种方案，因为它实现起来比较简单。</p>
-<h2 id="2-实现步骤"><a href="#2-实现步骤" class="headerlink" title="2.实现步骤"></a>2.实现步骤</h2><h3 id="2-1-创建拦截器"><a href="#2-1-创建拦截器" class="headerlink" title="2.1.创建拦截器"></a>2.1.创建拦截器</h3><p>在项目中添加 <strong>com.yun.interceptor</strong> 包，并在其中添加 <strong>MyInterceptor</strong> 类，其内容如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.interceptor;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</div><div class="line">    Logger logger = LoggerFactory.getLogger(MyInterceptor.class);</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="comment">//获取session</span></div><div class="line">        HttpSession session = request.getSession(<span class="keyword">true</span>);</div><div class="line">        <span class="comment">//判断用户ID是否存在，不存在就跳转到登录界面</span></div><div class="line">        <span class="keyword">if</span>(session.getAttribute(<span class="string">"userId"</span>) == <span class="keyword">null</span>)&#123;</div><div class="line">            logger.info(<span class="string">"------:跳转到login页面！"</span>);</div><div class="line">  response.sendRedirect(request.getContextPath()+<span class="string">"/login"</span>);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            session.setAttribute(<span class="string">"userId"</span>, session.getAttribute(<span class="string">"userId"</span>));</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler,</span></span></div><div class="line">            ModelAndView modelAndView) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span></span></div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-2-添加-WebConfig-java-文件"><a href="#2-2-添加-WebConfig-java-文件" class="headerlink" title="2.2.添加 WebConfig.java 文件"></a>2.2.添加 WebConfig.java 文件</h3><p>在项目中创建 com.yun.config 包，创建 WebConfig.java 文件，其内容如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun.config;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.BeansException;</div><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContextAware;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.util.ResourceUtils;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.EnableWebMvc;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.interceptor.MyInterceptor;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@EnableWebMvc</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ApplicationContext applicationContext;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WebConfig</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</div><div class="line">        registry.addResourceHandler(<span class="string">"/static/**"</span>).addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+<span class="string">"/static/"</span>);</div><div class="line">        registry.addResourceHandler(<span class="string">"/templates/**"</span>).addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+<span class="string">"/templates/"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">super</span>.addResourceHandlers(registry);  </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">        <span class="keyword">this</span>.applicationContext = applicationContext;</div><div class="line">    &#125; </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</div><div class="line">        <span class="comment">//拦截规则：除了login，其他都拦截判断</span></div><div class="line">        registry.addInterceptor(<span class="keyword">new</span> MyInterceptor()).addPathPatterns(<span class="string">"/**"</span>).excludePathPatterns(<span class="string">"/login"</span>);</div><div class="line">        <span class="keyword">super</span>.addInterceptors(registry);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-3-修改-YunApplication-java-文件"><a href="#2-3-修改-YunApplication-java-文件" class="headerlink" title="2.3.修改 YunApplication.java 文件"></a>2.3.修改 YunApplication.java 文件</h3><p>在 YunApplication.java 文件中添加如下代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.yun;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</div><div class="line"><span class="keyword">import</span> org.springframework.ui.Model;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.yun.service.LoggerService;</div><div class="line"><span class="keyword">import</span> com.yun.service.ScopeService;</div><div class="line"><span class="keyword">import</span> com.yun.service.UserService;</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YunApplication</span> </span>&#123;</div><div class="line">  </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">	<span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">greeting</span><span class="params">()</span> </span>&#123;	</div><div class="line">		<span class="keyword">return</span> <span class="string">"Hello World!"</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="comment">// 下面是需要添加到 YunApplication.java 中的代码</span></div><div class="line"><span class="comment">// 本文件中的其他内容只是为了说明这段代码应该添加到什么位置</span></div><div class="line">    </div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/login"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(HttpSession session)</span> </span>&#123;</div><div class="line">    	session.setAttribute(<span class="string">"userId"</span>, <span class="string">"jackie"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line"> <span class="comment">// 需要添加的代码到此为止</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-登录测试"><a href="#3-登录测试" class="headerlink" title="3.登录测试"></a>3.登录测试</h2><p>本文中主要强调利用拦截器验证登录与否，因此 <strong>login</strong> 页面就直接帮助用户以 <strong>jackie</strong> 的身份登录了。</p>
-<p>首先，在浏览器中输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706260001.png" alt=""></p>
-<p>然后敲击回车访问，发现网站自动跳转到 login 页面：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706260002.png" alt=""></p>
-<p>再次输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080</div></pre></td></tr></table></figure>
-<p>然后回车访问，发现已经可以正常地访问了：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706260003.png" alt=""></p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/u011493599/article/details/53942757" target="_blank" rel="external">springboot(八)拦截器之验证登录</a></p>
-<p><a href="http://blog.csdn.net/jalon2015/article/details/71423974" target="_blank" rel="external">SpringBoot学习笔记（六）：配置拦截器，控制登录跳转</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/拦截器/">拦截器</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-Spring中bean的生命周期" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/25/Spring中bean的生命周期/">Spring中bean的生命周期</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/06/25/Spring中bean的生命周期/" class="article-date">
-  <time datetime="2017-06-25T13:44:28.000Z" itemprop="datePublished">2017-06-25</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-传统-Java-应用-bean-的生命周期"><a href="#1-传统-Java-应用-bean-的生命周期" class="headerlink" title="1.传统 Java 应用 bean 的生命周期"></a>1.传统 Java 应用 bean 的生命周期</h2><ol>
-<li>使用 <strong>Java</strong> 关键字 <strong>new</strong> 进行 <strong>bean</strong> 实例化。</li>
-<li>使用这个 <strong>bean</strong>。</li>
-<li><strong>Java</strong> 自动进行垃圾回收。</li>
-</ol>
-<h2 id="2-Spring-中-bean-的生命周期"><a href="#2-Spring-中-bean-的生命周期" class="headerlink" title="2.Spring 中 bean 的生命周期"></a>2.Spring 中 bean 的生命周期</h2><ol>
-<li>实例化。</li>
-<li>填充属性。</li>
-<li>调用 <strong>BeanNameAware</strong> 的 <strong>setBeanName()</strong> 方法。</li>
-<li>调用 <strong>BeanFactoryAware</strong> 的 <strong>setBeanFactory()</strong> 方法。</li>
-<li>调用 <strong>ApplicationContextAware</strong> 的 <strong>setApplicationContext()</strong> 方法。</li>
-<li>调用 <strong>BeanPostProcessor</strong> 的预初始化方法。</li>
-<li>调用 <strong>InitalizingBean</strong> 的 <strong>afterPropertiesSet()</strong> 方法。</li>
-<li>调用自定义的初始化方法。</li>
-<li>调用 <strong>BeanPostProcessor</strong> 的初始化后方法。</li>
-<li><strong>使用 bean。</strong></li>
-<li>调用 <strong>DisposableBean</strong> 的 <strong>destory()</strong> 方法。</li>
-<li>调用自定义的销毁方法。</li>
-</ol>
-<h2 id="3-Spring-中-bean-生命周期的解释"><a href="#3-Spring-中-bean-生命周期的解释" class="headerlink" title="3.Spring 中 bean 生命周期的解释"></a>3.Spring 中 bean 生命周期的解释</h2><h3 id="3-1-bean-生命周期的本质"><a href="#3-1-bean-生命周期的本质" class="headerlink" title="3.1.bean 生命周期的本质"></a>3.1.bean 生命周期的本质</h3><p>就一个对象而言，其声明周期可以概括为：</p>
-<ol>
-<li>创建（实例化 + 初始化）</li>
-<li>使用</li>
-<li>销毁</li>
-</ol>
-<p>就 <strong>Spring</strong> 中的 <strong>bean</strong> 而言，<strong>Spring</strong> 只是提供了一些接口，允许开发者在：<strong>实例化</strong>、<strong>初始化</strong>和<strong>销毁</strong></p>
-<p>的前后进行一些操作。</p>
-<h3 id="3-2-bean-相关方法分类"><a href="#3-2-bean-相关方法分类" class="headerlink" title="3.2.bean 相关方法分类"></a>3.2.bean 相关方法分类</h3><ol>
-<li><strong>Bean自身方法</strong>：<strong>init-method/destroy-method</strong>，通过为配置文件<strong>bean</strong>定义中添加相应属性指定相应执行方法。</li>
-<li><strong>Bean级生命周期接口</strong>：<strong>BeanNameAware</strong>、<strong>BeanFactoryAware</strong>、和<strong>InitializingBean</strong> 。这些接口的方法，每个 <strong>bean</strong> 选择实现，可选择各自的个性化操作。</li>
-<li><strong>容器级生命周期接口方法</strong>：<strong>BeanPostProcessor</strong> 等 ，一般称它们的实现类为“后处理器”，这些接口是每个 <strong>bean</strong> 实例化或初始化时候都会调用。</li>
-</ol>
-<h3 id="3-3-简单描述"><a href="#3-3-简单描述" class="headerlink" title="3.3.简单描述"></a>3.3.简单描述</h3><p><strong>bean</strong> 的生命周期，主要就是在<strong>实例化</strong>和<strong>填充属性</strong>之后，让 bean 知道自己的<strong>名称</strong>， <strong>工厂</strong>和<strong>上下文</strong> ，并在自定义的初始化方法前后调用<strong>预初始化（前）、填充属性后（前）</strong>和<strong>初始化后（后）</strong>方法。</p>
-<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="http://blog.csdn.net/a327369238/article/details/52193822" target="_blank" rel="external">Spring Bean生命周期详解</a></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bean/">Bean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Jack Smith&nbsp;
+      &copy; 2018 Jack Smith&nbsp;
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>

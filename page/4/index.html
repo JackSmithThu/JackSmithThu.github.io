@@ -45,6 +45,399 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/23/Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库/">Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/23/Eclipse搭建SpringBoot（三）用Mybatis连接MySQL数据库/" class="article-date">
+  <time datetime="2017-06-23T14:55:05.000Z" itemprop="datePublished">2017-06-23</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-搭建-MySQL-数据库"><a href="#1-搭建-MySQL-数据库" class="headerlink" title="1.搭建 MySQL 数据库"></a>1.搭建 MySQL 数据库</h2><p>安装 MySQL 的步骤就不在此赘述了，如果没接触过 MySQL 安装的话，可以参考：</p>
+<p><a href="https://jacksmiththu.github.io/2017/04/08/%E5%8D%95%E5%8F%B0windows%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E6%9C%BA%E5%A4%87%E4%BB%BD/" target="_blank" rel="external">单台windows搭建mysql主从机备份</a></p>
+<p>现在我们已经有了一个可用的数据库，以及 root 的密码（我使用的密码是：root）。</p>
+<h3 id="1-1-登录账户"><a href="#1-1-登录账户" class="headerlink" title="1.1.登录账户"></a>1.1.登录账户</h3><p><strong>Win</strong> + <strong>R</strong> 输入 <strong>cmd</strong> 敲回车，打开一个终端，在里面输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; mysql -uroot -proot</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230003.png" alt=""></p>
+<h3 id="1-2-建立数据库"><a href="#1-2-建立数据库" class="headerlink" title="1.2.建立数据库"></a>1.2.建立数据库</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; create database yun;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230004.png" alt=""></p>
+<p>因为我之前已经建立过了，所以会显示 <strong>ERROR</strong>。正常情况下应该显示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Query OK, 1 row affected (0.01 sec)</div></pre></td></tr></table></figure>
+<p>查询一下，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; show databases;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230005.png" alt=""></p>
+<p>可以看到我们刚才建立的数据库 <strong>yun</strong>。</p>
+<h3 id="1-3-建立对应表"><a href="#1-3-建立对应表" class="headerlink" title="1.3.建立对应表"></a>1.3.建立对应表</h3><p>有了数据库，我们还需要建立响应的表并插入数据，这样才能够查询。为此我们先简历一张表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; use yun;</div><div class="line">&gt; CREATE TABLE IF NOT EXISTS user (id INT(11),name VARCHAR(255));</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230006.png" alt=""></p>
+<h3 id="1-4-向表中插入数据"><a href="#1-4-向表中插入数据" class="headerlink" title="1.4.向表中插入数据"></a>1.4.向表中插入数据</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; INSERT INTO user (id,name) values(1,&quot;Jackie&quot;);</div><div class="line">&gt; INSERT INTO user (id,name) values(2,&quot;Nacu&quot;);</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230007.png" alt=""></p>
+<p>查询一下表中是否有插入的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; SELECT * FROM user;</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230008.png" alt=""></p>
+<p>到了这一步，数据库就搭建完成了。接下来我们来搭建网站。</p>
+<h2 id="2-向-SpringBoot-集成-Mybatis"><a href="#2-向-SpringBoot-集成-Mybatis" class="headerlink" title="2.向 SpringBoot 集成 Mybatis"></a>2.向 SpringBoot 集成 Mybatis</h2><h3 id="2-1-修改-src-main-java-目录和添加文件"><a href="#2-1-修改-src-main-java-目录和添加文件" class="headerlink" title="2.1.修改 src/main/java 目录和添加文件"></a>2.1.修改 src/main/java 目录和添加文件</h3><p>按照下图的修改项目的包名，并添加新的包和类。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230009.png" alt=""></p>
+<h4 id="2-1-1-YunAppalication-java"><a href="#2-1-1-YunAppalication-java" class="headerlink" title="2.1.1.YunAppalication.java"></a>2.1.1.YunAppalication.java</h4><p>将 <strong>YunAppalication.java</strong> 所在的包名修改成 <strong>com.yun</strong> ，并修改其内容如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">package com.yun;</div><div class="line"></div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.ui.Model;</div><div class="line">import org.springframework.web.bind.annotation.PathVariable;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RequestParam;</div><div class="line">import org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line">import com.yun.service.UserService;</div><div class="line"></div><div class="line">/*</div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@Controller</div><div class="line">public class YunApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(YunApplication.class, args);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 返回字符串</div><div class="line">	 * 调用示例 : localhost:8080</div><div class="line">	 */</div><div class="line">	@ResponseBody</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;	</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 不带参数的模版渲染</div><div class="line">	 * 调用示例 : localhost:8080/index</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/index&quot;)</div><div class="line">	public String index() &#123;	</div><div class="line">		return &quot;index&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（/风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello/1/jackie</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/hello/&#123;id&#125;/&#123;name&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) String id, @PathVariable(&quot;name&quot;) String name,Model model) &#123;</div><div class="line">        model.addAttribute(&quot;id&quot;, id);</div><div class="line">        model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（?风格）</div><div class="line">	 * 调用示例 : http://localhost:8080/hello?id=1&amp;name=jackie</div><div class="line">	 */</div><div class="line">    @RequestMapping(value = &quot;/hello&quot;)</div><div class="line">    public String hello2(@RequestParam String id, @RequestParam String name, Model model) &#123;</div><div class="line">    	model.addAttribute(&quot;id&quot;, id);</div><div class="line">    	model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @Autowired</div><div class="line">    private UserService userService;</div><div class="line">    @ResponseBody</div><div class="line">    @RequestMapping(&quot;/database/&#123;id&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) Integer id) &#123;</div><div class="line"></div><div class="line">        return userService.getById(id).getName();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-1-2-User-java"><a href="#2-1-2-User-java" class="headerlink" title="2.1.2.User.java"></a>2.1.2.User.java</h4><p><strong>User.java</strong> 是一个实体类，一般来说，实体类会被放在 <strong>mode</strong>l 包下。如我们的 <strong>User.java</strong> 就被放到了 <strong>com.yun.model</strong> 包下，其内容如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package com.yun.model;</div><div class="line"></div><div class="line">public class User &#123;</div><div class="line">    private Integer id;</div><div class="line">    private String name;</div><div class="line">    public Integer getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line">    public void setId(Integer id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-1-3-UserMapper-java"><a href="#2-1-3-UserMapper-java" class="headerlink" title="2.1.3.UserMapper.java"></a>2.1.3.UserMapper.java</h4><p><strong>UserMapper.java</strong> 是一个 <strong>Mapper</strong>（用于映射 <strong>model</strong> 中的实体类与数据库的查询结果）。其一半位于 <strong>mapper</strong> 包或者 <strong>dao</strong> 包下，我们就把它放在 <strong>com.yun.mapper</strong> 包下。其内容如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.yun.mapper;</div><div class="line"></div><div class="line">import org.apache.ibatis.annotations.Mapper;</div><div class="line">import org.apache.ibatis.annotations.Param;</div><div class="line">import org.apache.ibatis.annotations.Result;</div><div class="line">import org.apache.ibatis.annotations.Results;</div><div class="line">import org.apache.ibatis.annotations.Select;</div><div class="line"></div><div class="line">import com.yun.model.User;</div><div class="line"></div><div class="line">@Mapper </div><div class="line">public interface UserMapper &#123;</div><div class="line">    @Select(&quot;SELECT * FROM user WHERE user.id = #&#123;id&#125;&quot;)</div><div class="line">    @Results(&#123;</div><div class="line">        @Result(column = &quot;id&quot;, property = &quot;id&quot;),</div><div class="line">        @Result(column = &quot;name&quot;, property = &quot;name&quot;)</div><div class="line">    &#125;)</div><div class="line">    User getById(@Param(&quot;id&quot;) Integer id);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-1-4-UserService-java"><a href="#2-1-4-UserService-java" class="headerlink" title="2.1.4.UserService.java"></a>2.1.4.UserService.java</h4><p><strong>UserService.java</strong> 是一个 <strong>Service</strong>（主要用于实现业务的逻辑）。一般位于 <strong>service</strong> 包下，我们将其放在 <strong>com.yun.service</strong> 包下。其内容如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">package com.yun.service;</div><div class="line"></div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.stereotype.Service;</div><div class="line"></div><div class="line">import com.yun.mapper.UserMapper;</div><div class="line">import com.yun.model.User;</div><div class="line"></div><div class="line">@Service</div><div class="line">public class UserService &#123;</div><div class="line">    @Autowired</div><div class="line">    private UserMapper userMapper;</div><div class="line">    </div><div class="line">	public User getById(Integer id) &#123;</div><div class="line">        return userMapper.getById(id);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-2-修改-application-properties-文件"><a href="#2-2-修改-application-properties-文件" class="headerlink" title="2.2.修改 application.properties 文件"></a>2.2.修改 application.properties 文件</h3><p>修改 <strong>application.properties</strong> 文件的扩展名为 <strong>yml</strong> （<strong>注意：这很重要！！！！！！</strong> ），并添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">  datasource:</div><div class="line">    url: jdbc:mysql://localhost:3306/yun?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</div><div class="line">    username: root</div><div class="line">    password: root</div><div class="line">    driver-class-name: com.mysql.jdbc.Driver</div></pre></td></tr></table></figure>
+<h3 id="2-3-修改-pom-xml-文件"><a href="#2-3-修改-pom-xml-文件" class="headerlink" title="2.3.修改 pom.xml 文件"></a>2.3.修改 pom.xml 文件</h3><p>向 <strong>pom.xml</strong> 文件添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 使用数据源 --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.0.14&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- mysql --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">	&lt;scope&gt;runtime&lt;/scope&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- mybatis --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p>完整的 <strong>pom.xml</strong> 文件的内容如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</div><div class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line"></div><div class="line">	&lt;groupId&gt;com.example&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;yun&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</div><div class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</div><div class="line"></div><div class="line">	&lt;name&gt;yun&lt;/name&gt;</div><div class="line">	&lt;description&gt;yun demo web&lt;/description&gt;</div><div class="line"></div><div class="line">	&lt;parent&gt;</div><div class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.5.4.RELEASE&lt;/version&gt;</div><div class="line">		&lt;relativePath /&gt; &lt;!-- lookup parent from repository --&gt;</div><div class="line">	&lt;/parent&gt;</div><div class="line"></div><div class="line">	&lt;properties&gt;</div><div class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</div><div class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</div><div class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</div><div class="line">	&lt;/properties&gt;</div><div class="line"></div><div class="line">	&lt;dependencies&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;test&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!-- 使用数据源 --&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.0.14&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!-- mysql --&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">			&lt;scope&gt;runtime&lt;/scope&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">		&lt;!-- mybatis --&gt;</div><div class="line">		&lt;dependency&gt;</div><div class="line">			&lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</div><div class="line">			&lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">		&lt;/dependency&gt;</div><div class="line"></div><div class="line">	&lt;/dependencies&gt;</div><div class="line"></div><div class="line">	&lt;build&gt;</div><div class="line">		&lt;plugins&gt;</div><div class="line">			&lt;plugin&gt;</div><div class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</div><div class="line">			&lt;/plugin&gt;</div><div class="line">		&lt;/plugins&gt;</div><div class="line">	&lt;/build&gt;</div><div class="line"></div><div class="line"></div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure>
+<p>添加完成之后，<strong>Ctrl</strong> + <strong>S</strong> 保存。保存之后 maven 会自动下载相关的依赖，这可能需要一定的时间。</p>
+<h2 id="3-运行和测试"><a href="#3-运行和测试" class="headerlink" title="3.运行和测试"></a>3.运行和测试</h2><p>右击 <strong>YunApplication.java</strong>，选择 <strong>Run as</strong>，然后选择 <strong>Java Application</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230010.png" alt=""></p>
+<p>在浏览器输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/database/1</div></pre></td></tr></table></figure>
+<p>即可查询数据库中 1 号用户的名字。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230011.png" alt=""></p>
+<p>当然，你也可以查询 2 号用户。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230012.png" alt=""></p>
+<p>到了这一步，向 SpringBoot 集成 Mybatis 基本就完成了。</p>
+<h2 id="4-参考链接"><a href="#4-参考链接" class="headerlink" title="4.参考链接"></a>4.参考链接</h2><p><a href="https://darylliu.github.io/2016/11/03/SpringBoot%E5%AD%A6%E4%B9%A03%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E6%88%90mybatis/" target="_blank" rel="external">SpringBoot学习3之数据库集成mybatis</a></p>
+<p><a href="http://www.mybatis.org/mybatis-3/" target="_blank" rel="external">mybatis 官网</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mybatis/">Mybatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-如何解决github上传每次都要输入账号密码的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/">如何解决github上传每次都要输入账号密码的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/23/如何解决github上传每次都要输入账号密码的问题/" class="article-date">
+  <time datetime="2017-06-23T14:35:01.000Z" itemprop="datePublished">2017-06-23</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-需要输入账号密码的原因"><a href="#1-需要输入账号密码的原因" class="headerlink" title="1.需要输入账号密码的原因"></a>1.需要输入账号密码的原因</h3><p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230001.png" alt=""></p>
+<p>之所以每次上传都需要输入账号密码，是因为使用了 https 的方式进行 push。只要改成 ssh 的方式就不必输入账号密码了。</p>
+<h3 id="2-操作步骤"><a href="#2-操作步骤" class="headerlink" title="2.操作步骤"></a>2.操作步骤</h3><ol>
+<li>git remote -v</li>
+<li>git remote rm origin</li>
+<li>git remote add origin git@github.com:JackSmithThu/MarkdownPhotos.git</li>
+<li>git push origin</li>
+<li>git push –set-upstream origin master</li>
+</ol>
+<p>上面的 <strong>jackSmithThu</strong> 和 <strong>MarkDownPhotos</strong> 需要改成你 <strong>github</strong> 的<strong>用户名</strong>和<strong>项目名</strong>( 第5步中，set 前面是两个 “-”，出于 hexo 的原因。直接复制可能无法使用，建议粘贴 <strong>git bash</strong> 里面的提示)。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706230002.png" alt=""></p>
+<h3 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h3><p><a href="http://blog.csdn.net/yuquan0821/article/details/8210944" target="_blank" rel="external">push到github时，每次都要输入用户名和密码的问题</a></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Matlab/">Matlab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SCAtoolbox/">SCAtoolbox</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Eclipse搭建SpringBoot（二）控制器Controller" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/">Eclipse搭建SpringBoot（二）控制器Controller</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/22/Eclipse搭建SpringBoot（二）控制器Controller/" class="article-date">
+  <time datetime="2017-06-21T16:07:54.000Z" itemprop="datePublished">2017-06-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-新建项目"><a href="#1-新建项目" class="headerlink" title="1.新建项目"></a>1.新建项目</h2><p>首先，我们重新创建一个名为 yun 的 SpringBoot 项目，创建完成后项目结构如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220001.png" alt=""></p>
+<h2 id="2-修改-YunApplication-java"><a href="#2-修改-YunApplication-java" class="headerlink" title="2.修改 YunApplication.java"></a>2.修改 YunApplication.java</h2><p>我们将 <strong>YunApplication.java</strong> 中的内容按照如下代码修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line">package com.example.demo;</div><div class="line"></div><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.stereotype.Controller;</div><div class="line">import org.springframework.ui.Model;</div><div class="line">import org.springframework.web.bind.annotation.PathVariable;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RequestParam;</div><div class="line">import org.springframework.web.bind.annotation.ResponseBody;</div><div class="line"></div><div class="line">/*</div><div class="line"> * 控制器使用示例</div><div class="line"> */</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@Controller</div><div class="line">public class YunApplication &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(YunApplication.class, args);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 返回字符串</div><div class="line">	 * 调用示例 : localhost:8080</div><div class="line">	 */</div><div class="line">	@ResponseBody </div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;	</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 不带参数的模版渲染</div><div class="line">	 * 调用示例 : localhost:8080/index</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/index&quot;)</div><div class="line">	public String index() &#123;	</div><div class="line">		return &quot;index&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（/风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello/1/jackie</div><div class="line">	 */</div><div class="line">	@RequestMapping(&quot;/hello/&#123;id&#125;/&#123;name&#125;&quot;)</div><div class="line">    public String hello(@PathVariable(&quot;id&quot;) String id, @PathVariable(&quot;name&quot;) String name,Model model) &#123;</div><div class="line">        model.addAttribute(&quot;id&quot;, id);</div><div class="line">        model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 带参数的模版渲染（?风格）</div><div class="line">	 * 调用示例 : localhost:8080/hello?id=1$name=jackie</div><div class="line">	 */</div><div class="line">    @RequestMapping(value = &quot;/hello&quot;)</div><div class="line">    public String hello2(@RequestParam String id, @RequestParam String name, Model model) &#123;</div><div class="line">    	model.addAttribute(&quot;ihttp://localhost:8080/hello?id=1&amp;name=jackied&quot;, id);</div><div class="line">    	model.addAttribute(&quot;name&quot;, name);</div><div class="line">        return &quot;hello&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="下面进行一些解释："><a href="#下面进行一些解释：" class="headerlink" title="下面进行一些解释："></a>下面进行一些解释：</h4><h5 id="我们在响应请求时，主要分为两种情况："><a href="#我们在响应请求时，主要分为两种情况：" class="headerlink" title="我们在响应请求时，主要分为两种情况："></a>我们在响应请求时，主要分为两种情况：</h5><ol>
+<li>我们想要返回一个字符串（可能是一个 <strong>json</strong> 串）。</li>
+<li>我们想要返回一个页面。</li>
+</ol>
+<p>对于前一种情况，我们可以使用 <strong>@ResponseBody</strong> 注解使返回的内容为我们想要返回的字符串。对于后一种情况，我们其实返回的是两样东西：</p>
+<ol>
+<li>一个前端页面（我们称之为 <strong>templates</strong>）。</li>
+<li>该页面所需要的数据（我们称之为 <strong>model</strong>）。</li>
+</ol>
+<p>一个被返回的页面同时包括这两种东西，其中 <strong>model</strong> 可以直接用如下语句赋值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model.addAttribute(&quot;id&quot;, id);</div></pre></td></tr></table></figure>
+<p><strong>model</strong> 的每一个属性既可以是一个基本类型，也可以是字符串，列表（<strong>List</strong>）等。</p>
+<p><strong>templates</strong> 位于 <strong>src/main/resources/templates</strong> 下，后面我们会详细介绍。</p>
+<h5 id="下面介绍前面使用过的几种注解。"><a href="#下面介绍前面使用过的几种注解。" class="headerlink" title="下面介绍前面使用过的几种注解。"></a>下面介绍前面使用过的几种注解。</h5><p><strong>@Controller</strong> 注解的类会被当作一个控制器 Controller，专门用来处理不同请求不同的URL，从而有针对性的返回内容。</p>
+<p><strong>@RequestMapping</strong> 注解是用来处理请求地址映射的注解，可以用在类或方法上，如果用在类上，则表示所有该类中的响应方法都是以该地址作为父路径。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">@RequestMapping(&quot;/root&quot;)</div><div class="line">public class YunApplication &#123;</div><div class="line">	</div><div class="line">	// 调用示例 : http://localhost:8080/root</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String hello() &#123;</div><div class="line">		return &quot; Hello World1!&quot;;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	// 调用示例 : http://localhost:8080/root/hello2</div><div class="line">	@RequestMapping(&quot;/hello2&quot;)</div><div class="line">	public String hello2() &#123;</div><div class="line">		return &quot;Hello World2!&quot;;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@ResponseBody</strong> 注解的类或方法在响应请求时只返回字符串，因此不能返回被渲染的模板。如我们上面提到的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@ResponseBody </div><div class="line">@RequestMapping(&quot;/&quot;)</div><div class="line">public String greeting() &#123;	</div><div class="line">	return &quot;Hello World!&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>@RestController</strong> 注解整合了 <strong>@Controller</strong> 和 <strong>@ResponseBody</strong>。在该类中所有的请求都只会返回字符串。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import org.springframework.boot.SpringApplication;</div><div class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</div><div class="line">import org.springframework.web.bind.annotation.RequestMapping;</div><div class="line">import org.springframework.web.bind.annotation.RestController;</div><div class="line"></div><div class="line">@SpringBootApplication</div><div class="line">@RestController</div><div class="line">public class YunApplication &#123;</div><div class="line">	@RequestMapping(&quot;/&quot;)</div><div class="line">	public String greeting() &#123;</div><div class="line">		return &quot;Hello World!&quot;;</div><div class="line">	&#125;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		SpringApplication.run(App.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-修改-pom-xml-文件"><a href="#3-修改-pom-xml-文件" class="headerlink" title="3.修改 pom.xml 文件"></a>3.修改 pom.xml 文件</h2><p>为了使我们的应用能够自动地去对应的位置去寻找 <strong>templates</strong>，我们需要使用<strong>thymeleaf</strong>模板引擎进行渲染。我们唯一需要做的事就是在 <strong>dependencies</strong> 标签中添加如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">			&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<p>添加完成的结果应该是这个样子的：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220002.png" alt=""></p>
+<h2 id="4-创建模板文件"><a href="#4-创建模板文件" class="headerlink" title="4.创建模板文件"></a>4.创建模板文件</h2><p>在 <strong>src/main/resources/templates</strong> 文件夹下创建模板文件 <strong>index.html</strong>，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;Hello SomeOne&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p&gt; hello index! &lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>再在该文件夹下创建 <strong>hello.html</strong>，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;Hello SomeOne&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p th:text=&quot;&apos;Hello &apos; + $&#123;name&#125; + &apos;, your id is &apos; + $&#123;id&#125; + &apos;!&apos;&quot; /&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>从上面的代码中，我们是可以看到模板文件是如何调用 <strong>model</strong> 中的属性的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$&#123;属性名&#125;</div></pre></td></tr></table></figure>
+<h2 id="5-测试结果"><a href="#5-测试结果" class="headerlink" title="5.测试结果"></a>5.测试结果</h2><h3 id="5-1-启动项目"><a href="#5-1-启动项目" class="headerlink" title="5.1.启动项目"></a>5.1.启动项目</h3><p>完整的项目结构如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220003.png" alt=""></p>
+<p>右键 <strong>Yunapplication.java</strong> ，点击<strong>Run as</strong>，然后选择 <strong>Java Application</strong> ：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220004.png" alt=""></p>
+<p>控制台输出如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220005.png" alt=""></p>
+<h3 id="5-2-进行测试"><a href="#5-2-进行测试" class="headerlink" title="5.2.进行测试"></a>5.2.进行测试</h3><h5 id="5-2-1-打开浏览器，输入："><a href="#5-2-1-打开浏览器，输入：" class="headerlink" title="5.2.1.打开浏览器，输入："></a>5.2.1.打开浏览器，输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080</div></pre></td></tr></table></figure>
+<p>输出结果如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220006.png" alt=""></p>
+<h5 id="5-2-2-输入："><a href="#5-2-2-输入：" class="headerlink" title="5.2.2.输入："></a>5.2.2.输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/index</div></pre></td></tr></table></figure>
+<p> <img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220007.png" alt=""></p>
+<h5 id="5-2-3-输入："><a href="#5-2-3-输入：" class="headerlink" title="5.2.3.输入："></a>5.2.3.输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/hello/1/jackie</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220008.png" alt=""></p>
+<h5 id="5-2-4-输入："><a href="#5-2-4-输入：" class="headerlink" title="5.2.4.输入："></a>5.2.4.输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/hello?id=1&amp;name=jackie</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706220009.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ecilpse/">Ecilpse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/">SpringBoot</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
+      <article id="post-Docker入门之（二）Docker的安装与基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/">Docker入门之（二）Docker的安装与基本操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2017/06/07/Docker入门之（二）Docker的安装与基本操作/" class="article-date">
+  <time datetime="2017-06-07T06:33:21.000Z" itemprop="datePublished">2017-06-07</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-Docker的安装"><a href="#1-Docker的安装" class="headerlink" title="1.Docker的安装"></a>1.Docker的安装</h2><h3 id="1-1-安装-curl-包"><a href="#1-1-安装-curl-包" class="headerlink" title="1.1.安装 curl 包"></a>1.1.安装 curl 包</h3><p>按 Ctrl + Alt +T 打开终端，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
+<p>然后输入密码。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070001.png" alt=""></p>
+<p>获取超级用户权限之后，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ apt-get update </div><div class="line">$ apt-get install curl</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070002.png" alt=""></p>
+<h3 id="1-2-用-curl-获取最新的-docker-安装包"><a href="#1-2-用-curl-获取最新的-docker-安装包" class="headerlink" title="1.2.用 curl 获取最新的 docker 安装包"></a>1.2.用 curl 获取最新的 docker 安装包</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -sSL https://get.docker.com/ | sh</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070003.png" alt=""></p>
+<h3 id="1-3-检查-docker-是否安装成功"><a href="#1-3-检查-docker-是否安装成功" class="headerlink" title="1.3.检查 docker 是否安装成功"></a>1.3.检查 docker 是否安装成功</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run hello-world</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070004.png" alt=""></p>
+<p>由于本地没有 hello-world 镜像，docker 会自动从网上下载这个镜像，然后运行。</p>
+<h2 id="2-Docker的使用"><a href="#2-Docker的使用" class="headerlink" title="2.Docker的使用"></a>2.Docker的使用</h2><p>为了演示 Docker 的使用方法，我们新建一个镜像并在里面安装一个 vim，然后上传到云端。</p>
+<h3 id="2-1-账号注册"><a href="#2-1-账号注册" class="headerlink" title="2.1.账号注册"></a>2.1.账号注册</h3><p>首先你需要一个 Docker 的账号，登录：<a href="https://www.docker.com/" target="_blank" rel="external">https://www.docker.com/</a></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070005.png" alt=""></p>
+<p>点击上图标红部分，进入账号申请页面：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070006.png" alt=""></p>
+<p>填写好信息之后点击 【Sign Up】。注意，到这一步注册还没有完全成功，因为它会给你的邮箱发一封验证邮件，在你去邮箱验证该邮件之前账号都是不能使用的。</p>
+<h4 id="所以千万不要忘了验证邮件！！！"><a href="#所以千万不要忘了验证邮件！！！" class="headerlink" title="所以千万不要忘了验证邮件！！！"></a>所以千万不要忘了验证邮件！！！</h4><h3 id="2-2-登录账号"><a href="#2-2-登录账号" class="headerlink" title="2.2.登录账号"></a>2.2.登录账号</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker login</div></pre></td></tr></table></figure>
+<p>此时会提示输入账号密码，输入完成后会提示登录成功。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070007.png" alt=""></p>
+<h3 id="2-3-启动一个容器"><a href="#2-3-启动一个容器" class="headerlink" title="2.3.启动一个容器"></a>2.3.启动一个容器</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -t -i ubuntu:16.04</div></pre></td></tr></table></figure>
+<p>此时会下载 ubuntu 16.04 的镜像并启动。 -i 的意思是以交互模式运行，-t 的意思是打开一个该容器的伪终端。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070008.png" alt=""></p>
+<p>根据提示我们可以看出，我们已经进入了一个 docker 容器的伪终端。</p>
+<h3 id="2-4-安装-vim"><a href="#2-4-安装-vim" class="headerlink" title="2.4.安装 vim"></a>2.4.安装 vim</h3><p>在新打开的伪终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get update</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070009.png" alt=""></p>
+<p>然后输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apt-get install vim</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070010.png" alt=""></p>
+<p>询问是否继续（<strong>Y/n</strong>）时，输入 y。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070011.png" alt=""></p>
+<h3 id="2-5-测试vim"><a href="#2-5-测试vim" class="headerlink" title="2.5.测试vim"></a>2.5.测试vim</h3><p>在伪终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
+<p>建立一个叫做 a.txt 的文件。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070012.png" alt=""></p>
+<p>打开 vim 程序如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070013.png" alt=""></p>
+<p>按下键盘上的 <strong>i</strong> ，进入插入模式（<strong>i</strong>nsert），随便输入一点字符。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070014.png" alt=""></p>
+<p>然后按下 Esc 进入命令模式，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
+<p>保存文件并退出。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070015.png" alt=""></p>
+<p>我们已经建立了一个 a.txt 的文档，接下来输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat a.txt</div></pre></td></tr></table></figure>
+<p>查看文档是否存在，以及其内容是否为我们输入的内容。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070016.png" alt=""></p>
+<h2 id="3-Docker镜像的保存"><a href="#3-Docker镜像的保存" class="headerlink" title="3.Docker镜像的保存"></a>3.Docker镜像的保存</h2><h3 id="3-1-提交镜像"><a href="#3-1-提交镜像" class="headerlink" title="3.1.提交镜像"></a>3.1.提交镜像</h3><p>在伪终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ exit</div></pre></td></tr></table></figure>
+<p>从伪终端退出。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070017.png" alt=""></p>
+<p>然后输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker commit f0a jacksmith/demo</div></pre></td></tr></table></figure>
+<p>其中 f0a 是虚拟机容器序号的前三位，jacksmith 需要改成你自己的用户名，demo 是你给你自己镜像取的名字。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070018.png" alt=""></p>
+<h3 id="3-2-上传镜像"><a href="#3-2-上传镜像" class="headerlink" title="3.2.上传镜像"></a>3.2.上传镜像</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker push jacksmith demo</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070019.png" alt=""></p>
+<h3 id="3-3-查看镜像是否上传成功"><a href="#3-3-查看镜像是否上传成功" class="headerlink" title="3.3.查看镜像是否上传成功"></a>3.3.查看镜像是否上传成功</h3><p>在终端输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker search jacksmith</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070020.png" alt=""></p>
+<p>可见已经上传已经成功了。</p>
+<h2 id="4-重用Docker镜像"><a href="#4-重用Docker镜像" class="headerlink" title="4.重用Docker镜像"></a>4.重用Docker镜像</h2><p>Ctrl + Alt +T，打开一个新终端，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo su</div></pre></td></tr></table></figure>
+<p>输入密码之后，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -i -t jacksmith/demo</div></pre></td></tr></table></figure>
+<p>打开伪终端，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vim a.txt</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070021.png" alt=""></p>
+<p>可以看到这就是我们刚才发布的镜像：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201706070022.png" alt=""></p>
+<h2 id="5-参考链接"><a href="#5-参考链接" class="headerlink" title="5.参考链接"></a>5.参考链接</h2><p><a href="http://www.runoob.com/docker/docker-command-manual.html" target="_blank" rel="external">Docker 命令大全</a></p>
+<p><a href="http://www.docker.org.cn/book/" target="_blank" rel="external">Docker手册</a></p>
+<h2 id="6-操作系统-Ubuntu-16-04"><a href="#6-操作系统-Ubuntu-16-04" class="headerlink" title="6.操作系统 Ubuntu 16.04"></a>6.操作系统 Ubuntu 16.04</h2>
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟机/">虚拟机</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-ActiveMQ入门之（一）ActiveMQ的安装及使用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -492,404 +885,15 @@
 
 
     
-      <article id="post-大神们的博客" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/24/大神们的博客/">大神们的博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/04/24/大神们的博客/" class="article-date">
-  <time datetime="2017-04-24T09:57:22.000Z" itemprop="datePublished">2017-04-24</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="【学习用】huangjunhui-大神的博客"><a href="#【学习用】huangjunhui-大神的博客" class="headerlink" title="【学习用】huangjunhui 大神的博客"></a>【学习用】<a href="http://opiece.me/2015/04/09/hexo-guide/" target="_blank" rel="external">huangjunhui 大神的博客</a></h3><h3 id="【膜拜用】liuning-大神的博客"><a href="#【膜拜用】liuning-大神的博客" class="headerlink" title="【膜拜用】liuning 大神的博客"></a>【膜拜用】<a href="https://darylliu.github.io" target="_blank" rel="external">liuning 大神的博客</a></h3>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-单台windows搭建mysql主从机备份" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/08/单台windows搭建mysql主从机备份/">单台windows搭建mysql主从机备份</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/04/08/单台windows搭建mysql主从机备份/" class="article-date">
-  <time datetime="2017-04-08T06:04:11.000Z" itemprop="datePublished">2017-04-08</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-在一台window上搭建两个MySQL实例"><a href="#1-在一台window上搭建两个MySQL实例" class="headerlink" title="1.在一台window上搭建两个MySQL实例"></a>1.在一台window上搭建两个MySQL实例</h2><h3 id="1-1-下载-MySQL-5-6"><a href="#1-1-下载-MySQL-5-6" class="headerlink" title="1.1.下载 MySQL 5.6"></a>1.1.下载 MySQL 5.6</h3><p>下载地址：<a href="http://download.csdn.net/download/zzu_wang/8708049" target="_blank" rel="external">http://download.csdn.net/download/zzu_wang/8708049</a></p>
-<p>注意，一定要下载 5.6 版本，5.7版本会出现各种各样奇怪的问题。</p>
-<h3 id="1-2-建立对应目录"><a href="#1-2-建立对应目录" class="headerlink" title="1.2.建立对应目录"></a>1.2.建立对应目录</h3><p>在你喜欢的位置（我的是D:\WorkSpace\mysql\）建立两个文件夹，分别叫 mysql5601 和 mysql5602。将刚才下载到的 zip 文件分别复制到这两个文件夹中解压。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080001.png" alt=""></p>
-<p>解压完成之后应该是这个样子的：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080002.png" alt=""></p>
-<h3 id="1-3-修改响应配置文件"><a href="#1-3-修改响应配置文件" class="headerlink" title="1.3.修改响应配置文件"></a>1.3.修改响应配置文件</h3><p>分别打开 mysql5601 和 mysql5602 ，修改 my-default.ini 文件</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080003.png" alt=""></p>
-<p>打开  my-default.ini 文件，修改下图中标记的位置</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080004.png" alt=""></p>
-<p>basedir 为 mysql 的解压目录，datadir 为 basedir\data，两个实例的 port 分别设置为 3306 和 3307，server_id 分别设置为 1 和 2。</p>
-<p>mysql5601：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">basedir = D:\WorkSpace\mysql\msql5601</div><div class="line">datadir = D:\WorkSpace\mysql\msql5601\data</div><div class="line">port = 3306</div><div class="line">server_id = 1</div></pre></td></tr></table></figure>
-<p>mysql5602：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">basedir = D:\WorkSpace\mysql\msql5602</div><div class="line">datadir = D:\WorkSpace\mysql\msql5602\data</div><div class="line">port = 3307</div><div class="line">server_id = 2</div></pre></td></tr></table></figure>
-<p>注意，只修改刚才提到的地方就好，其他地方暂时先不用管，后面会有提到。</p>
-<h3 id="1-4-启动-MySQL-服务"><a href="#1-4-启动-MySQL-服务" class="headerlink" title="1.4.启动 MySQL 服务"></a>1.4.启动 MySQL 服务</h3><p>在 windows 搜索框中搜索 cmd，得到结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080005.png" alt=""></p>
-<p>按下 Ctrl + Shift + Enter，以管理员身份进入 cmd，进入之后，如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080006.png" alt=""></p>
-<p>进入到 D:\WorkSpace\mysql\msql5601\bin 目录下，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL1  --defaults-file=&quot;D:\WorkSpace\mysql\msql5601\my-default.ini&quot; ：</div></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080007.png" alt=""></p>
-<p>因为我已经安装过了，所以会显示 The service already exists! ，第一次安装应该显示 Service successfully installed.</p>
-<p>【MySQL1】是服务的名称，安装成功后，在 windows 搜索里输入【服务】，可以在服务中找到它。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080008.png" alt=""></p>
-<p>安装成功后，输入 net start MySQL1，启动这个服务：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080009.png" alt=""></p>
-<p>然后用同样的方法启动另一个服务，这回叫MySQL2：</p>
-<p>进入到 D:\WorkSpace\mysql\msql5602\bin 目录下，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld install MySQL2  --defaults-fil e= &quot;D:\WorkSpace\mysql\msql5602\my-default.ini&quot;</div></pre></td></tr></table></figure>
-<p>安装成功后，输入 net start MySQL2，启动这个服务，得到结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080010.png" alt=""></p>
-<p>两个服务都跑起来之后，我们就可以进入下一步：实现主从备份了。</p>
-<h2 id="2-搭建主从备份"><a href="#2-搭建主从备份" class="headerlink" title="2.搭建主从备份"></a>2.搭建主从备份</h2><h3 id="2-1-在两个-MySQL-实例创建数据库"><a href="#2-1-在两个-MySQL-实例创建数据库" class="headerlink" title="2.1.在两个 MySQL 实例创建数据库"></a>2.1.在两个 MySQL 实例创建数据库</h3><p>我们以 mysql5601 中的实例作为主库，以 mysql5602 中的实例作为从库。</p>
-<p>在这两个数据库中各自创建一个叫做 test 的库作为用来同步的库。具体操作如下：</p>
-<p>进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080011.png" alt=""></p>
-<p>在这个命令中，前一个小写的 p 是密码（password）的 p，后一个大写的 P 是端口（Port）的 P。</p>
-<p>然后输入：create database test;</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080012.png" alt=""></p>
-<p>我的因为已经建立过了，所以会报出 database exists。</p>
-<p>输入：show databases; </p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080013.png" alt=""></p>
-<p>显示现有的 database，我们可以看到，test已经在里面了。</p>
-<p>接下来我们建立从机的数据库，打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080014.png" alt=""></p>
-<p>然后输入：create database test;</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080015.png" alt=""></p>
-<p>这样两个数据库就建立好了。</p>
-<h3 id="2-2-修改主库配置文件"><a href="#2-2-修改主库配置文件" class="headerlink" title="2.2.修改主库配置文件"></a>2.2.修改主库配置文件</h3><p>打开 mysql5601，修改 my-default.ini 文件，在其中添加如下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">server-id=1    #服务器 id </div><div class="line">log-bin=C:\Program Files\MySQL\MySQL Server 5.5\mysql-bin    #二进制文件存放路径</div><div class="line">binlog-do-db=test1    #待同步的数据库</div></pre></td></tr></table></figure>
-<p>添加完后，我们的 my-default.ini 文件就会像下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir = D:\WorkSpace\mysql\msql5601</div><div class="line">datadir = D:\WorkSpace\mysql\msql5601\data</div><div class="line">port = 3306</div><div class="line">server_id = 1</div><div class="line"></div><div class="line">log-bin=D:\WorkSpace\mysql\msql5601\mysql-bin    #二进制文件存放路径</div><div class="line">binlog-do-db=test    #待同步的数据库</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure>
-<p>Windows 搜索【服务】，重启 MySQL1 服务。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080016.png" alt=""></p>
-<p>重启之后，你会看到 D:\WorkSpace\mysql\msql5601 目录下多出了两个文件（因为我重启过三遍所以多出来四个）：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080017.png" alt=""></p>
-<h3 id="2-3-给要连接的从服务器设置权限"><a href="#2-3-给要连接的从服务器设置权限" class="headerlink" title="2.3.给要连接的从服务器设置权限"></a>2.3.给要连接的从服务器设置权限</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3306</p>
-<p>进入 mysql 命令行模式，输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grant replication slave,reload,super on *.* to slave@10.0.76.192 identified by &apos;root&apos;;</div></pre></td></tr></table></figure>
-<p>给主机10.0.76.192添加权限，用户名：slave，密码：root；</p>
-<p>注意，10.0.76.192是我的 ip 地址，这个地址需要改成你自己的 ip 地址（如果不是一台机器则要改成从机的 ip 地址）。查询 ip 地址的方法很简单，打开 cmd，输入 ipconfig 即可。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080018.png" alt=""></p>
-<h3 id="2-4-输入命令-show-master-status"><a href="#2-4-输入命令-show-master-status" class="headerlink" title="2.4.输入命令 show master status;"></a>2.4.输入命令 show master status;</h3><p>找到 File 和 Position 的值记录下来，这些值后面会用到。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080019.png" alt=""></p>
-<h3 id="2-5-修改从库配置文件"><a href="#2-5-修改从库配置文件" class="headerlink" title="2.5.修改从库配置文件"></a>2.5.修改从库配置文件</h3><p>打开mysql5602，修改my-default.ini文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">server-id=2    #服务器 id ，不能和主服务器一致</div><div class="line">replicate-do-db=test1    #待同步的数据库</div></pre></td></tr></table></figure>
-<p>修改后的 my-default.ini 文件如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># For advice on how to change settings please see</div><div class="line"># http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html</div><div class="line"># *** DO NOT EDIT THIS FILE. It&apos;s a template which will be copied to the</div><div class="line"># *** default location during install, and will be replaced if you</div><div class="line"># *** upgrade to a newer version of MySQL.</div><div class="line"></div><div class="line">[mysqld]</div><div class="line"></div><div class="line"># Remove leading # and set to the amount of RAM for the most important data</div><div class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</div><div class="line"># innodb_buffer_pool_size = 128M</div><div class="line"></div><div class="line"># Remove leading # to turn on a very important data integrity option: logging</div><div class="line"># changes to the binary log between backups.</div><div class="line"># log_bin</div><div class="line"></div><div class="line"># These are commonly set, remove the # and set as required.</div><div class="line">basedir = D:\WorkSpace\mysql\msql5602</div><div class="line">datadir = D:\WorkSpace\mysql\msql5602\data</div><div class="line">port = 3307</div><div class="line">server_id = 2</div><div class="line">replicate-do-db=test    #待同步的数据库</div><div class="line"></div><div class="line"></div><div class="line"># Remove leading # to set options mainly useful for reporting servers.</div><div class="line"># The server defaults are faster for transactions and fast SELECTs.</div><div class="line"># Adjust sizes as needed, experiment to find the optimal values.</div><div class="line"># join_buffer_size = 128M</div><div class="line"># sort_buffer_size = 2M</div><div class="line"># read_rnd_buffer_size = 2M </div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div></pre></td></tr></table></figure>
-<p>重启 MySQL2 服务。</p>
-<h3 id="2-6-修改从库对主库的连接参数"><a href="#2-6-修改从库对主库的连接参数" class="headerlink" title="2.6.修改从库对主库的连接参数"></a>2.6.修改从库对主库的连接参数</h3><p>打开一个cmd，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，输入 mysql -uroot -proot -P3307</p>
-<p>进入 mysql 命令行模式，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">change master to master_host=&apos;10.0.76.192&apos;,master_user=&apos;slave&apos;,master_password=&apos;root&apos;, master_log_file=&apos;mysql-bin.000003&apos;,master_log_pos=120;</div></pre></td></tr></table></figure>
-<p>注意：这里输入的 mysql-bin.000003 和 120 请替换为步骤2.4中查询出来的值，master_host 替换为你自己的 ip。 </p>
-<h3 id="2-7-启动-salve-线程"><a href="#2-7-启动-salve-线程" class="headerlink" title="2.7.启动 salve 线程"></a>2.7.启动 salve 线程</h3><p>输入：start slave;</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080020.png" alt=""></p>
-<p>然后输入：show slave status\G   （没有分号）</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080021.png" alt=""></p>
-<p>看是否有以下两行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Slave_IO_Running: Yes</div><div class="line">Slave_SQL_Running: Yes</div></pre></td></tr></table></figure>
-<p>这两个指标非常重要，任意一行为No都不能正常运行。我就曾经遇到了下面的这种问题。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ERROR] Slave I/O: error connecting to master &apos;slave@10.0.76.192:3306:3306&apos; - retry-time: 60  retries: 6, Error_code: 2005</div></pre></td></tr></table></figure>
-<p>解决方法很简单，重启以下 slave 的服务就可以了。</p>
-<h3 id="2-8-测试同步"><a href="#2-8-测试同步" class="headerlink" title="2.8.测试同步"></a>2.8.测试同步</h3><p>打开两个 cmd ，进入 D:\WorkSpace\mysql\msql5602\bin 目录下，分别输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql -uroot -proot -P3306（主机）</div><div class="line">mysql -uroot -proot -P3307（从机）</div></pre></td></tr></table></figure>
-<p>在主机上输入：use test;</p>
-<p>转到 test 数据库，然后输入：create table table1;</p>
-<p>新建一个名为 table1 的表。然后输入：show tables;</p>
-<p>得到结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080022.png" alt=""></p>
-<p>上面的操作只是在主机上的 test 数据库中建立了一张名为 table1 的表。</p>
-<p>接下来我们进入从机的 cmd，输入：use test;</p>
-<p>然后输入：show tables;</p>
-<p>得到结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705080023.png" alt=""></p>
-<p>可以看到，两个数据库的数据已经开始自动同步了。</p>
-<h2 id="3-参考链接"><a href="#3-参考链接" class="headerlink" title="3.参考链接"></a>3.参考链接</h2><p>windows下mysql主从同步</p>
-<p><a href="http://www.cnblogs.com/xiaochangwei/p/4824355.html" target="_blank" rel="external">http://www.cnblogs.com/xiaochangwei/p/4824355.html</a></p>
-<p>mysql （master/slave）复制原理及配置</p>
-<p><a href="http://blog.csdn.net/mer1234567/article/details/7405775" target="_blank" rel="external">http://blog.csdn.net/mer1234567/article/details/7405775</a></p>
-<p>window下一台PC机器上安装多个mysql的方法</p>
-<p><a href="http://blog.csdn.net/zfqzpp/article/details/13630905" target="_blank" rel="external">http://blog.csdn.net/zfqzpp/article/details/13630905</a></p>
-<p>mysql 数据同步 出现Slave_IO_Running:No问题的解决方法小结</p>
-<p><a href="http://www.jb51.net/article/27220.htm" target="_blank" rel="external">http://www.jb51.net/article/27220.htm</a></p>
-<p>slave have equal MySQL Server UUIDs原因及解决</p>
-<p><a href="http://www.linuxidc.com/Linux/2015-02/113564.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-02/113564.htm</a></p>
-<h2 id="4-操作系统：windows10"><a href="#4-操作系统：windows10" class="headerlink" title="4.操作系统：windows10"></a>4.操作系统：windows10</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-几种消息队列的比较" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/06/几种消息队列的比较/">几种消息队列的比较</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/04/06/几种消息队列的比较/" class="article-date">
-  <time datetime="2017-04-06T02:13:27.000Z" itemprop="datePublished">2017-04-06</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-RabbitMQ"><a href="#1-RabbitMQ" class="headerlink" title="1.RabbitMQ"></a>1.RabbitMQ</h3><p>  对高并发（Erlang）、路由、负载均衡、数据持久化都有很好的支持。</p>
-<h3 id="2-ActiveMQ"><a href="#2-ActiveMQ" class="headerlink" title="2.ActiveMQ"></a>2.ActiveMQ</h3><p>  Java开发，支持持久化，性能相对较差。</p>
-<h3 id="3-ZeroMQ"><a href="#3-ZeroMQ" class="headerlink" title="3.ZeroMQ"></a>3.ZeroMQ</h3><p>  C语言开发，引入库即可使用，不需要服务器，速度快，但不支持持久化。</p>
-<h3 id="4-Redis"><a href="#4-Redis" class="headerlink" title="4.Redis"></a>4.Redis</h3><p>  C语言开发，速度快，支持持久化，但不可靠。</p>
-<h3 id="5-RocketMQ"><a href="#5-RocketMQ" class="headerlink" title="5.RocketMQ"></a>5.RocketMQ</h3><p>  Java开发，性能略低于kafka，但支持严格的顺序，失败重试，更多队列等。</p>
-<h3 id="6-Kafka"><a href="#6-Kafka" class="headerlink" title="6.Kafka"></a>6.Kafka</h3><p>  Scala开发，一次生产多次消费，可以当作消息队列使用，可持久化，速度快。</p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RockerMQ/">RockerMQ</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
-      <article id="post-单台windows搭建zookeeper和kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/04/单台windows搭建zookeeper和kafka集群/">单台windows搭建zookeeper和kafka集群</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/04/04/单台windows搭建zookeeper和kafka集群/" class="article-date">
-  <time datetime="2017-04-04T10:11:39.000Z" itemprop="datePublished">2017-04-04</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们的目标是在一台机器上部署三个zookeeper的server，并在此基础上部署三个zookeeper的server。</p>
-<h1 id="1-zookeeper的部署"><a href="#1-zookeeper的部署" class="headerlink" title="1.zookeeper的部署"></a>1.zookeeper的部署</h1><p>zookeeper的部署采用伪集群模式，即在一台电脑上部署多个server。</p>
-<h2 id="1-1-建立文件夹，存放项目"><a href="#1-1-建立文件夹，存放项目" class="headerlink" title="1.1.建立文件夹，存放项目"></a>1.1.建立文件夹，存放项目</h2><p>在你喜欢的位置（我的目录为D:\WorkSpace）建立一个名为zookeeper的文件夹，并在该文件夹下建立三个目录，分别名为server1，server2和server3。完成之后如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040011.png" alt=""></p>
-<h2 id="1-2-下载zookeeper"><a href="#1-2-下载zookeeper" class="headerlink" title="1.2.下载zookeeper"></a>1.2.下载zookeeper</h2><p>下载地址：<a href="http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。" target="_blank" rel="external">http://apache.fayea.com/zookeeper/。或者直接去zookeeper官网自己找对应的版本也是一样的。</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040012.png" alt=""></p>
-<h2 id="1-3-解压文件并创建一些目录"><a href="#1-3-解压文件并创建一些目录" class="headerlink" title="1.3.解压文件并创建一些目录"></a>1.3.解压文件并创建一些目录</h2><p>将下载好的压缩包解压到server1目录下，并在server1目录下建三个文件夹，分别名为data，dataLog和logs。完成之后应该是这样的。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040013.png" alt=""></p>
-<p>注意：压缩包解压的时候直接选【解压到当前文件夹】即可。所以上图中的zookeeper-3.4.10文件夹打开之后应该是这样的：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040014.png" alt=""></p>
-<h2 id="1-4-在server1-data目录下，创建一个叫做myid的文件。"><a href="#1-4-在server1-data目录下，创建一个叫做myid的文件。" class="headerlink" title="1.4.在server1/data目录下，创建一个叫做myid的文件。"></a>1.4.在server1/data目录下，创建一个叫做myid的文件。</h2><p>注意，这个文件不需要任何扩展名，所以显示的形式如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040015.png" alt=""></p>
-<p>如果你看到的myid文件不是这样的，说明你的扩展名没有去除。在windows系统下，文件扩展名默认是被隐藏的。在【查看】选项卡里勾选【文件扩展名】，你就能看到被隐藏的扩展名了。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040016.png" alt=""></p>
-<h2 id="1-5-打开myid文件，在里面添加对应的id"><a href="#1-5-打开myid文件，在里面添加对应的id" class="headerlink" title="1.5.打开myid文件，在里面添加对应的id"></a>1.5.打开myid文件，在里面添加对应的id</h2><p>因为我们目前配置的是server1，所以添加id为1，然后关闭即可。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040017.png" alt=""></p>
-<p>这里打开myid文件使用的编辑器是notepad++，如果没有安装的话，可以下载一个安装一下。下载地址：<a href="https://notepad-plus-plus.org/。" target="_blank" rel="external">https://notepad-plus-plus.org/。</a></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040018.png" alt=""></p>
-<h2 id="1-6-修改配置文件"><a href="#1-6-修改配置文件" class="headerlink" title="1.6.修改配置文件"></a>1.6.修改配置文件</h2><p>在server1/zookeeper-3.4.10/conf目录下，新建zoo.cfg文件，加入内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<p>注意，dataDir和dataLogDir中的D:/WorkSpace目录需要改成你自己的目录。</p>
-<p>这里对zoo.cfg中的内容进行简要地说明：</p>
-<p><strong>tickTime</strong>为客户端与服务器之间或服务器互相之间的心跳间隔，以ms为单位。</p>
-<p><strong>initLimit</strong>为leader与follower进行初始连接时最多能够容忍的心跳数。</p>
-<p><strong>syncLimit</strong>为follower与leader请求和应答之间最多能容忍的心跳数。</p>
-<p><strong>dataDir</strong>为数据文件目录。</p>
-<p><strong>dataLogDir</strong>为日志文件目录。</p>
-<p><strong>clientPort</strong>为客户端连接服务器的端口，zookeeper监听此接口接收客户端访问请求。</p>
-<p><strong>最后三行</strong>为集群中每个服务器的ip和端口号。前一个端口为leader和follower通信端口，后一个端口为选举新leader时所用的端口。一般来说，在多台电脑的情况下，每台服务器上的端口配置是一样的。不过我们现在使用同一台电脑配置三个server，为了避免冲突，只能把它们改成不一样。</p>
-<h2 id="1-7-复制server1中的内容到server2和server3中，并修改相应配置"><a href="#1-7-复制server1中的内容到server2和server3中，并修改相应配置" class="headerlink" title="1.7.复制server1中的内容到server2和server3中，并修改相应配置"></a>1.7.复制server1中的内容到server2和server3中，并修改相应配置</h2><p>将server1中的内容分别复制到server2和server3中，并修改/data/myid文件和/zookeeper-3.4.10/conf/zoo.cfg文件。</p>
-<p>myid文件只需要将其中的内容改成服务器的序号即可。</p>
-<p>zoo.cfg文件需要修改dataDir，dataLogDir和clientPort。修改后的三个文件如下：</p>
-<p>server1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server1/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server1/dataLog</div><div class="line">clientPort=2181</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<p>server2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server2/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server2/dataLog</div><div class="line">clientPort=2182</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<p>server3：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line">initLimit=5</div><div class="line">syncLimit=2</div><div class="line">dataDir=D:/WorkSpace/zookeeper/server3/data</div><div class="line">dataLogDir=D:/WorkSpace/zookeeper/server3/dataLog</div><div class="line">clientPort=2183</div><div class="line">server.1=127.0.0.1:2888:3888</div><div class="line">server.2=127.0.0.1:2889:3889</div><div class="line">server.3=127.0.0.1:2890:3890</div></pre></td></tr></table></figure>
-<h2 id="1-8-启动服务器"><a href="#1-8-启动服务器" class="headerlink" title="1.8.启动服务器"></a>1.8.启动服务器</h2><p>分别进入三个server的/zookeeper-3.4.10/bin目录下，运行：zkServer start 。结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040019.png" alt=""></p>
-<p>第一个server启动的时候会报错，这是由于它想要和其他两个server进行通信，而另外两个server还没有搭建起来。不用理会这个错误，继续打开新的cmd窗口，启动其他server就好。注意，原来的窗口不要关！所有server都启动了之后，显示如下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040020.png" alt=""></p>
-<p>如果报Invalid arguments, exiting abnormally 的异常的话，只需要在 zkServer start 命令中去掉start，即输入zkServer即可。</p>
-<h2 id="1-9-连接客户端"><a href="#1-9-连接客户端" class="headerlink" title="1.9.连接客户端"></a>1.9.连接客户端</h2><p>进入任意一个zookeeper-3.4.10目录下，用以下命令启动客户端：zkCli –server 127.0.0.1:2181<br>，显示如下结果：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040021.png" alt=""></p>
-<p>输入help，显示可以执行的指令。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040022.png" alt=""></p>
-<p>做到这一步，zookeeper集群的搭建就完成了。接下来我们要在此基础上搭建kafka的集群。</p>
-<h1 id="2-kafka的部署"><a href="#2-kafka的部署" class="headerlink" title="2.kafka的部署"></a>2.kafka的部署</h1><p>kafka在设计的时候就依赖于zookeeper，对于kafka而言，zookeeper相当于它的文件系统。每个节点的信息都保存在zookeeper对应的路径下。</p>
-<p><strong>（1）Broker注册</strong>：Broker在zookeeper中保存为一个临时节点，节点的路径是/brokers/ids/[brokerid],每个节点会保存对应broker的IP以及端口等信息。</p>
-<p><strong>（2）Topic注册</strong>：在kafka中,一个topic会被分成多个区并被分到多个broker上，分区的信息以及broker的分布情况都保存在zookeeper中，根节点路径为/brokers/topics,每个topic都会在topics下建立独立的子节点，每个topic节点下都会包含分区以及broker的对应信息。</p>
-<p><strong>（3）消费者与分区的对应关系</strong>：对于每个消费者分组，kafka都会为其分配一个全局唯一的Group ID,分组内的所有消费者会共享该ID,kafka还会为每个消费者分配一个consumer ID,通常采用hostname:uuid的形式。在kafka的设计中规定，对于topic的每个分区，最多只能被一个消费者进行消费，也就是消费者与分区的关系是一对多的关系。消费者与分区的关系被存储在zookeeper中节点的路径为 /consumers/[group_id]/owners/[topic]/[broker_id-partition_id],该节点的内容就是消费者的Consumer ID。</p>
-<p><strong>（4）消费者负载均衡</strong>：消费者服务启动时，会创建一个属于消费者节点的临时节点，节点的路径为 /consumers/[group_id]/ids/[consumer_id],该节点的内容是该消费者订阅的Topic信息。每个消费者会对/consumers/[group_id]/ids节点注册Watcher监听器，一旦消费者的数量增加或减少就会触发消费者的负载均衡。消费者还会对/brokers/ids/[brokerid]节点进行监听，如果发现服务器的Broker服务器列表发生变化，也会进行消费者的负载均衡。</p>
-<p><strong>（5）消费者的offset</strong>：在kafka的消费者API分为两种(1)High Level API：由zookeeper维护消费者的offset (2) Low Level API：自己的代码实现对offset的维护。由于自己维护offset往往比较复杂，所以多数情况下都是使用High Level的API offset在zookeeper中的节点路径为/consumers/[group_id]/offsets/[topic]/[broker_id-part_id],该节点的值就是对应的offset。</p>
-<p>看到这里，你就会明白kafka和zookeeper之间的关系了。我们现在就是要在已经配置好的zookeeper集群上配置kafka集群。</p>
-<h2 id="2-1-建立对应目录"><a href="#2-1-建立对应目录" class="headerlink" title="2.1.建立对应目录"></a>2.1.建立对应目录</h2><p>还是找到你喜欢的那个目录（我的是D:\WorkSpace）,建立一个叫做kafka的文件夹，里面建立三个子目录，分别叫做：kafka1，kafka2和kafka3。完成之后应该是这个样子：<br><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040023.png" alt=""></p>
-<h2 id="2-2-下载kafka并解压到每个文件夹"><a href="#2-2-下载kafka并解压到每个文件夹" class="headerlink" title="2.2.下载kafka并解压到每个文件夹"></a>2.2.下载kafka并解压到每个文件夹</h2><p>kafka下载地址：<br><a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz" target="_blank" rel="external">https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.12-0.10.2.1.tgz</a><br>下载之后是一个压缩包，还是直接解压到kafka1，kafka2和kafka3这三个文件夹就行。解压完后，在 kafka1，kafka2和kafka3目录下分别添加一个kafkaLog目录。最后的结果应该是这个样子的：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040024.png" alt=""></p>
-<h2 id="2-3-修改配置文件："><a href="#2-3-修改配置文件：" class="headerlink" title="2.3.修改配置文件："></a>2.3.修改配置文件：</h2><p>分别打开kafka1，kafka2和kafka3三个目录中的kafka_2.12-0.10.2.1/config路径下的consumer.properties文件，将里面的内容改成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">group.id=logGroup</div></pre></td></tr></table></figure>
-<p>再打开这三个目录下的server.properties文件，按照下面内容进行修改：</p>
-<p>kafka1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=0</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka1/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9092</div><div class="line">port=9092</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
-<p>kafka2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=1</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka2/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9093</div><div class="line">port=9093</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
-<p>kafka3：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">broker.id=2</div><div class="line">log.dirs =D:/WorkSpace/kafka/kafka3/kafkaLog</div><div class="line">listeners=PLAINTEXT://127.0.0.1:9094</div><div class="line">port=9094</div><div class="line">zookeeper.connect=127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</div><div class="line">message.max.byte=5242880</div><div class="line">default.replication.factor=2</div><div class="line">replica.fetch.max.bytes=5242880</div></pre></td></tr></table></figure>
-<h2 id="2-4-启动kafka服务器"><a href="#2-4-启动kafka服务器" class="headerlink" title="2.4.启动kafka服务器"></a>2.4.启动kafka服务器</h2><p>进入D:/WorkSpace/kafka/kafka1/目录下，输入<br>.\bin\windows\kafka-server-start.bat .\config\server.properties  命令，注意不要漏掉命令中的“.”。得到的结果如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040025.png" alt=""></p>
-<p>同样地，进入另外两个kafka2 和 kafka3目录下，把另外两个kafka服务器也启动起来。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201705040026.png" alt=""></p>
-<p>如果你最后得到的结果是这样的，那么恭喜你，zookeeper和kafka集群已经搭建完成了。</p>
-<h1 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h1><p>（1）在单机上实现ZooKeeper伪机群/伪集群部署 ：</p>
-<p><a href="http://blog.csdn.net/poechant/article/details/6633923" target="_blank" rel="external">http://blog.csdn.net/poechant/article/details/6633923</a></p>
-<p>（2）一台机器上安装zookeeper和kafka集群：</p>
-<p><a href="http://blog.csdn.net/u013244038/article/details/53938997" target="_blank" rel="external">http://blog.csdn.net/u013244038/article/details/53938997</a></p>
-<h2 id="操作系统版本：windows-10"><a href="#操作系统版本：windows-10" class="headerlink" title="操作系统版本：windows 10"></a>操作系统版本：windows 10</h2><h2 id="zookeeper版本：3-4-10"><a href="#zookeeper版本：3-4-10" class="headerlink" title="zookeeper版本：3.4.10"></a>zookeeper版本：3.4.10</h2><h2 id="kafka版本：2-12-0-10-2-1"><a href="#kafka版本：2-12-0-10-2-1" class="headerlink" title="kafka版本：2.12-0.10.2.1"></a>kafka版本：2.12-0.10.2.1</h2>
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/">Kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zookeeper/">Zookeeper</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Jack Smith&nbsp;
+      &copy; 2018 Jack Smith&nbsp;
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, theme by <a href="http://github.com/ppoffice">PPOffice</a>
     </div>
   </div>
@@ -904,6 +908,23 @@
 
 
 <script src="/js/script.js"></script>
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>
