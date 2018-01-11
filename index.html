@@ -45,6 +45,71 @@
   </div>
 </header>
     <section id="main" class="outer">
+      <article id="post-滤波器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/02/滤波器/">滤波器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      <a href="/2018/01/02/滤波器/" class="article-date">
+  <time datetime="2018-01-02T10:38:00.000Z" itemprop="datePublished">2018-01-02</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-滤波器的概念"><a href="#1-滤波器的概念" class="headerlink" title="1.滤波器的概念"></a>1.滤波器的概念</h2><p>为了阐述滤波器的概念，我们首先来看两个场景。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310001.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310002.png" alt=""></p>
+<p>在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。</p>
+<h2 id="2-高通、低通和带通"><a href="#2-高通、低通和带通" class="headerlink" title="2.高通、低通和带通"></a>2.高通、低通和带通</h2><p>假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310003.png" alt=""></p>
+<p>我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310004.png" alt=""></p>
+<h2 id="3-使用-Matlab-生成滤波器"><a href="#3-使用-Matlab-生成滤波器" class="headerlink" title="3.使用 Matlab 生成滤波器"></a>3.使用 Matlab 生成滤波器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hd = design(fdesign.bandpass(&apos;N,F3dB1,F3dB2&apos;,6,7500,8500,fs),&apos;butter&apos;);</div><div class="line">res = filter(hd,data);</div></pre></td></tr></table></figure>
+<p>其中，data 是输入被滤波的信号，res 是输出的结果。如果对 matlab 中滤波器感兴趣，可以输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; help fdesign.bandpass</div></pre></td></tr></table></figure>
+<p>下面我们用 matlab 生成的滤波器进行滤波。</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310005.png" alt=""></p>
+<p>滤波的结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310006.png" alt=""></p>
+
+      
+    </div>
+    
+    
+      <footer class="article-footer">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DSP/">DSP</a></li></ul>
+
+      </footer>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+    
       <article id="post-傅里叶变换" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -766,71 +831,6 @@
 
 
     
-      <article id="post-滤波器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/27/滤波器/">滤波器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      <a href="/2017/09/27/滤波器/" class="article-date">
-  <time datetime="2017-09-27T10:38:00.000Z" itemprop="datePublished">2017-09-27</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-滤波器的概念"><a href="#1-滤波器的概念" class="headerlink" title="1.滤波器的概念"></a>1.滤波器的概念</h2><p>为了阐述滤波器的概念，我们首先来看两个场景。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310001.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310002.png" alt=""></p>
-<p>在这两个场景中，为了排除不同频段信号（声音）的干扰，我们需要使用一种工具将不需要的频段滤除出去，这种工具就是滤波器。</p>
-<h2 id="2-高通、低通和带通"><a href="#2-高通、低通和带通" class="headerlink" title="2.高通、低通和带通"></a>2.高通、低通和带通</h2><p>假定我们有三个不同频率的正弦信号，当他们相互叠加之后，如何将我们想要的信号分离出来呢？</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310003.png" alt=""></p>
-<p>我们可以使用高通，低通和带通滤波器分别得到我们想要的部分。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310004.png" alt=""></p>
-<h2 id="3-使用-Matlab-生成滤波器"><a href="#3-使用-Matlab-生成滤波器" class="headerlink" title="3.使用 Matlab 生成滤波器"></a>3.使用 Matlab 生成滤波器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hd = design(fdesign.bandpass(&apos;N,F3dB1,F3dB2&apos;,6,7500,8500,fs),&apos;butter&apos;);</div><div class="line">res = filter(hd,data);</div></pre></td></tr></table></figure>
-<p>其中，data 是输入被滤波的信号，res 是输出的结果。如果对 matlab 中滤波器感兴趣，可以输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; help fdesign.bandpass</div></pre></td></tr></table></figure>
-<p>下面我们用 matlab 生成的滤波器进行滤波。</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310005.png" alt=""></p>
-<p>滤波的结果如下：</p>
-<p><img src="https://raw.githubusercontent.com/JackSmithThu/MarkdownPhotos/master/201712310006.png" alt=""></p>
-
-      
-    </div>
-    
-    
-      <footer class="article-footer">
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DSP/">DSP</a></li></ul>
-
-      </footer>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-    
       <article id="post-AndroidStudio安装教程" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -911,7 +911,7 @@
 
     
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Далее &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
       </nav>
     </section>
     <footer id="footer">
